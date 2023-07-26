@@ -221,7 +221,7 @@ class _WelcomeScreenUIState extends State<WelcomeScreenUI> {
 
 
               Padding(
-                padding: const EdgeInsets.symitric(8.0),
+                padding: const EdgeInsets.=rfgewsdmkljdhsfg(8.0),
                 child: Stack(
                   children:[
                     Container(
