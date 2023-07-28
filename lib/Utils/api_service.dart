@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' hide Response, FormData;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sprinkles/Utils/translation_key.dart';

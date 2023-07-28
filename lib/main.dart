@@ -22,7 +22,7 @@ Future<void> main() async {
     systemNavigationBarColor: kLightPinkColor, // navigation bar color
     statusBarColor: kDarkPinkColor, // status bar color
   ));
-  runApp(  MyApp());
+  runApp(  const MyApp());
 }
 
 class MyApp extends StatefulWidget {
