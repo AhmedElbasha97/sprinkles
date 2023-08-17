@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
@@ -118,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: TextStyle(
                             shadows: <Shadow>[
                               Shadow(
-                                offset: Offset(2.0, 2.0),
+                                offset: const Offset(2.0, 2.0),
                                   blurRadius: 13.0,
 
                                 color: Colors.black.withOpacity(0.5)
@@ -194,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                           shadows: <Shadow>[
                             Shadow(
-                                offset: Offset(2.0, 2.0),
+                                offset: const Offset(2.0, 2.0),
                                 blurRadius: 13.0,
 
                                 color: Colors.black.withOpacity(0.5)
@@ -269,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           shadows: <Shadow>[
                             Shadow(
-                                offset: Offset(2.0, 2.0),
+                                offset: const Offset(2.0, 2.0),
                                 blurRadius: 13.0,
 
                                 color: Colors.black.withOpacity(0.5)
@@ -343,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                           shadows: <Shadow>[
                             Shadow(
-                                offset: Offset(2.0, 2.0),
+                                offset: const Offset(2.0, 2.0),
                                 blurRadius: 13.0,
 
                                 color: Colors.black.withOpacity(0.5)
@@ -417,7 +419,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                           shadows: <Shadow>[
                             Shadow(
-                                offset: Offset(2.0, 2.0),
+                                offset: const Offset(2.0, 2.0),
                                 blurRadius: 13.0,
 
                                 color: Colors.black.withOpacity(0.5)
