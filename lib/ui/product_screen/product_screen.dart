@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
-import 'package:sprinkles/ui/store_cake%20_screen/store_cake_screen.dart';
+import 'package:sprinkles/ui/store_cake%20_screen/store_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 import '../../Utils/constant.dart';
@@ -116,8 +116,8 @@ class _ProductScreenState extends State<ProductScreen> {
                                         style: TextStyle(
                                           shadows: <Shadow>[
                                             Shadow(
-                                                offset: const Offset(1.0, 1.0),
-                                                blurRadius: 3.0,
+                                                offset: const Offset(0.5, 0.5),
+                                                blurRadius: 0.5,
 
                                                 color: Colors.black.withOpacity(0.5)
                                             ),
@@ -214,8 +214,8 @@ class _ProductScreenState extends State<ProductScreen> {
                                               style: TextStyle(
                                                 shadows: <Shadow>[
                                                   Shadow(
-                                                      offset: const Offset(1.0, 1.0),
-                                                      blurRadius: 3.0,
+                                                      offset: const Offset(0.5, 0.5),
+                                                      blurRadius: 0.5,
 
                                                       color: Colors.black.withOpacity(0.5)
                                                   ),
@@ -300,8 +300,8 @@ class _ProductScreenState extends State<ProductScreen> {
 
                                           shadows: <Shadow>[
                                             Shadow(
-                                                offset: const Offset(1.0, 1.0),
-                                                blurRadius: 3.0,
+                                                offset: const Offset(0.5, 0.5),
+                                                blurRadius: 0.5,
 
                                                 color: Colors.black.withOpacity(0.5)
                                             ),
@@ -446,6 +446,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
                 ),
               ),
+
                   Container(
 
                     child: Column(
@@ -454,6 +455,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment:MainAxisAlignment.spaceAround,
+
                             children: [
                               Container(
                                   width:Get.width*0.44,

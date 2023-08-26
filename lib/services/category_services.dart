@@ -16,4 +16,17 @@ class CategoryServices {
     }
     return null;
   }
+  static Future<List<CategoryModel>?> getSupCategory(int categoryId) async {
+    List<CategoryModel>? categoryList = [];
+    var data = await api.request(Services.categoryEndPoint, "POST",queryParamters: {
+      "ctgid":categoryId
+    });
+    if (data != null) {
+      for (var category in data){
+        categoryList.add(CategoryModel.fromJson(category));
+      }
+      return categoryList;
+    }
+    return null;
+  }
 }

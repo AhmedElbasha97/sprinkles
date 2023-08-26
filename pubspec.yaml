@@ -63,8 +63,15 @@ dependencies:
   easy_localization: ^3.0.2
   double_back_to_close_app: ^2.1.0
   flutter_rating_bar: ^4.0.1
-
+  flutter_svg: ^2.0.7
+  data_connection_checker:
+    git:
+      url: https://github.com/chornthorn/data_connection_checker.git
+      ref: master
   cupertino_icons: ^1.0.5
+
+
+
 
 dev_dependencies:
   flutter_test:
@@ -93,17 +100,16 @@ flutter:
     - assets/icons/
     - assets/images/
   fonts:
-    - family: Al-Mujahed_Al-Anbobi
-      fonts:
-
+      - family: Al-Mujahed_Al-Anbobi
+        fonts:
           - asset: assets/fonts/Bahij_TheSansArabic-ExtraBold.ttf
-    - family: alois
-      fonts:
-        - asset: assets/fonts/Alois.ttf
-          weight: 600
-        - asset: assets/fonts/alois-heavy_bigfontsite.com.ttf
-          weight: 800
-        - asset: assets/fonts/Alois Bold.ttf
-          weight: 900
+      - family: alois
+        fonts:
+          - asset: assets/fonts/Alois.ttf
+            weight: 600
+          - asset: assets/fonts/alois-heavy_bigfontsite.com.ttf
+            weight: 800
+          - asset: assets/fonts/Alois Bold.ttf
+            weight: 900
 
 

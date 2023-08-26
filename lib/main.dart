@@ -9,6 +9,7 @@ import 'package:sprinkles/Utils/localization_services.dart';
 
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/transelation/app_transelation.dart';
+import 'package:sprinkles/services/network_status_service.dart';
 import 'package:sprinkles/ui/splash_screen/splash_screen.dart';
 import 'dart:io';
 
@@ -17,6 +18,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Get.putAsync(() => StorageService.init(), permanent: true);
   Get.put(LocalizationService.init(), permanent: true);
+  Get.put<NetworkStatusService>(NetworkStatusService(), permanent: true);
   await Get.putAsync(() => ConnectionService.init(), permanent: true);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: kLightPinkColor, // navigation bar color

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
+import 'package:sprinkles/ui/store_details_screen/store_details_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 import '../../Utils/constant.dart';
@@ -46,8 +47,7 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                         Container(
                           height: Get.height*0.25,
                           width:Get.width,
-                          child:const Padding(padding: EdgeInsets.all(0),
-                          ),
+
                         ),
                         Container(
 
@@ -116,8 +116,8 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                                           style: TextStyle(
                                             shadows: <Shadow>[
                                               Shadow(
-                                                  offset: const Offset(1.0, 1.0),
-                                                  blurRadius: 3.0,
+                                                  offset: const Offset(0.5, 0.5),
+                                                  blurRadius: 0.5,
 
                                                   color: Colors.black.withOpacity(0.5)
                                               ),
@@ -214,8 +214,8 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                                                 style: TextStyle(
                                                   shadows: <Shadow>[
                                                     Shadow(
-                                                        offset: const Offset(1.0, 1.0),
-                                                        blurRadius: 3.0,
+                                                        offset: const Offset(0.5, 0.5),
+                                                        blurRadius: 0.5,
 
                                                         color: Colors.black.withOpacity(0.5)
                                                     ),
@@ -273,8 +273,8 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                                       style: TextStyle(
                                         shadows: <Shadow>[
                                           Shadow(
-                                              offset: const Offset(1.0, 1.0),
-                                              blurRadius: 3.0,
+                                              offset: const Offset(0.5, 0.5),
+                                              blurRadius: 0.5,
 
                                               color: Colors.black.withOpacity(0.5)
                                           ),
@@ -528,11 +528,16 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                                   ),
                                   Row(
                                     children:[
-                                      SizedBox(
-                                      height: Get.height*0.04,
-                                      width: Get.width*0.2,
-                                      child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
+                                      InkWell(
+                                        onTap:(){
+                                          Get.to(()=>const StoreDetailedScreen());
+                                        },
+                                        child: SizedBox(
+                                        height: Get.height*0.04,
+                                        width: Get.width*0.2,
+                                        child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
                                     ),
+                                      ),
                                       SizedBox(
                                       height: Get.height*0.065,
                                       width: Get.width*0.08,
@@ -667,10 +672,15 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                                     ),
                                     Row(
                                         children:[
-                                          SizedBox(
-                                            height: Get.height*0.04,
-                                            width: Get.width*0.2,
-                                            child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
+                                          InkWell(
+                                            onTap:(){
+                                              Get.to(()=>const StoreDetailedScreen());
+                                            },
+                                            child: SizedBox(
+                                              height: Get.height*0.04,
+                                              width: Get.width*0.2,
+                                              child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
+                                            ),
                                           ),
                                           SizedBox(
                                             height: Get.height*0.065,
@@ -708,7 +718,8 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                           ),
                         ),
                       ]
-                  ),Stack(
+                  ),
+                  Stack(
                       children:[
                         Container(
                           height: Get.height*0.23,
@@ -805,10 +816,15 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                                     ),
                                     Row(
                                         children:[
-                                          SizedBox(
-                                            height: Get.height*0.04,
-                                            width: Get.width*0.2,
-                                            child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
+                                          InkWell(
+                                            onTap:(){
+                                              Get.to(()=>const StoreDetailedScreen());
+                                            },
+                                            child: SizedBox(
+                                              height: Get.height*0.04,
+                                              width: Get.width*0.2,
+                                              child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
+                                            ),
                                           ),
                                           SizedBox(
                                             height: Get.height*0.065,
@@ -846,7 +862,8 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                           ),
                         ),
                       ]
-                  ),Stack(
+                  ),
+                  Stack(
                       children:[
                         Container(
                           height: Get.height*0.23,
@@ -943,10 +960,15 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                                     ),
                                     Row(
                                         children:[
-                                          SizedBox(
-                                            height: Get.height*0.04,
-                                            width: Get.width*0.2,
-                                            child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
+                                          InkWell(
+                                            onTap:(){
+                                              Get.to(()=>const StoreDetailedScreen());
+                                              },
+                                            child: SizedBox(
+                                              height: Get.height*0.04,
+                                              width: Get.width*0.2,
+                                              child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
+                                            ),
                                           ),
                                           SizedBox(
                                             height: Get.height*0.065,
@@ -984,7 +1006,8 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                           ),
                         ),
                       ]
-                  ),Stack(
+                  ),
+                  Stack(
                       children:[
                         Container(
                           height: Get.height*0.23,
@@ -1081,10 +1104,15 @@ class _CakeStoreScreenState extends State<CakeStoreScreen> {
                                     ),
                                     Row(
                                         children:[
-                                          SizedBox(
-                                            height: Get.height*0.04,
-                                            width: Get.width*0.2,
-                                            child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
+                                          InkWell(
+                                            onTap:(){
+                                              Get.to(()=>const StoreDetailedScreen());
+                                            },
+                                            child: SizedBox(
+                                              height: Get.height*0.04,
+                                              width: Get.width*0.2,
+                                              child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
+                                            ),
                                           ),
                                           SizedBox(
                                             height: Get.height*0.065,
