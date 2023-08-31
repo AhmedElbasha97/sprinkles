@@ -4,22 +4,22 @@
 
 import 'dart:convert';
 
-List<AdvertismentModel> advertismentModelFromJson(String str) => List<AdvertismentModel>.from(json.decode(str).map((x) => AdvertismentModel.fromJson(x)));
+List<AdvertisementModel> advertismentModelFromJson(String str) => List<AdvertisementModel>.from(json.decode(str).map((x) => AdvertisementModel.fromJson(x)));
 
-String advertismentModelToJson(List<AdvertismentModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String advertismentModelToJson(List<AdvertisementModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class AdvertismentModel {
+class AdvertisementModel {
   int? id;
   String? img;
   String? link;
 
-  AdvertismentModel({
+  AdvertisementModel({
     this.id,
     this.img,
     this.link,
   });
 
-  factory AdvertismentModel.fromJson(Map<String, dynamic> json) => AdvertismentModel(
+  factory AdvertisementModel.fromJson(Map<String, dynamic> json) => AdvertisementModel(
     id: json["id"],
     img: json["img"],
     link: json["link"],

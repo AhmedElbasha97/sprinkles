@@ -12,54 +12,46 @@ class ShopsModel {
   int? id;
   String? name;
   String? nameEn;
+  String? desc;
+  String? descEn;
+  String? phone;
+  String? whatsapp;
+  String? rating;
   String? image;
-  List<Ctg>? ctgs;
 
   ShopsModel({
     this.id,
     this.name,
     this.nameEn,
+    this.desc,
+    this.descEn,
+    this.phone,
+    this.whatsapp,
+    this.rating,
     this.image,
-    this.ctgs,
   });
 
   factory ShopsModel.fromJson(Map<String, dynamic> json) => ShopsModel(
     id: json["id"],
     name: json["name"],
     nameEn: json["name_en"],
+    desc: json["desc"],
+    descEn: json["desc_en"],
+    phone: json["phone"],
+    whatsapp: json["whatsapp"],
+    rating: json["rating"],
     image: json["image"],
-    ctgs: json["ctgs"] == null ? [] : List<Ctg>.from(json["ctgs"]!.map((x) => Ctg.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,
     "name_en": nameEn,
+    "desc": desc,
+    "desc_en": descEn,
+    "phone": phone,
+    "whatsapp": whatsapp,
+    "rating": rating,
     "image": image,
-    "ctgs": ctgs == null ? [] : List<dynamic>.from(ctgs!.map((x) => x.toJson())),
-  };
-}
-
-class Ctg {
-  int? id;
-  String? name;
-  String? nameEn;
-
-  Ctg({
-    this.id,
-    this.name,
-    this.nameEn,
-  });
-
-  factory Ctg.fromJson(Map<String, dynamic> json) => Ctg(
-    id: json["id"],
-    name: json["name"],
-    nameEn: json["name_en"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "name_en": nameEn,
   };
 }

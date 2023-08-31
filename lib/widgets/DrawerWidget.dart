@@ -1,12 +1,9 @@
 // ignore_for_file: file_names, library_private_types_in_public_api, use_build_context_synchronously, sized_box_for_whitespace
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/widgets/drawer_tap_widget.dart';
-
 import '../Utils/constant.dart';
-import '../ui/product_screen/product_screen.dart';
 import 'custom_text_widget.dart';
 
 
@@ -20,15 +17,15 @@ class AppDrawers extends StatefulWidget {
 
 class _AppDrawersState extends State<AppDrawers> {
  List<DrawerItem> data= [
-   DrawerItem("الرئيسيّة ","homeIconDrawer.png"),
-   DrawerItem("عرض المحلات","storeIconDrawer.png"),
-   DrawerItem("عرض المنتجات ","productIconDrawer.png"),
-   DrawerItem("البحث المتقدم","searchIconDrawer.png"),
-   DrawerItem("تسجيل دخول المحلات","signUpIconDrawer.png"),
-   DrawerItem("سياسة الخصوصيه","privacyIconDrawer.png"),
-   DrawerItem("الشروط والاحكام","termsIconDrawer.png"),
-   DrawerItem("شارك التطبيق","shareIcon.png"),
-   DrawerItem("تقييم التطبيق","rateIconDrawer.png"),
+   const DrawerItem("الرئيسيّة ","homeIconDrawer.png"),
+   const DrawerItem("عرض المحلات","storeIconDrawer.png"),
+   const DrawerItem("عرض المنتجات ","productIconDrawer.png"),
+   const DrawerItem("البحث المتقدم","searchIconDrawer.png"),
+   const DrawerItem("تسجيل دخول المحلات","signUpIconDrawer.png"),
+   const DrawerItem("سياسة الخصوصيه","privacyIconDrawer.png"),
+   const DrawerItem("الشروط والاحكام","termsIconDrawer.png"),
+   const DrawerItem("شارك التطبيق","shareIcon.png"),
+   const DrawerItem("تقييم التطبيق","rateIconDrawer.png"),
  ];
   @override
   Widget build(BuildContext context) {
@@ -94,7 +91,8 @@ class _AppDrawersState extends State<AppDrawers> {
                           width: Get.width*0.4,
                           child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitWidth,),
                         ),
-                      ),Positioned(
+                      ),
+                      Positioned(
                         left:5,
                         child: Container(
                           width:Get.width*0.22,

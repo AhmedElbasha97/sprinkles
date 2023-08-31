@@ -1,8 +1,9 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
-import 'package:sprinkles/ui/product_screen/product_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 class DrawerTapWidget extends StatelessWidget {
@@ -14,7 +15,7 @@ class DrawerTapWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return    InkWell(
       onTap:(){
-        Get.to(()=>const ProductScreen());
+
       },
       child: Stack(
           children:[

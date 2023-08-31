@@ -6,9 +6,12 @@ import 'package:sprinkles/models/products_model.dart';
 
 class ProductServices {
   static ApiService api = ApiService();
-  static Future<List<ProductsModel>?> getProducts() async {
+  static Future<List<ProductsModel>?> getProducts(int mainCategoryId,int subCategoryId) async {
     List<ProductsModel>? productsList = [];
-    var data = await api.request(Services.productEndPoint, "POST");
+    var data = await api.request(Services.productEndPoint, "POST",queryParamters: {
+      "ctgid":mainCategoryId,
+      "ctgid2":subCategoryId,
+    });
     if (data != null) {
       for (var product in data){
         productsList.add(ProductsModel.fromJson(product));

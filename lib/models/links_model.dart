@@ -10,36 +10,41 @@ String linksModelToJson(List<LinksModel> data) => json.encode(List<dynamic>.from
 
 class LinksModel {
   String? facebook;
-  String? twitter;
-  String? youtube;
+  String? tiktok;
+  String? whatsApp;
   String? instagram;
   String? ios;
   String? andriod;
+  String? snapchat;
 
   LinksModel({
     this.facebook,
-    this.twitter,
-    this.youtube,
+    this.tiktok,
+    this.whatsApp,
     this.instagram,
     this.ios,
     this.andriod,
+    this.snapchat,
   });
 
   factory LinksModel.fromJson(Map<String, dynamic> json) => LinksModel(
     facebook: json["facebook"],
-    twitter: json["twitter"],
-    youtube: json["youtube"],
+    tiktok: json["tiktok"],
+    whatsApp: json["whatsApp"],
     instagram: json["instagram"],
     ios: json["ios"],
     andriod: json["andriod"],
+    snapchat: json["snapchat"],
   );
 
   Map<String, dynamic> toJson() => {
     "facebook": facebook,
-    "twitter": twitter,
-    "youtube": youtube,
+    "tiktok": tiktok,
+    "whatsApp": whatsApp,
     "instagram": instagram,
     "ios": ios,
     "andriod": andriod,
+    "snapchat": snapchat,
   };
 }
+

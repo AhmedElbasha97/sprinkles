@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class NetworkErrorItem extends StatelessWidget {
+  const NetworkErrorItem({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +20,7 @@ class NetworkErrorItem extends StatelessWidget {
               'assets/icons/network.svg',
               width: 200,
               height: 200,
-              color: Colors.red[200],
+
             ),
             const SizedBox(height: 30),
             const Text(

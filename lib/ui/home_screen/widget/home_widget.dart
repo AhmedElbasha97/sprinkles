@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -17,7 +19,7 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap:(){
-        Get.to(()=>const ProductScreen());
+        Get.to(()=> ProductScreen(mainCategoryId: category?.id??0,));
       },
       child: Stack(
           children:[
@@ -87,7 +89,7 @@ class HomeWidget extends StatelessWidget {
               left:0,
               child: CachedNetworkImage(
                 fit: BoxFit.cover,
-                imageUrl: "https://privilegecare.net${category?.img??""}",
+                imageUrl: "https://cake.syncqatar.com${category?.img??""}",
                 imageBuilder: ((context, image){
                   return   Container(
                     height: Get.height*0.15,

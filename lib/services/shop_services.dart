@@ -7,9 +7,22 @@ import '../models/shop_detailed_model.dart';
 
 class ShopServices {
   static ApiService api = ApiService();
-  static Future<List<ShopsModel>?> getShops() async {
+  static Future<List<ShopsModel>?> getAllShops() async {
     List<ShopsModel>? shopList = [];
     var data = await api.request(Services.shopEndPoint, "POST");
+    if (data != null) {
+      for (var shop in data){
+        shopList.add(ShopsModel.fromJson(shop));
+      }
+      return shopList;
+    }
+    return null;
+  }
+  static Future<List<ShopsModel>?> getShopsForMainCategory(int mainCategoryId) async {
+    List<ShopsModel>? shopList = [];
+    var data = await api.request(Services.shopEndPoint, "POST",queryParamters: {
+      "ctgid":mainCategoryId
+    });
     if (data != null) {
       for (var shop in data){
         shopList.add(ShopsModel.fromJson(shop));

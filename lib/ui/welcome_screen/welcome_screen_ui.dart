@@ -278,7 +278,7 @@ class _WelcomeScreenUIState extends State<WelcomeScreenUI> {
                       bottom:Get.height*0.09,
                       child: InkWell(
                         onTap:(){
-                          controller.launchURL(controller.links?.facebook??"");
+                          controller.launchURL(controller.links?.whatsApp??"");
                         },
                         child:  SizedBox(
                           height: Get.height*0.08,
@@ -292,7 +292,7 @@ class _WelcomeScreenUIState extends State<WelcomeScreenUI> {
                       bottom:Get.height*0.07,
                       child: InkWell(
                         onTap:(){
-                          controller.launchURL(controller.links?.instagram??"");
+                          controller.launchURL(controller.links?.snapchat??"");
                         },
                         child:  SizedBox(
                           height: Get.height*0.08,
@@ -306,7 +306,7 @@ class _WelcomeScreenUIState extends State<WelcomeScreenUI> {
                       bottom:Get.height*0.045,
                       child: InkWell(
                         onTap:(){
-                          controller.launchURL(controller.links?.youtube??"");
+                          controller.launchURL(controller.links?.tiktok??"");
                         },
                         child:  SizedBox(
                           height: Get.height*0.08,

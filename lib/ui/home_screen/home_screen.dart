@@ -1,7 +1,6 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/ui/home_screen/controller/home_controller.dart';
@@ -9,35 +8,20 @@ import 'package:sprinkles/ui/home_screen/widget/home_loading_widget.dart';
 import 'package:sprinkles/ui/home_screen/widget/home_widget.dart';
 import 'package:sprinkles/widgets/DrawerWidget.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
-
 import '../../Utils/constant.dart';
-import '../product_screen/product_screen.dart';
 
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
 
-class _HomeScreenState extends State<HomeScreen> {
-  GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
-
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-  }
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
       init:  HomeController(),
       builder: (HomeController controller) =>  SafeArea(
         child: Scaffold(
-          key: _scaffoldState,
+          key: controller.scaffoldState,
           drawer:const AppDrawers(),
           body: Container(
             height: Get.height,
@@ -57,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children:[
                         InkWell(
                           onTap:(){
-                            _scaffoldState.currentState!.openDrawer();
+                            controller.scaffoldState.currentState!.openDrawer();
                           },
                             child: const Icon( Icons.subject_rounded ,color:Colors.white,size:30)),
                         Row(

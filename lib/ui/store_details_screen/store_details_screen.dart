@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, sized_box_for_whitespace, unnecessary_string_interpolations, unnecessary_brace_in_string_interps
+// ignore_for_file: avoid_print, sized_box_for_whitespace, unnecessary_string_interpolations, unnecessary_brace_in_string_interps, avoid_unnecessary_containers
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
