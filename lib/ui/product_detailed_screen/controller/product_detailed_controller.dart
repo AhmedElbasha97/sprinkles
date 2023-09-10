@@ -5,8 +5,12 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sprinkles/models/product_detailed_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/services/product_service.dart';
+import 'package:sprinkles/ui/login/login_screen.dart';
+import 'package:sprinkles/ui/siginup/signup_screen.dart';
+import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Utils/colors.dart';
@@ -16,39 +20,44 @@ class ProductDetailedController extends GetxController{
   ScrollController scrollController = ScrollController();
   int activeIndex = 0;
   bool productIsLoading = true;
-  late List<ProductsModel>? productList;
-
-
-  final List<String> imageList = [
-    "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2017/12/13/00/23/christmas-3015776_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2019/12/19/10/55/christmas-market-4705877_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2019/12/20/00/03/road-4707345_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2019/12/22/04/18/x-mas-4711785__340.jpg",
-    "https://cdn.pixabay.com/photo/2016/11/22/07/09/spruce-1848543__340.jpg"
-  ];
-final List<String> tagsTitle = ["عدد الأفراد","الوزن","الحشو","وقت التحضير","عدد الأفراد","الوزن","الحشو","وقت التحضير","عدد الأفراد","الوزن","الحشو","وقت التحضير",];
-final List<String> tagsValue = ["10","10 كجم","فروله وكريمة","50 دقيقه","10","10 كجم","فروله وكريمة","50 دقيقه","10","10 كجم","فروله وكريمة","50 دقيقه",];
+  late ProductDetailedModel? productData;
+  late List<ProductsModel>? productsList;
+  final String productId;
 
   List<Widget> dotsList = [];
+
+  ProductDetailedController(this.productId);
   @override
   Future<void> onInit() async {
     super.onInit();
-    makingDotsForCarouselSlider();
     getProductData();
+
   }
+
   getProductData() async {
     productIsLoading = true;
     update();
-    productList =
-    await ProductServices.getProducts(4, 1);
+    productData =
+    await ProductServices.getProductDetails( productId);
+    productsList = await ProductServices.getProducts(1,4);
+    makingDotsForCarouselSlider();
     productIsLoading = false;
     update();
   }
+  showWarningFavorite(context){
+    showDialog(context: context,
+        builder: (context) {
+      return YesOrNoDialogue(alertText: 'لا تستطيع اضافه إلى قائمه المفضله إلا عند تسجيل دخول الحساب', alertTitle: 'لايمكنك اضافه إلى قائمه المفضله', alertYesButtonTitle: 'أنشاء حساب', alertNoButtonTitle: 'تسجيل حساب', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
+        Get.to(()=>const SignupScreen());
+      }, alertNoButtonFunction: (){
+        Get.to(()=>LoginScreen());
+      }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height*0.6);
+    });
+  }
   makingDotsForCarouselSlider(){
-
+   int productLength = productData?.images?.length??0;
     dotsList = [];
-    for(int i=0;i<imageList.length;i++){
+    for(int i=0;i<productLength;i++){
       dotsList.add(
           InkWell(
             onTap:(){
@@ -86,8 +95,8 @@ final List<String> tagsValue = ["10","10 كجم","فروله وكريمة","50 �
   }
   whatsapp(String contact) async{
 
-    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help')}";
+    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help about this product which i saw in sprinkles app";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help about this product which i saw in sprinkles app')}";
 
     try{
       if(Platform.isIOS){

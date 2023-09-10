@@ -102,7 +102,14 @@ flutter:
   fonts:
       - family: Al-Mujahed_Al-Anbobi
         fonts:
+          - asset: assets/fonts/Bahij_TheSansArabic-Plain.ttf
+            weight: 700
+          - asset: assets/fonts/Bahij TheSansArabic.ttf
+            weight: 600
           - asset: assets/fonts/Bahij_TheSansArabic-ExtraBold.ttf
+            weight: 900
+          - asset: assets/fonts/alfont_com_AlFont_com_Bahij_TheSansArabic-Bold-1.ttf
+            weight: 800
       - family: alois
         fonts:
           - asset: assets/fonts/Alois.ttf

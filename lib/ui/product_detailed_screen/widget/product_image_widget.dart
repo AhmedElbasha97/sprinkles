@@ -8,14 +8,14 @@ import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 class ProductImageWidget extends StatelessWidget {
   const ProductImageWidget({Key? key, required this.imageUrl, required this.activeIndex, required this.imageTotalCount}) : super(key: key);
-  final String imageUrl;
+  final String? imageUrl;
   final String activeIndex;
   final String imageTotalCount;
   @override
   Widget build(BuildContext context) {
     return  CachedNetworkImage(
       fit: BoxFit.cover,
-      imageUrl: imageUrl,
+      imageUrl:  "https://cake.syncqatar.com${imageUrl??""}",
       imageBuilder: ((context, image){
         return  Stack(
           children: [

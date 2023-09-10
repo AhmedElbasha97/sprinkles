@@ -9,6 +9,7 @@ import 'package:sprinkles/ui/product_screen/widgets/category_loading_widget.dart
 import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
 import 'package:sprinkles/ui/store%20_screen/store_screen.dart';
+import 'package:sprinkles/widgets/DrawerWidget.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 import '../../Utils/constant.dart';
@@ -22,6 +23,8 @@ class ProductScreen extends StatelessWidget {
     return GetBuilder(
       init:  ProductController(mainCategoryId),
       builder: (ProductController controller) => Scaffold(
+        key: controller.scaffoldState,
+        drawer:const AppDrawers(),
         backgroundColor:kBackGroundColor,
         body:  SingleChildScrollView(
           controller: controller.scrollController,
@@ -52,13 +55,17 @@ class ProductScreen extends StatelessWidget {
                               children:[
                                 Container(
                                   width:Get.width*0.4,
-                                  child: const Padding(
-                                    padding:  EdgeInsets.fromLTRB(8,8,8,8),
+                                  child:  Padding(
+                                    padding:  const EdgeInsets.fromLTRB(8,8,8,8),
                                     child: Row(
                                       mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30),
-                                        CustomText(
+                                        InkWell(
+                                            onTap:(){
+                                              controller.scaffoldState.currentState!.openDrawer();
+                                            },
+                                            child: const Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30)),
+                                        const CustomText(
                                           'English',
                                           style: TextStyle(
                                             fontSize:15,
@@ -82,7 +89,7 @@ class ProductScreen extends StatelessWidget {
                                     },
                                     child: Container(
                                       height: Get.height*0.05,
-                                      width:Get.width*0.3,
+                                      width:Get.width*0.35,
                                       decoration: BoxDecoration(
                                         color:Colors.white,
                                         border: Border.all( color:kDarkPinkColor,width: 1),
@@ -108,7 +115,7 @@ class ProductScreen extends StatelessWidget {
                                       child:  Center(
                                         child:  CustomText(
                                           'عرض محلات الكيك',
-                                          style: TextStyle(
+                                          style:TextStyle(
                                             shadows: <Shadow>[
                                               Shadow(
                                                   offset: const Offset(0.5, 0.5),
@@ -117,7 +124,7 @@ class ProductScreen extends StatelessWidget {
                                                   color: Colors.black.withOpacity(0.5)
                                               ),
                                             ],
-                                            fontSize: 12,
+                                            fontSize: 15,
                                             letterSpacing: 0,
                                             fontFamily: fontFamilyArabicName,
                                             color: kDarkPinkColor,

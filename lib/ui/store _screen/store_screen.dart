@@ -9,6 +9,7 @@ import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/store%20_screen/controller/store_controller.dart';
 import 'package:sprinkles/ui/store%20_screen/widget/store_loading_widget.dart';
 import 'package:sprinkles/ui/store%20_screen/widget/store_widget.dart';
+import 'package:sprinkles/widgets/DrawerWidget.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 import '../../Utils/constant.dart';
@@ -25,6 +26,8 @@ class StoreScreen extends StatelessWidget {
     return GetBuilder(
       init:  StoreController(mainCategoryId,selectedFromDrawer),
       builder: (StoreController controller) =>  Scaffold(
+        key: controller.scaffoldState,
+        drawer:const AppDrawers(),
         backgroundColor:kBackGroundColor,
         body:  SingleChildScrollView(
           controller: controller.scrollController,
@@ -54,12 +57,16 @@ class StoreScreen extends StatelessWidget {
                                 children:[
                                   Container(
                                     width:Get.width*0.4,
-                                    child: const Padding(
+                                    child:  Padding(
                                       padding:  EdgeInsets.fromLTRB(8,8,8,8),
                                       child: Row(
                                         mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30),
+                                          InkWell(
+                                              onTap:(){
+                                                controller.scaffoldState.currentState!.openDrawer();
+                                              },
+                                              child: Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30)),
                                           CustomText(
                                             'English',
                                             style: TextStyle(
@@ -119,7 +126,7 @@ class StoreScreen extends StatelessWidget {
                                                     color: Colors.black.withOpacity(0.5)
                                                 ),
                                               ],
-                                              fontSize: 12,
+                                              fontSize: 15,
                                               letterSpacing: 0,
                                               fontFamily: fontFamilyArabicName,
                                               color: kDarkPinkColor,

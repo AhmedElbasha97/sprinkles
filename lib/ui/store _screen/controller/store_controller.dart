@@ -11,7 +11,7 @@ class StoreController extends GetxController {
   bool advertisementsIsLoading = true;
   final int mainCategoryId;
   final bool selectedFromDrawer;
-
+  GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
   StoreController(this.mainCategoryId, this.selectedFromDrawer);
 
   int selectedMainCategoryId = 0;

@@ -25,7 +25,7 @@ class ProductServices {
       "item_id":productId
     });
     if (data != null) {
-      return ProductDetailedModel.fromJson(data[0]);
+      return ProductDetailedModel.fromJson(data);
     }
     return null;
   }

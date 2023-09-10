@@ -30,6 +30,7 @@ class ProductController extends GetxController {
   late List<CategoryModel>? subCategoryList;
   late List<AdvertisementModel>? advertList;
   List<Widget> products = [];
+  GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
   @override
   Future<void> onInit() async {
     super.onInit();

@@ -1,11 +1,14 @@
-// ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace, avoid_print
+// ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace, avoid_print, unnecessary_string_interpolations, prefer_is_empty
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/ui/product_detailed_screen/controller/product_detailed_controller.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/product_image_widget.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/read_more_widget.dart';
@@ -13,49 +16,50 @@ import 'package:sprinkles/ui/product_detailed_screen/widget/seller_product_loadi
 import 'package:sprinkles/ui/product_screen/widgets/product_widget.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
-class ProductDetailedScreen extends StatefulWidget {
-  const ProductDetailedScreen({Key? key}) : super(key: key);
-
-  @override
-  State<ProductDetailedScreen> createState() => _ProductDetailedScreenState();
-}
-
-class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
+class ProductDetailedScreen extends StatelessWidget {
+  const ProductDetailedScreen({Key? key, required this.productId}) : super(key: key);
+  final String? productId;
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init:  ProductDetailedController(),
+      init:  ProductDetailedController(productId??""),
       builder: (ProductDetailedController controller) => Scaffold(
         appBar: AppBar(
           backgroundColor:kBackGroundColor,
             actions:[
-              Container(
-                child: Row(
-                    children:[
+              InkWell(
 
-                      CustomText(
-                        'أضف إلى المفضلة',
-                        textAlign:TextAlign.left,
-                        style: TextStyle(
-                          shadows: <Shadow>[
-                            Shadow(
-                                offset: const Offset(0.5, 0.5),
-                                blurRadius: 0.5,
+                onTap:(){
+                  controller. showWarningFavorite(context);
+                },
+                child: Container(
+                  child: Row(
+                      children:[
 
-                                color: Colors.black.withOpacity(0.5)
-                            ),
-                          ],
-                          fontSize: 12,
-                          letterSpacing: 0,
-                          fontFamily: fontFamilyArabicName,
-                          color: kDarkPinkColor,
+                        CustomText(
+                          'أضف إلى المفضلة',
+                          textAlign:TextAlign.left,
+                          style: TextStyle(
+                            shadows: <Shadow>[
+                              Shadow(
+                                  offset: const Offset(0.5, 0.5),
+                                  blurRadius: 0.5,
+
+                                  color: Colors.black.withOpacity(0.5)
+                              ),
+                            ],
+                            fontSize: 12,
+                            letterSpacing: 0,
+                            fontFamily: fontFamilyArabicName,
+                            color: kDarkPinkColor,
+                          ),
                         ),
-                      ),
-                      const Icon(
-                          Icons.favorite_outline_rounded  ,color:kDarkPinkColor,size:20
-                      ),
-                    ]
+                        const Icon(
+                            Icons.favorite_outline_rounded  ,color:kDarkPinkColor,size:20
+                        ),
+                      ]
 
+                  ),
                 ),
               )
             ],
@@ -103,13 +107,69 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
               width:Get.width,
               child: Column(
                 children:[
-                  Stack(
+                  controller.productIsLoading? Container(
+
+              width:Get.width,
+                height:Get.height*0.4,
+                decoration:BoxDecoration(
+                  color:  const Color(0xFFF2F0F3),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      offset: const Offset(
+                        0.0,
+                        0.0,
+                      ),
+                      blurRadius: 13.0,
+                      spreadRadius: 2.0,
+                    ), //BoxShadow
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.2),
+                      offset: const Offset(0.0, 0.0),
+                      blurRadius: 0.0,
+                      spreadRadius: 0.0,
+                    ), //BoxShadow
+                  ],
+                ),
+                child:Center(
+                  child: Container(
+
+                    width:Get.width*0.95,
+                    height:Get.height*0.38,
+                    decoration:BoxDecoration(
+                      color:  const Color(0xFFDFDDDF),
+                      borderRadius: BorderRadius.circular(15),
+
+                    ),
+                  ).animate(onPlay: (controller) => controller.repeat())
+                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                      .animate() // this wraps the previous Animate in another Animate
+                  ,
+                ),
+              ).animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                  .animate() // this wraps the previous Animate in another Animate
+              : controller.productData?.images?.length ==0?const SizedBox():
+                  controller.productData?.images?.length ==1? Container(
+                      width:Get.width,
+                      height:Get.height*0.4,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            "https://cake.syncqatar.com${controller.productData!.images?[0]??""}",
+                          ),
+                          fit:  BoxFit.fill,
+                        ),
+                      )
+                  ):Stack(
                     children: [
+
                       CarouselSlider.builder(
                         carouselController: controller.carouselController,
-                        itemCount: controller.imageList.length,
+                        itemCount: controller.productData?.images?.length,
                         itemBuilder: (BuildContext context, int index, int realIndex) {
-                          return ProductImageWidget(imageUrl: controller.imageList[index], activeIndex: '${index+1}', imageTotalCount: '${controller.imageList.length}',);
+                          return ProductImageWidget(imageUrl: "${controller.productData?.images?[index]??""}", activeIndex: '${index+1}', imageTotalCount:"${controller.productData?.images?.length??0}",);
                         },
                         options: CarouselOptions(
                             height:Get.height*0.4,
@@ -123,9 +183,18 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                       ),
                       Positioned(
                         bottom:10,
-                        left:Get.width*0.37,
-                        child: Row(
-                          children:controller.dotsList
+
+                        child: Container(
+
+                          width:Get.width,
+                          child: Row(
+                            mainAxisAlignment:MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                children:controller.dotsList
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -198,8 +267,27 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                                   Row(
                                     mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                     children: [
-                                      CustomText(
-                                        'كيك الزفاف',
+                                      controller.productIsLoading?Center(
+                                        child:   Container(
+                                          width:Get.width*0.25,
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                              color: const Color(0xFFDFDDDF),
+                                              borderRadius: BorderRadius.circular(50)
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide():CustomText(
+                                        Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.productData?.nameEn??"":controller.productData?.name??"",
                                         style: TextStyle(
                                           shadows: <Shadow>[
                                             Shadow(
@@ -209,6 +297,7 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                                                 color: Colors.black.withOpacity(0.5)
                                             ),
                                           ],
+                                          fontWeight: FontWeight.w900,
                                           fontSize: 16,
                                           letterSpacing: 0,
                                           fontFamily: fontFamilyArabicName,
@@ -216,9 +305,28 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                                         ),
                                       ),
 
-                                      RatingBar.builder(
-                                        initialRating:3.5,
-                                        minRating: 1,
+                                      controller.productIsLoading?Center(
+                                        child:   Container(
+                                          width:Get.width*0.25,
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                              color: const Color(0xFFDFDDDF),
+                                              borderRadius: BorderRadius.circular(50)
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide():RatingBar.builder(
+                                        initialRating:double.parse(controller.productData?.rating??"0"),
+                                        minRating: double.parse(controller.productData?.rating??"0"),
                                         itemSize:20,
                                         direction: Axis.horizontal,
                                         ignoreGestures:true,
@@ -236,8 +344,27 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                                     ],
                                   ),
 
-                                  CustomText(
-                                    'السعر:1233435ريال',
+                                  controller.productIsLoading?Center(
+                                    child:   Container(
+                                      width:Get.width*0.25,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xFFDFDDDF),
+                                          borderRadius: BorderRadius.circular(50)
+                                      ),
+                                    ).animate(onPlay: (controller) => controller.repeat())
+                                        .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                        .animate() // this wraps the previous Animate in another Animate
+                                        .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                        .slide(),
+
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide():CustomText(
+                                    'السعر:${controller.productData?.price}ريال',
                                     style: TextStyle(
                                       shadows: <Shadow>[
                                         Shadow(
@@ -259,9 +386,28 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                                       mainAxisAlignment:MainAxisAlignment.spaceBetween,
 
                                       children:[
-                                        InkWell(
-                                          onTap:(){
+                                        controller.productIsLoading?Center(
+                                          child:   Container(
+                                            width:Get.width*0.25,
+                                            height: 20,
+                                            decoration: BoxDecoration(
+                                                color: const Color(0xFFDFDDDF),
+                                                borderRadius: BorderRadius.circular(50)
+                                            ),
+                                          ).animate(onPlay: (controller) => controller.repeat())
+                                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                              .animate() // this wraps the previous Animate in another Animate
+                                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                              .slide(),
 
+
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide():InkWell(
+                                          onTap:(){
+                                            controller.makePhoneCall( '${controller.productData?.shop?.phone}');
                                           },
                                           child: Row(
                                             crossAxisAlignment:CrossAxisAlignment.center,
@@ -272,7 +418,7 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                                                 child: Image.asset("assets/icons/c.png",fit: BoxFit.cover,),
                                               ),
                                               CustomText(
-                                                '10934324234',
+                                                '${controller.productData?.shop?.phone}',
                                                 style: TextStyle(
                                                   shadows: <Shadow>[
                                                     Shadow(
@@ -291,32 +437,56 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                                             ],
                                           ),
                                         ),
-                                        Row(
-                                          crossAxisAlignment:CrossAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              height: Get.height*0.03,
-                                              width: Get.width*0.09,
-                                              child: Image.asset("assets/icons/w.png",fit: BoxFit.cover,),
+                                        controller.productIsLoading?Center(
+                                          child:   Container(
+                                            width:Get.width*0.25,
+                                            height: 20,
+                                            decoration: BoxDecoration(
+                                                color: const Color(0xFFDFDDDF),
+                                                borderRadius: BorderRadius.circular(50)
                                             ),
-                                            CustomText(
-                                              '10934324234',
-                                              style: TextStyle(
-                                                shadows: <Shadow>[
-                                                  Shadow(
-                                                      offset: const Offset(0.5, 0.5),
-                                                      blurRadius: 0.5,
+                                          ).animate(onPlay: (controller) => controller.repeat())
+                                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                              .animate() // this wraps the previous Animate in another Animate
+                                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                              .slide(),
 
-                                                      color: Colors.black.withOpacity(0.5)
-                                                  ),
-                                                ],
-                                                fontSize: 13,
-                                                letterSpacing: 0,
-                                                fontFamily: fontFamilyArabicName,
-                                                color: kDarkPinkColor,
+
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide():InkWell(
+                                          onTap:(){
+                                            controller.whatsapp('${controller.productData?.shop?.whatsapp}');
+                                          },
+                                          child: Row(
+                                            crossAxisAlignment:CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: Get.height*0.03,
+                                                width: Get.width*0.09,
+                                                child: Image.asset("assets/icons/w.png",fit: BoxFit.cover,),
                                               ),
-                                            ),
-                                          ],
+                                              CustomText(
+                                                '${controller.productData?.shop?.whatsapp}',
+                                                style: TextStyle(
+                                                  shadows: <Shadow>[
+                                                    Shadow(
+                                                        offset: const Offset(0.5, 0.5),
+                                                        blurRadius: 0.5,
+
+                                                        color: Colors.black.withOpacity(0.5)
+                                                    ),
+                                                  ],
+                                                  fontSize: 13,
+                                                  letterSpacing: 0,
+                                                  fontFamily: fontFamilyArabicName,
+                                                  color: kDarkPinkColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ]
                                     ),
@@ -331,14 +501,88 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                       ],
                     ),
                   ),
-              Padding(
+              controller.productIsLoading? Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   width:Get.width,
                   child: GridView.builder(
                     shrinkWrap:true,
                     controller:controller.scrollController,
-                    itemCount: controller.tagsTitle.length,
+                    itemCount: 5,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing:10.0,
+                        mainAxisSpacing: 10.0,
+                        childAspectRatio:1.7
+                    ),
+                    itemBuilder: (BuildContext context, int index){
+                      return  Container(
+                          height: Get.height*0.02,
+                          width:Get.width*0.3,
+                          decoration:BoxDecoration(
+                            borderRadius:BorderRadius.circular(15),
+                            color:Colors.white,
+                          ),
+                          child: Center(child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+
+                              children: <Widget>[
+                                Center(
+                                  child:   Container(
+                                    width:Get.width*0.25,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFFDFDDDF),
+                                        borderRadius: BorderRadius.circular(50)
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Center(
+                                  child:   Container(
+                                    width:Get.width*0.25,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFFDFDDDF),
+                                        borderRadius: BorderRadius.circular(50)
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide()
+                              ]
+                          ),
+                          )
+                      );
+                    },
+                  ),
+                ),
+              ):Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width:Get.width,
+                  child: GridView.builder(
+                    shrinkWrap:true,
+                    controller:controller.scrollController,
+                    itemCount:controller.productData!.itemFilter?.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         crossAxisSpacing:10.0,
@@ -359,7 +603,7 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
 
                               children: <Widget>[
                                 CustomText(
-                            controller.tagsTitle[index],
+                                  Get.find<StorageService>().activeLocale == SupportedLocales.english?"${controller.productData!.itemFilter?[index].filterEn??""}":"${controller.productData!.itemFilter?[index].filter??""}",
                                   style: TextStyle(
                                     shadows: <Shadow>[
                                       Shadow(
@@ -371,12 +615,14 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                                     ],
                                     fontSize: 13,
                                     letterSpacing: 0,
+                                    fontWeight: FontWeight.w900,
+
                                     fontFamily: fontFamilyArabicName,
                                     color: kDarkPinkColor,
                                   ),
                                 ),
                                 CustomText(
-                                  controller.tagsValue[index],
+                                  Get.find<StorageService>().activeLocale == SupportedLocales.english?"${controller.productData!.itemFilter?[index].filterItemEn??""}":"${controller.productData!.itemFilter?[index].filterItem??""}",
                                   style: TextStyle(
                                     shadows: <Shadow>[
                                       Shadow(
@@ -420,6 +666,8 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
 
                       textAlign:TextAlign.left,
                         style: TextStyle(
+                          fontWeight: FontWeight.w900,
+
                           shadows: <Shadow>[
                             Shadow(
                                 offset: const Offset(0.5, 0.5),
@@ -434,7 +682,78 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                           color: kDarkPinkColor,
                         ),
                       ),
-                      const ReadMoreText("المزيد من التفاصيل المزيد من التفاصيل المزيد من التفاصيل المزيد من التفاصيل المزيد من التفاصيل المزيد من التفاصيل المزيد من التفاصيلالمزيد من التفاصيل المزيد من التفاصيلالمزيد من التفاصيل المزيد من التفاصيلالمزيد من التفاصيل المزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيلالمزيد من التفاصيل", colorClickableText: kLightPinkColor, style:  TextStyle(
+                      controller.productIsLoading?Center(
+                        child:   Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width:Get.width*0.85,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFFDFDDDF),
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                              ).animate(onPlay: (controller) => controller.repeat())
+                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                  .animate() // this wraps the previous Animate in another Animate
+                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                  .slide(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width:Get.width*0.85,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFFDFDDDF),
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                              ).animate(onPlay: (controller) => controller.repeat())
+                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                  .animate() // this wraps the previous Animate in another Animate
+                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                  .slide(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width:Get.width*0.85,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFFDFDDDF),
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                              ).animate(onPlay: (controller) => controller.repeat())
+                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                  .animate() // this wraps the previous Animate in another Animate
+                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                  .slide(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width:Get.width*0.85,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFFDFDDDF),
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                              ).animate(onPlay: (controller) => controller.repeat())
+                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                  .animate() // this wraps the previous Animate in another Animate
+                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                  .slide(),
+                            ),
+                          ],
+                        ).animate(onPlay: (controller) => controller.repeat())
+                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                            .animate() // this wraps the previous Animate in another Animate
+                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                            .slide(),
+
+
+                      ): ReadMoreText(  Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.productData?.descEn??"":controller.productData?.desc??"", colorClickableText: kLightPinkColor, style:  const TextStyle(
                         fontSize: 13,
                         letterSpacing: 0,
                         fontFamily: fontFamilyArabicName,
@@ -472,23 +791,48 @@ class _ProductDetailedScreenState extends State<ProductDetailedScreen> {
                             color: Colors.black.withOpacity(0.5)
                         ),
                       ],
+                      fontWeight: FontWeight.w900,
                       fontSize: 15,
                       letterSpacing: 0,
                       fontFamily: fontFamilyArabicName,
                       color: kDarkPinkColor,
                     ),
                   ),
-                  controller.productIsLoading?const SellerProductLoadingWidget():Container(
+                  controller.productIsLoading?const SellerProductLoadingWidget():controller.productsList?.length == 0?Row(
+                      children:[
+                        SizedBox(
+                          width:Get.width*0.4,
+                          height:Get.height*0.33,
+                          child: Image.asset("assets/images/Product quality-bro.png",fit: BoxFit.fitWidth,),
+                        ),
+                        const SizedBox(
+                            width:30
+                        ),
+                        SizedBox(
+                          width:Get.width*0.4,
+                          child: const CustomText(
+                            'ليس هناك منتجات متوفره الأن',
+                            textAlign:TextAlign.center,
+                            style: TextStyle(
+                              fontSize:20,
+                              fontFamily: fontFamilyEnglishName,
+                              fontWeight: FontWeight.w900,
+                              color: kDarkPinkColor,
+                            ),
+                          ),
+                        ),
+                      ]
+                  ):Container(
                     width:Get.width*0.95,
                     height:Get.height*0.33,
                     child: ListView.builder(
                       scrollDirection:Axis.horizontal,
                       shrinkWrap:true,
-                      itemCount:controller.productList?.length,
+                      itemCount:controller.productsList?.length,
                       itemBuilder: (BuildContext context, int index) {
                         return  Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ProductWidget(product:controller.productList?[index]),
+                          child: ProductWidget(product:controller.productsList?[index]),
                         );
                       },
 

@@ -10,4 +10,9 @@ class Services {
  static String advertismentEndPoint = "slider"; //Post
  static String advertismentHasBeenUsedEndPoint = "slider_click"; //Post
  static String linksEndPoint = "social"; //Post
+ static String signingUpEndPoint = "signup"; //Post
+ static String signingInEndPoint = "login"; //Post
+ static String editingMemberDataEndPoint = "member/edit"; //Post
+ static String editingMemberPasswordEndPoint = "member/change_password"; //Post
+ static String getUserDataEndPoint = "member"; //Post
  }

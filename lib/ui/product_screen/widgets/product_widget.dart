@@ -12,8 +12,11 @@ import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/models/products_model.dart';
+import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/product_detailed_screen/product_detailed_screen.dart';
+import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
+import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -25,6 +28,18 @@ final ProductsModel? product;
       path: phoneNumber,
     );
     await launchUrl(launchUri);
+  }
+
+
+  showWarningFavorite(context){
+    showDialog(context: context,
+        builder: (context) {
+          return YesOrNoDialogue(alertText: 'لا تستطيع اضافه إلى قائمه المفضله إلا عند تسجيل دخول الحساب', alertTitle: 'لايمكنك اضافه إلى قائمه المفضله', alertYesButtonTitle: 'أنشاء حساب', alertNoButtonTitle: 'تسجيل حساب', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
+            Get.to(()=>const SignupScreen());
+          }, alertNoButtonFunction: (){
+            Get.to(()=>LoginScreen());
+          }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height*0.6);
+        });
   }
   whatsapp(String contact) async{
 
@@ -46,7 +61,7 @@ final ProductsModel? product;
   Widget build(BuildContext context) {
     return InkWell(
       onTap:(){
-        Get.to(()=>const ProductDetailedScreen());
+        Get.to(()=> ProductDetailedScreen(productId: '${product?.id??0}',));
       },
       child: Container(
           width:Get.width*0.44,
@@ -155,16 +170,22 @@ final ProductsModel? product;
                       Positioned(
                         right:5,
                         top:5,
-                        child: Container(
-                            height: Get.height*0.03,
-                            width:Get.width*0.06,
-                            decoration: BoxDecoration(
-                              color:kLightPinkColor,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child:const Center(
-                              child:Icon(Icons.favorite,color:Colors.white,size:14),
-                            )
+                        child: InkWell(
+                          onTap:(){
+                            showWarningFavorite(context);
+
+                          },
+                          child: Container(
+                              height: Get.height*0.03,
+                              width:Get.width*0.06,
+                              decoration: BoxDecoration(
+                                color:kLightPinkColor,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child:const Center(
+                                child:Icon(Icons.favorite,color:Colors.white,size:14),
+                              )
+                          ),
                         ),
                       ),
                     ],

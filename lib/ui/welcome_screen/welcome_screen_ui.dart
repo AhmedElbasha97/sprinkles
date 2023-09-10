@@ -119,6 +119,7 @@ class _WelcomeScreenUIState extends State<WelcomeScreenUI> {
                                       style: TextStyle(
                                         fontSize: 25,
                                         letterSpacing: 0,
+                                        fontWeight: FontWeight.w900,
                                         fontFamily: fontFamilyArabicName,
                                         foreground: Paint()
                                           ..style = PaintingStyle.stroke
@@ -132,6 +133,7 @@ class _WelcomeScreenUIState extends State<WelcomeScreenUI> {
                                       style: TextStyle(
                                         fontSize: 25,
                                         letterSpacing: 0,
+                                        fontWeight: FontWeight.w900,
                                         fontFamily: fontFamilyArabicName,
                                         color: kDarkPinkColor,
                                       ),

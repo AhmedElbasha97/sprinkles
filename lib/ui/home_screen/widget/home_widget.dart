@@ -65,6 +65,7 @@ class HomeWidget extends StatelessWidget {
                     child:  CustomText(
                       Get.find<StorageService>().activeLocale == SupportedLocales.english?category?.nameEn??"":category?.name??"",
                       style: TextStyle(
+                        fontWeight: FontWeight.w900,
                         shadows: <Shadow>[
                           Shadow(
                               offset: const Offset(2.0, 2.0),
