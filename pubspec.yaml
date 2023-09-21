@@ -64,6 +64,7 @@ dependencies:
   double_back_to_close_app: ^2.1.0
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.0.7
+  pinch_zoom: ^1.0.0
   data_connection_checker:
     git:
       url: https://github.com/chornthorn/data_connection_checker.git

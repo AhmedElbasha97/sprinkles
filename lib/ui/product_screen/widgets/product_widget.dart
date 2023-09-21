@@ -11,17 +11,28 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/products_model.dart';
+import 'package:sprinkles/models/response_model.dart';
+import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/product_detailed_screen/product_detailed_screen.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
+import 'package:sprinkles/widgets/alert_dialogue.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProductWidget extends StatelessWidget {
-  const ProductWidget({Key? key, this.product}) : super(key: key);
+  const ProductWidget({Key? key, this.product, required this.productAreAddedOrNot, required this.addingOrRemovingProductToFavorite, required this.mainCategoryId, required this.comingFromFavoriteList, required this.comingFromProductList, required this.comingFromProductDetails, required this.branchCategoryId}) : super(key: key);
 final ProductsModel? product;
+  final bool productAreAddedOrNot ;
+  final Function addingOrRemovingProductToFavorite;
+  final int mainCategoryId;
+  final int branchCategoryId;
+  final bool comingFromFavoriteList;
+  final bool comingFromProductList;
+  final bool comingFromProductDetails;
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
       scheme: 'tel',
@@ -30,17 +41,6 @@ final ProductsModel? product;
     await launchUrl(launchUri);
   }
 
-
-  showWarningFavorite(context){
-    showDialog(context: context,
-        builder: (context) {
-          return YesOrNoDialogue(alertText: 'لا تستطيع اضافه إلى قائمه المفضله إلا عند تسجيل دخول الحساب', alertTitle: 'لايمكنك اضافه إلى قائمه المفضله', alertYesButtonTitle: 'أنشاء حساب', alertNoButtonTitle: 'تسجيل حساب', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
-            Get.to(()=>const SignupScreen());
-          }, alertNoButtonFunction: (){
-            Get.to(()=>LoginScreen());
-          }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height*0.6);
-        });
-  }
   whatsapp(String contact) async{
 
     var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
@@ -57,15 +57,16 @@ final ProductsModel? product;
 
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap:(){
-        Get.to(()=> ProductDetailedScreen(productId: '${product?.id??0}',));
+        Get.to(()=> ProductDetailedScreen(productId: '${product?.id??0}', mainCategoryId: mainCategoryId, comingFromProductList: comingFromProductList, comingFromFavoriteList: comingFromFavoriteList, comingFromProductDetails: comingFromProductDetails, branchCategoryId: branchCategoryId,));
       },
       child: Container(
           width:Get.width*0.44,
-          height:Get.height*0.305,
+          height:Get.height*0.30,
           decoration: BoxDecoration(
             color:Colors.white,
             boxShadow: [
@@ -88,7 +89,7 @@ final ProductsModel? product;
             borderRadius: BorderRadius.circular(15),
           ),
           child:Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal:8.0,vertical:8.0),
             child: Column(
                 children:[
                   Stack(
@@ -106,7 +107,7 @@ final ProductsModel? product;
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: image,
-                                    fit:  BoxFit.contain,
+                                    fit:  BoxFit.cover,
                                   ),
                                 )
                             ),
@@ -141,8 +142,8 @@ final ProductsModel? product;
                             child:Center(
                               child: Container(
 
-                                width:Get.width*0.38,
-                                height:Get.height*0.14,
+                                width:Get.width*0.37,
+                                height:Get.height*0.13,
                                 decoration:BoxDecoration(
                                   color:  const Color(0xFFDFDDDF),
                                   borderRadius: BorderRadius.circular(15),
@@ -172,7 +173,7 @@ final ProductsModel? product;
                         top:5,
                         child: InkWell(
                           onTap:(){
-                            showWarningFavorite(context);
+                            addingOrRemovingProductToFavorite();
 
                           },
                           child: Container(
@@ -182,8 +183,16 @@ final ProductsModel? product;
                                 color:kLightPinkColor,
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              child:const Center(
-                                child:Icon(Icons.favorite,color:Colors.white,size:14),
+                              child: Center(
+                                child:productAreAddedOrNot?const Icon(
+                                  Icons.favorite,
+                                  color: Colors.white,
+                                  size:14
+                                ):const Icon(
+                                  Icons.favorite_border_rounded,
+                                  color: Colors.white,
+                                  size:14
+                                ),
                               )
                           ),
                         ),
@@ -285,7 +294,7 @@ final ProductsModel? product;
                           width:Get.width*0.18,
                           height:Get.height*0.028,
                           decoration: BoxDecoration(
-                            color:const Color(0xFF810074).withAlpha(70),
+                            color:const  Color(0xFFf56893).withAlpha(70),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.1),
@@ -313,7 +322,7 @@ final ProductsModel? product;
                                 fontSize: 12,
                                 letterSpacing: 0,
                                 fontFamily: fontFamilyArabicName,
-                                color: kDarkPinkColor,
+                                color: kLightPinkColor,
                               ),
                             ),
                           ),
@@ -322,7 +331,7 @@ final ProductsModel? product;
                           width:Get.width*0.18,
                           height:Get.height*0.028,
                           decoration: BoxDecoration(
-                            color:const Color(0xFF810074).withAlpha(70),
+                            color:const  Color(0xFFf56893).withAlpha(70),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.1),
@@ -350,7 +359,7 @@ final ProductsModel? product;
                                 fontSize: 12,
                                 letterSpacing: 0,
                                 fontFamily: fontFamilyArabicName,
-                                color: kDarkPinkColor,
+                                color: kLightPinkColor,
                               ),
                             ),
                           ),

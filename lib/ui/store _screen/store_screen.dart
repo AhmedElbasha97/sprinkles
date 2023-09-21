@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, sized_box_for_whitespace, unnecessary_brace_in_string_interps, prefer_is_empty, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
@@ -23,11 +24,12 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final statusBarHeight = MediaQuery.of(context).viewPadding.top;
     return GetBuilder(
-      init:  StoreController(mainCategoryId,selectedFromDrawer),
+      init:  StoreController(mainCategoryId,selectedFromDrawer,context),
       builder: (StoreController controller) =>  Scaffold(
         key: controller.scaffoldState,
-        drawer:const AppDrawers(),
+        drawer: AppDrawers(scaffoldKey: controller.scaffoldState,),
         backgroundColor:kBackGroundColor,
         body:  SingleChildScrollView(
           controller: controller.scrollController,
@@ -42,12 +44,12 @@ class StoreScreen extends StatelessWidget {
 
                       children:[
                         Container(
-                          height: Get.height*0.3,
+                          height: Get.height*0.31,
                           width:Get.width,
 
                         ),
                         Positioned(
-                          top:Get.height*0.04,
+                          top:statusBarHeight,
                           right:0,
                           child: Container(
 
@@ -87,8 +89,11 @@ class StoreScreen extends StatelessWidget {
                                     padding: const EdgeInsets.fromLTRB(0,0,8.0,0),
                                     child: InkWell(
                                       onTap:(){
-                                        Get.to(()=> ProductScreen(mainCategoryId: mainCategoryId,));
-                                      },
+                                        if(!selectedFromDrawer) {
+                                          Get.off(() =>
+                                              ProductScreen(mainCategoryId: mainCategoryId, selectingFromDrawer: false,));
+    }
+                                        },
                                       child: Container(
                                         height: Get.height*0.05,
                                         width:Get.width*0.3,
@@ -116,7 +121,7 @@ class StoreScreen extends StatelessWidget {
                                         ),
                                         child:  Center(
                                           child:  CustomText(
-                                            'عرض المنتجات',
+                                            selectedFromDrawer?"محلات":'عرض المنتجات',
                                             style: TextStyle(
                                               shadows: <Shadow>[
                                                 Shadow(
@@ -150,7 +155,7 @@ class StoreScreen extends StatelessWidget {
                                                 fontFamily: fontFamilyArabicName,
                                                 fontWeight: FontWeight.w700),
                                             onTap: (){
-
+                                              controller.selectingFilter(e);
                                             },
                                             child: SizedBox(
                                               width: Get.width,
@@ -180,10 +185,10 @@ class StoreScreen extends StatelessWidget {
                                         }).toList(),
 
                                     child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(0,0,8.0,0),
+                                      padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
                                       child: Container(
-                                        height: Get.height*0.05,
-                                        width:Get.width*0.45,
+
+                                        width:Get.width*0.5,
                                         decoration: BoxDecoration(
                                           color:Colors.white,
                                           border: Border.all( color:kDarkPinkColor,width: 1),
@@ -208,29 +213,35 @@ class StoreScreen extends StatelessWidget {
                                         ),
                                         child:  Center(
                                           child:  Padding(
-                                            padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
+                                            padding: const EdgeInsets.fromLTRB(8.0,5,8.0,5),
                                             child: Row(
                                               mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                               children: [
-                                                const SizedBox(),
-                                                CustomText(
-                                                  'ترتيب حسب',
-                                                  style: TextStyle(
-                                                    shadows: <Shadow>[
-                                                      Shadow(
-                                                          offset: const Offset(0.5, 0.5),
-                                                          blurRadius: 0.5,
 
-                                                          color: Colors.black.withOpacity(0.5)
-                                                      ),
-                                                    ],
-                                                    fontSize: 15,
-                                                    letterSpacing: 0,
-                                                    fontFamily: fontFamilyArabicName,
-                                                    color: kDarkPinkColor,
+                                                Container(
+
+                                                  width:Get.width*0.38,
+                                                  child: CustomText(
+                                                    textAlign:TextAlign.center,
+                                                    maxLines:3,
+                                                    controller.selectingFilterTagName,
+                                                    style: TextStyle(
+                                                      shadows: <Shadow>[
+                                                        Shadow(
+                                                            offset: const Offset(0.5, 0.5),
+                                                            blurRadius: 0.5,
+
+                                                            color: Colors.black.withOpacity(0.5)
+                                                        ),
+                                                      ],
+                                                      fontSize: 12,
+                                                      letterSpacing: 0,
+                                                      fontFamily: fontFamilyArabicName,
+                                                      color: kDarkPinkColor,
+                                                    ),
                                                   ),
                                                 ),
-                                                const Icon( Icons.arrow_downward_sharp ,color:kDarkPinkColor,size:20),
+                                                controller.selectingFilterTag == "0"||controller.selectingFilterTag.contains("desc")?const Icon( Icons.arrow_downward_sharp ,color:kDarkPinkColor,size:20):controller.selectingFilterTag.contains("asc")?const Icon( Icons.arrow_upward_sharp ,color:kDarkPinkColor,size:20):const SizedBox(),
                                               ],
                                             ),
                                           ),
@@ -269,16 +280,21 @@ class StoreScreen extends StatelessWidget {
                                         ],
                                         borderRadius: BorderRadius.circular(15), //
                                       ),
-                                      child:TextField(
-
+                                      child:TextFormField(
+                                        controller:controller.searchController,
                                         textAlign:TextAlign.center,
                                         cursorColor: kDarkPinkColor,
                                         textInputAction: TextInputAction.search,
+                                        inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp("[a-zA-Z\u0621-\u064A]")),
+                                          
+
+                                        ],
                                         style: TextStyle(
                                           shadows: <Shadow>[
                                             Shadow(
-                                                offset: const Offset(0.5, 0.5),
-                                                blurRadius: 0.5,
+                                                offset: const Offset(2.0, 2.0),
+                                                blurRadius: 13.0,
 
                                                 color: Colors.black.withOpacity(0.5)
                                             ),
@@ -288,6 +304,16 @@ class StoreScreen extends StatelessWidget {
                                           fontFamily: fontFamilyArabicName,
                                           color: kDarkPinkColor,
                                         ),
+                                        onChanged:(e){
+                                          controller.searchingForKeyword();
+                                        },
+                                        onFieldSubmitted:(e)  {
+
+                                             controller
+                                                .searchingForKeyword();
+
+                                        },
+
                                         decoration:  InputDecoration(
                                           isDense: true,
                                           contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -304,8 +330,8 @@ class StoreScreen extends StatelessWidget {
 
                                             shadows: <Shadow>[
                                               Shadow(
-                                                  offset: const Offset(1.0, 1.0),
-                                                  blurRadius: 3.0,
+                                                  offset: const Offset(0.5, 0.5),
+                                                  blurRadius: 0.5,
 
                                                   color: Colors.black.withOpacity(0.5)
                                               ),
@@ -316,10 +342,15 @@ class StoreScreen extends StatelessWidget {
                                             color: kDarkPinkColor,
                                           ),
 
-                                          suffixIcon:   const Icon(
-                                            Icons.search_outlined,
-                                            color: kDarkPinkColor,
-                                            size: 20,),
+                                          suffixIcon:   IconButton(
+                                            onPressed: () async {
+
+                                            },
+                                            icon: const Icon(
+                                              Icons.search_outlined,
+                                              color: kDarkPinkColor,
+                                              size: 24,),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -329,7 +360,7 @@ class StoreScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top:Get.height*0.04,
+                          top:statusBarHeight,
                           left:0,
                           child: Stack(
                             children: [
@@ -388,7 +419,27 @@ class StoreScreen extends StatelessWidget {
 
                     ),
                   ):const SizedBox(),
-                  controller.storeIsLoading?const StoreLoadingWidget():controller.storeList?.length == 0? Column(
+                  controller.storeIsLoading?const StoreLoadingWidget():controller.storeList?.length == 0? controller.activateSearching? Column(
+                      children:[
+                        SizedBox(
+                          height: Get.height*0.4,
+                          width: Get.width*0.8,
+                          child: Image.asset("assets/images/Search-rafiki.png",fit: BoxFit.fitWidth,),
+                        ),
+                        SizedBox(
+                            height: Get.height*0.03
+                        ),
+                        const CustomText(
+                          'ليس هناك محل بهذا الأسم',
+                          style: TextStyle(
+                            fontSize:25,
+                            fontFamily: fontFamilyEnglishName,
+                            fontWeight: FontWeight.w600,
+                            color: kDarkPinkColor,
+                          ),
+                        ),
+                      ]
+                  ):Column(
                     children:[
                       SizedBox(
                         height: Get.height*0.4,
@@ -402,18 +453,17 @@ class StoreScreen extends StatelessWidget {
                         'ليس هناك محلات متوفره الأن',
                         style: TextStyle(
                           fontSize:25,
-                          fontFamily: fontFamilyEnglishName,
-                          fontWeight: FontWeight.w600,
+                          fontFamily: fontFamilyArabicName,
+                          fontWeight: FontWeight.w900,
                           color: kDarkPinkColor,
                         ),
                       ),
                     ]
                   ):Column(
-                    children:controller.storeList!.map(
-                        (e){
-                         return StoreWidget(store:e);
-                        }
-                    ).toList(),
+
+                    children:
+                      controller.storeListWidget
+                    ,
                   ),
                 ],
               ),

@@ -15,4 +15,15 @@ class Services {
  static String editingMemberDataEndPoint = "member/edit"; //Post
  static String editingMemberPasswordEndPoint = "member/change_password"; //Post
  static String getUserDataEndPoint = "member"; //Post
- }
+ static String getFavoriteShopDataEndPoint = "sfavorite"; //Post
+ static String getShopIsInFavoriteOrNotEndPoint = "sfavorite/check"; //Post
+ static String addOrRemoveShopToFavoriteEndPoint = "sfavorite/new"; //Post
+ static String deleteUserAccountEndPoint = "member_delete"; //Post
+ static String orderingProductEndPoint = "order/new"; //Post
+ static String getFavoriteProductDataEndPoint = "ifavorite"; //Post
+ static String getProductsInFavoriteOrNotEndPoint = "ifavorite/check"; //Post
+ static String addOrRemoveProductToFavoriteEndPoint = "ifavorite/new"; //Post
+ static String privacyPolicyEndPoint = "policy"; //post
+ static String termsAndConditionEndPoint = "terms"; //post
+
+}

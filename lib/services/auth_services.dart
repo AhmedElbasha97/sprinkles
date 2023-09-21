@@ -1,11 +1,12 @@
 import 'package:sprinkles/Utils/api_service.dart';
 import 'package:sprinkles/Utils/services.dart';
+import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/models/user_auth_model.dart';
 import 'package:sprinkles/models/user_data_model.dart';
 
 class AuthServices {
   static ApiService api = ApiService();
-  static Future<UserAuthModel?>signingUp(String email,String name,String password,String passwordConformation,String phone) async {
+  static Future<UserAuthModel?>signingUp(String name,String email,String phone,String password,String passwordConformation) async {
     var data = await api.request(Services.signingUpEndPoint, "POST",queryParamters: {
     "name":name,
       "email":email,
@@ -56,6 +57,15 @@ class AuthServices {
     });
     if (data != null) {
       return UserDataModel.fromJson(data[0]);
+    }
+    return null;
+  }
+  static Future<ResponseModel?> deleteUserAccount(String memberId) async {
+    var data = await api.request(Services.deleteUserAccountEndPoint, "POST",queryParamters: {
+      "member_id":memberId,
+    });
+    if (data != null) {
+      return ResponseModel.fromJson(data);
     }
     return null;
   }

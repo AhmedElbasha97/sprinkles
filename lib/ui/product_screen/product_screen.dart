@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, sized_box_for_whitespace, unnecessary_string_interpolations, unnecessary_brace_in_string_interps, prefer_is_empty
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
@@ -16,15 +17,18 @@ import '../../Utils/constant.dart';
 
 
 class ProductScreen extends StatelessWidget {
-  const ProductScreen({Key? key, required this.mainCategoryId}) : super(key: key);
+  const ProductScreen({Key? key, required this.mainCategoryId, required this.selectingFromDrawer}) : super(key: key);
   final int mainCategoryId;
+  final bool selectingFromDrawer;
+
   @override
   Widget build(BuildContext context) {
+    final statusBarHeight = MediaQuery.of(context).viewPadding.top;
     return GetBuilder(
-      init:  ProductController(mainCategoryId),
+      init:  ProductController(mainCategoryId,context,selectingFromDrawer),
       builder: (ProductController controller) => Scaffold(
         key: controller.scaffoldState,
-        drawer:const AppDrawers(),
+        drawer: AppDrawers(scaffoldKey: controller.scaffoldState,),
         backgroundColor:kBackGroundColor,
         body:  SingleChildScrollView(
           controller: controller.scrollController,
@@ -39,13 +43,13 @@ class ProductScreen extends StatelessWidget {
 
                     children:[
                       Container(
-                        height: Get.height*0.3,
+                        height: Get.height*0.31,
                         width:Get.width,
                         child:const Padding(padding: EdgeInsets.all(0),
                         ),
                       ),
                       Positioned(
-                        top:Get.height*0.04,
+                        top:statusBarHeight,
                         right:0,
                         child: Container(
 
@@ -85,8 +89,13 @@ class ProductScreen extends StatelessWidget {
                                   padding: const EdgeInsets.fromLTRB(0,0,8.0,0),
                                   child: InkWell(
                                     onTap:(){
-                                      Get.to(()=> StoreScreen(mainCategoryId: mainCategoryId, selectedFromDrawer: false,));
-                                    },
+                                      if(!selectingFromDrawer) {
+                                        Get.off(() =>
+                                            StoreScreen(
+                                              mainCategoryId: mainCategoryId,
+                                              selectedFromDrawer: false,));
+                                      }
+                                      },
                                     child: Container(
                                       height: Get.height*0.05,
                                       width:Get.width*0.35,
@@ -114,7 +123,7 @@ class ProductScreen extends StatelessWidget {
                                       ),
                                       child:  Center(
                                         child:  CustomText(
-                                          'عرض محلات الكيك',
+                                          selectingFromDrawer?"المنتجات":'عرض محلات الكيك',
                                           style:TextStyle(
                                             shadows: <Shadow>[
                                               Shadow(
@@ -142,13 +151,13 @@ class ProductScreen extends StatelessWidget {
                                   itemBuilder: (context) =>
                                       controller.governmentData.map((e){
                                         return   PopupMenuItem(
-                                          value:"${e}",
+                                          value:e,
                                           textStyle: const TextStyle(
                                               color: kDarkPinkColor,
                                               fontFamily: fontFamilyArabicName,
                                               fontWeight: FontWeight.w700),
                                           onTap: (){
-
+                                            controller.selectingFilter(e);
                                           },
                                           child: SizedBox(
                                             width: Get.width,
@@ -178,10 +187,10 @@ class ProductScreen extends StatelessWidget {
                                       }).toList(),
 
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(0,0,8.0,0),
+                                    padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
                                     child: Container(
-                                      height: Get.height*0.05,
-                                      width:Get.width*0.45,
+
+                                      width:Get.width*0.5,
                                       decoration: BoxDecoration(
                                         color:Colors.white,
                                         border: Border.all( color:kDarkPinkColor,width: 1),
@@ -206,29 +215,35 @@ class ProductScreen extends StatelessWidget {
                                       ),
                                       child:  Center(
                                         child:  Padding(
-                                          padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
+                                          padding: const EdgeInsets.fromLTRB(8.0,5,8.0,5),
                                           child: Row(
                                             mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                             children: [
-                                              const SizedBox(),
-                                              CustomText(
-                                                'ترتيب حسب',
-                                                style: TextStyle(
-                                                  shadows: <Shadow>[
-                                                    Shadow(
-                                                        offset: const Offset(0.5, 0.5),
-                                                        blurRadius: 0.5,
 
-                                                        color: Colors.black.withOpacity(0.5)
-                                                    ),
-                                                  ],
-                                                  fontSize: 15,
-                                                  letterSpacing: 0,
-                                                  fontFamily: fontFamilyArabicName,
-                                                  color: kDarkPinkColor,
+                                              Container(
+
+                                                width:Get.width*0.38,
+                                                child: CustomText(
+                                                  textAlign:TextAlign.center,
+                                                  maxLines:3,
+                                                  controller.selectingFilterTagName,
+                                                  style: TextStyle(
+                                                    shadows: <Shadow>[
+                                                      Shadow(
+                                                          offset: const Offset(0.5, 0.5),
+                                                          blurRadius: 0.5,
+
+                                                          color: Colors.black.withOpacity(0.5)
+                                                      ),
+                                                    ],
+                                                    fontSize: 12,
+                                                    letterSpacing: 0,
+                                                    fontFamily: fontFamilyArabicName,
+                                                    color: kDarkPinkColor,
+                                                  ),
                                                 ),
                                               ),
-                                              const Icon( Icons.arrow_downward_sharp ,color:kDarkPinkColor,size:20),
+                                              controller.selectingFilterTag == "0"||controller.selectingFilterTag.contains("desc")?const Icon( Icons.arrow_downward_sharp ,color:kDarkPinkColor,size:20):controller.selectingFilterTag.contains("asc")?const Icon( Icons.arrow_upward_sharp ,color:kDarkPinkColor,size:20):const SizedBox(),
                                             ],
                                           ),
                                         ),
@@ -267,11 +282,14 @@ class ProductScreen extends StatelessWidget {
                                       ],
                                       borderRadius: BorderRadius.circular(15), //
                                     ),
-                                    child:TextField(
-
+                                    child:TextFormField(
+                                      controller:controller.searchController,
                                       textAlign:TextAlign.center,
                                       cursorColor: kDarkPinkColor,
                                       textInputAction: TextInputAction.search,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(RegExp("[a-zA-Z\u0621-\u064A]")),
+                                      ],
                                       style: TextStyle(
                                         shadows: <Shadow>[
                                           Shadow(
@@ -286,6 +304,15 @@ class ProductScreen extends StatelessWidget {
                                         fontFamily: fontFamilyArabicName,
                                         color: kDarkPinkColor,
                                       ),
+                                      onChanged:(e){
+                                        controller.searchingForKeyword();
+                                      },
+                                      onFieldSubmitted:(e)  {
+
+                                        controller
+                                            .searchingForKeyword();
+
+                                      },
                                       decoration:  InputDecoration(
                                         isDense: true,
                                         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -317,7 +344,7 @@ class ProductScreen extends StatelessWidget {
                                           suffixIcon:   const Icon(
                                             Icons.search_outlined,
                                             color: kDarkPinkColor,
-                                            size: 20,),
+                                            size: 24,),
                                           ),
                                     ),
                                   ),
@@ -327,7 +354,7 @@ class ProductScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top:Get.height*0.04,
+                        top:statusBarHeight,
                         left:0,
                         child: Stack(
                           children: [
@@ -383,8 +410,26 @@ class ProductScreen extends StatelessWidget {
 
                     ]
                   ),
-                controller.categoryIsLoading?const CategoryLoadingWidget():
-                  Container(
+                  selectingFromDrawer?controller.mainCategoryIsLoading?const CategoryLoadingWidget():
+                Container(
+                  width:Get.width*0.95,
+                  height: Get.height*0.18,
+                  child: ListView.builder(
+                    scrollDirection:Axis.horizontal,
+                    controller: controller.scrollController,
+                    shrinkWrap:true,
+                    itemCount:controller.mainCategoryList?.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return
+                        InkWell(
+                            onTap:(){
+                              controller.selectingCategoryFromMainCategory(controller.mainCategoryList?[index].id??0);
+                            },
+                            child: CategoryWidget(category:controller.mainCategoryList?[index], selectedCategoryId:  controller.selectedMainCategoryId,)); },
+
+                  ),
+                ):
+                  controller.categoryIsLoading?const CategoryLoadingWidget():Container(
                     width:Get.width*0.95,
                     height: Get.height*0.15,
                     child: ListView.builder(
@@ -402,7 +447,45 @@ class ProductScreen extends StatelessWidget {
 
                     ),
                   ),
-                  controller.productIsLoading?const ProductLoadingWidget():controller.productList?.length == 0? Column(
+                  selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?const CategoryLoadingWidget():Container(
+                    width:Get.width*0.95,
+                    height: Get.height*0.15,
+                    child: ListView.builder(
+                      scrollDirection:Axis.horizontal,
+                      controller: controller.scrollController,
+                      shrinkWrap:true,
+                      itemCount:controller.subCategoryList?.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return
+                          InkWell(
+                              onTap:(){
+                                controller.selectingAnotherSubCategory(controller.subCategoryList?[index].id??0);
+                              },
+                              child: CategoryWidget(category:controller.subCategoryList?[index], selectedCategoryId:  controller.selectedSubCategoryId,)); },
+
+                    ),
+                  ):const SizedBox(),
+                  controller.productIsLoading?const ProductLoadingWidget():controller.productList?.length == 0?controller.activateSearching? Column(
+                      children:[
+                        SizedBox(
+                          height: Get.height*0.4,
+                          width: Get.width*0.8,
+                          child: Image.asset("assets/images/Search-rafiki.png",fit: BoxFit.fitWidth,),
+                        ),
+                        SizedBox(
+                            height: Get.height*0.03
+                        ),
+                        const CustomText(
+                          'ليس هناك منتج بهذا الأسم',
+                          style: TextStyle(
+                            fontSize:25,
+                            fontFamily: fontFamilyEnglishName,
+                            fontWeight: FontWeight.w600,
+                            color: kDarkPinkColor,
+                          ),
+                        ),
+                      ]
+                  ):Column(
                       children:[
                         SizedBox(
                           height: Get.height*0.4,

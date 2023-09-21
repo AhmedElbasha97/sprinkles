@@ -16,18 +16,18 @@ class DrawerTapWidget extends StatelessWidget {
     return    Stack(
         children:[
           Container(
-            height: Get.height*0.11,
+            height: Get.height*0.08,
             width:Get.width*0.75,
             child:const Padding(padding: EdgeInsets.all(0),
             ),
           ),
           Positioned(
-            top:Get.height*0.025,
+            bottom:Get.height*0.016,
             child: Padding(
               padding:  EdgeInsets.symmetric(horizontal: Get.width*0.12),
               child: Container(
                 height: Get.height*0.05,
-                width:Get.width*0.6,
+                width:Get.width*0.55,
                 decoration: BoxDecoration(
                   border: Border.all( color:kBackGroundColor,width: 2),
                   boxShadow: [
@@ -82,9 +82,11 @@ class DrawerTapWidget extends StatelessWidget {
           ),
 
           Positioned(
+
+            top:0,
             right:0,
             child: SizedBox(
-              height: Get.height*0.1,
+              height: Get.height*0.08,
               width: Get.width*0.2,
               child: Image.asset(iconPath,fit: BoxFit.fitHeight,),
             ),

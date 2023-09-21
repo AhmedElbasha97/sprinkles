@@ -9,35 +9,51 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/ui/favorite_screen/controller/favorite_controller.dart';
 import 'package:sprinkles/ui/product_detailed_screen/controller/product_detailed_controller.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/product_image_widget.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/read_more_widget.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/seller_product_loading_widget.dart';
+import 'package:sprinkles/ui/product_detailed_screen/widget/video_player_widget.dart';
+import 'package:sprinkles/ui/product_screen/controller/product_contoller.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_widget.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 class ProductDetailedScreen extends StatelessWidget {
-  const ProductDetailedScreen({Key? key, required this.productId}) : super(key: key);
+  const ProductDetailedScreen({Key? key, required this.productId, required this.mainCategoryId, required this.comingFromProductList, required this.comingFromFavoriteList, required this.comingFromProductDetails, required this.branchCategoryId}) : super(key: key);
   final String? productId;
+  final int mainCategoryId;
+  final bool comingFromProductList;
+  final bool comingFromFavoriteList;
+  final bool comingFromProductDetails;
+  final int branchCategoryId;
+
   @override
   Widget build(BuildContext context) {
+    final gController = Get.put(ProductController(mainCategoryId,context,false));
+    final fController = Get.put(FavoriteController(context));
     return GetBuilder(
-      init:  ProductDetailedController(productId??""),
+      init:  ProductDetailedController(productId??"",mainCategoryId,branchCategoryId),
       builder: (ProductDetailedController controller) => Scaffold(
         appBar: AppBar(
           backgroundColor:kBackGroundColor,
             actions:[
               InkWell(
-
                 onTap:(){
-                  controller. showWarningFavorite(context);
+                  controller.addingOrRemovingProductToFavorite(context);
+                  if(comingFromProductList){
+                  gController.getProductData(false);}
+                  if(comingFromFavoriteList){
+                    fController.getData();
+                  }
+
                 },
                 child: Container(
                   child: Row(
                       children:[
 
                         CustomText(
-                          'أضف إلى المفضلة',
+                          controller.productAreAddedOrNot?"امسح من المفضله":'أضف إلى المفضلة',
                           textAlign:TextAlign.left,
                           style: TextStyle(
                             shadows: <Shadow>[
@@ -54,8 +70,12 @@ class ProductDetailedScreen extends StatelessWidget {
                             color: kDarkPinkColor,
                           ),
                         ),
-                        const Icon(
-                            Icons.favorite_outline_rounded  ,color:kDarkPinkColor,size:20
+                        controller.productAreAddedOrNot? const Icon(
+                          Icons.favorite_border_rounded,
+                          color: kDarkPinkColor,
+                        ): const Icon(
+                          Icons.favorite,
+                          color: kDarkPinkColor,
                         ),
                       ]
 
@@ -169,7 +189,7 @@ class ProductDetailedScreen extends StatelessWidget {
                         carouselController: controller.carouselController,
                         itemCount: controller.productData?.images?.length,
                         itemBuilder: (BuildContext context, int index, int realIndex) {
-                          return ProductImageWidget(imageUrl: "${controller.productData?.images?[index]??""}", activeIndex: '${index+1}', imageTotalCount:"${controller.productData?.images?.length??0}",);
+                          return ProductImageWidget(imageUrl: "${controller.productData?.images?[index]??""}", activeIndex: index, imageTotalCount:"${controller.productData?.images?.length??0}",imagesLink:controller.productData?.images);
                         },
                         options: CarouselOptions(
                             height:Get.height*0.4,
@@ -575,7 +595,8 @@ class ProductDetailedScreen extends StatelessWidget {
                     },
                   ),
                 ),
-              ):Padding(
+              ):
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   width:Get.width,
@@ -646,6 +667,50 @@ class ProductDetailedScreen extends StatelessWidget {
                   ),
                 ),
               ),
+                  controller.productIsLoading?Container(
+
+        width:Get.width,
+        height:Get.height*0.4,
+        decoration:BoxDecoration(
+          color:  const Color(0xFFF2F0F3),
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              offset: const Offset(
+                0.0,
+                0.0,
+              ),
+              blurRadius: 13.0,
+              spreadRadius: 2.0,
+            ), //BoxShadow
+            BoxShadow(
+              color: Colors.white.withOpacity(0.2),
+              offset: const Offset(0.0, 0.0),
+              blurRadius: 0.0,
+              spreadRadius: 0.0,
+            ), //BoxShadow
+          ],
+        ),
+        child:Center(
+          child: Container(
+
+            width:Get.width*0.95,
+            height:Get.height*0.38,
+            decoration:BoxDecoration(
+              color:  const Color(0xFFDFDDDF),
+              borderRadius: BorderRadius.circular(15),
+
+            ),
+          ).animate(onPlay: (controller) => controller.repeat())
+              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+              .animate() // this wraps the previous Animate in another Animate
+          ,
+        ),
+      ).animate(onPlay: (controller) => controller.repeat())
+          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+          .animate():controller.productData?.video==""?const SizedBox() // this wraps the previous Animate in another Animate
+      :VideoPlayerWidget(videoPlayer: 'https://cake.syncqatar.com${controller.productData?.video??""}',),
               Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -815,7 +880,7 @@ class ProductDetailedScreen extends StatelessWidget {
                             textAlign:TextAlign.center,
                             style: TextStyle(
                               fontSize:20,
-                              fontFamily: fontFamilyEnglishName,
+                              fontFamily: fontFamilyArabicName,
                               fontWeight: FontWeight.w900,
                               color: kDarkPinkColor,
                             ),
@@ -829,10 +894,11 @@ class ProductDetailedScreen extends StatelessWidget {
                       scrollDirection:Axis.horizontal,
                       shrinkWrap:true,
                       itemCount:controller.productsList?.length,
-                      itemBuilder: (BuildContext context, int index) {
+                      itemBuilder: (BuildContext context, int index)  {
+                       controller.checkProductsAddedOrNet("${controller.productsList?[index].id}",);
                         return  Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ProductWidget(product:controller.productsList?[index]),
+                          child: ProductWidget(product:controller.productsList?[index], productAreAddedOrNot:   controller.checker, addingOrRemovingProductToFavorite: (){}, mainCategoryId: mainCategoryId, comingFromProductDetails: true, comingFromFavoriteList: false, comingFromProductList: false, branchCategoryId: branchCategoryId,),
                         );
                       },
 

@@ -93,6 +93,7 @@ class EditPasswordController extends GetxController{
     formValidated = formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (formValidated) {
+      changingPassword(context);
     }
   }
 

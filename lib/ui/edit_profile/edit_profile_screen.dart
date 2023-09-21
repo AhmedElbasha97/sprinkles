@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,7 +39,7 @@ class EditProfileScreen extends StatelessWidget {
                               height: Get.height*0.25,
                               width:Get.width*0.5,
                               child:     Padding(
-                                padding: EdgeInsets.fromLTRB(0,5,10.0,0),
+                                padding: const EdgeInsets.fromLTRB(0,5,10.0,0),
                                 child: Column(
                                     crossAxisAlignment:CrossAxisAlignment.start,
 
@@ -274,7 +274,7 @@ class EditProfileScreen extends StatelessWidget {
                     child: InkWell(
                       onTap: (){
                         if(!controller.editProfile) {
-                          controller.sinningUp(context);
+                          controller.sendPressed(context);
                         }else{
                           showDialog(context: context,
                               builder: (context) {

@@ -22,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
       builder: (controller) => Scaffold(
           backgroundColor:kBackGroundColor,
           key: controller.scaffoldState,
-          drawer:const AppDrawers(),
+          drawer: AppDrawers(scaffoldKey: controller.scaffoldState,),
           body:Column(
             mainAxisAlignment:MainAxisAlignment.spaceBetween,
           children:[
@@ -383,6 +383,7 @@ class ProfileScreen extends StatelessWidget {
                                     fontSize: 18,
                                     letterSpacing: 0,
                                     fontFamily: fontFamilyArabicName,
+                                    fontWeight: FontWeight.w900,
                                     color: kBackGroundColor,
                                   ),
                                 ),

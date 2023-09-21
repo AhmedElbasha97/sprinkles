@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:sprinkles/models/category_model.dart';
+
 ShopDetailedModel shopDetailedModelFromJson(String str) => ShopDetailedModel.fromJson(json.decode(str));
 
 String shopDetailedModelToJson(ShopDetailedModel data) => json.encode(data.toJson());
@@ -21,7 +23,7 @@ class ShopDetailedModel {
   String? desc;
   String? descEn;
   int? star;
-  List<Ctg>? ctgs;
+  List<CategoryModel>? ctgs;
   String? image;
 
   ShopDetailedModel({
@@ -54,7 +56,7 @@ class ShopDetailedModel {
     desc: json["desc"],
     descEn: json["desc_en"],
     star: json["star"],
-    ctgs: json["ctgs"] == null ? [] : List<Ctg>.from(json["ctgs"]!.map((x) => Ctg.fromJson(x))),
+    ctgs: json["ctgs"] == null ? [] : List<CategoryModel>.from(json["ctgs"]!.map((x) => CategoryModel.fromJson(x))),
     image: json["image"],
   );
 
@@ -76,26 +78,3 @@ class ShopDetailedModel {
   };
 }
 
-class Ctg {
-  int? id;
-  String? name;
-  String? nameEn;
-
-  Ctg({
-    this.id,
-    this.name,
-    this.nameEn,
-  });
-
-  factory Ctg.fromJson(Map<String, dynamic> json) => Ctg(
-    id: json["id"],
-    name: json["name"],
-    nameEn: json["name_en"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "name_en": nameEn,
-  };
-}

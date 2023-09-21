@@ -11,14 +11,24 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/models/favorite_model.dart';
+import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/models/shops_model.dart';
+import 'package:sprinkles/services/favorite_services.dart';
+import 'package:sprinkles/ui/login/login_screen.dart';
+import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/ui/store_details_screen/store_details_screen.dart';
+import 'package:sprinkles/widgets/alert_dialogue.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
+import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StoreWidget extends StatelessWidget {
-  const StoreWidget({Key? key, this.store}) : super(key: key);
+  const StoreWidget({Key? key, this.store, required this.shopAreAddedOrNot, required this.addingOrRemovingForFav, required this.mainCategoryId}) : super(key: key);
  final ShopsModel? store;
+ final bool shopAreAddedOrNot;
+ final Function addingOrRemovingForFav;
+  final int mainCategoryId;
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
       scheme: 'tel',
@@ -26,6 +36,7 @@ class StoreWidget extends StatelessWidget {
     );
     await launchUrl(launchUri);
   }
+
   whatsapp(String contact) async{
 
     var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
@@ -42,6 +53,7 @@ class StoreWidget extends StatelessWidget {
 
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -92,7 +104,7 @@ class StoreWidget extends StatelessWidget {
             left:0,
             child: Container(
               height: Get.height*0.15,
-              width: Get.width*0.29,
+              width: Get.width*0.31,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/images/store frame.png"),
@@ -175,22 +187,35 @@ class StoreWidget extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: Get.width*0.2,
+            left: Get.width*0.21,
             top:Get.height*0.1145,
-            child: Container(
-                height: Get.height*0.025,
-                width:Get.width*0.05,
-                decoration: BoxDecoration(
-                  color:kLightPinkColor,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child:const Center(
-                  child:Icon(Icons.favorite,color:Colors.white,size:12),
-                )
+            child: InkWell(
+              onTap:(){
+                addingOrRemovingForFav();
+              },
+              child: Container(
+                  height: Get.height*0.025,
+                  width:Get.width*0.05,
+                  decoration: BoxDecoration(
+                    color:kLightPinkColor,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child:Center(
+                    child:shopAreAddedOrNot?const Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                      size:14
+                    ):const Icon(
+                      Icons.favorite_border_rounded,
+                      color: Colors.white,
+                      size:14
+                    ),
+                  )
+              ),
             ),
           ),
           Positioned(
-            left: Get.width*0.26,
+            left: Get.width*0.25,
 
             top:Get.height*0.09,
             child: Container(
@@ -199,7 +224,7 @@ class StoreWidget extends StatelessWidget {
                     crossAxisAlignment:CrossAxisAlignment.end,
                     children:[
                        Padding(
-                         padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
+                         padding: const EdgeInsets.fromLTRB(20.0,0,15.0,0),
                          child: CustomText(
                           Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.descEn??"":store?.desc??"",
                           style: const TextStyle(
@@ -214,7 +239,7 @@ class StoreWidget extends StatelessWidget {
                           children:[
                             InkWell(
                               onTap:(){
-                                Get.to(()=>const StoreDetailedScreen());
+                                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
                               },
                               child: SizedBox(
                                 height: Get.height*0.04,

@@ -1,5 +1,5 @@
 
-// ignore_for_file: sized_box_for_whitespace, unnecessary_import, prefer_const_constructors_in_immutables
+// ignore_for_file: sized_box_for_whitespace, unnecessary_import, prefer_const_constructors_in_immutables, avoid_unnecessary_containers
 
 import 'dart:ui';
 

@@ -5,17 +5,26 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/product_detailed_model.dart';
 import 'package:sprinkles/models/products_model.dart';
+import 'package:sprinkles/models/response_model.dart';
+import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/services/product_service.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
+import 'package:sprinkles/ui/product_screen/controller/product_contoller.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
+import 'package:sprinkles/widgets/alert_dialogue.dart';
 import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Utils/colors.dart';
 
 class ProductDetailedController extends GetxController{
+  bool productAreAddedOrNot = false;
+  bool checker =false;
   CarouselController carouselController = CarouselController();
   ScrollController scrollController = ScrollController();
   int activeIndex = 0;
@@ -23,24 +32,108 @@ class ProductDetailedController extends GetxController{
   late ProductDetailedModel? productData;
   late List<ProductsModel>? productsList;
   final String productId;
-
   List<Widget> dotsList = [];
-
-  ProductDetailedController(this.productId);
+  String messageTextWhatsApp = "";
+  ProductDetailedController(this.productId, this.mainCategoryId, this.branchCategoryId,);
+  final int mainCategoryId;
+  final int branchCategoryId;
   @override
+
   Future<void> onInit() async {
     super.onInit();
+    checkProductAddedOrNet();
     getProductData();
+  }
+   checkProductsAddedOrNet(String productId) async {
+    FavoriteStatusModel? data = await  FavoriteServices.getProductIsInFavoriteOrNot(productId);
+    if(data == 1){
+      checker = true;
+    }else{
+      checker = false;
+    }
 
   }
+   checkerProductsAddedOrNet(String productId) async {
+    FavoriteStatusModel? data = await  FavoriteServices.getProductIsInFavoriteOrNot(productId);
+    if(data == 1){
+      return true;
+    }else{
+      return false;
+    }
 
+  }
+  addingOrRemovingProductsToFavorite(context,String productId) async {
+    if(Get.find<StorageService>().checkUserIsSignedIn){
+      if( await checkProductsAddedOrNet(productId)){
+        ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"0");
+        if(data?.msg != "succeeded"){
+          showDialog(context: context,
+              builder: (context) {
+                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              }
+          );
+        }
+
+      }else{
+        ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"1");
+        if(data?.msg != "succeeded"){
+          showDialog(context: context,
+              builder: (context) {
+                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              }
+          );
+        }
+
+      }
+    }else{
+      showWarningFavorite(context);
+    }
+  }
+  checkProductAddedOrNet() async {
+    FavoriteStatusModel? data= await  FavoriteServices.getProductIsInFavoriteOrNot(productId);
+    if(data?.status == 1){
+      productAreAddedOrNot = true;
+    }else{
+      productAreAddedOrNot = false;
+    }
+  }
+  addingOrRemovingProductToFavorite(context) async {
+    if(Get.find<StorageService>().checkUserIsSignedIn){
+      if(productAreAddedOrNot){
+        ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"0");
+        if(data?.msg != "succeeded"){
+          showDialog(context: context,
+              builder: (context) {
+                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              }
+          );
+        }
+        await checkProductAddedOrNet();
+        update();
+      }else{
+        ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"1");
+        if(data?.msg != "succeeded"){
+          showDialog(context: context,
+              builder: (context) {
+                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              }
+          );
+        }
+        await checkProductAddedOrNet();
+        update();
+      }
+    }else{
+      showWarningFavorite(context);
+    }
+  }
   getProductData() async {
     productIsLoading = true;
     update();
     productData =
     await ProductServices.getProductDetails( productId);
-    productsList = await ProductServices.getProducts(1,4);
+    productsList = await ProductServices.getProductsSimilarToProductDetailedShown(mainCategoryId,branchCategoryId,"${productData?.shop?.id??0}");
     makingDotsForCarouselSlider();
+    messageTextWhatsApp = " في تطبيق sprinkles وأريد عمل اوردر ${Get.find<StorageService>().activeLocale == SupportedLocales.english?productData?.nameEn??"":productData?.name??""}رأيت هذا ال";
     productIsLoading = false;
     update();
   }
@@ -95,8 +188,8 @@ class ProductDetailedController extends GetxController{
   }
   whatsapp(String contact) async{
 
-    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help about this product which i saw in sprinkles app";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help about this product which i saw in sprinkles app')}";
+    var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
 
     try{
       if(Platform.isIOS){

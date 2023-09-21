@@ -6,11 +6,25 @@ import 'package:sprinkles/models/products_model.dart';
 
 class ProductServices {
   static ApiService api = ApiService();
-  static Future<List<ProductsModel>?> getProducts(int mainCategoryId,int subCategoryId) async {
+  static Future<List<ProductsModel>?> getAllProduct(String filterData) async {
+    List<ProductsModel>? productsList = [];
+    var data = await api.request(Services.productEndPoint, "POST",queryParamters: {
+      "sort":filterData
+    });
+    if (data != null) {
+      for (var product in data){
+        productsList.add(ProductsModel.fromJson(product));
+      }
+      return productsList;
+    }
+    return null;
+  }
+  static Future<List<ProductsModel>?> getProducts(int mainCategoryId,int subCategoryId,String filterData) async {
     List<ProductsModel>? productsList = [];
     var data = await api.request(Services.productEndPoint, "POST",queryParamters: {
       "ctgid":mainCategoryId,
       "ctgid2":subCategoryId,
+      "sort":filterData,
     });
     if (data != null) {
       for (var product in data){
@@ -29,5 +43,19 @@ class ProductServices {
     }
     return null;
   }
-
+  static Future<List<ProductsModel>?> getProductsSimilarToProductDetailedShown(int mainCategoryId,int subCategoryId,String shopId) async {
+    List<ProductsModel>? productsList = [];
+    var data = await api.request(Services.productEndPoint, "POST",queryParamters: {
+      "ctgid":mainCategoryId,
+      "ctgid2":subCategoryId,
+      "shop":shopId,
+    });
+    if (data != null) {
+      for (var product in data){
+        productsList.add(ProductsModel.fromJson(product));
+      }
+      return productsList;
+    }
+    return null;
+  }
 }

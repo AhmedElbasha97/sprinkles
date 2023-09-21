@@ -19,7 +19,7 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.height*0.15,
+      height: Get.height*0.2,
       width:Get.width*0.2,
 
       child:Column(

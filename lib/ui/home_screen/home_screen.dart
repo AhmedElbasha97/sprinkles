@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
       builder: (HomeController controller) =>  SafeArea(
         child: Scaffold(
           key: controller.scaffoldState,
-          drawer:const AppDrawers(),
+          drawer: AppDrawers(scaffoldKey: controller.scaffoldState,),
           body: Container(
             height: Get.height,
             width: Get.width,

@@ -1,5 +1,5 @@
 
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -270,7 +270,7 @@ class SignupScreen extends StatelessWidget {
                         width: Get.width*0.95,
                         child: CustomInputField(
                             hasIntialValue: true,
-                            labelText:  "تأكيد كلمة المرور الخاصة بك",
+                            labelText:  " كلمة المرور الخاصة بك",
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.visiblePassword,
                             iconOfTextField: const Icon(Icons.password,

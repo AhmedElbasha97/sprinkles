@@ -19,7 +19,7 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap:(){
-        Get.to(()=> ProductScreen(mainCategoryId: category?.id??0,));
+        Get.to(()=> ProductScreen(mainCategoryId: category?.id??0, selectingFromDrawer: false,));
       },
       child: Stack(
           children:[
@@ -61,26 +61,29 @@ class HomeWidget extends StatelessWidget {
                       colors: [kDarkPinkColor,kLightPinkColor],
                     ),borderRadius: BorderRadius.circular(40), //
                   ),
-                  child:  Center(
-                    child:  CustomText(
-                      Get.find<StorageService>().activeLocale == SupportedLocales.english?category?.nameEn??"":category?.name??"",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        shadows: <Shadow>[
-                          Shadow(
-                              offset: const Offset(2.0, 2.0),
-                              blurRadius: 13.0,
+                  child:  Padding(
+                    padding: const EdgeInsets.only(left:18.0),
+                    child: Center(
+                      child:  CustomText(
+                        Get.find<StorageService>().activeLocale == SupportedLocales.english?category?.nameEn??"":category?.name??"",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          shadows: <Shadow>[
+                            Shadow(
+                                offset: const Offset(2.0, 2.0),
+                                blurRadius: 13.0,
 
-                              color: Colors.black.withOpacity(0.5)
-                          ),
-                        ],
-                        fontSize: 18,
-                        letterSpacing: 0,
-                        fontFamily: fontFamilyArabicName,
-                        color: kBackGroundColor,
+                                color: Colors.black.withOpacity(0.5)
+                            ),
+                          ],
+                          fontSize: 18,
+                          letterSpacing: 0,
+                          fontFamily: fontFamilyArabicName,
+                          color: kBackGroundColor,
+                        ),
                       ),
-                    ),
 
+                    ),
                   ),
                 ),
               ),
@@ -94,7 +97,7 @@ class HomeWidget extends StatelessWidget {
                 imageBuilder: ((context, image){
                   return   Container(
                     height: Get.height*0.15,
-                    width: Get.width*0.3,
+                    width: Get.width*0.31,
                       decoration: BoxDecoration(
                       image: DecorationImage(
                       image: image,

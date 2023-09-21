@@ -1,16 +1,20 @@
 // ignore_for_file: file_names, library_private_types_in_public_api, use_build_context_synchronously, sized_box_for_whitespace
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/models/privacy_policy_model.dart';
 import 'package:sprinkles/services/biomatrics_auth_services.dart';
+import 'package:sprinkles/ui/favorite_screen/favorite_screen.dart';
 import 'package:sprinkles/ui/home_screen/home_screen.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
+import 'package:sprinkles/ui/privacypolicy/privacyPolicyScreen.dart';
+import 'package:sprinkles/ui/product_screen/product_screen.dart';
 import 'package:sprinkles/ui/profile/profile_screen.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/ui/splash_screen/splash_screen.dart';
 import 'package:sprinkles/ui/store%20_screen/store_screen.dart';
+import 'package:sprinkles/ui/term&condition/terms_screen.dart';
 import 'package:sprinkles/widgets/drawer_tap_widget.dart';
 import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import '../Utils/constant.dart';
@@ -19,34 +23,83 @@ import 'custom_text_widget.dart';
 
 class AppDrawers extends StatefulWidget {
 
-  const AppDrawers({Key? key}) : super(key: key);
-
+  const AppDrawers({Key? key, required this.scaffoldKey}) : super(key: key);
+  final scaffoldKey ;
   @override
   _AppDrawersState createState() => _AppDrawersState();
 }
 
 class _AppDrawersState extends State<AppDrawers> {
+  List<DrawerItem> data= [
+  const DrawerItem("الرئيسيّة","homeIconDrawer.png"),
+  const DrawerItem("عرض المحلات","storeIconDrawer.png"),
+  const DrawerItem("عرض المنتجات ","productIconDrawer.png"),
+  const DrawerItem("البحث المتقدم","searchIconDrawer.png"),
+  Get.find<StorageService>().checkUserIsSignedIn?
+  const DrawerItem("الحساب الشخصى","userIcon.png"):
+  const DrawerItem("تسجيل دخول","loginIcon.png"),
+  Get.find<StorageService>().checkUserIsSignedIn?
+  const DrawerItem("تسجيل الخروج","logoutIcon.png"):
+  const DrawerItem("انشاء حساب","signUpIconDrawer.png"),
+  const DrawerItem("سياسة الخصوصيه","privacyIconDrawer.png"),
+  const DrawerItem("الشروط والاحكام","termsIconDrawer.png"),
+  const DrawerItem("شارك التطبيق","shareIcon.png"),
+  const DrawerItem("تقييم التطبيق","rateIconDrawer.png"),
+];
+  @override
+  void initState() {
+    super.initState();
+  if(Get.find<StorageService>().checkUserIsSignedIn){
+      data.insert(5, const DrawerItem("قائمه المفضله","favoriteIcon.png"));
+  }
+
+  }
   detectFunctionalityOfDrawerTap(String title){
   switch(title){
     case "الرئيسيّة":{
-      Get.to(()=>const HomeScreen());
+      Get.to(()=>const HomeScreen(),transition:Transition.rightToLeftWithFade);
+
+        widget.scaffoldKey.currentState?.openEndDrawer();
+
     }
     break;
     case "عرض المحلات":{
-      Get.to(()=> const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,));
+      Get.to(()=> const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }
+    case "قائمه المفضله":{
+      Get.to(()=> const FavoriteScreen(),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
     }
     break;
     case "الحساب الشخصى":{
-      Get.to(()=>const ProfileScreen());
+      Get.to(()=>const ProfileScreen(),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
     }
     break;
 
+        case "سياسة الخصوصيه":{
+      Get.to(()=> const PrivacyPolicyScreen() ,transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }
+    case "الشروط والاحكام":{
+    Get.to(()=> const TermsScreen(),transition:Transition.rightToLeftWithFade);
+    widget.scaffoldKey.currentState?.openEndDrawer();
+  }
+  break;
+    case "عرض المنتجات ":{
+      Get.to(()=> const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }
+    break;
     case "تسجيل دخول":{
-      Get.to(()=> LoginScreen());
+      Get.to(()=> LoginScreen(),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
     }
     break;
     case "انشاء حساب":{
-      Get.to(()=> const SignupScreen());
+      Get.to(()=> const SignupScreen(),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
     }
     break;
     case "تسجيل الخروج":{
@@ -55,135 +108,30 @@ class _AppDrawersState extends State<AppDrawers> {
             builder: (context) {
               return YesOrNoDialogue(alertText: 'هل تريد تسجيل الخروج من التطبيق يمكنك أيضآ مسح بيناتك أيضآ', alertTitle: 'تسجيل الخروج', alertYesButtonTitle: 'تسجيل الخروج', alertNoButtonTitle: 'مسح الحساب', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
                 Get.find<StorageService>().loggingOut();
-                Get.to(()=>const SplashScreen());
+                Get.offAll(()=>const SplashScreen());
 
               }, alertNoButtonFunction: () async {
                 if(await BiomatricsAuthService.authenticateUser("مسح الحساب")) {
 
-                Get.find<StorageService>().loggingOut(); Get.to(()=>const SplashScreen());
+                Get.find<StorageService>().loggingOut(); Get.offAll(()=>const SplashScreen());
                 }
               }, alertYesButtonIcon: 'assets/icons/logoutIcon.png', alertNoButtonIcon: 'assets/icons/deleteAccountIcon.png', alertIcon: 'assets/icons/logoutIcon.png',containerHeight:Get.height*0.57);
             });
+        widget.scaffoldKey.currentState?.openEndDrawer();
 
     }
     break;
     case "الشروط والاحكام":{
-      showDialog(context: context,
-        builder: (context) {
-        return Dialog(
-          backgroundColor:Colors.transparent,
-          insetPadding: const EdgeInsets.symmetric(horizontal: 15),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          elevation: 0,
-          child: Container(
-            height:Get.height*0.26,
-            color:Colors.transparent,
-            child: Stack(
 
-              children: [
-                Positioned(
-                  bottom:0,
-                  child: Center(
-                    child:  Container(
-
-                      padding:  EdgeInsets.only(top:Get.height*0.05,left:10,right:10,bottom:10),                    decoration: BoxDecoration(
-                        borderRadius:BorderRadius.circular(10),
-                        color:kDarkPinkColor
-                    ),
-
-                      width:Get.width*0.9,
-                      child: Container(
-                        height:Get.height*0.09,
-                        width:Get.width*0.9,
-                        decoration: BoxDecoration(
-                            borderRadius:BorderRadius.circular(10),
-                            color:kBackGroundColor
-                        ),
-                        child: Column(
-                          mainAxisAlignment:MainAxisAlignment.center,
-                          children: [
-                            CustomText(
-                              "تحميل....",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                shadows: <Shadow>[
-                                  Shadow(
-                                      offset: const Offset(2.0, 2.0),
-                                      blurRadius: 13.0,
-
-                                      color: Colors.black.withOpacity(0.5)
-                                  ),
-                                ],
-                                fontSize: 18,
-                                letterSpacing: 0,
-                                fontFamily: fontFamilyArabicName,
-                                color: kLightPinkColor,
-                              ),
-                            ).animate(onPlay: (controller) => controller.repeat())
-                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(30))
-                                .animate() // this wraps the previous Animate in another Animate
-                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                .slide(),
-                          ],
-                        ),
-                      ).animate(onPlay: (controller) => controller.repeat())
-                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(30))
-                          .animate() // this wraps the previous Animate in another Animate
-                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                          .slide(),
-                    ),
-
-                  ),
-                ),
-                Positioned(
-                  top:0,
-                  left:Get.width*0.3,
-                  child: Container(
-
-                    padding:const EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                        borderRadius:BorderRadius.circular(50),color:kDarkPinkColor
-                    ),
-                    height: Get.height*0.15,
-                    width: Get.width*0.3,
-                    child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
-                  ),
-                ),
-              ],
-            ),
-          ).animate(onPlay: (controller) => controller.repeat())
-              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(30))
-              .animate() // this wraps the previous Animate in another Animate
-              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-              .slide(),
-        );
-        }
-
-      );
     }
     break;
   }
   }
- List<DrawerItem> data= [
-   const DrawerItem("الرئيسيّة","homeIconDrawer.png"),
-   const DrawerItem("عرض المحلات","storeIconDrawer.png"),
-   const DrawerItem("عرض المنتجات ","productIconDrawer.png"),
-   const DrawerItem("البحث المتقدم","searchIconDrawer.png"),
- Get.find<StorageService>().checkUserIsSignedIn?
-   const DrawerItem("الحساب الشخصى","userIcon.png"):
-   const DrawerItem("تسجيل دخول","loginIcon.png"),
-   Get.find<StorageService>().checkUserIsSignedIn?
-   const DrawerItem("تسجيل الخروج","logoutIcon.png"):
-   const DrawerItem("انشاء حساب","signUpIconDrawer.png"),
-   const DrawerItem("تسجيل دخول المحلات","addNewStoreIcon.png"),
-   const DrawerItem("سياسة الخصوصيه","privacyIconDrawer.png"),
-   const DrawerItem("الشروط والاحكام","termsIconDrawer.png"),
-   const DrawerItem("شارك التطبيق","shareIcon.png"),
-   const DrawerItem("تقييم التطبيق","rateIconDrawer.png"),
- ];
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
+
       backgroundColor: kBackGroundColor,
       child: ListView(
         children: [
@@ -195,8 +143,9 @@ class _AppDrawersState extends State<AppDrawers> {
                   width:Get.width,
 
                 ),
-      Positioned(
-          right:0, child: Container(
+                Positioned(
+                  top:0,
+                  right:0, child: Container(
           height: Get.height*0.25,
           width:Get.width*0.45,
           child: const Padding(
@@ -231,6 +180,7 @@ class _AppDrawersState extends State<AppDrawers> {
             ),
           )),),
                 Positioned(
+                  top:0,
                   left:0,
                   child: Stack(
                     children: [

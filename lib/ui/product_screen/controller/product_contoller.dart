@@ -6,64 +6,493 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
+import 'package:sprinkles/Utils/constant.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/models/advertisment_model.dart';
 import 'package:sprinkles/models/category_model.dart';
+import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/products_model.dart';
+import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/services/advrtisment_services.dart';
 import 'package:sprinkles/services/category_services.dart';
+import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/services/product_service.dart';
+import 'package:sprinkles/services/seaarch_and_filters_services.dart';
+import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_widget.dart';
+import 'package:sprinkles/ui/siginup/signup_screen.dart';
+import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../widgets/alert_dialogue.dart';
 
 class ProductController extends GetxController {
   bool productIsLoading = true;
   bool categoryIsLoading = true;
   bool advertisementsIsLoading = true;
   final int mainCategoryId;
-
-  ProductController(this.mainCategoryId);
-
-  List<String> governmentData = ["ترتيب حسب السعر","ترتيب حسب الاسم","ترتيب حسب التصنيف"];
+   final BuildContext context;
+   final bool selectingFromDrawer;
+  ProductController(this.mainCategoryId, this.context, this.selectingFromDrawer);
+  late TextEditingController searchController;
+  bool hasBeenSelectedFromDrawer = false;
+  List<String> governmentData = ["ازاله ترتيب حسب","ترتيب حسب السعر من الأقل سعر إلى أعلى السعر","ترتيب حسب السعر من أعلى سعر إلى الأقل السعر","ترتيب حسب الاسم من ى إلى أ","ترتيب حسب الاسم من أ إلى ى",];
   ScrollController scrollController = ScrollController();
   int selectedSubCategoryId = 0;
+  String selectingFilterTag = "0";
+  String selectingFilterTagName = "ترتيب حسب";
   late List<ProductsModel>? productList;
   late List<CategoryModel>? subCategoryList;
+  late List<CategoryModel>? mainCategoryList;
   late List<AdvertisementModel>? advertList;
+ bool activateSearching = false;
+ int selectedMainCategoryId = 240;
+  bool mainCategoryIsLoading = true;
   List<Widget> products = [];
-  GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
+ final GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
   @override
   Future<void> onInit() async {
     super.onInit();
-    await getSubCategoryData();
+    hasBeenSelectedFromDrawer = selectingFromDrawer;
+    searchController = TextEditingController();
+    if(selectingFromDrawer){
+      await getMainCategoryData();
+    }else{
+      await getSubCategoryData();
+    }
     await  getAdvertisementsData();
+  }
+  getMainCategoryData() async {
+    mainCategoryList = await CategoryServices.getHomeCategory();
+    mainCategoryIsLoading = false;
+    update();
+  }
+  selectingFilter(String filterName){
+    switch(filterName){
+      case"ازاله ترتيب حسب":{
+        selectingFilterTag = "0";
+        selectingFilterTagName = "ترتيب حسب";
+        update();
+        if(activateSearching){
+          searchingForKeyword();
+        }else{
+          getProductData(true);
+        }
+      }
+      break;
+      case"ترتيب حسب السعر من الأقل سعر إلى أعلى السعر":{
+        selectingFilterTag = Filters.price_desc.name;
+        selectingFilterTagName = "ترتيب حسب السعر من الأقل سعر إلى أعلى السعر";
+        update();
+        if(activateSearching){
+          searchingForKeyword();
+        }else{
+          getProductData(true);
+        }
+      }
+      break;
+      case"ترتيب حسب السعر من أعلى سعر إلى الأقل السعر":{
+        selectingFilterTag = Filters. price_asc.name;
+        selectingFilterTagName = "ترتيب حسب السعر من أعلى سعر إلى الأقل السعر";
+        update();
+        if(activateSearching){
+          searchingForKeyword();
+        }else{
+          getProductData(true);
+        }
+      }
+      break;
+      case"ترتيب حسب الاسم من ى إلى أ":{
+        selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_desc.name:Filters.name_desc.name;
+        selectingFilterTagName = "ترتيب حسب الاسم من ى إلى أ";
+        update();
+        if(activateSearching){
+          searchingForKeyword();
+        }else{
+          getProductData(true);
+        }
+      }
+      break;
+      case"ترتيب حسب الاسم من أ إلى ى":{
+        selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_asc.name:Filters.name_asc.name;
+        selectingFilterTagName = "ترتيب حسب الاسم من أ إلى ى";
+        update();
+        if(activateSearching){
+          searchingForKeyword();
+        }else{
+          getProductData(true);
+        }
+      }
+      break;
+    }
+  }
+  String removeAllWhitespaces(String string) {
+    return string.replaceAll(' ', '');
+  }
+  selectingCategoryFromMainCategory(int mainCategoryId){
+    selectedMainCategoryId = mainCategoryId;
+    getSubCategoryData();
+    getAdvertisementsData();
+  }
+  searchingForKeyword() async {
+
+    if(removeAllWhitespaces(searchController.text)==""){
+      activateSearching = false;
+      getProductData(true);
+    }else{
+      productIsLoading = true;
+      activateSearching = true;
+      update();
+      if(selectingFromDrawer)
+      {
+        if(selectedMainCategoryId==240){
+          productList = await SearchAndFilterServices.searchForProducts(searchController.text,selectingFilterTag);
+        }else{
+          productList = await SearchAndFilterServices.searchForProductsInMainCategory(selectedMainCategoryId,searchController.text,selectingFilterTag);
+        }
+        productList = await SearchAndFilterServices.searchForProductsInMainCategory(selectedMainCategoryId,searchController.text,selectingFilterTag);
+      }else{
+        productList = await SearchAndFilterServices.searchForProducts(searchController.text,selectingFilterTag);
+      }
+
+      if(productList?.length != 0){
+        await fillingData();
+      }
+      productIsLoading = false;
+      update();
+    }
 
   }
-  getProductData() async {
-    productIsLoading = true;
-    update();
-    productList = await ProductServices.getProducts(mainCategoryId,selectedSubCategoryId);
+  getProductData(bool changingTap) async {
+
+    if(changingTap) {
+      productIsLoading = true;
+      update();
+    }
+    if(selectingFromDrawer) {
+      if (selectedMainCategoryId == 240) {
+
+        productList = await ProductServices.getAllProduct(selectingFilterTag);
+      } else {
+        productList = await ProductServices.getProducts(
+            selectedMainCategoryId, selectedSubCategoryId, selectingFilterTag);
+      }
+    }else{
+      productList = await ProductServices.getProducts(
+          mainCategoryId, selectedSubCategoryId, selectingFilterTag);
+    }
     if(productList?.length != 0){
-      fillingData();
+     await fillingData();
     }
 
     print("the length of widget list iS ${products.length}");
     productIsLoading = false;
     update();
   }
+
+  Future<bool> checkProductAddedOrNet(String productId) async {
+    FavoriteStatusModel? data= await  FavoriteServices.getProductIsInFavoriteOrNot(productId);
+    if(data?.status == 1){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  addingOrRemovingProductToFavorite(context,String productId,int index,bool doubleProductOrNot) async {
+    var i = 0;
+    if(index != 0){
+      i = index - 1;
+    }
+    if(Get.find<StorageService>().checkUserIsSignedIn){
+      if( await checkProductAddedOrNet(productId)){
+        ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"0");
+        if(data?.msg != "succeeded"){
+          showDialog(context: context,
+              builder: (context) {
+                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              }
+          );
+        }
+      if(doubleProductOrNot){
+        var checker =await checkProductAddedOrNet("${productList?[index].id}");
+        var checker1 =await checkProductAddedOrNet("${productList?[index+1].id}");
+        products[i]=Padding(
+          padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+          child: Row(
+              mainAxisAlignment:MainAxisAlignment.spaceAround,
+              children:[
+                ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                  addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
+                }, mainCategoryId: mainCategoryId, comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true, branchCategoryId: selectedSubCategoryId,),
+
+                ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
+                  addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
+                }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+              ]
+          ),
+        );
+        update();
+      }else{
+        var checker =await checkProductAddedOrNet("${productList?[index].id}");
+        products[i]=Column(
+          children: [
+            Row(
+                mainAxisAlignment:MainAxisAlignment.start,
+                children:[
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                        addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,false);
+                      }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                  ),
+
+                ]
+            ),
+            Padding(
+              padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+              child: Container(
+                height: Get.height*0.2,
+                width:Get.width,
+                color:Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CarouselSlider(
+                    options:  CarouselOptions(
+                        height: Get.height*0.19,
+                        aspectRatio: 2.0,
+                        enlargeCenterPage: false,
+                        viewportFraction: 1,
+                        autoPlay: true),
+
+                    items: advertList!.map(
+                            (e){
+                          return InkWell(
+                            onTap:(){
+                              selectingAdvertisements(e.link??"",e.id??0);
+                            },
+                            child:CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              imageUrl: "https://cake.syncqatar.com${e.img??""}",
+                              imageBuilder: ((context, image){
+                                return  ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width,
+                                      height:Get.height*0.16,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: image,
+                                          fit:  BoxFit.cover,
+                                        ),
+                                      )
+                                  ),
+                                );
+                              }),
+                              placeholder: (context, image){
+                                return   Container(
+
+                                  width:Get.width,
+                                  height:Get.height*0.16,
+                                  decoration:BoxDecoration(
+                                    color:  const Color(0xFFDFDDDF),
+                                    borderRadius: BorderRadius.circular(15),
+
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                    .animate(); // this wraps the previous Animate in another Animate
+
+
+                              },
+                              errorWidget: (context, url, error){
+                                return SizedBox(
+                                  width:Get.width,
+                                  height:Get.height*0.16,
+                                  child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.contain,),
+                                );
+                              },
+                            ),
+                          );
+
+                        }
+                    ).toList(),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+        update();
+      }
+
+      }else{
+        ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"1");
+        if(data?.msg != "succeeded"){
+          showDialog(context: context,
+              builder: (context) {
+                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              }
+          );
+        }else{
+          if(doubleProductOrNot){
+            var checker =await checkProductAddedOrNet("${productList?[index].id}");
+            var checker1 =await checkProductAddedOrNet("${productList?[index+1].id}");
+            products[i]=Padding(
+              padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+              child: Row(
+                  mainAxisAlignment:MainAxisAlignment.spaceAround,
+                  children:[
+                    ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                      addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
+                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
+
+                    ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
+                      addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
+                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                  ]
+              ),
+            );
+            update();
+          }else{
+            var checker =await checkProductAddedOrNet("${productList?[index].id}");
+            products[i]=Column(
+              children: [
+                Row(
+                    mainAxisAlignment:MainAxisAlignment.start,
+                    children:[
+                      Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                            addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,false);
+                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                      ),
+
+                    ]
+                ),
+                Padding(
+                  padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+                  child: Container(
+                    height: Get.height*0.2,
+                    width:Get.width,
+                    color:Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CarouselSlider(
+                        options:  CarouselOptions(
+                            height: Get.height*0.19,
+                            aspectRatio: 2.0,
+                            enlargeCenterPage: false,
+                            viewportFraction: 1,
+                            autoPlay: true),
+
+                        items: advertList!.map(
+                                (e){
+                              return InkWell(
+                                onTap:(){
+                                  selectingAdvertisements(e.link??"",e.id??0);
+                                },
+                                child:CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: "https://cake.syncqatar.com${e.img??""}",
+                                  imageBuilder: ((context, image){
+                                    return  ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Container(
+                                          width:Get.width,
+                                          height:Get.height*0.16,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: image,
+                                              fit:  BoxFit.cover,
+                                            ),
+                                          )
+                                      ),
+                                    );
+                                  }),
+                                  placeholder: (context, image){
+                                    return   Container(
+
+                                      width:Get.width,
+                                      height:Get.height*0.16,
+                                      decoration:BoxDecoration(
+                                        color:  const Color(0xFFDFDDDF),
+                                        borderRadius: BorderRadius.circular(15),
+
+                                      ),
+                                    ).animate(onPlay: (controller) => controller.repeat())
+                                        .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                        .animate(); // this wraps the previous Animate in another Animate
+
+
+                                  },
+                                  errorWidget: (context, url, error){
+                                    return SizedBox(
+                                      width:Get.width,
+                                      height:Get.height*0.16,
+                                      child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.contain,),
+                                    );
+                                  },
+                                ),
+                              );
+
+                            }
+                        ).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+            update();
+          }
+        }
+      }
+
+    }else{
+      showWarningFavorite(context);
+    }
+  }
+  showWarningFavorite(context){
+    showDialog(context: context,
+        builder: (context) {
+          return YesOrNoDialogue(alertText: 'لا تستطيع اضافه إلى قائمه المفضله إلا عند تسجيل دخول الحساب', alertTitle: 'لايمكنك اضافه إلى قائمه المفضله', alertYesButtonTitle: 'أنشاء حساب', alertNoButtonTitle: 'تسجيل حساب', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
+            Get.to(()=>const SignupScreen());
+          }, alertNoButtonFunction: (){
+            Get.to(()=>LoginScreen());
+          }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height*0.6);
+        });
+  }
   getSubCategoryData() async {
-    subCategoryList = await CategoryServices.getSupCategory(mainCategoryId);
-    categoryIsLoading = false;
-    update();
+    if(selectedMainCategoryId!=240){
+      subCategoryList = await CategoryServices.getSupCategory(selectedMainCategoryId);
+      categoryIsLoading = false;
+      update();
+    }else{
+      subCategoryList = await CategoryServices.getSupCategory(mainCategoryId);
+      categoryIsLoading = false;
+      update();
+    }
+
   }
   getAdvertisementsData() async {
-    advertList = await AdvertisementServices.getAdvertisements(mainCategoryId);
-    await  getProductData();
-    advertisementsIsLoading = false;
-    update();
+    if(selectingFromDrawer){
+      advertList = await AdvertisementServices.getAdvertisements(selectedMainCategoryId);
+      await  getProductData(true);
+      advertisementsIsLoading = false;
+      update();
+    }else{
+      advertList = await AdvertisementServices.getAdvertisements(mainCategoryId);
+      await  getProductData(true);
+      advertisementsIsLoading = false;
+      update();
+    }
+
   }
   selectingAnotherSubCategory(int subCategoryId){
     selectedSubCategoryId = subCategoryId;
-    getProductData();
+
+    getAdvertisementsData();
   }
   selectingAdvertisements(String link,int advertisementsId) async {
     await AdvertisementServices.advertisementsHasBeenViewed("$advertisementsId");
@@ -72,27 +501,36 @@ class ProductController extends GetxController {
     throw Exception('Could not launch $url');
     }
   }
-  fillingData(){
+  fillingData()  async {
     products = [];
 print("hi from fill data${productList?.length}");
-
-
       for (int i = 0; i <= productList!.length-1; i=i+2) {
         if(i<productList!.length-1){
 
           print("hi from fill data${productList?.length}");
+          var checker =await checkProductAddedOrNet("${productList?[i].id}");
+          var checker1 =await checkProductAddedOrNet("${productList?[i+1].id}");
           products.add(
-            Row(
-                mainAxisAlignment:MainAxisAlignment.spaceAround,
-              children:[
-                ProductWidget(product:productList?[i]),
-                ProductWidget(product:productList?[i+1])
-              ]
+            Padding(
+              padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+              child: Row(
+                  mainAxisAlignment:MainAxisAlignment.spaceAround,
+                children:[
+             ProductWidget(product:productList?[i], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                    addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,true);
+                  }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
+
+                 ProductWidget(product:productList?[i+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
+                    addingOrRemovingProductToFavorite(context,"${productList?[i+1].id}",i,true);
+                  }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                ]
+              ),
             )
           );
 
         }
         else{
+          var checker =await checkProductAddedOrNet("${productList?[i].id}");
           products.add(
               Column(
                 children: [
@@ -101,13 +539,15 @@ print("hi from fill data${productList?.length}");
                       children:[
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ProductWidget(product:productList?[i]),
+                          child: ProductWidget(product:productList?[i], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                            addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,false);
+                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
                         ),
 
                       ]
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(15.0,5.0,15.0,5.0),
+                  advertList?.length !=0?Padding(
+                    padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
                     child: Container(
                       height: Get.height*0.2,
                       width:Get.width,
@@ -177,87 +617,94 @@ print("hi from fill data${productList?.length}");
                         ),
                       ),
                     ),
-                  ),
+                  ):const SizedBox(),
                 ],
               )
           );
         }
-        if(i%4==0&&i!=0||productList!.length == 2){
+        if(i%2==0&&i!=0||productList!.length == 2){
           print(i);
-          products.add(
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15.0,5.0,15.0,5.0),
-              child: Container(
-                height: Get.height*0.2,
-                width:Get.width,
-                color:Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CarouselSlider(
-                    options:  CarouselOptions(
-                        height: Get.height*0.19,
-                        aspectRatio: 2.0,
-                        enlargeCenterPage: false,
-                        viewportFraction: 1,
-                        autoPlay: true),
+          if(advertList?.length !=0) {
+            products.add(
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
+                child: Container(
+                  height: Get.height * 0.2,
+                  width: Get.width,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                          height: Get.height * 0.19,
+                          aspectRatio: 2.0,
+                          enlargeCenterPage: false,
+                          viewportFraction: 1,
+                          autoPlay: true),
 
-                    items: advertList?.map(
-                            (e){
-                          return InkWell(
-                            onTap:(){
-                              selectingAdvertisements(e.link??"",e.id??0);
-                            },
-                            child:CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              imageUrl: "https://cake.syncqatar.com${e.img??""}",
-                              imageBuilder: ((context, image){
-                                return  ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Container(
-                                      width:Get.width,
-                                      height:Get.height*0.16,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: image,
-                                          fit:  BoxFit.cover,
-                                        ),
-                                      )
-                                  ),
-                                );
-                              }),
-                              placeholder: (context, image){
-                                return   Container(
-
-                                  width:Get.width,
-                                  height:Get.height*0.16,
-                                  decoration:BoxDecoration(
-                                    color:  const Color(0xFFDFDDDF),
+                      items: advertList?.map(
+                              (e) {
+                            return InkWell(
+                              onTap: () {
+                                selectingAdvertisements(
+                                    e.link ?? "", e.id ?? 0);
+                              },
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: "https://cake.syncqatar.com${e.img ??
+                                    ""}",
+                                imageBuilder: ((context, image) {
+                                  return ClipRRect(
                                     borderRadius: BorderRadius.circular(15),
+                                    child: Container(
+                                        width: Get.width,
+                                        height: Get.height * 0.16,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: image,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )
+                                    ),
+                                  );
+                                }),
+                                placeholder: (context, image) {
+                                  return Container(
 
-                                  ),
-                                ).animate(onPlay: (controller) => controller.repeat())
-                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                    .animate(); // this wraps the previous Animate in another Animate
+                                    width: Get.width,
+                                    height: Get.height * 0.16,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      borderRadius: BorderRadius.circular(15),
+
+                                    ),
+                                  ).animate(onPlay: (controller) =>
+                                      controller.repeat())
+                                      .shimmer(duration: 1200.ms,
+                                      color: kDarkPinkColor.withAlpha(10))
+                                      .animate(); // this wraps the previous Animate in another Animate
 
 
-                              },
-                              errorWidget: (context, url, error){
-                                return SizedBox(
-                                  width:Get.width,
-                                  height:Get.height*0.16,
-                                  child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.contain,),
-                                );
-                              },
-                            ),
-                          );
-
-                        }
-                    ).toList(),
+                                },
+                                errorWidget: (context, url, error) {
+                                  return SizedBox(
+                                    width: Get.width,
+                                    height: Get.height * 0.16,
+                                    child: Image.asset(
+                                      "assets/images/logo sprinkles.png",
+                                      fit: BoxFit.contain,),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                      ).toList(),
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
+            );
+          }
         }
       }
     }
