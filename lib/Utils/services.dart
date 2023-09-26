@@ -1,10 +1,11 @@
 
 
 class Services {
- static String baseEndPoint = "https://cake.syncqatar.com/api/";
+ static String baseEndPoint = "http://sprinkles-qa.com";
  static String categoryEndPoint = "ctg"; //Post
  static String shopEndPoint = "shop"; //Post
  static String productEndPoint = "item"; //Post
+ static String mainCategoryDataProductEndPoint = "ctg/view"; //Post
  static String shopDetailedEndPoint = "shop/view"; //Post
  static String productDetailedEndPoint = "item/view"; //Post
  static String advertismentEndPoint = "slider"; //Post
@@ -19,7 +20,7 @@ class Services {
  static String getShopIsInFavoriteOrNotEndPoint = "sfavorite/check"; //Post
  static String addOrRemoveShopToFavoriteEndPoint = "sfavorite/new"; //Post
  static String deleteUserAccountEndPoint = "member_delete"; //Post
- static String orderingProductEndPoint = "order/new"; //Post
+ static String orderingProductEndPoint = "item/form"; //Post
  static String getFavoriteProductDataEndPoint = "ifavorite"; //Post
  static String getProductsInFavoriteOrNotEndPoint = "ifavorite/check"; //Post
  static String addOrRemoveProductToFavoriteEndPoint = "ifavorite/new"; //Post

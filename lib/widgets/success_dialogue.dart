@@ -84,7 +84,7 @@ class SuccessDialogue extends StatelessWidget {
                                       fontSize: 18,
                                       letterSpacing: 0,
                                       fontFamily: fontFamilyArabicName,
-                                      color: kBackGroundColor,
+                                      color: kDarkPinkColor,
                                     ),
                                   ),
                                 ),

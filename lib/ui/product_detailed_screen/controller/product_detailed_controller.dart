@@ -1,7 +1,6 @@
 // ignore_for_file: empty_catches
 
 import 'dart:io';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,12 +13,10 @@ import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/services/product_service.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
-import 'package:sprinkles/ui/product_screen/controller/product_contoller.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/widgets/alert_dialogue.dart';
 import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../../Utils/colors.dart';
 
 class ProductDetailedController extends GetxController{
@@ -37,30 +34,38 @@ class ProductDetailedController extends GetxController{
   ProductDetailedController(this.productId, this.mainCategoryId, this.branchCategoryId,);
   final int mainCategoryId;
   final int branchCategoryId;
+  int selectedProductId = 24543;
   @override
-
   Future<void> onInit() async {
     super.onInit();
-    checkProductAddedOrNet();
+
     getProductData();
   }
    checkProductsAddedOrNet(String productId) async {
-    FavoriteStatusModel? data = await  FavoriteServices.getProductIsInFavoriteOrNot(productId);
-    if(data == 1){
-      checker = true;
-    }else{
-      checker = false;
-    }
-
+     if(Get.find<StorageService>().checkUserIsSignedIn) {
+       FavoriteStatusModel? data = await FavoriteServices
+           .getProductIsInFavoriteOrNot(productId);
+       if (data == 1) {
+         checker = true;
+       } else {
+         checker = false;
+       }
+     }else{
+       checker = false;
+     }
   }
    checkerProductsAddedOrNet(String productId) async {
-    FavoriteStatusModel? data = await  FavoriteServices.getProductIsInFavoriteOrNot(productId);
-    if(data == 1){
-      return true;
-    }else{
-      return false;
-    }
-
+     if(Get.find<StorageService>().checkUserIsSignedIn) {
+       FavoriteStatusModel? data = await FavoriteServices
+           .getProductIsInFavoriteOrNot(productId);
+       if (data == 1) {
+         return true;
+       } else {
+         return false;
+       }
+     }else{
+       return false;
+     }
   }
   addingOrRemovingProductsToFavorite(context,String productId) async {
     if(Get.find<StorageService>().checkUserIsSignedIn){
@@ -126,13 +131,36 @@ class ProductDetailedController extends GetxController{
       showWarningFavorite(context);
     }
   }
+  selectingAnotherItem(int itemId ){
+    selectedProductId = itemId;
+    update();
+    getProductData();
+  }
   getProductData() async {
     productIsLoading = true;
     update();
-    productData =
-    await ProductServices.getProductDetails( productId);
-    productsList = await ProductServices.getProductsSimilarToProductDetailedShown(mainCategoryId,branchCategoryId,"${productData?.shop?.id??0}");
+    if(selectedProductId != 24543){
+      productData =
+      await ProductServices.getProductDetails("$selectedProductId");
+      productsList =
+      await ProductServices.getProducts(mainCategoryId, productData?.ctg?.id??0, "0");
+      productsList?.removeWhere((element)=>
+      element.id == selectedProductId
+      );
+    }else {
+      productData =
+      await ProductServices.getProductDetails(productId);
+      productsList =
+      await ProductServices.getProducts(mainCategoryId, productData?.ctg?.id??0, "0");
+      productsList?.removeWhere((element)=>
+        "${element.id}" == productId
+      );
+    }
+
     makingDotsForCarouselSlider();
+    if(Get.find<StorageService>().checkUserIsSignedIn) {
+      checkProductAddedOrNet();
+    }
     messageTextWhatsApp = " في تطبيق sprinkles وأريد عمل اوردر ${Get.find<StorageService>().activeLocale == SupportedLocales.english?productData?.nameEn??"":productData?.name??""}رأيت هذا ال";
     productIsLoading = false;
     update();
@@ -140,7 +168,7 @@ class ProductDetailedController extends GetxController{
   showWarningFavorite(context){
     showDialog(context: context,
         builder: (context) {
-      return YesOrNoDialogue(alertText: 'لا تستطيع اضافه إلى قائمه المفضله إلا عند تسجيل دخول الحساب', alertTitle: 'لايمكنك اضافه إلى قائمه المفضله', alertYesButtonTitle: 'أنشاء حساب', alertNoButtonTitle: 'تسجيل حساب', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
+      return YesOrNoDialogue(alertText: 'لا تستطيع اضافه إلى قائمه المفضله إلا عند تسجيل دخول الحساب', alertTitle: 'لايمكنك اضافه إلى قائمه المفضله', alertYesButtonTitle: 'إنشاء حساب', alertNoButtonTitle: 'تسجيل دخول', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
         Get.to(()=>const SignupScreen());
       }, alertNoButtonFunction: (){
         Get.to(()=>LoginScreen());

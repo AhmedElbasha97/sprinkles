@@ -130,15 +130,18 @@ class TermsScreen extends StatelessWidget {
             ? const Loader()
             : ListView(
           children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: CustomText(Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.termsData?.titleEn??"":controller.termsData?.title??"",
-                  style:  TextStyle(
-                      fontFamily: Get.find<StorageService>().activeLocale == SupportedLocales.english?fontFamilyEnglishName:fontFamilyArabicName,
-                      color: kDarkPinkColor,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 20),),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: CustomText(Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.termsData?.titleEn??"":controller.termsData?.title??"",
+                    style:  TextStyle(
+                        fontFamily: Get.find<StorageService>().activeLocale == SupportedLocales.english?fontFamilyEnglishName:fontFamilyArabicName,
+                        color: kDarkPinkColor,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20),),
+                ),
               ),
             ),
             Padding(
@@ -149,7 +152,7 @@ class TermsScreen extends StatelessWidget {
                   "body": Style(
                     fontFamily: Get.find<StorageService>().activeLocale == SupportedLocales.english?fontFamilyEnglishName:fontFamilyArabicName,
                     color: kDarkPinkColor,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w600,
                     fontSize: FontSize(20),
                   ),
                 },),

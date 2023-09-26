@@ -210,7 +210,8 @@ class SignUpController extends GetxController{
         await Get.find<StorageService>().saveAccountId("${data?.info?.id??0}");
         Get.back();
         Get.back();
-      }else{
+      }
+      else{
         signingUp = false;
         update();
         showDialog(context: context,

@@ -8,6 +8,7 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/models/category_model.dart';
 import 'package:sprinkles/ui/product_screen/product_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
@@ -93,7 +94,7 @@ class HomeWidget extends StatelessWidget {
               left:0,
               child: CachedNetworkImage(
                 fit: BoxFit.cover,
-                imageUrl: "https://cake.syncqatar.com${category?.img??""}",
+                imageUrl: "${Services.baseEndPoint}${category?.img??""}",
                 imageBuilder: ((context, image){
                   return   Container(
                     height: Get.height*0.15,

@@ -11,6 +11,7 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/models/shops_model.dart';
@@ -113,7 +114,7 @@ class StoreWidget extends StatelessWidget {
               child: Center(
                 child: CachedNetworkImage(
                   fit: BoxFit.contain,
-                  imageUrl: "https://cake.syncqatar.com${store?.image??""}",
+                  imageUrl: "${Services.baseEndPoint}${store?.image??""}",
                   imageBuilder: ((context, image){
                     return  ClipRRect(
                       borderRadius: BorderRadius.circular(15),
@@ -121,6 +122,7 @@ class StoreWidget extends StatelessWidget {
                           height: Get.height*0.09,
                           width: Get.width*0.17,
                           decoration: BoxDecoration(
+                            shape: BoxShape.circle,
                             image: DecorationImage(
                               image: image,
                               fit: BoxFit.contain,
@@ -241,10 +243,49 @@ class StoreWidget extends StatelessWidget {
                               onTap:(){
                                 Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
                               },
-                              child: SizedBox(
+                              child: Container(
                                 height: Get.height*0.04,
                                 width: Get.width*0.2,
-                                child: Image.asset("assets/icons/more.png",fit: BoxFit.fitWidth,),
+                                decoration: BoxDecoration(
+                                  color:const  Color(0xFFF3BED0).withAlpha(70),
+                                  border:  const Border(
+                                    bottom:BorderSide( color:kDarkPinkColor,width: 2,),
+                                    top:BorderSide( color:kDarkPinkColor,width: 2),
+                                    right:BorderSide( color:kDarkPinkColor,width: 7),
+                                    left:BorderSide( color:kDarkPinkColor,width: 2),
+
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      offset: const Offset(
+                                        0.0,
+                                        0.0,
+                                      ),
+                                      blurRadius: 13.0,
+                                      spreadRadius: 2.0,
+                                    ), //BoxShadow
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.2),
+                                      offset: const Offset(0.0, 0.0),
+                                      blurRadius: 0.0,
+                                      spreadRadius: 0.0,
+                                    ), //BoxShadow
+                                  ],
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: const Center(
+                                  child: CustomText(
+                                    'المزيد',
+                                    style: TextStyle(
+                                      height: 1.3,
+                                      fontSize: 12,
+                                      letterSpacing: 0,
+                                      fontFamily: fontFamilyArabicName,
+                                      color:Color(0xFF641B46),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             InkWell(
@@ -252,7 +293,7 @@ class StoreWidget extends StatelessWidget {
                                 _makePhoneCall(store?.phone??"");
                               },
                               child: SizedBox(
-                                height: Get.height*0.065,
+                                height: Get.height*0.03,
                                 width: Get.width*0.08,
                                 child: Image.asset("assets/icons/c.png",fit: BoxFit.fitHeight,),
                               ),
@@ -262,7 +303,7 @@ class StoreWidget extends StatelessWidget {
                                 whatsapp(store?.whatsapp??"");
                                 },
                               child: SizedBox(
-                                height: Get.height*0.065,
+                                height: Get.height*0.03,
                                 width: Get.width*0.08,
                                 child: Image.asset("assets/icons/w.png",fit: BoxFit.fitHeight,),
                               ),

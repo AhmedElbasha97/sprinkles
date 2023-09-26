@@ -129,34 +129,38 @@ class PrivacyPolicyScreen extends StatelessWidget {
             ),
             body: controller.loading
                 ? const Loader()
-                : ListView(
+                : Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: ListView(
               children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: CustomText(Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.privacyData?.titleEn??"":controller.privacyData?.title??"",
-                      style:  TextStyle(
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: CustomText(Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.privacyData?.titleEn??"":controller.privacyData?.title??"",
+                        style:  TextStyle(
+                            fontFamily: Get.find<StorageService>().activeLocale == SupportedLocales.english?fontFamilyEnglishName:fontFamilyArabicName,
+                            color: kDarkPinkColor,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20),),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Html(
+                      data: Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.privacyData?.descEn??"":controller.privacyData?.desc??"",
+                      style: {
+                        "body": Style(
                           fontFamily: Get.find<StorageService>().activeLocale == SupportedLocales.english?fontFamilyEnglishName:fontFamilyArabicName,
                           color: kDarkPinkColor,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20),),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Html(
-                    data: Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.privacyData?.descEn??"":controller.privacyData?.desc??"",
-                    style: {
-                      "body": Style(
-                        fontFamily: Get.find<StorageService>().activeLocale == SupportedLocales.english?fontFamilyEnglishName:fontFamilyArabicName,
-                        color: kDarkPinkColor,
-                        fontWeight: FontWeight.w800,
-                        fontSize: FontSize(20),
-                      ),
-                    },),
-                )
+                          fontWeight: FontWeight.w600,
+
+                          fontSize: FontSize(20),
+                        ),
+                      },),
+                  )
               ],
             ),
+                ),
           ),
     );
   }

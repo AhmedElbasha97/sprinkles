@@ -1,28 +1,56 @@
-// ignore_for_file: prefer_const_constructors
+import 'dart:async';
+import 'dart:io';
 
-import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
-import 'package:sprinkles/ui/home_screen/home_screen.dart';
-import 'package:sprinkles/widgets/network_error_item.dart';
 
-class NetworkStatusService extends GetxService {
-  NetworkStatusService() {
-    DataConnectionChecker().onStatusChange.listen(
-          (status) async {
-        _getNetworkStatus(status);
-      },
-    );
+class ConnectionService extends GetxService {
+  ConnectionService();
+
+  final _connectivity = Connectivity();
+  final RxBool hasConnection = false.obs;
+  late StreamSubscription<ConnectivityResult> _subscription;
+
+  static Future<ConnectionService> init() async {
+    final ConnectionService service = ConnectionService();
+
+    //subscribe to connection change
+    service._subscription = service._connectivity.onConnectivityChanged
+        .listen(service._onConnectionChange);
+
+    return service;
   }
 
-  void _getNetworkStatus(DataConnectionStatus status) {
-    if (status == DataConnectionStatus.connected) {
-      _validateSession(); //after internet connected it will redirect to home page
-    } else {
-      Get.dialog(NetworkErrorItem(), useSafeArea: false); // If internet loss then it will show the NetworkErrorItem widget
+  void _onConnectionChange(ConnectivityResult resul) {
+    //Check if connected
+    _checkConnection();
+  }
+
+  Future<void> _checkConnection() async {
+    final bool oldConnectionStatus = hasConnection.value;
+    bool newConnectionStatus;
+
+    try {
+      final List<InternetAddress> result =
+      await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        newConnectionStatus = true;
+      } else {
+        newConnectionStatus = false;
+      }
+    } on SocketException {
+      newConnectionStatus = false;
+    }
+
+    if (oldConnectionStatus != newConnectionStatus) {
+      hasConnection(newConnectionStatus);
     }
   }
 
-  void _validateSession() {
-    Get.to(()=>const HomeScreen());
+  @override
+  void onClose() {
+    _subscription.cancel();
+
+    super.onClose();
   }
 }

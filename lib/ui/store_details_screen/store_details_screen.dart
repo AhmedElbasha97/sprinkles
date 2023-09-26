@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_loading_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
@@ -304,6 +305,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                         height: Get.height*0.15,
                                         width: Get.width*0.33,
                                         decoration:BoxDecoration(
+
                                           color:  const Color(0xFFF2F0F3),
                                           borderRadius: BorderRadius.circular(50),
                                           boxShadow: [
@@ -344,12 +346,13 @@ class StoreDetailedScreen extends StatelessWidget {
                                           .animate() // this wraps the previous Animate in another Animate
                                           :CachedNetworkImage(
                                         fit:  BoxFit.contain,
-                                        imageUrl: "https://cake.syncqatar.com${controller.shopData?.image??""}",
+                                        imageUrl: "${Services.baseEndPoint}${controller.shopData?.image??""}",
                                         imageBuilder: ((context, image){
                                           return   Container(
                                               height: Get.height*0.15,
                                               width: Get.width*0.33,
                                               decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
                                                 image: DecorationImage(
                                                   image: image,
                                                   fit:  BoxFit.contain,
@@ -420,284 +423,189 @@ class StoreDetailedScreen extends StatelessWidget {
 
                       ]
                   ),
-                  Column(
-                    children: [
+
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
 
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0,0,8.0,0),
-                            child: InkWell(
-                              onTap:() async {
-                                await controller.makePhoneCall();
-                              },
-                              child: Container(
-                                height: Get.height*0.05,
-                                width:Get.width*0.45,
-                                decoration: BoxDecoration(
-                                  color:Colors.white,
-                                  border: Border.all( color:kDarkPinkColor,width: 1),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      offset: const Offset(
-                                        0.0,
-                                        0.0,
-                                      ),
-                                      blurRadius: 13.0,
-                                      spreadRadius: 2.0,
-                                    ), //BoxShadow
-                                    BoxShadow(
-                                      color: Colors.white.withOpacity(0.2),
-                                      offset: const Offset(0.0, 0.0),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
-                                    ), //BoxShadow
-                                  ],
-                                  borderRadius: BorderRadius.circular(15), //
-                                ),
-                                child:  Center(
-                                  child:  Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Row(
-                                      mainAxisAlignment:MainAxisAlignment.center,
-                                      children: [
-                                        CustomText(
-                                          'تواصل عن طريق الهاتف',
-                                          style: TextStyle(
-                                            shadows: <Shadow>[
-                                              Shadow(
-                                                  offset: const Offset(0.5, 0.5),
-                                                  blurRadius: 0.5,
-
-                                                  color: Colors.black.withOpacity(0.5)
-                                              ),
-                                            ],
-                                            fontSize: 12,
-                                            letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
-                                            color: kDarkPinkColor,
-                                          ),
-                                        ),
-                                        const SizedBox(width:5),
-                                        const Icon(Icons.phone,color: kDarkPinkColor,size:18)
-                                      ],
-                                    ),
+                          Container(
+                           decoration: BoxDecoration(
+                             gradient: LinearGradient(
+                               begin: Alignment.topCenter,
+                               end: Alignment.bottomCenter,
+                               colors: [kDarkPinkColor,kLightPinkColor],
+                             ),
+                              border: Border.all(  color:Colors.white,width: 1),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  offset: const Offset(
+                                    0.0,
+                                    0.0,
                                   ),
-
+                                  blurRadius: 13.0,
+                                  spreadRadius: 2.0,
+                                ), //BoxShadow
+                                BoxShadow(
+                                  color: Colors.white.withOpacity(0.2),
+                                  offset: const Offset(0.0, 0.0),
+                                  blurRadius: 0.0,
+                                  spreadRadius: 0.0,
+                                ), //BoxShadow
+                              ],
+                              borderRadius: BorderRadius.circular(50), //
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: InkWell(
+                                onTap:() async {
+                                  await controller.makePhoneCall();
+                                },
+                                child:  SizedBox(
+                                  height: Get.height*0.045,
+                                  width:Get.width*0.089,
+                                  child: Image.asset("assets/icons/c.png",fit: BoxFit.fitHeight,),
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0,0,8.0,0),
-                            child: InkWell(
-                              onTap:(){
-                                controller.whatsapp();
-                              },
-                              child: Container(
-                                height: Get.height*0.05,
-                                width:Get.width*0.45,
-                                decoration: BoxDecoration(
-                                  color:Colors.white,
-                                  border: Border.all( color:kDarkPinkColor,width: 1),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      offset: const Offset(
-                                        0.0,
-                                        0.0,
-                                      ),
-                                      blurRadius: 13.0,
-                                      spreadRadius: 2.0,
-                                    ), //BoxShadow
-                                    BoxShadow(
-                                      color: Colors.white.withOpacity(0.2),
-                                      offset: const Offset(0.0, 0.0),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
-                                    ), //BoxShadow
-                                  ],
-                                  borderRadius: BorderRadius.circular(15), //
-                                ),
-                                child:  Center(
-                                  child:  Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Row(
-                                      mainAxisAlignment:MainAxisAlignment.center,
-                                      children: [
-                                        CustomText(
-                                          'تواصل عن طريق الواتس',
-                                          style: TextStyle(
-                                            shadows: <Shadow>[
-                                              Shadow(
-                                                  offset: const Offset(0.5, 0.5),
-                                                  blurRadius: 0.5,
-
-                                                  color: Colors.black.withOpacity(0.5)
-                                              ),
-                                            ],
-                                            fontSize: 12,
-                                            letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
-                                            color: kDarkPinkColor,
-                                          ),
-                                        ),
-                                        const SizedBox(width:5),
-                                        const Icon(Icons.chat,color: kDarkPinkColor,size:18)
-                                      ],
-                                    ),
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [kDarkPinkColor,kLightPinkColor],
+                              ),
+                              border: Border.all(  color:Colors.white,width: 1),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  offset: const Offset(
+                                    0.0,
+                                    0.0,
                                   ),
-
+                                  blurRadius: 13.0,
+                                  spreadRadius: 2.0,
+                                ), //BoxShadow
+                                BoxShadow(
+                                  color: Colors.white.withOpacity(0.2),
+                                  offset: const Offset(0.0, 0.0),
+                                  blurRadius: 0.0,
+                                  spreadRadius: 0.0,
+                                ), //BoxShadow
+                              ],
+                              borderRadius: BorderRadius.circular(50), //
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: InkWell(
+                                onTap:(){
+                                  controller.whatsapp();
+                                },
+                                child: SizedBox(
+                                  height: Get.height*0.045,
+                                  width:Get.width*0.089,
+                                  child: Image.asset("assets/icons/w.png",fit: BoxFit.fitHeight,),
                                 ),
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [kDarkPinkColor,kLightPinkColor],
+                              ),
+                              border: Border.all(  color:Colors.white,width: 1),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  offset: const Offset(
+                                    0.0,
+                                    0.0,
+                                  ),
+                                  blurRadius: 13.0,
+                                  spreadRadius: 2.0,
+                                ), //BoxShadow
+                                BoxShadow(
+                                  color: Colors.white.withOpacity(0.2),
+                                  offset: const Offset(0.0, 0.0),
+                                  blurRadius: 0.0,
+                                  spreadRadius: 0.0,
+                                ), //BoxShadow
+                              ],
+                              borderRadius: BorderRadius.circular(50), //
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: InkWell(
+                                onTap:(){
+                                  controller.addingOrRemovingStoreToFavorite(context);
+                                },
+                                child: Container(
+                                    height: Get.height*0.045,
+                                    width:Get.width*0.089,
+                                    decoration: BoxDecoration(
+                                      color:kLightPinkColor,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: Center(
+                                      child:controller.storeAreAddedOrNot?const Icon(
+                                          Icons.favorite,
+                                          color: Colors.white,
+                                          size:20
+                                      ):const Icon(
+                                          Icons.favorite_border_rounded,
+                                          color: Colors.white,
+                                          size:20
+                                      ),
+                                    )
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [kDarkPinkColor,kLightPinkColor],
+                              ),
+                              border: Border.all( color:Colors.white,width: 1),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  offset: const Offset(
+                                    0.0,
+                                    0.0,
+                                  ),
+                                  blurRadius: 13.0,
+                                  spreadRadius: 2.0,
+                                ), //BoxShadow
+                                BoxShadow(
+                                  color: Colors.white.withOpacity(0.2),
+                                  offset: const Offset(0.0, 0.0),
+                                  blurRadius: 0.0,
+                                  spreadRadius: 0.0,
+                                ), //BoxShadow
+                              ],
+                              borderRadius: BorderRadius.circular(50), //
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: InkWell(
+                                onTap:(){
+                                  controller.showStoreLocation();
+                                },
+                                child:  const Icon(Icons.pin_drop_outlined,color: Colors.white,size:30)
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height:10),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0,0,8.0,0),
-                            child: InkWell(
-                              onTap:(){
-                                controller.addingOrRemovingStoreToFavorite(context);
-                              },
-                              child: Container(
-                                height: Get.height*0.05,
-                                width:Get.width*0.45,
-                                decoration: BoxDecoration(
-                                  color:Colors.white,
-                                  border: Border.all( color:kDarkPinkColor,width: 1),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      offset: const Offset(
-                                        0.0,
-                                        0.0,
-                                      ),
-                                      blurRadius: 13.0,
-                                      spreadRadius: 2.0,
-                                    ), //BoxShadow
-                                    BoxShadow(
-                                      color: Colors.white.withOpacity(0.2),
-                                      offset: const Offset(0.0, 0.0),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
-                                    ), //BoxShadow
-                                  ],
-                                  borderRadius: BorderRadius.circular(15), //
-                                ),
-                                child:  Center(
-                                  child:  Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Row(
-                                        mainAxisAlignment:MainAxisAlignment.center,
-                                        children:[
 
-                                          CustomText(
-                                            controller.storeAreAddedOrNot?"امسح من المفضله":'أضف إلى المفضلة',
-                                            textAlign:TextAlign.left,
-                                            style: TextStyle(
-                                              shadows: <Shadow>[
-                                                Shadow(
-                                                    offset: const Offset(0.5, 0.5),
-                                                    blurRadius: 0.5,
-
-                                                    color: Colors.black.withOpacity(0.5)
-                                                ),
-                                              ],
-                                              fontSize: 12,
-                                              letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
-                                              color: kDarkPinkColor,
-                                            ),
-                                          ),
-                                          controller.storeAreAddedOrNot? const Icon(
-                                            Icons.favorite_border_rounded,
-                                            color: kDarkPinkColor,
-                                          ): const Icon(
-                                            Icons.favorite,
-                                            color: kDarkPinkColor,
-                                          ),
-                                        ]
-
-                                    ),
-                                  ),
-
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0,0,8.0,0),
-                            child: InkWell(
-                              onTap:(){
-                                controller.showStoreLocation();
-                              },
-                              child: Container(
-                                height: Get.height*0.05,
-                                width:Get.width*0.45,
-                                decoration: BoxDecoration(
-                                  color:Colors.white,
-                                  border: Border.all( color:kDarkPinkColor,width: 1),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      offset: const Offset(
-                                        0.0,
-                                        0.0,
-                                      ),
-                                      blurRadius: 13.0,
-                                      spreadRadius: 2.0,
-                                    ), //BoxShadow
-                                    BoxShadow(
-                                      color: Colors.white.withOpacity(0.2),
-                                      offset: const Offset(0.0, 0.0),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
-                                    ), //BoxShadow
-                                  ],
-                                  borderRadius: BorderRadius.circular(15), //
-                                ),
-                                child:  Center(
-                                  child:  Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Row(
-                                      mainAxisAlignment:MainAxisAlignment.center,
-                                      children: [
-                                        CustomText(
-                                          'عرض موقع المحل',
-                                          style: TextStyle(
-                                            shadows: <Shadow>[
-                                              Shadow(
-                                                  offset: const Offset(0.5, 0.5),
-                                                  blurRadius: 0.5,
-
-                                                  color: Colors.black.withOpacity(0.5)
-                                              ),
-                                            ],
-                                            fontSize: 12,
-                                            letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
-                                            color: kDarkPinkColor,
-                                          ),
-                                        ),
-                                        const SizedBox(width:5),
-                                        const Icon(Icons.map,color: kDarkPinkColor,size:18)
-                                      ],
-                                    ),
-                                  ),
-
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
                  controller.shopIsLoading?const CategoryLoadingWidget():controller.shopData?.ctgs?.length == 0||controller.shopData?.ctgs?.length == 1? const SizedBox():Container(
                     width:Get.width*0.95,
                     height: Get.height*0.18,
@@ -729,8 +637,8 @@ class StoreDetailedScreen extends StatelessWidget {
                         const SizedBox(
                             height:50
                         ),
-                        const CustomText(
-                          'ليس هناك منتجات متوفره فى هذا المحل',
+                         CustomText(
+                          controller.shopData?.ctgs?.length == 0?'ليس هناك منتجات متوفره فى هذا المحل':'ليس هناك منتجات متوفره فى هذه فئة حتى الأن',
                           textAlign:TextAlign.center,
                           style: TextStyle(
                             fontSize:25,

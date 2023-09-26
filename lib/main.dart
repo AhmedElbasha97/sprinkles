@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
-import 'package:sprinkles/Utils/connection_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
-
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/transelation/app_transelation.dart';
 import 'package:sprinkles/services/network_status_service.dart';
@@ -18,7 +16,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Get.putAsync(() => StorageService.init(), permanent: true);
   Get.put(LocalizationService.init(), permanent: true);
-  Get.put<NetworkStatusService>(NetworkStatusService(), permanent: true);
   await Get.putAsync(() => ConnectionService.init(), permanent: true);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: kLightPinkColor, // navigation bar color

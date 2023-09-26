@@ -44,7 +44,7 @@ class StoreScreen extends StatelessWidget {
 
                       children:[
                         Container(
-                          height: Get.height*0.31,
+                          height: Get.height*0.33,
                           width:Get.width,
 
                         ),
@@ -213,7 +213,7 @@ class StoreScreen extends StatelessWidget {
                                         ),
                                         child:  Center(
                                           child:  Padding(
-                                            padding: const EdgeInsets.fromLTRB(8.0,5,8.0,5),
+                                            padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.007,8.0,Get.height*0.007),
                                             child: Row(
                                               mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                               children: [
@@ -234,7 +234,7 @@ class StoreScreen extends StatelessWidget {
                                                             color: Colors.black.withOpacity(0.5)
                                                         ),
                                                       ],
-                                                      fontSize: 12,
+                                                      fontSize: 15,
                                                       letterSpacing: 0,
                                                       fontFamily: fontFamilyArabicName,
                                                       color: kDarkPinkColor,

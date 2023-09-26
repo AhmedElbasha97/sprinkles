@@ -24,10 +24,10 @@ class DrawerTapWidget extends StatelessWidget {
           Positioned(
             bottom:Get.height*0.016,
             child: Padding(
-              padding:  EdgeInsets.symmetric(horizontal: Get.width*0.12),
+              padding:  EdgeInsets.symmetric(horizontal: Get.width*0.07),
               child: Container(
                 height: Get.height*0.05,
-                width:Get.width*0.55,
+                width:Get.width*0.6,
                 decoration: BoxDecoration(
                   border: Border.all( color:kBackGroundColor,width: 2),
                   boxShadow: [

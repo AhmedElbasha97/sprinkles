@@ -5,7 +5,6 @@ import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/ui/favorite_screen/controller/favorite_controller.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
 import 'package:sprinkles/ui/store%20_screen/widget/store_loading_widget.dart';
-import 'package:sprinkles/ui/store%20_screen/widget/store_widget.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 class FavoriteScreen extends StatelessWidget {

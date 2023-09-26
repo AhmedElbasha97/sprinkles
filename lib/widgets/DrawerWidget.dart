@@ -2,8 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/models/privacy_policy_model.dart';
+import 'package:sprinkles/models/response_model.dart';
+import 'package:sprinkles/services/auth_services.dart';
 import 'package:sprinkles/services/biomatrics_auth_services.dart';
 import 'package:sprinkles/ui/favorite_screen/favorite_screen.dart';
 import 'package:sprinkles/ui/home_screen/home_screen.dart';
@@ -15,6 +18,7 @@ import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/ui/splash_screen/splash_screen.dart';
 import 'package:sprinkles/ui/store%20_screen/store_screen.dart';
 import 'package:sprinkles/ui/term&condition/terms_screen.dart';
+import 'package:sprinkles/widgets/alert_dialogue.dart';
 import 'package:sprinkles/widgets/drawer_tap_widget.dart';
 import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import '../Utils/constant.dart';
@@ -112,8 +116,19 @@ class _AppDrawersState extends State<AppDrawers> {
 
               }, alertNoButtonFunction: () async {
                 if(await BiomatricsAuthService.authenticateUser("مسح الحساب")) {
+                  ResponseModel? data = await AuthServices.deleteUserAccount(Get.find<StorageService>().getId);
+                  if(data?.msg == "succeeded"){
+                    Get.find<StorageService>().loggingOut();
+                    Get.offAll(()=>const SplashScreen());
+                  }
+                  else{
+                    showDialog(context: context,
+                        builder: (context) {
+                          return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                        }
+                    );
+                  }
 
-                Get.find<StorageService>().loggingOut(); Get.offAll(()=>const SplashScreen());
                 }
               }, alertYesButtonIcon: 'assets/icons/logoutIcon.png', alertNoButtonIcon: 'assets/icons/deleteAccountIcon.png', alertIcon: 'assets/icons/logoutIcon.png',containerHeight:Get.height*0.57);
             });

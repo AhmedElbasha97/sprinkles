@@ -1,4 +1,4 @@
-package com.example.sprinkles
+package com.Sync.sprinkles
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine

@@ -11,6 +11,7 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/response_model.dart';
@@ -24,7 +25,7 @@ import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProductWidget extends StatelessWidget {
-  const ProductWidget({Key? key, this.product, required this.productAreAddedOrNot, required this.addingOrRemovingProductToFavorite, required this.mainCategoryId, required this.comingFromFavoriteList, required this.comingFromProductList, required this.comingFromProductDetails, required this.branchCategoryId}) : super(key: key);
+  const ProductWidget({Key? key, this.product, required this.productAreAddedOrNot, required this.addingOrRemovingProductToFavorite, required this.mainCategoryId, required this.comingFromFavoriteList, required this.comingFromProductList, required this.comingFromProductDetails, required this.branchCategoryId, this.productDetailsFunction,}) : super(key: key);
 final ProductsModel? product;
   final bool productAreAddedOrNot ;
   final Function addingOrRemovingProductToFavorite;
@@ -33,6 +34,7 @@ final ProductsModel? product;
   final bool comingFromFavoriteList;
   final bool comingFromProductList;
   final bool comingFromProductDetails;
+  final Function? productDetailsFunction;
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
       scheme: 'tel',
@@ -62,11 +64,21 @@ final ProductsModel? product;
   Widget build(BuildContext context) {
     return InkWell(
       onTap:(){
-        Get.to(()=> ProductDetailedScreen(productId: '${product?.id??0}', mainCategoryId: mainCategoryId, comingFromProductList: comingFromProductList, comingFromFavoriteList: comingFromFavoriteList, comingFromProductDetails: comingFromProductDetails, branchCategoryId: branchCategoryId,));
-      },
+        if(comingFromProductDetails){
+          productDetailsFunction!();
+        } else {
+          Get.to(() =>
+              ProductDetailedScreen(productId: '${product?.id ?? 0}',
+                mainCategoryId: mainCategoryId,
+                comingFromProductList: comingFromProductList,
+                comingFromFavoriteList: comingFromFavoriteList,
+                comingFromProductDetails: comingFromProductDetails,
+                branchCategoryId: branchCategoryId,));
+        }
+        },
       child: Container(
           width:Get.width*0.44,
-          height:Get.height*0.30,
+          height:Get.height*0.305,
           decoration: BoxDecoration(
             color:Colors.white,
             boxShadow: [
@@ -89,7 +101,7 @@ final ProductsModel? product;
             borderRadius: BorderRadius.circular(15),
           ),
           child:Padding(
-            padding: const EdgeInsets.symmetric(horizontal:8.0,vertical:8.0),
+            padding: const EdgeInsets.only(top:8.0,left:8.0,right: 8.0),
             child: Column(
                 children:[
                   Stack(
@@ -97,7 +109,7 @@ final ProductsModel? product;
 
                       CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: "https://cake.syncqatar.com${product?.images?[0]??""}",
+                        imageUrl: "${Services.baseEndPoint}${product?.images?[0]??""}",
                         imageBuilder: ((context, image){
                           return  ClipRRect(
                             borderRadius: BorderRadius.circular(15),
@@ -161,8 +173,8 @@ final ProductsModel? product;
                         },
                         errorWidget: (context, url, error){
                           return SizedBox(
-                            width:Get.width*0.38,
-                            height:Get.height*0.14,
+                            width:Get.width*0.4,
+                            height:Get.height*0.16,
                             child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
                           );
                         },
@@ -199,94 +211,119 @@ final ProductsModel? product;
                       ),
                     ],
                   ),
-                  Row(
-                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                      children:[
-                        Column(
-                          crossAxisAlignment:CrossAxisAlignment.start,
-                          mainAxisAlignment:MainAxisAlignment.start,
-                          children: [
-                             CustomText(
-                              Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.nameEn??"":product?.name??"",
-                              style: const TextStyle(
-                                height: 1.3,
-                                fontSize: 12,
-                                letterSpacing: 0,
-                                fontFamily: fontFamilyArabicName,
-                                color: Colors.black,
-                              ),
-                            ),
-                             CustomText(
-                              Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.descEn??"":product?.desc??"",
-                              style: const TextStyle(
-                                height: 1.3,
-                                fontSize: 12,
-                                letterSpacing: 0,
-                                fontFamily: fontFamilyArabicName,
-                                color: Colors.black,
-                              ),
-                            ),
-                             CustomText(
-                              " عدد الافراد ${product?.persons??0}",
-                              style: const TextStyle(
-                                height: 1.3,
-                                fontSize: 12,
-                                letterSpacing: 0,
-                                fontFamily: fontFamilyArabicName,
-                                color: Colors.black,
-                              ),
-                            ),
-                            RatingBar.builder(
-                              initialRating:double.parse("${product?.persons??0}"),
-                              minRating: 1,
-                              itemSize:15,
-                              direction: Axis.horizontal,
-                              ignoreGestures:true,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                              itemBuilder: (context, _) => const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
-                            ),
+                  Padding(
+                    padding: const EdgeInsets.only(top:8.0),
+                    child: Container(
+                      width:Get.width*0.44,
+                      child: Row(
 
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            InkWell(
-                              onTap:(){
-                                _makePhoneCall(product?.shop?.phone??"");
-                                },
-                              child: SizedBox(
-                                height: Get.height*0.03,
-                                width: Get.width*0.09,
-                                child: Image.asset("assets/icons/c.png",fit: BoxFit.cover,),
-                              ),
-                            ),
-                            InkWell(
-                              onTap:(){
-                                whatsapp(product?.shop?.whatsapp??"");
-                              },
-                              child: SizedBox(
-                                height: Get.height*0.03,
-                                width: Get.width*0.09,
-                                child: Image.asset("assets/icons/w.png",fit: BoxFit.cover,),
-                              ),
-                            ),
-                            SizedBox(
-                              height: Get.height*0.03,
-                              width: Get.width*0.09,
-                              child: Image.asset("assets/icons/s.png",fit: BoxFit.cover,),
-                            ),
+                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                          children:[
+                            Container(
+                              width:Get.width*0.3,
+                              child: Column(
+                                crossAxisAlignment:CrossAxisAlignment.start,
+                                mainAxisAlignment:MainAxisAlignment.start,
+                                children: [
+                                   CustomText(
+                                    Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.nameEn??"":product?.name??"",
+                                     maxLines: 1,
+                                    style: const TextStyle(
+                                      height: 1.3,
+                                      fontSize: 12,
+                                      letterSpacing: 0,
+                                      fontFamily: fontFamilyArabicName,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                   CustomText(
 
-                          ],
-                        ),
-                      ]),
+                                    Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.descEn??"":product?.desc??"",
+                                     maxLines: 1,
+                                    style: const TextStyle(
+
+                                      height: 1.3,
+                                      fontSize: 12,
+                                      letterSpacing: 0,
+                                      fontFamily: fontFamilyArabicName,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  CustomText(
+                                   "عدد الافراد ${product?.persons??0}",
+                                   maxLines: 1,
+                                   style: const TextStyle(
+                                     height: 1.3,
+                                     fontSize: 12,
+                                     letterSpacing: 0,
+                                     fontFamily: fontFamilyArabicName,
+                                     color: Colors.black,
+                                   ),
+                                  ),
+                                  RatingBar.builder(
+                                    initialRating:double.parse("${product?.persons??0}"),
+                                    minRating: 1,
+                                    itemSize:15,
+                                    direction: Axis.horizontal,
+                                    ignoreGestures:true,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding: const EdgeInsets.only(left: 2.0),
+                                    itemBuilder: (context, _) => const Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      print(rating);
+                                    },
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                            Column(
+
+                              children: [
+                                InkWell(
+                                  onTap:(){
+                                    _makePhoneCall(product?.shop?.phone??"");
+                                    },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 2.0),
+                                    child: SizedBox(
+                                      height: Get.height*0.025,
+                                      width: Get.width*0.09,
+                                      child: Image.asset("assets/icons/c.png",fit: BoxFit.fitHeight,),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap:(){
+                                    whatsapp(product?.shop?.whatsapp??"");
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 2,bottom: 2),
+                                    child: SizedBox(
+                                      height: Get.height*0.025,
+                                      width: Get.width*0.09,
+                                      child: Image.asset("assets/icons/w.png",fit: BoxFit.fitHeight,),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 3.0),
+                                  child: SizedBox(
+                                    height: Get.height*0.02,
+                                    width: Get.width*0.09,
+                                    child: Image.asset("assets/icons/s.png",fit: BoxFit.fitHeight,),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          ]),
+                    ),
+                  ),
                   Row(
                       mainAxisAlignment:MainAxisAlignment.spaceBetween,
                       children:[
@@ -294,7 +331,7 @@ final ProductsModel? product;
                           width:Get.width*0.18,
                           height:Get.height*0.028,
                           decoration: BoxDecoration(
-                            color:const  Color(0xFFf56893).withAlpha(70),
+                            color:const  Color(0xFFFFBDD2),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.1),
@@ -322,7 +359,7 @@ final ProductsModel? product;
                                 fontSize: 12,
                                 letterSpacing: 0,
                                 fontFamily: fontFamilyArabicName,
-                                color: kLightPinkColor,
+                                color:Color(0xFF641B46),
                               ),
                             ),
                           ),
@@ -331,7 +368,7 @@ final ProductsModel? product;
                           width:Get.width*0.18,
                           height:Get.height*0.028,
                           decoration: BoxDecoration(
-                            color:const  Color(0xFFf56893).withAlpha(70),
+                            color:const  Color(0xFFFFBDD2),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.1),
@@ -359,7 +396,7 @@ final ProductsModel? product;
                                 fontSize: 12,
                                 letterSpacing: 0,
                                 fontFamily: fontFamilyArabicName,
-                                color: kLightPinkColor,
+                                color:Color(0xFF641B46),
                               ),
                             ),
                           ),
