@@ -6,6 +6,7 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/term&condition/controller/term_and_condition_controller.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 import 'package:sprinkles/widgets/loader.dart';
@@ -37,7 +38,7 @@ class TermsScreen extends StatelessWidget {
               children: [
                 // Implement the stroke
                 CustomText(
-                  "الشروط والاحكام",
+                  drawerTag9.tr,
                   style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 0,
@@ -50,9 +51,9 @@ class TermsScreen extends StatelessWidget {
                   ),
                 ),
                 // The text inside
-                const CustomText(
-                  "الشروط والاحكام",
-                  style: TextStyle(
+                 CustomText(
+                  drawerTag9.tr,
+                  style: const TextStyle(
                     fontSize: 15,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w900,
@@ -100,7 +101,7 @@ class TermsScreen extends StatelessWidget {
                             Icons.arrow_back_ios_rounded  ,color:kDarkPinkColor,size:15
                         ),
                         CustomText(
-                          'رجوع',
+                          goBack.tr,
                           textAlign:TextAlign.left,
                           style: TextStyle(
                             height:1,

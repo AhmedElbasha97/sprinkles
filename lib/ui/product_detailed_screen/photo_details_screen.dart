@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:sprinkles/Utils/colors.dart';
+import 'package:sprinkles/Utils/services.dart';
 
 import '../../Utils/constant.dart';
 import '../../widgets/custom_text_widget.dart';
@@ -59,7 +60,7 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                   resetDuration:const Duration(milliseconds: 100000),
                 child: CachedNetworkImage(
                   color: Colors.grey.withOpacity(0.5),
-                  imageUrl:   "https://cake.syncqatar.com${widget.link?[activeIndex]??""}",
+                  imageUrl:   "${Services.baseEndPoint}${widget.link?[activeIndex]??""}",
                   imageBuilder: ((context, image){
                     return  Container(
                         width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,

@@ -4,6 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/siginup/controller/signup_controller.dart';
 import 'package:sprinkles/widgets/text_field_widget.dart';
@@ -29,7 +32,7 @@ class SignupScreen extends StatelessWidget {
               child: Column(
 
                 children:[
-                  Stack(
+                  Get.find<StorageService>().activeLocale == SupportedLocales.english?Stack(
                       children:[
                         Container(
                           height: Get.height*0.25,
@@ -65,10 +68,10 @@ class SignupScreen extends StatelessWidget {
                                       const SizedBox(
                                         width:10,
                                       ),
-                                      const Padding(
+                                      Padding(
                                         padding: EdgeInsets.fromLTRB(0,0,10.0,0),
                                         child: CustomText(
-                                          'مرحبًا',
+                                          greetingText.tr,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w900,
 
@@ -79,11 +82,11 @@ class SignupScreen extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      const Padding(
+                                      Padding(
                                         padding: EdgeInsets.fromLTRB(0,0,15.0,0),
                                         child: Center(
                                           child: CustomText(
-                                            'انشاء حساب',
+                                            signUpProfile.tr,
                                             style: TextStyle(
 
                                               fontSize: 22,
@@ -136,6 +139,114 @@ class SignupScreen extends StatelessWidget {
                         ),
 
                       ]
+                  ):Stack(
+                      children:[
+                        Container(
+                          height: Get.height*0.25,
+                          width:Get.width,
+
+                        ),
+                        Positioned(
+                          top:statusBarHeight,
+                          right:0,
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: Get.height*0.19,
+                                width: Get.width*0.47,
+                              ),
+                              Positioned(
+                                top:0,
+                                child: SizedBox(
+                                  height: Get.height*0.19,
+                                  width: Get.width*0.47,
+                                  child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitHeight,),
+                                ),
+                              ),
+                              Positioned(
+                                left:5,
+                                child: Container(
+                                  width:Get.width*0.26,
+                                  child: Row(
+                                    mainAxisAlignment:MainAxisAlignment.start,
+                                    crossAxisAlignment:CrossAxisAlignment.end,
+                                    children: [
+                                      SizedBox(
+                                        height: Get.height*0.14,
+                                        width: Get.width*0.26,
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top:statusBarHeight,
+                          left:0,
+                          child: Container(
+                              height: Get.height*0.25,
+                              width:Get.width*0.5,
+                              child:    Padding(
+                                padding: const EdgeInsets.fromLTRB(0,5,10.0,0),
+                                child: Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+
+                                    children:[
+                                      InkWell(
+                                        onTap:(){
+                                          Get.back();
+                                        },
+                                        child: Container(
+                                          child: const Row(
+                                              children:[
+                                                Icon(
+                                                    Icons.arrow_back_ios_rounded  ,color:kDarkPinkColor,size:20
+                                                ),
+                                              ]
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width:10,
+                                      ),
+                                       Padding(
+                                        padding: EdgeInsets.fromLTRB(0,0,10.0,0),
+                                        child: CustomText(
+                                          greetingText.tr,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+
+                                            fontSize: 25,
+                                            letterSpacing: 0,
+                                            fontFamily: fontFamilyArabicName,
+                                            color: kDarkPinkColor,
+                                          ),
+                                        ),
+                                      ),
+                                       Padding(
+                                        padding: EdgeInsets.fromLTRB(0,0,15.0,0),
+                                        child: Center(
+                                          child: CustomText(
+                                            signUpProfile.tr,
+                                            style: TextStyle(
+
+                                              fontSize: 22,
+                                              letterSpacing: 0,
+                                              fontFamily: fontFamilyArabicName,
+                                              color: kDarkPinkColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ]
+                                ),
+                              )),),
+
+
+                      ]
                   ),
 
 
@@ -149,7 +260,7 @@ class SignupScreen extends StatelessWidget {
                       child: CustomInputField(
                         textAligning: TextAlign.center,
                         hasIntialValue: true,
-                        labelText: "أدخل اسمك الكامل",
+                        labelText: signUpTitleName.tr,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                         iconOfTextField: const Icon(Icons.person,
@@ -178,7 +289,7 @@ class SignupScreen extends StatelessWidget {
                         width: Get.width*0.95,
                         child: CustomInputField(
                           hasIntialValue: true,
-                          labelText: "أدخل بريدك الإلكتروني",
+                          labelText: signUpTitleEmail.tr,
                           iconOfTextField: const Icon(Icons.email,
                               color: kDarkPinkColor),
                           textInputAction: TextInputAction.next,
@@ -208,7 +319,7 @@ class SignupScreen extends StatelessWidget {
                         width: Get.width*0.95,
                         child: CustomInputField(
                           hasIntialValue: true,
-                          labelText: "أدخل رقم هاتفك",
+                          labelText: signUpTitlePhone.tr,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           iconOfTextField: const Icon(Icons.phone,
@@ -218,11 +329,11 @@ class SignupScreen extends StatelessWidget {
                           validator: controller.validatePhoneNumber,
                           icon: (controller.phoneValidated)
                               ? (controller.phoneState)
-                              ?  const Row(
+                              ?   Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
 
-                              CustomText("   974    ", style: TextStyle(
+                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: TextStyle(
                                 fontSize: 15.0,
                                 fontFamily: fontFamilyArabicName,
                                 color: kDarkPinkColor,
@@ -232,11 +343,11 @@ class SignupScreen extends StatelessWidget {
                               SizedBox(width: 5,),
                             ],
                           )
-                              :  const Row(
+                              :   Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
 
-                              CustomText("   974    ", style: TextStyle(
+                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: TextStyle(
                                 fontSize: 15.0,
                                 fontFamily: fontFamilyArabicName,
                                 color: kDarkPinkColor,
@@ -247,11 +358,11 @@ class SignupScreen extends StatelessWidget {
                               ),SizedBox(width: 5,),
                             ],
                           )
-                              :  const Row(
+                              :   Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
 
-                              CustomText("   974    ", style: TextStyle(
+                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: TextStyle(
                                 fontSize: 15.0,
                                 fontFamily: fontFamilyArabicName,
                                 color: kDarkPinkColor,
@@ -270,7 +381,7 @@ class SignupScreen extends StatelessWidget {
                         width: Get.width*0.95,
                         child: CustomInputField(
                             hasIntialValue: true,
-                            labelText:  " كلمة المرور الخاصة بك",
+                            labelText: signUpTitlePass.tr,
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.visiblePassword,
                             iconOfTextField: const Icon(Icons.password,
@@ -303,7 +414,7 @@ class SignupScreen extends StatelessWidget {
                         width: Get.width*0.95,
                         child: CustomInputField(
                             hasIntialValue: true,
-                            labelText:  "تأكيد كلمة المرور الخاصة بك",
+                            labelText:  signUpTitleConfirmPass.tr,
                             iconOfTextField: const Icon(Icons.password,
                                 color: kDarkPinkColor),
                             textInputAction: TextInputAction.done,
@@ -333,15 +444,15 @@ class SignupScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: RichText(
-                        text:   const TextSpan(
+                        text:    TextSpan(
                           children: [
 
-                            WidgetSpan(
+                            const WidgetSpan(
                               child: Icon(Icons.info_sharp, size: 14,color: kDarkPinkColor,),
                             ),
                             TextSpan(
-                              text: "يجب أن يكون كلمه السر تحتوى على حرف كبير و حرف صغير ورموز خاصه مثل :(@,#,!,&,*,~)و رقم وليس أقل من ٨أحرف",
-                              style:  TextStyle(
+                              text: changePassScreenText3.tr,
+                              style:  const TextStyle(
                                   fontSize: 12.0,
                                   fontFamily: fontFamilyArabicName,
                                   fontWeight: FontWeight.w600,
@@ -358,9 +469,9 @@ class SignupScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children:   [
-                        const CustomText("هل لديك حساب بالفعل؟",
+                         CustomText(signUpText1.tr,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontFamily:fontFamilyArabicName,
                               color: kLightPinkColor,
                               fontWeight: FontWeight.w600,
@@ -370,7 +481,7 @@ class SignupScreen extends StatelessWidget {
                           onTap: (){
                             Get.to( LoginScreen());
                           },
-                          child:  const CustomText("تسجيل الدخول",
+                          child:   CustomText(signInBTN.tr,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily: fontFamilyArabicName,
@@ -434,8 +545,8 @@ class SignupScreen extends StatelessWidget {
                             colors: [kDarkPinkColor,kLightPinkColor],
                           ),borderRadius: BorderRadius.circular(40), //
                         ),
-                        child:  const Center(
-                          child:  CustomText("انشاء حساب",
+                        child:   Center(
+                          child:  CustomText(signUpProfile.tr,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily:fontFamilyArabicName,

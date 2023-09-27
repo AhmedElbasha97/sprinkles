@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/edit_profile/controller/edit_profile_controller.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 import 'package:sprinkles/widgets/loading_dialogue.dart';
 import 'package:sprinkles/widgets/text_field_widget.dart';
+
+import '../../Utils/localization_services.dart';
+import '../../Utils/memory.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -25,7 +29,115 @@ class EditProfileScreen extends StatelessWidget {
               child: Column(
 
                 children:[
-                  Stack(
+                  Get.find<StorageService>().activeLocale == SupportedLocales.english?Stack(
+                      children:[
+                        Container(
+                          height: Get.height*0.25,
+                          width:Get.width,
+
+                        ),
+                        Positioned(
+                          top:statusBarHeight,
+                          right:0,
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: Get.height*0.19,
+                                width: Get.width*0.47,
+                              ),
+                              Positioned(
+                                top:0,
+                                child: SizedBox(
+                                  height: Get.height*0.19,
+                                  width: Get.width*0.47,
+                                  child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitHeight,),
+                                ),
+                              ),
+                              Positioned(
+                                right:5,
+                                child: Container(
+                                  width:Get.width*0.26,
+                                  child: Row(
+                                    mainAxisAlignment:MainAxisAlignment.start,
+                                    crossAxisAlignment:CrossAxisAlignment.end,
+                                    children: [
+                                      SizedBox(
+                                        height: Get.height*0.14,
+                                        width: Get.width*0.26,
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top:statusBarHeight,
+                          left:0,
+                          child: Container(
+                              height: Get.height*0.25,
+                              width:Get.width*0.5,
+                              child:     Padding(
+                                padding: const EdgeInsets.fromLTRB(10.0,5,10.0,0),
+                                child: Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+
+                                    children:[
+                                      InkWell(
+                                        onTap:(){
+                                          Get.back();
+                                        },
+                                        child: Container(
+                                          child: const Row(
+                                              children:[
+                                                Icon(
+                                                    Icons.arrow_back_ios_rounded  ,color:kDarkPinkColor,size:20
+                                                ),
+                                              ]
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width:10,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
+                                        child: CustomText(
+                                          greetingText.tr,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w900,
+
+                                            fontSize: 25,
+                                            letterSpacing: 0,
+                                            fontFamily: fontFamilyArabicName,
+                                            color: kDarkPinkColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(7.0,0,7.0,0),
+                                        child: Center(
+                                          child: CustomText(
+                                            editProfileTitle.tr,
+                                            style: const TextStyle(
+
+                                              fontSize: 22,
+                                              letterSpacing: 0,
+                                              fontFamily: fontFamilyArabicName,
+                                              color: kDarkPinkColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ]
+                                ),
+                              )),),
+
+
+                      ]
+                  ):Stack(
                       children:[
                         Container(
                           height: Get.height*0.25,
@@ -61,11 +173,11 @@ class EditProfileScreen extends StatelessWidget {
                                       const SizedBox(
                                         width:10,
                                       ),
-                                      const Padding(
-                                        padding: EdgeInsets.fromLTRB(0,0,10.0,0),
+                                       Padding(
+                                        padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
                                         child: CustomText(
-                                          'مرحبًا',
-                                          style: TextStyle(
+                                          greetingText.tr,
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w900,
 
                                             fontSize: 25,
@@ -75,12 +187,12 @@ class EditProfileScreen extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      const Padding(
-                                        padding: EdgeInsets.fromLTRB(0,0,7.0,0),
+                                       Padding(
+                                        padding: const EdgeInsets.fromLTRB(0,0,7.0,0),
                                         child: Center(
                                           child: CustomText(
-                                            'تعديل حساب',
-                                            style: TextStyle(
+                                            editProfileTitle.tr,
+                                            style: const TextStyle(
 
                                               fontSize: 22,
                                               letterSpacing: 0,
@@ -145,7 +257,7 @@ class EditProfileScreen extends StatelessWidget {
                       child: CustomInputField(
                         textAligning: TextAlign.center,
                         hasIntialValue: true,
-                        labelText: "أدخل اسمك الكامل",
+                        labelText: signUpTitleName.tr,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                         iconOfTextField: const Icon(Icons.person,
@@ -174,7 +286,7 @@ class EditProfileScreen extends StatelessWidget {
                       width: Get.width*0.95,
                       child: CustomInputField(
                         hasIntialValue: true,
-                        labelText: "أدخل بريدك الإلكتروني",
+                        labelText: signUpTitleEmail.tr,
                         iconOfTextField: const Icon(Icons.email,
                             color: kDarkPinkColor),
                         textInputAction: TextInputAction.next,
@@ -204,7 +316,7 @@ class EditProfileScreen extends StatelessWidget {
                       width: Get.width*0.95,
                       child: CustomInputField(
                         hasIntialValue: true,
-                        labelText: "أدخل رقم هاتفك",
+                        labelText: signUpTitlePhone.tr,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.number,
                         iconOfTextField: const Icon(Icons.phone,
@@ -214,40 +326,40 @@ class EditProfileScreen extends StatelessWidget {
                         validator: controller.validatePhoneNumber,
                         icon: (controller.phoneValidated)
                             ? (controller.phoneState)
-                            ?  const Row(
+                            ?   Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
 
-                            CustomText("   974    ", style: TextStyle(
+                            CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
                               fontSize: 15.0,
                               fontFamily: fontFamilyArabicName,
                               color: kDarkPinkColor,
                             ),),
-                            Icon(Icons.check_rounded,
+                            const Icon(Icons.check_rounded,
                                 color: kDarkPinkColor),
-                            SizedBox(width: 5,),
+                            const SizedBox(width: 5,),
                           ],
                         )
-                            :  const Row(
+                            :   Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
 
-                            CustomText("   974    ", style: TextStyle(
+                            CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
                               fontSize: 15.0,
                               fontFamily: fontFamilyArabicName,
                               color: kDarkPinkColor,
                             ),),
-                            Icon(
+                            const Icon(
                               Icons.close_outlined,
                               color: kErrorColor,
-                            ),SizedBox(width: 5,),
+                            ),const SizedBox(width: 5,),
                           ],
                         )
-                            :  const Row(
+                            :   Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
 
-                            CustomText("   974    ", style: TextStyle(
+                            CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
                               fontSize: 15.0,
                               fontFamily: fontFamilyArabicName,
                               color: kDarkPinkColor,
@@ -310,8 +422,8 @@ class EditProfileScreen extends StatelessWidget {
                             colors: [kDarkPinkColor,kLightPinkColor],
                           ),borderRadius: BorderRadius.circular(40), //
                         ),
-                        child:  const Center(
-                          child:  CustomText("تعديل الحساب",
+                        child:   Center(
+                          child:  CustomText(editProfileTitle.tr,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily:fontFamilyArabicName,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/response_model.dart';
@@ -7,10 +10,9 @@ import 'package:sprinkles/models/shops_model.dart';
 import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_widget.dart';
 import 'package:sprinkles/ui/store%20_screen/widget/store_widget.dart';
+import 'package:sprinkles/widgets/alert_dialogue.dart';
 
-import '../../../Utils/localization_services.dart';
-import '../../../Utils/memory.dart';
-import '../../../widgets/alert_dialogue.dart';
+
 
 class FavoriteController extends GetxController{
 int selectedTap = 0;
@@ -64,7 +66,7 @@ addingOrRemovingProductToFavorite(context,String productId,int index,bool double
       if(data?.msg != "succeeded"){
         showDialog(context: context,
             builder: (context) {
-              return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
             }
         );
       }
@@ -108,7 +110,7 @@ addingOrRemovingProductToFavorite(context,String productId,int index,bool double
       if(data?.msg != "succeeded"){
         showDialog(context: context,
             builder: (context) {
-              return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
             }
         );
       }else{

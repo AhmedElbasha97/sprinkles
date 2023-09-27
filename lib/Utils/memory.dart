@@ -7,6 +7,7 @@ abstract class StorageKeys {
   StorageKeys();
   static const String activeLocale = "ACTIVE_LOCAL";
   static const String userId = "User_Id";
+  static const String userName = "User_Name";
 
 }
 
@@ -24,9 +25,14 @@ class StorageService extends GetxService {
   //to save id of the account
   Future<void> saveAccountId(String userId) async =>
       _prefs.setString(StorageKeys.userId, userId);
+  Future<void> saveAccountName(String userName) async =>
+      _prefs.setString(StorageKeys.userId, userName);
 
   String get getId {
     return _prefs.getString(StorageKeys.userId)?? "0";
+  }
+  String get userName {
+    return _prefs.getString(StorageKeys.userName)?? " ";
   }
   loggingOut(){
     _prefs.remove(StorageKeys.userId);

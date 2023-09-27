@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/ui/welcome_screen/controller/welcome_controller.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
@@ -58,6 +60,12 @@ class _WelcomeScreenUIState extends State<WelcomeScreenUI> {
                       children: [
                         InkWell(
                           onTap:(){
+                            final Locale newLocale = SupportedLocales.arabic;
+                            //in storage
+                            Get.find<StorageService>().activeLocale = newLocale;
+
+                            //in Getx
+                            Get.updateLocale(newLocale);
                             Get.to(()=>const HomeScreen());
                           },
                           child: Container(
@@ -147,6 +155,13 @@ class _WelcomeScreenUIState extends State<WelcomeScreenUI> {
                         const SizedBox(width: 20,),
                         InkWell(
                           onTap:(){
+                            final Locale newLocale = SupportedLocales.english;
+
+                            //in storage
+                            Get.find<StorageService>().activeLocale = newLocale;
+
+                            //in Getx
+                            Get.updateLocale(newLocale);
                             Get.to(()=>const HomeScreen());
                           },
                           child: Container(

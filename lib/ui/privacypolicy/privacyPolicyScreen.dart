@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/privacypolicy/controller/privacy_policy_controller.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 import 'package:sprinkles/widgets/loader.dart';
@@ -38,7 +39,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   children: [
                     // Implement the stroke
                     CustomText(
-                      "سياسة الخصوصيه",
+                      drawerTag8.tr,
                       style: TextStyle(
                         fontSize: 15,
                         letterSpacing: 0,
@@ -51,9 +52,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
                       ),
                     ),
                     // The text inside
-                    const CustomText(
-                      "سياسة الخصوصيه",
-                      style: TextStyle(
+                     CustomText(
+                      drawerTag8.tr,
+                      style: const TextStyle(
                         fontSize: 15,
                         letterSpacing: 0,
                         fontWeight: FontWeight.w900,
@@ -101,7 +102,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                                 Icons.arrow_back_ios_rounded  ,color:kDarkPinkColor,size:15
                             ),
                             CustomText(
-                              'رجوع',
+                              goBack.tr,
                               textAlign:TextAlign.left,
                               style: TextStyle(
                                 height:1,

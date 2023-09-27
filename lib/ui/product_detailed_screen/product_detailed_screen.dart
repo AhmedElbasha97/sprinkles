@@ -12,6 +12,7 @@ import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/favorite_screen/controller/favorite_controller.dart';
 import 'package:sprinkles/ui/ordering/ordering_screen.dart';
 import 'package:sprinkles/ui/product_detailed_screen/controller/product_detailed_controller.dart';
@@ -54,7 +55,7 @@ class ProductDetailedScreen extends StatelessWidget {
                         Icons.arrow_back_ios_rounded  ,color:kDarkPinkColor,size:20
                       ),
                       CustomText(
-                        'رجوع',
+                        goBack.tr,
                         textAlign:TextAlign.left,
                         style: TextStyle(
                           shadows: <Shadow>[
@@ -161,7 +162,7 @@ class ProductDetailedScreen extends StatelessWidget {
             child:  Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.shopping_cart,
                   weight: 30,
                   color: Colors.white,
@@ -170,7 +171,7 @@ class ProductDetailedScreen extends StatelessWidget {
                   width: 5,
                 ),
                 CustomText(
-                  'أطلب الأن',
+                  orderNowBTN.tr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     shadows: <Shadow>[
@@ -412,7 +413,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                 ) // this wraps the previous Animate in another Animate
                                     :CachedNetworkImage(
                                   fit:  BoxFit.contain,
-                                  imageUrl: "https://cake.syncqatar.com${controller.productData?.shop?.whatsapp??""}",
+                                  imageUrl: "${Services.baseEndPoint}${controller.productData?.shop?.whatsapp??""}",
                                   imageBuilder: ((context, image){
                                     return   Container(
                                         height: Get.height*0.1,
@@ -892,7 +893,7 @@ class ProductDetailedScreen extends StatelessWidget {
       ).animate(onPlay: (controller) => controller.repeat())
           .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
           .animate():controller.productData?.video==""?const SizedBox() // this wraps the previous Animate in another Animate
-      :VideoPlayerWidget(videoPlayer: 'https://cake.syncqatar.com${controller.productData?.video??""}',),
+      :VideoPlayerWidget(videoPlayer: '${Services.baseEndPoint}${controller.productData?.video??""}',),
               Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -909,7 +910,7 @@ class ProductDetailedScreen extends StatelessWidget {
                     children: [
 
                       CustomText(
-                        'التفاصيل:',
+                        detailsTitle.tr,
 
                       textAlign:TextAlign.left,
                         style: TextStyle(
@@ -1027,7 +1028,7 @@ class ProductDetailedScreen extends StatelessWidget {
                   crossAxisAlignment:CrossAxisAlignment.start,
                 children:[
                   CustomText(
-                    'منتجات اخرى ذات صله:',
+                    otherProductTitle.tr,
                     textAlign:TextAlign.left,
                     style: TextStyle(
                       shadows: <Shadow>[
@@ -1057,10 +1058,10 @@ class ProductDetailedScreen extends StatelessWidget {
                         ),
                         SizedBox(
                           width:Get.width*0.4,
-                          child: const CustomText(
-                            'ليس هناك منتجات متوفره الأن',
+                          child:  CustomText(
+                            noProductData.tr,
                             textAlign:TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize:20,
                               fontFamily: fontFamilyArabicName,
                               fontWeight: FontWeight.w900,

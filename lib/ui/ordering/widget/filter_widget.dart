@@ -53,7 +53,7 @@ class FilterWidget extends StatelessWidget {
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:Get.find<StorageService>().activeLocale == SupportedLocales.english? CrossAxisAlignment.end: CrossAxisAlignment.start,
               children: [
                 Container(
                   height: Get.height*0.1,
@@ -118,6 +118,7 @@ class FilterWidget extends StatelessWidget {
                 const SizedBox(height: 10,),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
                   children: data!.items!.map((e) =>
                       FilterTapWidget(filterTapTitle: Get.find<StorageService>().activeLocale == SupportedLocales.english? e.filterItemEn??"":e.filterItem??"",
                         selected: e.filterItem == selectedValue.filterValue,

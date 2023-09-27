@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/Utils/validator.dart';
 import 'package:sprinkles/models/user_auth_model.dart';
 import 'package:sprinkles/services/auth_services.dart';
@@ -150,13 +151,14 @@ class LoginController extends GetxController{
       UserAuthModel? data = await AuthServices.signingIn(emailController.text, passwordController.text);
       if(data?.msg == "succeeded"){
         await Get.find<StorageService>().saveAccountId("${data?.info?.id??0}");
+        await Get.find<StorageService>().saveAccountName(data?.info?.name??"0");
         Get.offAll(const HomeScreen());
       }else{
         signingIn = false;
         update();
         showDialog(context: context,
             builder: (context) {
-              return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
             }
         );
       }

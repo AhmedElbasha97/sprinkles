@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/privacy_policy_model.dart';
 import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/services/auth_services.dart';
@@ -35,26 +36,25 @@ class AppDrawers extends StatefulWidget {
 
 class _AppDrawersState extends State<AppDrawers> {
   List<DrawerItem> data= [
-  const DrawerItem("الرئيسيّة","homeIconDrawer.png"),
-  const DrawerItem("عرض المحلات","storeIconDrawer.png"),
-  const DrawerItem("عرض المنتجات ","productIconDrawer.png"),
-  const DrawerItem("البحث المتقدم","searchIconDrawer.png"),
+   DrawerItem(drawerTag1.tr,"homeIconDrawer.png"),
+   DrawerItem(drawerTag2.tr,"storeIconDrawer.png"),
+   DrawerItem(drawerTag3.tr,"productIconDrawer.png"),
   Get.find<StorageService>().checkUserIsSignedIn?
-  const DrawerItem("الحساب الشخصى","userIcon.png"):
-  const DrawerItem("تسجيل دخول","loginIcon.png"),
+   DrawerItem(drawerTag4.tr,"userIcon.png"):
+   DrawerItem(drawerTag5.tr,"loginIcon.png"),
   Get.find<StorageService>().checkUserIsSignedIn?
-  const DrawerItem("تسجيل الخروج","logoutIcon.png"):
-  const DrawerItem("انشاء حساب","signUpIconDrawer.png"),
-  const DrawerItem("سياسة الخصوصيه","privacyIconDrawer.png"),
-  const DrawerItem("الشروط والاحكام","termsIconDrawer.png"),
-  const DrawerItem("شارك التطبيق","shareIcon.png"),
-  const DrawerItem("تقييم التطبيق","rateIconDrawer.png"),
+   DrawerItem(drawerTag6.tr,"logoutIcon.png"):
+   DrawerItem(drawerTag7.tr,"signUpIconDrawer.png"),
+   DrawerItem(drawerTag8.tr,"privacyIconDrawer.png"),
+   DrawerItem(drawerTag9.tr,"termsIconDrawer.png"),
+   DrawerItem(drawerTag11.tr,"shareIcon.png"),
+   DrawerItem(drawerTag10.tr,"rateIconDrawer.png"),
 ];
   @override
   void initState() {
     super.initState();
   if(Get.find<StorageService>().checkUserIsSignedIn){
-      data.insert(5, const DrawerItem("قائمه المفضله","favoriteIcon.png"));
+      data.insert(5,  DrawerItem(favTitle.tr,"favoriteIcon.png"));
   }
 
   }
@@ -110,12 +110,12 @@ class _AppDrawersState extends State<AppDrawers> {
 
         showDialog(context: context,
             builder: (context) {
-              return YesOrNoDialogue(alertText: 'هل تريد تسجيل الخروج من التطبيق يمكنك أيضآ مسح بيناتك أيضآ', alertTitle: 'تسجيل الخروج', alertYesButtonTitle: 'تسجيل الخروج', alertNoButtonTitle: 'مسح الحساب', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
+              return YesOrNoDialogue(alertText: logOutWarning.tr, alertTitle: drawerTag6.tr, alertYesButtonTitle: drawerTag6.tr, alertNoButtonTitle: deleteAcc.tr, alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
                 Get.find<StorageService>().loggingOut();
                 Get.offAll(()=>const SplashScreen());
 
               }, alertNoButtonFunction: () async {
-                if(await BiomatricsAuthService.authenticateUser("مسح الحساب")) {
+                if(await BiomatricsAuthService.authenticateUser(deleteAcc.tr)) {
                   ResponseModel? data = await AuthServices.deleteUserAccount(Get.find<StorageService>().getId);
                   if(data?.msg == "succeeded"){
                     Get.find<StorageService>().loggingOut();
@@ -124,7 +124,7 @@ class _AppDrawersState extends State<AppDrawers> {
                   else{
                     showDialog(context: context,
                         builder: (context) {
-                          return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                          return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
                         }
                     );
                   }
@@ -136,10 +136,84 @@ class _AppDrawersState extends State<AppDrawers> {
 
     }
     break;
-    case "الشروط والاحكام":{
+    case "Home":{
+      Get.to(()=>const HomeScreen(),transition:Transition.rightToLeftWithFade);
+
+        widget.scaffoldKey.currentState?.openEndDrawer();
 
     }
     break;
+    case "Shop Display":{
+      Get.to(()=> const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }
+    case 'Favorites list':{
+      Get.to(()=> const FavoriteScreen(),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }
+    break;
+    case "Personal Account":{
+      Get.to(()=>const ProfileScreen(),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }
+    break;
+
+        case "Privacy Policy":{
+      Get.to(()=> const PrivacyPolicyScreen() ,transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }
+    case "Terms and Conditions":{
+    Get.to(()=> const TermsScreen(),transition:Transition.rightToLeftWithFade);
+    widget.scaffoldKey.currentState?.openEndDrawer();
+  }
+  break;
+    case  "Display Products":{
+      Get.to(()=> const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }
+    break;
+    case "Log in":{
+      Get.to(()=> LoginScreen(),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }
+    break;
+    case "Create an account":{
+      Get.to(()=> const SignupScreen(),transition:Transition.rightToLeftWithFade);
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }
+    break;
+    case "Log out":{
+
+        showDialog(context: context,
+            builder: (context) {
+              return YesOrNoDialogue(alertText: logOutWarning.tr, alertTitle:drawerTag6.tr, alertYesButtonTitle: drawerTag6.tr, alertNoButtonTitle:deleteAcc.tr, alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
+                Get.find<StorageService>().loggingOut();
+                Get.offAll(()=>const SplashScreen());
+
+              }, alertNoButtonFunction: () async {
+                if(await BiomatricsAuthService.authenticateUser(deleteAcc.tr)) {
+                  ResponseModel? data = await AuthServices.deleteUserAccount(Get.find<StorageService>().getId);
+                  if(data?.msg == "succeeded"){
+                    Get.find<StorageService>().loggingOut();
+                    Get.offAll(()=>const SplashScreen());
+                  }
+                  else{
+                    showDialog(context: context,
+                        builder: (context) {
+                          return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                        }
+                    );
+                  }
+
+                }
+              }, alertYesButtonIcon: 'assets/icons/logoutIcon.png', alertNoButtonIcon: 'assets/icons/deleteAccountIcon.png', alertIcon: 'assets/icons/logoutIcon.png',containerHeight:Get.height*0.57);
+            });
+        widget.scaffoldKey.currentState?.openEndDrawer();
+
+    }
+    break;
+
+
   }
   }
 
@@ -163,15 +237,15 @@ class _AppDrawersState extends State<AppDrawers> {
                   right:0, child: Container(
           height: Get.height*0.25,
           width:Get.width*0.45,
-          child: const Padding(
-            padding: EdgeInsets.fromLTRB(8.0,0,8.0,0),
+          child:  Padding(
+            padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
             child: Column(
                 crossAxisAlignment:CrossAxisAlignment.start,
 
                 children:[
                 CustomText(
-                  'مرحبًا',
-                  style: TextStyle(
+                  greetingText.tr,
+                  style: const TextStyle(
 
                     fontSize: 17,
                     letterSpacing: 0,
@@ -181,8 +255,8 @@ class _AppDrawersState extends State<AppDrawers> {
                 ),
                 Center(
                   child: CustomText(
-                    'اسم المستخدم',
-                    style: TextStyle(
+                    Get.find<StorageService>().checkUserIsSignedIn?Get.find<StorageService>().userName:"",
+                    style: const TextStyle(
 
                       fontSize: 15,
                       letterSpacing: 0,

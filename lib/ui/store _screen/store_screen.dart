@@ -5,6 +5,9 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_loading_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/store%20_screen/controller/store_controller.dart';
@@ -14,6 +17,7 @@ import 'package:sprinkles/widgets/DrawerWidget.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 import '../../Utils/constant.dart';
+import '../home_screen/home_screen.dart';
 import '../product_screen/product_screen.dart';
 
 
@@ -40,6 +44,379 @@ class StoreScreen extends StatelessWidget {
             child:   Center(
               child: Column(
                 children: [
+                  Get.find<StorageService>().activeLocale == SupportedLocales.english?Stack(
+
+                      children:[
+                        Container(
+                          height: Get.height*0.33,
+                          width:Get.width,
+
+                        ),
+                        Positioned(
+                          top:statusBarHeight,
+                          left:0,
+                          child: Container(
+
+                            width:Get.width*0.6,
+                            child: Column(
+                                crossAxisAlignment:CrossAxisAlignment.start,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.4,
+                                    child:  Padding(
+                                      padding:  EdgeInsets.fromLTRB(8,8,8,8),
+                                      child: Row(
+                                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          InkWell(
+                                              onTap:(){
+                                                controller.scaffoldState.currentState!.openDrawer();
+                                              },
+                                              child: Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30)),
+                                          InkWell(
+                                            onTap: (){
+                                              final Locale newLocale =
+                                              Get.find<StorageService>().activeLocale == SupportedLocales.arabic
+                                                  ? SupportedLocales.english
+                                                  : SupportedLocales.arabic;
+                                              //in storage
+                                              Get.find<StorageService>().activeLocale = newLocale;
+                                              //in Getx
+                                              Get.updateLocale(newLocale);
+                                              Get.off(()=>const HomeScreen());
+                                            },
+                                            child: CustomText(
+                                              translateButton.tr,
+                                              style: TextStyle(
+                                                fontSize:15,
+                                                fontFamily: fontFamilyEnglishName,
+                                                fontWeight: FontWeight.w600,
+                                                color: kDarkPinkColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height:Get.height*0.01,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
+                                    child: InkWell(
+                                      onTap:(){
+                                        if(!selectedFromDrawer) {
+                                          Get.off(() =>
+                                              ProductScreen(mainCategoryId: mainCategoryId, selectingFromDrawer: false,));
+                                        }
+                                      },
+                                      child: Container(
+                                        height: Get.height*0.05,
+                                        width:Get.width*0.3,
+                                        decoration: BoxDecoration(
+                                          color:Colors.white,
+                                          border: Border.all( color:kDarkPinkColor,width: 1),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.1),
+                                              offset: const Offset(
+                                                0.0,
+                                                0.0,
+                                              ),
+                                              blurRadius: 13.0,
+                                              spreadRadius: 2.0,
+                                            ), //BoxShadow
+                                            BoxShadow(
+                                              color: Colors.white.withOpacity(0.2),
+                                              offset: const Offset(0.0, 0.0),
+                                              blurRadius: 0.0,
+                                              spreadRadius: 0.0,
+                                            ), //BoxShadow
+                                          ],
+                                          borderRadius: BorderRadius.circular(15), //
+                                        ),
+                                        child:  Center(
+                                          child:  CustomText(
+                                            selectedFromDrawer?storeTitle.tr:showProduct.tr,
+                                            style: TextStyle(
+                                              shadows: <Shadow>[
+                                                Shadow(
+                                                    offset: const Offset(0.5, 0.5),
+                                                    blurRadius: 0.5,
+
+                                                    color: Colors.black.withOpacity(0.5)
+                                                ),
+                                              ],
+                                              fontSize: 15,
+                                              letterSpacing: 0,
+                                              fontFamily: fontFamilyArabicName,
+                                              color: kDarkPinkColor,
+                                            ),
+                                          ),
+
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height:Get.height*0.01,
+                                  ),
+                                  PopupMenuButton<String>(
+                                    itemBuilder: (context) =>
+                                        controller.governmentData.map((e){
+                                          return   PopupMenuItem(
+                                            value:e,
+                                            textStyle: const TextStyle(
+                                                color: kDarkPinkColor,
+                                                fontFamily: fontFamilyArabicName,
+                                                fontWeight: FontWeight.w700),
+                                            onTap: (){
+                                              controller.selectingFilter(e);
+                                            },
+                                            child: SizedBox(
+                                              width: Get.width,
+                                              child: Column(
+                                                children: [
+                                                  CustomText(
+                                                    e,
+                                                    style: const TextStyle(
+                                                        color: kDarkPinkColor,
+                                                        fontFamily: fontFamilyArabicName,
+                                                        fontWeight: FontWeight.w600),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  const Divider(
+                                                    color: kDarkPinkColor,
+                                                    height: 1,
+                                                    thickness: 1,
+                                                    endIndent: 0,
+                                                    indent: 0,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
+                                      child: Container(
+
+                                        width:Get.width*0.5,
+                                        decoration: BoxDecoration(
+                                          color:Colors.white,
+                                          border: Border.all( color:kDarkPinkColor,width: 1),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.1),
+                                              offset: const Offset(
+                                                0.0,
+                                                0.0,
+                                              ),
+                                              blurRadius: 13.0,
+                                              spreadRadius: 2.0,
+                                            ), //BoxShadow
+                                            BoxShadow(
+                                              color: Colors.white.withOpacity(0.2),
+                                              offset: const Offset(0.0, 0.0),
+                                              blurRadius: 0.0,
+                                              spreadRadius: 0.0,
+                                            ), //BoxShadow
+                                          ],
+                                          borderRadius: BorderRadius.circular(15), //
+                                        ),
+                                        child:  Center(
+                                          child:  Padding(
+                                            padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.007,8.0,Get.height*0.007),
+                                            child: Row(
+                                              mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                              children: [
+
+                                                Container(
+
+                                                  width:Get.width*0.38,
+                                                  child: CustomText(
+                                                    textAlign:TextAlign.center,
+                                                    maxLines:3,
+                                                    controller.selectingFilterTagName,
+                                                    style: TextStyle(
+                                                      shadows: <Shadow>[
+                                                        Shadow(
+                                                            offset: const Offset(0.5, 0.5),
+                                                            blurRadius: 0.5,
+
+                                                            color: Colors.black.withOpacity(0.5)
+                                                        ),
+                                                      ],
+                                                      fontSize: 15,
+                                                      letterSpacing: 0,
+                                                      fontFamily: fontFamilyArabicName,
+                                                      color: kDarkPinkColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                                controller.selectingFilterTag == "0"||controller.selectingFilterTag.contains("desc")?const Icon( Icons.arrow_downward_sharp ,color:kDarkPinkColor,size:20):controller.selectingFilterTag.contains("asc")?const Icon( Icons.arrow_upward_sharp ,color:kDarkPinkColor,size:20):const SizedBox(),
+                                              ],
+                                            ),
+                                          ),
+
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  SizedBox(
+                                    height:Get.height*0.01,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
+                                    child: Container(
+                                      height: Get.height*0.05,
+                                      width:Get.width*0.8,
+                                      decoration: BoxDecoration(
+                                        color:Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(0.1),
+                                            offset: const Offset(
+                                              0.0,
+                                              0.0,
+                                            ),
+                                            blurRadius: 13.0,
+                                            spreadRadius: 2.0,
+                                          ), //BoxShadow
+                                          BoxShadow(
+                                            color: Colors.white.withOpacity(0.2),
+                                            offset: const Offset(0.0, 0.0),
+                                            blurRadius: 0.0,
+                                            spreadRadius: 0.0,
+                                          ), //BoxShadow
+                                        ],
+                                        borderRadius: BorderRadius.circular(15), //
+                                      ),
+                                      child:TextFormField(
+                                        controller:controller.searchController,
+                                        textAlign:TextAlign.center,
+                                        cursorColor: kDarkPinkColor,
+                                        textInputAction: TextInputAction.search,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(RegExp("[a-zA-Z\u0621-\u064A]")),
+
+
+                                        ],
+                                        style: TextStyle(
+                                          shadows: <Shadow>[
+                                            Shadow(
+                                                offset: const Offset(2.0, 2.0),
+                                                blurRadius: 13.0,
+
+                                                color: Colors.black.withOpacity(0.5)
+                                            ),
+                                          ],
+                                          fontSize: 15,
+                                          letterSpacing: 0,
+                                          fontFamily: fontFamilyArabicName,
+                                          color: kDarkPinkColor,
+                                        ),
+                                        onChanged:(e){
+                                          controller.searchingForKeyword();
+                                        },
+                                        onFieldSubmitted:(e)  {
+
+                                          controller
+                                              .searchingForKeyword();
+
+                                        },
+
+                                        decoration:  InputDecoration(
+                                          isDense: true,
+                                          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                                          enabledBorder:  OutlineInputBorder(
+                                              borderSide: const BorderSide(width: 1, color: kDarkPinkColor,),
+                                              borderRadius: BorderRadius.circular(15)
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderSide:   const BorderSide(color: kDarkPinkColor,width: 1.0),
+                                              borderRadius: BorderRadius.circular(15)),
+
+                                          hintText:searchKey.tr,
+                                          hintStyle: TextStyle(
+
+                                            shadows: <Shadow>[
+                                              Shadow(
+                                                  offset: const Offset(0.5, 0.5),
+                                                  blurRadius: 0.5,
+
+                                                  color: Colors.black.withOpacity(0.5)
+                                              ),
+                                            ],
+                                            fontSize: 15,
+                                            letterSpacing: 0,
+                                            fontFamily: fontFamilyArabicName,
+                                            color: kDarkPinkColor,
+                                          ),
+
+                                          suffixIcon:   IconButton(
+                                            onPressed: () async {
+
+                                            },
+                                            icon: const Icon(
+                                              Icons.search_outlined,
+                                              color: kDarkPinkColor,
+                                              size: 24,),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top:statusBarHeight,
+                          right:0,
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: Get.height*0.235,
+                                width: Get.width*0.6,
+                              ),
+                              Positioned(
+                                top:0,
+                                child: SizedBox(
+                                  height: Get.height*0.235,
+                                  width: Get.width*0.6,
+                                  child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitWidth,),
+                                ),
+                              ),Positioned(
+                                right:10,
+                                child: Container(
+                                  width:Get.width*0.48,
+                                  child: Row(
+                                    mainAxisAlignment:MainAxisAlignment.end,
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    children: [
+
+
+                                      SizedBox(
+                                        height: Get.height*0.18,
+                                        width: Get.width*0.35,
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                      ]
+                  ):
                   Stack(
 
                       children:[
@@ -69,13 +446,26 @@ class StoreScreen extends StatelessWidget {
                                                 controller.scaffoldState.currentState!.openDrawer();
                                               },
                                               child: Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30)),
-                                          CustomText(
-                                            'English',
-                                            style: TextStyle(
-                                              fontSize:15,
-                                              fontFamily: fontFamilyEnglishName,
-                                              fontWeight: FontWeight.w600,
-                                              color: kDarkPinkColor,
+                                          InkWell(
+                                            onTap: (){
+                                              final Locale newLocale =
+                                              Get.find<StorageService>().activeLocale == SupportedLocales.arabic
+                                                  ? SupportedLocales.english
+                                                  : SupportedLocales.arabic;
+                                              //in storage
+                                              Get.find<StorageService>().activeLocale = newLocale;
+                                              //in Getx
+                                              Get.updateLocale(newLocale);
+                                              Get.off(()=>const HomeScreen());
+                                            },
+                                            child: CustomText(
+                                              translateButton.tr,
+                                              style: TextStyle(
+                                                fontSize:15,
+                                                fontFamily: fontFamilyEnglishName,
+                                                fontWeight: FontWeight.w600,
+                                                color: kDarkPinkColor,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -121,7 +511,7 @@ class StoreScreen extends StatelessWidget {
                                         ),
                                         child:  Center(
                                           child:  CustomText(
-                                            selectedFromDrawer?"محلات":'عرض المنتجات',
+                                            selectedFromDrawer?storeTitle.tr:showProduct.tr,
                                             style: TextStyle(
                                               shadows: <Shadow>[
                                                 Shadow(
@@ -325,7 +715,7 @@ class StoreScreen extends StatelessWidget {
                                               borderSide:   const BorderSide(color: kDarkPinkColor,width: 1.0),
                                               borderRadius: BorderRadius.circular(15)),
 
-                                          hintText: "بحث",
+                                          hintText:searchKey.tr,
                                           hintStyle: TextStyle(
 
                                             shadows: <Shadow>[
@@ -429,8 +819,8 @@ class StoreScreen extends StatelessWidget {
                         SizedBox(
                             height: Get.height*0.03
                         ),
-                        const CustomText(
-                          'ليس هناك محل بهذا الأسم',
+                         CustomText(
+                          noDataSearchStore.tr,
                           style: TextStyle(
                             fontSize:25,
                             fontFamily: fontFamilyEnglishName,
@@ -450,7 +840,7 @@ class StoreScreen extends StatelessWidget {
                         height:50
                       ),
                       CustomText(
-                        'ليس هناك محلات متوفره الأن',
+                        noStoreData.tr,
                         style: TextStyle(
                           fontSize:25,
                           fontFamily: fontFamilyArabicName,

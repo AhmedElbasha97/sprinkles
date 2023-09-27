@@ -12,11 +12,13 @@ import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
+import 'package:sprinkles/ui/ordering/ordering_screen.dart';
 import 'package:sprinkles/ui/product_detailed_screen/product_detailed_screen.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/widgets/alert_dialogue.dart';
@@ -250,7 +252,7 @@ final ProductsModel? product;
                                     ),
                                   ),
                                   CustomText(
-                                   "عدد الافراد ${product?.persons??0}",
+                                   "${noOfPeople.tr} ${product?.persons??0}",
                                    maxLines: 1,
                                    style: const TextStyle(
                                      height: 1.3,
@@ -353,7 +355,7 @@ final ProductsModel? product;
                           ),
                           child:  Center(
                             child: CustomText(
-                              '${product?.price??0} ريال',
+                              '${product?.price??0} ${currencyKey.tr}',
                               style: const TextStyle(
                                 height: 1.3,
                                 fontSize: 12,
@@ -364,39 +366,44 @@ final ProductsModel? product;
                             ),
                           ),
                         ),
-                        Container(
-                          width:Get.width*0.18,
-                          height:Get.height*0.028,
-                          decoration: BoxDecoration(
-                            color:const  Color(0xFFFFBDD2),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                offset: const Offset(
-                                  0.0,
-                                  0.0,
+                        InkWell(
+                          onTap: (){
+                            Get.to(()=>OrderingScreen(productId: product?.id??0),transition:Transition.upToDown);
+                          },
+                          child: Container(
+                            width:Get.width*0.18,
+                            height:Get.height*0.028,
+                            decoration: BoxDecoration(
+                              color:const  Color(0xFFFFBDD2),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  offset: const Offset(
+                                    0.0,
+                                    0.0,
+                                  ),
+                                  blurRadius: 13.0,
+                                  spreadRadius: 2.0,
+                                ), //BoxShadow
+                                BoxShadow(
+                                  color: Colors.white.withOpacity(0.2),
+                                  offset: const Offset(0.0, 0.0),
+                                  blurRadius: 0.0,
+                                  spreadRadius: 0.0,
+                                ), //BoxShadow
+                              ],
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child:  Center(
+                              child: CustomText(
+                                orderNow.tr,
+                                style: const TextStyle(
+                                  height: 1.3,
+                                  fontSize: 12,
+                                  letterSpacing: 0,
+                                  fontFamily: fontFamilyArabicName,
+                                  color:Color(0xFF641B46),
                                 ),
-                                blurRadius: 13.0,
-                                spreadRadius: 2.0,
-                              ), //BoxShadow
-                              BoxShadow(
-                                color: Colors.white.withOpacity(0.2),
-                                offset: const Offset(0.0, 0.0),
-                                blurRadius: 0.0,
-                                spreadRadius: 0.0,
-                              ), //BoxShadow
-                            ],
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Center(
-                            child: CustomText(
-                              'أطلب الأن',
-                              style: TextStyle(
-                                height: 1.3,
-                                fontSize: 12,
-                                letterSpacing: 0,
-                                fontFamily: fontFamilyArabicName,
-                                color:Color(0xFF641B46),
                               ),
                             ),
                           ),

@@ -9,6 +9,7 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/advertisment_model.dart';
 import 'package:sprinkles/models/category_model.dart';
 import 'package:sprinkles/models/favorite_model.dart';
@@ -39,11 +40,11 @@ class ProductController extends GetxController {
   ProductController(this.mainCategoryId, this.context, this.selectingFromDrawer);
   late TextEditingController searchController;
   bool hasBeenSelectedFromDrawer = false;
-  List<String> governmentData = ["ازاله ترتيب حسب","السعر من الأقل سعر إلى أعلى السعر","السعر من أعلى سعر إلى الأقل السعر","ترتيب حسب الاسم من ى إلى أ","ترتيب حسب الاسم من أ إلى ى",];
+  List<String> governmentData = [removeFilterTitle.tr,priceFilterDescTitle.tr,priceFilterDescTitle.tr,nameFilterDescTitle.tr,nameFilterAscTitle.tr,];
   ScrollController scrollController = ScrollController();
   int selectedSubCategoryId = 0;
   String selectingFilterTag = "0";
-  String selectingFilterTagName = "ترتيب حسب";
+  String selectingFilterTagName = removeFilterValue.tr;
   late List<ProductsModel>? productList;
   late List<CategoryModel>? subCategoryList;
   late List<CategoryModel>? mainCategoryList;
@@ -73,9 +74,64 @@ class ProductController extends GetxController {
   }
   selectingFilter(String filterName){
     switch(filterName){
+      case "Remove sort order":{
+        selectingFilterTag = "0";
+        selectingFilterTagName = removeFilterValue.tr;
+        update();
+        if(activateSearching){
+          searchingForKeyword();
+        }else{
+          getProductData(true);
+        }
+      }
+      break;
+      case "Price from lowest price to highest price":{
+        selectingFilterTag = Filters.price_desc.name;
+        selectingFilterTagName = priceFilterDescTitle.tr;
+        update();
+        if(activateSearching){
+          searchingForKeyword();
+        }else{
+          getProductData(true);
+        }
+      }
+      break;
+      case "Price from highest price to lowest price":{
+        selectingFilterTag = Filters. price_asc.name;
+        selectingFilterTagName = priceFilterAscTitle.tr;
+        update();
+        if(activateSearching){
+          searchingForKeyword();
+        }else{
+          getProductData(true);
+        }
+      }
+      break;
+      case "Sort by name from Z to A":{
+        selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_desc.name:Filters.name_desc.name;
+        selectingFilterTagName = nameFilterDescTitle.tr;
+        update();
+        if(activateSearching){
+          searchingForKeyword();
+        }else{
+          getProductData(true);
+        }
+      }
+      break;
+      case "Sort by name from A to Z":{
+        selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_asc.name:Filters.name_asc.name;
+        selectingFilterTagName = priceFilterAscTitle.tr;
+        update();
+        if(activateSearching){
+          searchingForKeyword();
+        }else{
+          getProductData(true);
+        }
+      }
+      break;
       case"ازاله ترتيب حسب":{
         selectingFilterTag = "0";
-        selectingFilterTagName = "ترتيب حسب";
+        selectingFilterTagName = removeFilterValue.tr;
         update();
         if(activateSearching){
           searchingForKeyword();
@@ -86,7 +142,7 @@ class ProductController extends GetxController {
       break;
       case"السعر من الأقل سعر إلى أعلى السعر":{
         selectingFilterTag = Filters.price_desc.name;
-        selectingFilterTagName = "السعر من الأقل سعر إلى أعلى السعر";
+        selectingFilterTagName = priceFilterDescTitle.tr;
         update();
         if(activateSearching){
           searchingForKeyword();
@@ -97,7 +153,7 @@ class ProductController extends GetxController {
       break;
       case"السعر من أعلى سعر إلى الأقل السعر":{
         selectingFilterTag = Filters. price_asc.name;
-        selectingFilterTagName = "السعر من أعلى سعر إلى الأقل السعر";
+        selectingFilterTagName = priceFilterAscTitle.tr;
         update();
         if(activateSearching){
           searchingForKeyword();
@@ -108,7 +164,7 @@ class ProductController extends GetxController {
       break;
       case"ترتيب حسب الاسم من ى إلى أ":{
         selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_desc.name:Filters.name_desc.name;
-        selectingFilterTagName = "ترتيب حسب الاسم من ى إلى أ";
+        selectingFilterTagName = nameFilterDescTitle.tr;
         update();
         if(activateSearching){
           searchingForKeyword();
@@ -119,7 +175,7 @@ class ProductController extends GetxController {
       break;
       case"ترتيب حسب الاسم من أ إلى ى":{
         selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_asc.name:Filters.name_asc.name;
-        selectingFilterTagName = "ترتيب حسب الاسم من أ إلى ى";
+        selectingFilterTagName = priceFilterAscTitle.tr;
         update();
         if(activateSearching){
           searchingForKeyword();
@@ -213,7 +269,7 @@ class ProductController extends GetxController {
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
               }
           );
         }
@@ -334,7 +390,7 @@ class ProductController extends GetxController {
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
               }
           );
         }else{
@@ -459,7 +515,7 @@ class ProductController extends GetxController {
   showWarningFavorite(context){
     showDialog(context: context,
         builder: (context) {
-          return YesOrNoDialogue(alertText: 'لا تستطيع اضافه إلى قائمه المفضله إلا عند تسجيل دخول الحساب', alertTitle: 'لايمكنك اضافه إلى قائمه المفضله', alertYesButtonTitle: 'إنشاء حساب', alertNoButtonTitle: 'تسجيل دخول', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
+          return YesOrNoDialogue(alertText: addToFavoriteValue.tr, alertTitle: addToFavoriteTitle.tr, alertYesButtonTitle: signUpProfile.tr, alertNoButtonTitle: signInProfile.tr, alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
             Get.to(()=>const SignupScreen());
           }, alertNoButtonFunction: (){
             Get.to(()=>LoginScreen());

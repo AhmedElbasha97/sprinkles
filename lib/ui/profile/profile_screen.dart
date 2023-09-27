@@ -5,6 +5,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/ui/edit_profile/edit_profile_screen.dart';
 import 'package:sprinkles/ui/profile/controller/profile_controller.dart';
 import 'package:sprinkles/widgets/DrawerWidget.dart';
@@ -28,7 +30,126 @@ class ProfileScreen extends StatelessWidget {
           children:[
             Column(
               children: [
-                Stack(
+                Get.find<StorageService>().activeLocale == SupportedLocales.english?Stack(
+                    children:[
+                      Container(
+                        height: Get.height*0.25,
+                        width:Get.width,
+
+                      ),
+                      Positioned(
+                        top:statusBarHeight,
+                        right:0,
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: Get.height*0.19,
+                              width: Get.width*0.47,
+                            ),
+                            Positioned(
+                              top:0,
+                              child: SizedBox(
+                                height: Get.height*0.19,
+                                width: Get.width*0.47,
+                                child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitHeight,),
+                              ),
+                            ),
+                            Positioned(
+                              right:5,
+                              child: Container(
+                                width:Get.width*0.26,
+                                child: Row(
+                                  mainAxisAlignment:MainAxisAlignment.start,
+                                  crossAxisAlignment:CrossAxisAlignment.end,
+                                  children: [
+                                    SizedBox(
+                                      height: Get.height*0.14,
+                                      width: Get.width*0.26,
+                                      child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top:statusBarHeight,
+                        left:0,
+                        child: Container(
+                            height: Get.height*0.25,
+                            width:Get.width*0.65,
+                            child:    Padding(
+                              padding: const EdgeInsets.fromLTRB(0,0,0.0,0),
+                              child: Column(
+                                  crossAxisAlignment:CrossAxisAlignment.start,
+
+                                  children:[
+                                    Row(
+                                      children: [
+                                        InkWell(
+                                            onTap:(){
+                                              controller.scaffoldState.currentState!.openDrawer();
+                                            },
+                                            child: const Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30)),
+                                        const SizedBox(
+                                          width:20,
+                                        ),
+                                        const CustomText(
+                                          'مرحبًا',
+                                          style: TextStyle(
+
+                                            fontSize: 25,
+                                            letterSpacing: 0,
+                                            fontFamily: fontFamilyArabicName,
+                                            color: kDarkPinkColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(0,0,15.0,0),
+                                      child: controller.isLoading?Center(
+                                        child:   Container(
+                                          width:Get.width*0.35,
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                              color: const Color(0xFFDFDDDF),
+                                              borderRadius: BorderRadius.circular(50)
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(): Center(
+                                        child: CustomText(
+                                          controller.userData?.name??"",
+                                          style: const TextStyle(
+
+                                            fontSize: 22,
+                                            letterSpacing: 0,
+                                            fontFamily: fontFamilyArabicName,
+                                            color: kDarkPinkColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                  ]
+                              ),
+                            )),),
+
+
+                    ]
+                ):Stack(
                     children:[
                       Container(
                         height: Get.height*0.25,

@@ -4,6 +4,9 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
+import '../../../Utils/localization_services.dart';
+import '../../../Utils/memory.dart';
+
 class FilterTapWidget extends StatelessWidget {
  final String filterTapTitle;
  final bool selected;
@@ -91,7 +94,7 @@ class FilterTapWidget extends StatelessWidget {
                   width:Get.width*0.5,
                   child: Row(
 
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: Get.find<StorageService>().activeLocale == SupportedLocales.english?MainAxisAlignment.end:MainAxisAlignment.start,
                     children: [
                       Stack(
 

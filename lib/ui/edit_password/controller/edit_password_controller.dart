@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/Utils/validator.dart';
 import 'package:sprinkles/models/user_auth_model.dart';
 import 'package:sprinkles/services/auth_services.dart';
@@ -78,10 +79,10 @@ class EditPasswordController extends GetxController{
           reTypePasswordState = true;
           reTypePasswordValidated = true;
         } else {
-          validatePassword = "كلمه السر غير متطابقة";
+          validatePassword =invalidReTypePassword.tr;
         }
       }else{
-        validatePassword = "يجب إدخال كلمه السر اولآ";
+        validatePassword = enterPasswordFirst.tr;
       }
     }else{
       reTypePasswordState = false;
@@ -121,7 +122,7 @@ class EditPasswordController extends GetxController{
       changePassword = false;
       showDialog(context: context,
           builder: (context) {
-            return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"", alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+            return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"", alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
           }
       );
     }

@@ -7,6 +7,7 @@ import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/ordering/controller/ordering_controller.dart';
 import 'package:sprinkles/ui/ordering/widget/filter_loading.dart';
 import 'package:sprinkles/ui/ordering/widget/filter_widget.dart';
@@ -37,7 +38,7 @@ class OrderingScreen extends StatelessWidget {
               children: [
                 // Implement the stroke
                 CustomText(
-                  "اطلب الأن",
+                  orderNowBTN.tr,
                   style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 0,
@@ -50,9 +51,9 @@ class OrderingScreen extends StatelessWidget {
                   ),
                 ),
                 // The text inside
-                const CustomText(
-                  "اطلب الأن",
-                  style: TextStyle(
+                 CustomText(
+                  orderNowBTN.tr,
+                  style: const TextStyle(
                     fontSize: 15,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w900,
@@ -129,7 +130,387 @@ class OrderingScreen extends StatelessWidget {
         body:  SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
+              Get.find<StorageService>().activeLocale == SupportedLocales.english?Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Stack(
+                  children: [
+                    Container(
+                      width:Get.width,
+                      height:Get.height*0.19,
+                      decoration:BoxDecoration(
+                          borderRadius:BorderRadius.circular(10),
+                          color:Colors.white,
+                          border: Border.all(color: kDarkPinkColor,width: 1)
+                      ),
+                    ),
+                    Positioned(
+                        bottom:0,
+                        left:0,
+                        child:Container(
+                          height:Get.height*0.09,
+                          width: Get.width*0.3,
+                          decoration:const BoxDecoration(
+                            borderRadius:BorderRadius.only(bottomLeft:Radius.circular(10)),
+                            image: DecorationImage(
+                              image: AssetImage(
+                                "assets/images/Image 2.png",
+                              ),
+                              fit:  BoxFit.cover,
+                            ),
+
+                          ),
+                        )
+                    ),
+                    Positioned(
+                      top: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height:Get.height*0.17,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+
+                                  controller.dataIsLoading? Container(
+                                    width:Get.width*0.5,
+                                    height: 13,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFFDFDDDF),
+                                        borderRadius: BorderRadius.circular(50)
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide():Container(
+                                    width:Get.width*0.5,
+                                    child: CustomText(
+                                      Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+
+                                        shadows: <Shadow>[
+                                          Shadow(
+                                              offset: const Offset(0.5, 0.5),
+                                              blurRadius: 0.5,
+
+                                              color: Colors.black.withOpacity(0.5)
+                                          ),
+
+                                        ],
+
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 16,
+                                        letterSpacing: 0,
+                                        fontFamily: fontFamilyArabicName,
+                                        color: kDarkPinkColor,
+                                      ),
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  controller.dataIsLoading? Container(
+                                    width:Get.width*0.4,
+                                    height: 13,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFFDFDDDF),
+                                        borderRadius: BorderRadius.circular(50)
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide():Container(
+                                    width:Get.width*0.5,
+                                    child: CustomText(
+                                      "${priceKey.tr} ${controller.data?.price??""} ${currencyKey.tr}",
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+
+                                        shadows: <Shadow>[
+                                          Shadow(
+                                              offset: const Offset(0.5, 0.5),
+                                              blurRadius: 0.5,
+
+                                              color: Colors.black.withOpacity(0.5)
+                                          ),
+
+                                        ],
+
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15,
+                                        letterSpacing: 0,
+                                        fontFamily: fontFamilyArabicName,
+                                        color: kDarkPinkColor,
+                                      ),
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                    child: Container(
+                                      width:Get.width*0.5,
+                                      child: Row(
+                                        children: [
+                                          controller.dataIsLoading? Container(
+                                            width:Get.width*0.2,
+                                            height: 13,
+                                            decoration: BoxDecoration(
+                                                color:  const Color(0xFFF2F0F3),
+                                                borderRadius: BorderRadius.circular(50)
+                                            ),
+
+                                          ).animate(onPlay: (controller) => controller.repeat())
+                                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                              .animate() // this wraps the previous Animate in another Animate
+                                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                              .slide(): Container(
+                                            width:Get.width*0.35,
+                                            child: CustomText(
+                                              Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.shop?.nameEn??"":controller.data?.shop?.name??"",
+                                              textAlign: TextAlign.right,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                                letterSpacing: 0,
+                                                fontFamily: fontFamilyArabicName,
+                                                color: kLightPinkColor,
+                                              ),
+                                              maxLines: 1,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 5,),
+                                          controller.dataIsLoading?Container(
+                                            width:Get.width*0.1,
+                                            height:Get.height*0.05,
+                                            decoration:BoxDecoration(
+                                              color: const Color(0xFFDFDDDF),
+                                              borderRadius: BorderRadius.circular(50),
+
+                                            ),
+                                            child:  Center(
+                                              child: Container(
+
+                                                width:Get.width*0.065,
+                                                height:Get.height*0.03,
+                                                decoration:BoxDecoration(
+                                                  color:  const Color(0xFFF2F0F3),
+                                                  borderRadius: BorderRadius.circular(15),
+
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                              ,
+                                            ),
+                                          ).animate(onPlay: (controller) => controller.repeat())
+                                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                              .animate():CachedNetworkImage(
+                                            fit: BoxFit.cover,
+                                            imageUrl: "http://sprinkles-qa.com${controller.data?.shop?.image??""}",
+                                            imageBuilder: ((context, image){
+                                              return  ClipRRect(
+                                                borderRadius: BorderRadius.circular(50),
+                                                child: Container(
+                                                    width:Get.width*0.1,
+                                                    height:Get.height*0.05,
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: image,
+                                                        fit:  BoxFit.cover,
+                                                      ),
+                                                    )
+                                                ),
+                                              );
+                                            }),
+                                            placeholder: (context, image){
+                                              return   Container(
+
+                                                width:Get.width*0.1,
+                                                height:Get.height*0.05,
+                                                decoration:BoxDecoration(
+                                                  color:  const Color(0xFFF2F0F3),
+                                                  borderRadius: BorderRadius.circular(15),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.black.withOpacity(0.1),
+                                                      offset: const Offset(
+                                                        0.0,
+                                                        0.0,
+                                                      ),
+                                                      blurRadius: 13.0,
+                                                      spreadRadius: 2.0,
+                                                    ), //BoxShadow
+                                                    BoxShadow(
+                                                      color: Colors.white.withOpacity(0.2),
+                                                      offset: const Offset(0.0, 0.0),
+                                                      blurRadius: 0.0,
+                                                      spreadRadius: 0.0,
+                                                    ), //BoxShadow
+                                                  ],
+                                                ),
+                                                child:Center(
+                                                  child: Container(
+
+                                                    width:Get.width*0.065,
+                                                    height:Get.height*0.03,
+                                                    decoration:BoxDecoration(
+                                                      color:  const Color(0xFFDFDDDF),
+                                                      borderRadius: BorderRadius.circular(50),
+
+                                                    ),
+                                                  ).animate(onPlay: (controller) => controller.repeat())
+                                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                      .animate() // this wraps the previous Animate in another Animate
+                                                  ,
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  ;
+                                            },
+                                            errorWidget: (context, url, error){
+                                              return SizedBox(
+                                                width:Get.width*0.1,
+                                                height:Get.height*0.05,
+                                                child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                              );
+                                            },
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 20,),controller.dataIsLoading? Container(
+
+                              width:Get.width*0.4,
+                              height:Get.height*0.16,
+                              decoration:BoxDecoration(
+                                color:  const Color(0xFFF2F0F3),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    offset: const Offset(
+                                      0.0,
+                                      0.0,
+                                    ),
+                                    blurRadius: 13.0,
+                                    spreadRadius: 2.0,
+                                  ), //BoxShadow
+                                  BoxShadow(
+                                    color: Colors.white.withOpacity(0.2),
+                                    offset: const Offset(0.0, 0.0),
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ), //BoxShadow
+                                ],
+                              ),
+                              child:Center(
+                                child: Container(
+
+                                  width:Get.width*0.37,
+                                  height:Get.height*0.13,
+                                  decoration:BoxDecoration(
+                                    color:  const Color(0xFFDFDDDF),
+                                    borderRadius: BorderRadius.circular(15),
+
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                ,
+                              ),
+                            ).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                .animate() // this wraps the previous Animate in another Animate
+                                :CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              imageUrl:"${Services.baseEndPoint}${controller.data?.images?[0]??""}",
+                              imageBuilder: ((context, image){
+                                return  ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.4,
+                                      height:Get.height*0.16,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: image,
+                                          fit:  BoxFit.cover,
+                                        ),
+                                      )
+                                  ),
+                                );
+                              }),
+                              placeholder: (context, image){
+                                return   Container(
+
+                                  width:Get.width*0.4,
+                                  height:Get.height*0.16,
+                                  decoration:BoxDecoration(
+                                    color:  const Color(0xFFF2F0F3),
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        offset: const Offset(
+                                          0.0,
+                                          0.0,
+                                        ),
+                                        blurRadius: 13.0,
+                                        spreadRadius: 2.0,
+                                      ), //BoxShadow
+                                      BoxShadow(
+                                        color: Colors.white.withOpacity(0.2),
+                                        offset: const Offset(0.0, 0.0),
+                                        blurRadius: 0.0,
+                                        spreadRadius: 0.0,
+                                      ), //BoxShadow
+                                    ],
+                                  ),
+                                  child:Center(
+                                    child: Container(
+
+                                      width:Get.width*0.37,
+                                      height:Get.height*0.13,
+                                      decoration:BoxDecoration(
+                                        color:  const Color(0xFFDFDDDF),
+                                        borderRadius: BorderRadius.circular(15),
+
+                                      ),
+                                    ).animate(onPlay: (controller) => controller.repeat())
+                                        .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                        .animate() // this wraps the previous Animate in another Animate
+                                    ,
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    ;
+                              },
+                              errorWidget: (context, url, error){
+                                return SizedBox(
+                                  width:Get.width*0.4,
+                                  height:Get.height*0.16,
+                                  child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                );
+                              },
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ):Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Stack(
                   children: [
@@ -282,7 +663,7 @@ class OrderingScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                           SizedBox(width: 20,),
+                           const SizedBox(width: 20,),
                            Container(
                               height:Get.height*0.17,
                               child: Column(
@@ -466,7 +847,7 @@ class OrderingScreen extends StatelessWidget {
                                         );
                                       },
                                     ),
-                                          SizedBox(width: 5,),
+                                          const SizedBox(width: 5,),
 
                                           controller.dataIsLoading? Container(
                                             width:Get.width*0.2,
@@ -559,16 +940,16 @@ class OrderingScreen extends StatelessWidget {
                     child:  Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.shopping_cart,
                           weight: 30,
                           color: Colors.white,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         CustomText(
-                          'أطلب الأن',
+                          orderNowBTN.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             shadows: <Shadow>[

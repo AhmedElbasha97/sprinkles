@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/favorite_screen/controller/favorite_controller.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
 import 'package:sprinkles/ui/store%20_screen/widget/store_loading_widget.dart';
@@ -31,7 +32,7 @@ class FavoriteScreen extends StatelessWidget {
               children: [
                 // Implement the stroke
                 CustomText(
-                  'قائمه المفضله',
+                  favTitle.tr,
                   style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 0,
@@ -44,9 +45,9 @@ class FavoriteScreen extends StatelessWidget {
                   ),
                 ),
                 // The text inside
-                const CustomText(
-                  'قائمه المفضله',
-                  style: TextStyle(
+                 CustomText(
+                  favTitle.tr,
+                  style: const TextStyle(
                     fontSize: 15,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w900,
@@ -94,7 +95,7 @@ class FavoriteScreen extends StatelessWidget {
                             Icons.arrow_back_ios_rounded  ,color:kDarkPinkColor,size:15
                         ),
                         CustomText(
-                          'رجوع',
+                          goBack.tr,
                           textAlign:TextAlign.left,
                           style: TextStyle(
                               height:1,
@@ -204,7 +205,7 @@ class FavoriteScreen extends StatelessWidget {
                                   children: [
                                     // Implement the stroke
                                     CustomText(
-                                      'المحلات',
+                                      favTap2.tr,
                                       style: TextStyle(
                                         fontSize: 15,
                                         letterSpacing: 0,
@@ -218,7 +219,7 @@ class FavoriteScreen extends StatelessWidget {
                                     ),
                                     // The text inside
                                     CustomText(
-                                      'المحلات',
+                                      favTap2.tr,
                                       style: TextStyle(
                                         fontSize: 15,
                                         letterSpacing: 0,
@@ -318,7 +319,7 @@ class FavoriteScreen extends StatelessWidget {
                                   children: [
                                     // Implement the stroke
                                     CustomText(
-                                      'المنتجات',
+                                      favTap1.tr,
                                       style: TextStyle(
                                         fontSize: 15,
                                         letterSpacing: 0,
@@ -332,7 +333,7 @@ class FavoriteScreen extends StatelessWidget {
                                     ),
                                     // The text inside
                                     CustomText(
-                                      'المنتجات',
+                                      favTap1.tr,
                                       style: TextStyle(
                                         fontSize: 15,
                                         letterSpacing: 0,
@@ -370,10 +371,10 @@ class FavoriteScreen extends StatelessWidget {
                   const SizedBox(
                       height:50
                   ),
-                  const CustomText(
-                    ' ليس هناك محلات متوفره الأن فى قائمه المفضلة لديك',
+                   CustomText(
+                     noFavDataStoreList.tr,
                     textAlign:TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize:25,
                       fontFamily: fontFamilyArabicName,
                       fontWeight: FontWeight.w900,
@@ -395,10 +396,10 @@ class FavoriteScreen extends StatelessWidget {
                 const SizedBox(
                     height:50
                 ),
-                const CustomText(
-                  'ليس هناك منتجات متوفره الأن فى قائمه المفضلة لديك',
+                 CustomText(
+                  noFavDataProductList.tr,
                   textAlign:TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize:25,
                     fontFamily: fontFamilyEnglishName,
                     fontWeight: FontWeight.w600,
