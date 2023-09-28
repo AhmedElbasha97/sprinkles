@@ -51,7 +51,7 @@ class ShopServices {
 
     var data = await api.request(Services.productEndPoint, "POST",queryParamters: {
       "shop":shopId,
-      "ctgid2":categoryId
+      "ctgid":categoryId
     });
     if (data != null) {
       for (var product in data){

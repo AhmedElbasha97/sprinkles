@@ -60,6 +60,7 @@ getData() async {
      update();
    }
        productList = await ShopServices.getProductsOfTheShop(shopId,"$selectedSubCategoryId");
+   await fillingData();
    shopProductIsLoading = false;
    update();
    }
