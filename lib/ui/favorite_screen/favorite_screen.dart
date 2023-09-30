@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace, prefer_is_empty
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
@@ -386,7 +388,7 @@ class FavoriteScreen extends StatelessWidget {
             ),
           ):Column(
               children:controller.storeListWidget,)
-              : controller.isLoading?const ProductLoadingWidget():controller.products?.length == 0? Column(
+              : controller.isLoading?const ProductLoadingWidget():controller.products.length == 0? Column(
               children:[
                 SizedBox(
                   height: Get.height*0.4,

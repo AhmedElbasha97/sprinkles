@@ -96,4 +96,8 @@ const orderNowBTN = "Order_Now_BTN";
 const greetingText = "Greeting_Text";
 const logOutWarning = "log_Out_Warning";
 const priceKey = "Price_key";
-
+const whatsAppText1Key = "whats_App_Text_1_Key";
+const whatsAppText2Key = "whats_App_Text_2_Key";
+const whatsAppTextInfoKey = "whats_App_Text_6_Key";
+const storeLocation = "Store_location";
+const whatsAppInfoText = "whats_App_Info_Text";

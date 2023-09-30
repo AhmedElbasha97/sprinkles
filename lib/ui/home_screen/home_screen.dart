@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/home_screen/controller/home_controller.dart';
 import 'package:sprinkles/ui/home_screen/widget/home_loading_widget.dart';
 import 'package:sprinkles/ui/home_screen/widget/home_widget.dart';
@@ -52,14 +55,26 @@ class HomeScreen extends StatelessWidget {
                             SizedBox(
                               width:Get.width*0.05,
                             ),
-                            const CustomText(
-                              'English',
-                              style: TextStyle(
-                                fontSize:15,
-
-                                fontFamily: fontFamilyEnglishName,
-                                fontWeight: FontWeight.w600,
-                                color: kBackGroundColor,
+                            InkWell(
+                              onTap: (){
+                                final Locale newLocale =
+                                Get.find<StorageService>().activeLocale == SupportedLocales.arabic
+                                    ? SupportedLocales.english
+                                    : SupportedLocales.arabic;
+                                //in storage
+                                Get.find<StorageService>().activeLocale = newLocale;
+                                //in Getx
+                                Get.updateLocale(newLocale);
+                                Get.off(()=>const HomeScreen());
+                              },
+                              child: CustomText(
+                                translateButton.tr,
+                                style: const TextStyle(
+                                  fontSize:15,
+                                  fontFamily: fontFamilyEnglishName,
+                                  fontWeight: FontWeight.w600,
+                                  color: kBackGroundColor,
+                                ),
                               ),
                             ),
                           ]

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_is_empty
+// ignore_for_file: avoid_print, prefer_is_empty, unnecessary_brace_in_string_interps
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -674,7 +674,6 @@ print("hi from fill data${productList?.length}");
           }
         }
         else{
-          print("hi from fill data${i} hi 1product");
           var checker =await checkProductAddedOrNet("${productList?[i].id}");
           products.add(
               Column(

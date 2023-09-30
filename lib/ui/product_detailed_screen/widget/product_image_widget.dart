@@ -26,7 +26,7 @@ class ProductImageWidget extends StatelessWidget {
           return  Stack(
             children: [
               Hero(
-                tag:"imageHero${activeIndex}",
+                tag:"imageHero$activeIndex",
                 child: Container(
                     width:Get.width,
                     height:Get.height*0.4,

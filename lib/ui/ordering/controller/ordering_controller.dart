@@ -1,8 +1,11 @@
+// ignore_for_file: prefer_is_empty, empty_catches
+
 import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/choosing_filiter_model.dart';
 import 'package:sprinkles/services/order_services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,7 +35,6 @@ class OrderingController extends GetxController{
  }
  fillingChoosedData() {
   for (int i = 0; i < (data?.itemFilter?.length ?? 0 - 1); i++) {
-   print("hiii from fil data");
    choosedData.add(ChoosingFilterModel(data?.itemFilter?[i].filter ?? "",
        data?.itemFilter?[i].items?[0].filterItem ?? ""));
   }
@@ -42,9 +44,14 @@ choosingFilterValue(int index,String choosedFilterTitle){
   update();
 }
 ordering(){
-messageTextWhatsApp = " في تطبيق sprinkles وأريد عمل اوردر ${Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.nameEn??"":data?.name??""}رأيت هذا ال";
-for(int i = 0;i>choosedData.length-1;i++){
- messageTextWhatsApp = "$messageTextWhatsApp\n ${choosedData[i].filterTitle} \n ${choosedData[i].filterValue}";
+messageTextWhatsApp = " ${whatsAppText2Key.tr} ${Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.nameEn??"":data?.name??""} ${whatsAppText1Key.tr} ";
+
+if(data?.itemFilter?.length!=0) {
+ for (int i = 0; i > choosedData.length - 1; i++) {
+  messageTextWhatsApp =
+  "$messageTextWhatsApp\n ${choosedData[i].filterTitle} \n ${choosedData[i]
+      .filterValue}";
+ }
 }
 whatsapp(data?.shop?.whatsapp??"");
 }

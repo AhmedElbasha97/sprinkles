@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, sort_child_properties_last
+// ignore_for_file: avoid_print, sort_child_properties_last, prefer_is_empty
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -116,7 +116,7 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                   size: 50,
                 ),
               )),
-          widget.link?.length == 0?SizedBox():Positioned(
+          widget.link?.length == 0?const SizedBox():Positioned(
             right:10,
             top:15,
             child: Container(
@@ -140,10 +140,10 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width:10,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.image,
                         color: Colors.black,
                         size: 17,
@@ -154,7 +154,7 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                 )
             ),
           ),
-          widget.link?.length == 0?SizedBox():activeIndex != ((widget.link?.length??0)-1)?Positioned(
+          widget.link?.length == 0?const SizedBox():activeIndex != ((widget.link?.length??0)-1)?Positioned(
               top: Get.height*0.45,
               left: 10,
               child: GestureDetector(
@@ -167,7 +167,7 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                   size: 50,
                 ),
               )):const SizedBox(),
-          widget.link?.length == 0?SizedBox():activeIndex != 0?Positioned(
+          widget.link?.length == 0?const SizedBox():activeIndex != 0?Positioned(
               top: Get.height*0.45,
               right: 10,
               child: GestureDetector(

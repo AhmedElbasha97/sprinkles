@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
@@ -155,11 +157,9 @@ addingOrRemovingProductToFavorite(context,String productId,int index,bool double
 }
 fillingProductData()  async {
   products = [];
-  print("hi from fill data${productFavList?.length}");
   for (int i = 0; i <= productFavList!.length-1; i=i+2) {
     if(i<productFavList!.length-1){
 
-      print("hi from fill data${productFavList?.length}");
       var checker =await checkProductAddedOrNet("${productFavList?[i].id}");
       var checker1 =await checkProductAddedOrNet("${productFavList?[i+1].id}");
       products.add(

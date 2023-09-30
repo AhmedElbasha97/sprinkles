@@ -1,3 +1,5 @@
+// ignore_for_file: equal_keys_in_map
+
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 
@@ -102,7 +104,12 @@ class AppTranslations extends Translations {
       orderNowBTN:"Order Now",
       greetingText:"hello",
       logOutWarning: 'Do you want to log out of the application? You can also clear your data as well',
-      priceKey:"Price:"
+      priceKey:"Price:",
+      whatsAppText1Key:"I saw this",
+      whatsAppText2Key:"In the Sprinkles app and I want to make an order",
+      whatsAppTextInfoKey:"In the Sprinkles app and I want to inquire about it",
+      storeLocation:"Store Location:",
+   whatsAppInfoText: "I saw your store in the Sprinkles app and I want to inquire about something",
     },
     "ar": {
       requiredFiled:"هذه الخانة مطلوبه",
@@ -188,8 +195,8 @@ class AppTranslations extends Translations {
       moreButtonTitle:'المزيد',
       addToFavoriteTitle: 'لايمكنك اضافه إلى قائمه المفضله',
       addToFavoriteValue: 'لا تستطيع اضافه إلى قائمه المفضله إلا عند تسجيل دخول الحساب',
-      detailsTitle: "'التفاصيل:'",
-      otherProductTitle: "'منتجات اخرى ذات صله:'",
+      detailsTitle: "التفاصيل:",
+      otherProductTitle: "منتجات اخرى ذات صله:",
       noDataSearchStore: "'ليس هناك محل بهذا الأسم'",
       noStoreData: "'ليس هناك محلات متوفره الأن'",
       noDataSearchProduct: "'ليس هناك محل بهذا الأسم'",
@@ -197,7 +204,12 @@ class AppTranslations extends Translations {
       orderNowBTN:"أطلب الأن",
       greetingText:'مرحبًا',
       logOutWarning: 'هل تريد تسجيل الخروج من التطبيق يمكنك أيضآ مسح بيناتك أيضآ',
-      priceKey:"السعر:"
+      priceKey:"السعر:",
+      whatsAppText1Key:"رأيت هذا ال",
+      whatsAppText2Key:"في تطبيق سبرينكلس وأريد عمل اوردر",
+      whatsAppTextInfoKey:"في تطبيق سبرينكلس و وأريد الاستفسار عنه",
+      storeLocation:"موقع المحل:",
+      whatsAppInfoText:"رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ"
 
 
 }

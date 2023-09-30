@@ -2,7 +2,6 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:draggable_fab/draggable_fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -167,7 +166,7 @@ class ProductDetailedScreen extends StatelessWidget {
                   weight: 30,
                   color: Colors.white,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 CustomText(
@@ -254,76 +253,80 @@ class ProductDetailedScreen extends StatelessWidget {
                           fit:  BoxFit.fill,
                         ),
                       )
-                  ):Stack(
-                    children: [
+                  ):GetBuilder<ProductDetailedController>(
+                    id: "Carsoul",
+                    builder: (ProductDetailedController controller) { return Stack(
+                      children: [
 
-                      CarouselSlider.builder(
-                        carouselController: controller.carouselController,
-                        itemCount: controller.productData?.images?.length,
-                        itemBuilder: (BuildContext context, int index, int realIndex) {
-                          return ProductImageWidget(imageUrl: "${controller.productData?.images?[index]??""}", activeIndex: index, imageTotalCount:"${controller.productData?.images?.length??0}",imagesLink:controller.productData?.images);
-                        },
-                        options: CarouselOptions(
-                            height:Get.height*0.4,
-                            autoPlay: true,
-                            enlargeCenterPage: false,
-                            viewportFraction: 1,
-                            onPageChanged: (val, _) {
-                                controller.onImageChange(val);
-                            }
-                        ),
-                      ),
-                      Positioned(
-                        right:20,
-                        bottom:25,
-                        child: InkWell(
-                          onTap:(){
-                           controller.addingOrRemovingProductToFavorite(context);
-                            if(comingFromProductList){
-                            gController.getProductData(false);}
-                            if(comingFromFavoriteList){
-                              fController.getData();
-                            }
-
+                        CarouselSlider.builder(
+                          carouselController: controller.carouselController,
+                          itemCount: controller.productData?.images?.length,
+                          itemBuilder: (BuildContext context, int index, int realIndex) {
+                            return ProductImageWidget(imageUrl: "${controller.productData?.images?[index]??""}", activeIndex: index, imageTotalCount:"${controller.productData?.images?.length??0}",imagesLink:controller.productData?.images);
                           },
-                          child: Container(
-                              height: Get.height*0.04,
-                              width:Get.width*0.08,
-                              decoration: BoxDecoration(
-                                color:kLightPinkColor,
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: Center(
-                                child:controller.productAreAddedOrNot?const Icon(
-                                    Icons.favorite,
-                                    color: Colors.white,
-                                    size:14
-                                ):const Icon(
-                                    Icons.favorite_border_rounded,
-                                    color: Colors.white,
-                                    size:18
+                          options: CarouselOptions(
+                              height:Get.height*0.4,
+                              autoPlay: true,
+                              enlargeCenterPage: false,
+                              viewportFraction: 1,
+                              onPageChanged: (val, _) {
+                                controller.onImageChange(val);
+                              }
+                          ),
+                        ),
+                        Positioned(
+                          right:20,
+                          bottom:25,
+                          child: InkWell(
+                            onTap:(){
+                              controller.addingOrRemovingProductToFavorite(context);
+                              if(comingFromProductList){
+                                gController.getProductData(false);}
+                              if(comingFromFavoriteList){
+                                fController.getData();
+                              }
+
+                            },
+                            child: Container(
+                                height: Get.height*0.04,
+                                width:Get.width*0.08,
+                                decoration: BoxDecoration(
+                                  color:kLightPinkColor,
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
-                              )
+                                child: Center(
+                                  child:controller.productAreAddedOrNot?const Icon(
+                                      Icons.favorite,
+                                      color: Colors.white,
+                                      size:14
+                                  ):const Icon(
+                                      Icons.favorite_border_rounded,
+                                      color: Colors.white,
+                                      size:18
+                                  ),
+                                )
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        bottom:10,
+                        Positioned(
+                          bottom:10,
 
-                        child: Container(
+                          child: Container(
 
-                          width:Get.width,
-                          child: Row(
-                            mainAxisAlignment:MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                children:controller.dotsList
-                              ),
-                            ],
+                            width:Get.width,
+                            child: Row(
+                              mainAxisAlignment:MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                    children:controller.dotsList
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ); },
+
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -331,7 +334,7 @@ class ProductDetailedScreen extends StatelessWidget {
                       children: [
                       Container(
                       width:Get.width,
-                      height:Get.height*0.14,
+                      height:Get.height*0.16,
                         decoration:BoxDecoration(
                           borderRadius:BorderRadius.circular(10),
                           color:Colors.white,
@@ -342,8 +345,8 @@ class ProductDetailedScreen extends StatelessWidget {
                           top:0,
                           left:0,
                           child: Container(
-                            height:Get.height*0.14,
-                            width: Get.width*0.35,
+                            height:Get.height*0.16,
+                            width: Get.width*0.4,
                             decoration:const BoxDecoration(
                               borderRadius:BorderRadius.only(topLeft:Radius.circular(10),bottomLeft:Radius.circular(10)),
                               image: DecorationImage(
@@ -413,12 +416,13 @@ class ProductDetailedScreen extends StatelessWidget {
                                 ) // this wraps the previous Animate in another Animate
                                     :CachedNetworkImage(
                                   fit:  BoxFit.contain,
-                                  imageUrl: "${Services.baseEndPoint}${controller.productData?.shop?.whatsapp??""}",
+                                  imageUrl: "${Services.baseEndPoint}${controller.productData?.shop?.image??""}",
                                   imageBuilder: ((context, image){
                                     return   Container(
-                                        height: Get.height*0.1,
+                                        height: Get.height*0.13,
                                         width:Get.width*0.2,
                                         decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
                                           image: DecorationImage(
                                             image: image,
                                             fit:  BoxFit.contain,
@@ -491,14 +495,14 @@ class ProductDetailedScreen extends StatelessWidget {
                           right:0,
                           child: Container(
                               width:Get.width*0.65,
-                              height:Get.height*0.13,
+                              height:Get.height*0.15,
                             decoration:BoxDecoration(
                               borderRadius:BorderRadius.circular(10),
                               color:Colors.transparent,
 
                             ),
                             child:Padding(
-                              padding: const EdgeInsets.only(left:10.0,right: 10,top:10),
+                              padding: const EdgeInsets.only(left:10.0,right: 10,top:10,),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment:CrossAxisAlignment.start,
@@ -567,7 +571,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                       .animate() // this wraps the previous Animate in another Animate
                                       .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                       .slide():CustomText(
-                                    'السعر:${controller.productData?.price}ريال',
+                                    '${priceKey.tr} ${controller.productData?.price} ${currencyKey.tr}',
                                     style: TextStyle(
                                       shadows: <Shadow>[
                                         Shadow(
@@ -851,7 +855,6 @@ class ProductDetailedScreen extends StatelessWidget {
                 ),
               ),
                   controller.productIsLoading?Container(
-
         width:Get.width,
         height:Get.height*0.4,
         decoration:BoxDecoration(

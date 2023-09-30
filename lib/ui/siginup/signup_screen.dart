@@ -69,10 +69,10 @@ class SignupScreen extends StatelessWidget {
                                         width:10,
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(0,0,10.0,0),
+                                        padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
                                         child: CustomText(
                                           greetingText.tr,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w900,
 
                                             fontSize: 25,
@@ -83,11 +83,11 @@ class SignupScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(0,0,15.0,0),
+                                        padding: const EdgeInsets.fromLTRB(0,0,15.0,0),
                                         child: Center(
                                           child: CustomText(
                                             signUpProfile.tr,
-                                            style: TextStyle(
+                                            style: const TextStyle(
 
                                               fontSize: 22,
                                               letterSpacing: 0,
@@ -213,10 +213,10 @@ class SignupScreen extends StatelessWidget {
                                         width:10,
                                       ),
                                        Padding(
-                                        padding: EdgeInsets.fromLTRB(0,0,10.0,0),
+                                        padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
                                         child: CustomText(
                                           greetingText.tr,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w900,
 
                                             fontSize: 25,
@@ -227,11 +227,11 @@ class SignupScreen extends StatelessWidget {
                                         ),
                                       ),
                                        Padding(
-                                        padding: EdgeInsets.fromLTRB(0,0,15.0,0),
+                                        padding: const EdgeInsets.fromLTRB(0,0,15.0,0),
                                         child: Center(
                                           child: CustomText(
                                             signUpProfile.tr,
-                                            style: TextStyle(
+                                            style: const TextStyle(
 
                                               fontSize: 22,
                                               letterSpacing: 0,
@@ -333,36 +333,36 @@ class SignupScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
 
-                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: TextStyle(
+                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
                                 fontSize: 15.0,
                                 fontFamily: fontFamilyArabicName,
                                 color: kDarkPinkColor,
                               ),),
-                              Icon(Icons.check_rounded,
+                              const Icon(Icons.check_rounded,
                                   color: kDarkPinkColor),
-                              SizedBox(width: 5,),
+                              const SizedBox(width: 5,),
                             ],
                           )
                               :   Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
 
-                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: TextStyle(
+                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
                                 fontSize: 15.0,
                                 fontFamily: fontFamilyArabicName,
                                 color: kDarkPinkColor,
                               ),),
-                              Icon(
+                              const Icon(
                                 Icons.close_outlined,
                                 color: kErrorColor,
-                              ),SizedBox(width: 5,),
+                              ),const SizedBox(width: 5,),
                             ],
                           )
                               :   Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
 
-                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: TextStyle(
+                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
                                 fontSize: 15.0,
                                 fontFamily: fontFamilyArabicName,
                                 color: kDarkPinkColor,
@@ -483,7 +483,7 @@ class SignupScreen extends StatelessWidget {
                           },
                           child:   CustomText(signInBTN.tr,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily: fontFamilyArabicName,
                                 color: kDarkPinkColor,
                                 fontWeight: FontWeight.w600,
@@ -548,7 +548,7 @@ class SignupScreen extends StatelessWidget {
                         child:   Center(
                           child:  CustomText(signUpProfile.tr,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily:fontFamilyArabicName,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,

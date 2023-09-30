@@ -12,7 +12,6 @@ import 'package:sprinkles/ui/product_screen/widgets/category_loading_widget.dart
 import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/store%20_screen/controller/store_controller.dart';
 import 'package:sprinkles/ui/store%20_screen/widget/store_loading_widget.dart';
-import 'package:sprinkles/ui/store%20_screen/widget/store_widget.dart';
 import 'package:sprinkles/widgets/DrawerWidget.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 

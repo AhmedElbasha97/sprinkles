@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -136,7 +138,7 @@ class OrderingScreen extends StatelessWidget {
                   children: [
                     Container(
                       width:Get.width,
-                      height:Get.height*0.19,
+                      height:Get.height*0.195,
                       decoration:BoxDecoration(
                           borderRadius:BorderRadius.circular(10),
                           color:Colors.white,
@@ -169,7 +171,7 @@ class OrderingScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height:Get.height*0.17,
+                              height:Get.height*0.175,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
@@ -185,7 +187,8 @@ class OrderingScreen extends StatelessWidget {
                                       .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
                                       .animate() // this wraps the previous Animate in another Animate
                                       .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                      .slide():Container(
+                                      .slide():
+                                  Container(
                                     width:Get.width*0.5,
                                     child: CustomText(
                                       Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
@@ -222,7 +225,8 @@ class OrderingScreen extends StatelessWidget {
                                       .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
                                       .animate() // this wraps the previous Animate in another Animate
                                       .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                      .slide():Container(
+                                      .slide():
+                                  Container(
                                     width:Get.width*0.5,
                                     child: CustomText(
                                       "${priceKey.tr} ${controller.data?.price??""} ${currencyKey.tr}",
@@ -387,7 +391,8 @@ class OrderingScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const SizedBox(width: 20,),controller.dataIsLoading? Container(
+                            const SizedBox(width: 20,),
+                            controller.dataIsLoading? Container(
 
                               width:Get.width*0.4,
                               height:Get.height*0.16,
@@ -510,13 +515,14 @@ class OrderingScreen extends StatelessWidget {
                     )
                   ],
                 ),
-              ):Padding(
+              ):
+              Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Stack(
                   children: [
                     Container(
                       width:Get.width,
-                      height:Get.height*0.19,
+                      height:Get.height*0.195,
                       decoration:BoxDecoration(
                         borderRadius:BorderRadius.circular(10),
                         color:Colors.white,
@@ -665,7 +671,7 @@ class OrderingScreen extends StatelessWidget {
                             ),
                            const SizedBox(width: 20,),
                            Container(
-                              height:Get.height*0.17,
+                              height:Get.height*0.175,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [

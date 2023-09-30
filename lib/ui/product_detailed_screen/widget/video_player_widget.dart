@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, deprecated_member_use
 
 import 'dart:async';
 
@@ -7,7 +7,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/full_screen_widget.dart';
-import 'package:sprinkles/widgets/loader.dart';
 
 import 'package:video_player/video_player.dart';
 

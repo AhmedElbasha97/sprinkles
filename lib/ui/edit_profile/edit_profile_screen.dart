@@ -425,7 +425,7 @@ class EditProfileScreen extends StatelessWidget {
                         child:   Center(
                           child:  CustomText(editProfileTitle.tr,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily:fontFamilyArabicName,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,

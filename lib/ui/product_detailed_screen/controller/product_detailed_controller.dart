@@ -1,4 +1,4 @@
-// ignore_for_file: empty_catches
+// ignore_for_file: empty_catches, unrelated_type_equality_checks
 
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/product_detailed_model.dart';
 import 'package:sprinkles/models/products_model.dart';
@@ -161,14 +162,14 @@ class ProductDetailedController extends GetxController{
     if(Get.find<StorageService>().checkUserIsSignedIn) {
       checkProductAddedOrNet();
     }
-    messageTextWhatsApp = " في تطبيق sprinkles وأريد عمل اوردر ${Get.find<StorageService>().activeLocale == SupportedLocales.english?productData?.nameEn??"":productData?.name??""}رأيت هذا ال";
+    messageTextWhatsApp = " ${whatsAppTextInfoKey.tr} ${Get.find<StorageService>().activeLocale == SupportedLocales.english?productData?.nameEn??"":productData?.name??""} ${whatsAppText1Key.tr} ";
     productIsLoading = false;
     update();
   }
   showWarningFavorite(context){
     showDialog(context: context,
         builder: (context) {
-      return YesOrNoDialogue(alertText: 'لا تستطيع اضافه إلى قائمه المفضله إلا عند تسجيل دخول الحساب', alertTitle: 'لايمكنك اضافه إلى قائمه المفضله', alertYesButtonTitle: 'إنشاء حساب', alertNoButtonTitle: 'تسجيل دخول', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
+      return YesOrNoDialogue(alertText: addToFavoriteValue.tr, alertTitle: addToFavoriteTitle.tr, alertYesButtonTitle: signUpProfile.tr, alertNoButtonTitle: signInProfile.tr, alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
         Get.to(()=>const SignupScreen());
       }, alertNoButtonFunction: (){
         Get.to(()=>LoginScreen());
@@ -205,7 +206,7 @@ class ProductDetailedController extends GetxController{
     activeIndex = index;
     carouselController.jumpToPage(index);
     makingDotsForCarouselSlider();
-    update();
+    update(["Carsoul"]);
   }
   Future<void> makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(

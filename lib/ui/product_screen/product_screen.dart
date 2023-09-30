@@ -125,7 +125,7 @@ class ProductScreen extends StatelessWidget {
                                           .animate() // this wraps the previous Animate in another Animate
                                           .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                           .slide():Container(
-                                        width: Get.width*0.14,
+                                        width: Get.width*0.2,
                                             child: CustomText(
                                         Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
                                         style: TextStyle(
@@ -195,7 +195,7 @@ class ProductScreen extends StatelessWidget {
                                         imageBuilder: ((context, image){
                                           return   Container(
                                               height: Get.height*0.15,
-                                              width: Get.width*0.33,
+                                              width: Get.width*0.28,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
@@ -306,7 +306,7 @@ class ProductScreen extends StatelessWidget {
                                         imageBuilder: ((context, image){
                                           return   Container(
                                               height: Get.height*0.15,
-                                              width: Get.width*0.33,
+                                              width: Get.width*0.28,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
@@ -709,7 +709,6 @@ class ProductScreen extends StatelessWidget {
 
                       ]
                   ):Stack(
-                    textDirection:TextDirection.rtl,
                     children:[
                       Container(
                         height: Get.height*0.33,
@@ -1114,7 +1113,7 @@ class ProductScreen extends StatelessWidget {
                                         .animate() // this wraps the previous Animate in another Animate
                                         .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                         .slide():Container(
-                                      width: Get.width*0.14,
+                                      width: Get.width*0.2,
                                           child: CustomText(
                                       Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
                                       style: TextStyle(
@@ -1184,7 +1183,7 @@ class ProductScreen extends StatelessWidget {
                                       imageBuilder: ((context, image){
                                         return   Container(
                                             height: Get.height*0.15,
-                                            width: Get.width*0.33,
+                                            width: Get.width*0.28,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(
@@ -1196,7 +1195,7 @@ class ProductScreen extends StatelessWidget {
                                       placeholder: (context, image){
                                         return   Container(
                                           height: Get.height*0.2,
-                                          width: Get.width*0.3,
+                                          width: Get.width*0.28,
                                           decoration:BoxDecoration(
                                             color:  const Color(0xFFF2F0F3),
                                             borderRadius: BorderRadius.circular(50),
@@ -1245,7 +1244,8 @@ class ProductScreen extends StatelessWidget {
                                           child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
                                         );
                                       },
-                                    ):controller.categoryIsLoading?
+                                    ):
+                                    controller.categoryIsLoading?
                                     Container(
 
                                       height: Get.height*0.15,
@@ -1295,12 +1295,12 @@ class ProductScreen extends StatelessWidget {
                                       imageBuilder: ((context, image){
                                         return   Container(
                                             height: Get.height*0.15,
-                                            width: Get.width*0.33,
+                                            width: Get.width*0.28,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(
                                                 image: image,
-                                                fit:  BoxFit.contain,
+                                                fit:  BoxFit.cover,
                                               ),
                                             ));
                                       }),

@@ -1,11 +1,10 @@
-// ignore_for_file: file_names, library_private_types_in_public_api, use_build_context_synchronously, sized_box_for_whitespace
+// ignore_for_file: file_names, library_private_types_in_public_api, use_build_context_synchronously, sized_box_for_whitespace, prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
-import 'package:sprinkles/models/privacy_policy_model.dart';
 import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/services/auth_services.dart';
 import 'package:sprinkles/services/biomatrics_auth_services.dart';
@@ -71,7 +70,7 @@ class _AppDrawersState extends State<AppDrawers> {
       Get.to(()=> const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),transition:Transition.rightToLeftWithFade);
       widget.scaffoldKey.currentState?.openEndDrawer();
     }
-    case "قائمه المفضله":{
+    case "قائمة المفضلة":{
       Get.to(()=> const FavoriteScreen(),transition:Transition.rightToLeftWithFade);
       widget.scaffoldKey.currentState?.openEndDrawer();
     }
@@ -82,11 +81,11 @@ class _AppDrawersState extends State<AppDrawers> {
     }
     break;
 
-        case "سياسة الخصوصيه":{
+    case "سياسة الخصوصية":{
       Get.to(()=> const PrivacyPolicyScreen() ,transition:Transition.rightToLeftWithFade);
       widget.scaffoldKey.currentState?.openEndDrawer();
     }
-    case "الشروط والاحكام":{
+    case "الأحكام والشروط":{
     Get.to(()=> const TermsScreen(),transition:Transition.rightToLeftWithFade);
     widget.scaffoldKey.currentState?.openEndDrawer();
   }

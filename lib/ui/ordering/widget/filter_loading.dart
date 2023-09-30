@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -91,7 +93,7 @@ class FilterLoading extends StatelessWidget {
                                   .slide(),
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          const SizedBox(height: 10,),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -108,11 +110,11 @@ class FilterLoading extends StatelessWidget {
                                         height:Get.height*0.05,
                                         decoration:BoxDecoration(
                                           borderRadius:BorderRadius.circular(10),
-                                          border: Border(
-                                            right: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
-                                            left: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
-                                            top: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
-                                            bottom: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
+                                          border: const Border(
+                                            right: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
+                                            left: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
+                                            top: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
+                                            bottom: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
                                           ),
 
                                           color: const Color(0xFFF2F0F3),
@@ -129,8 +131,8 @@ class FilterLoading extends StatelessWidget {
 
                                           height:Get.height*0.05,
                                           width: Get.width*0.14,
-                                          decoration:BoxDecoration(
-                                            color:  const Color(0xFFDFDDDF),
+                                          decoration:const BoxDecoration(
+                                            color:  Color(0xFFDFDDDF),
                                             borderRadius:BorderRadius.only(topRight:Radius.circular(10),bottomRight:Radius.circular(10)),
 
 
@@ -255,11 +257,11 @@ class FilterLoading extends StatelessWidget {
                                         height:Get.height*0.05,
                                         decoration:BoxDecoration(
                                           borderRadius:BorderRadius.circular(10),
-                                          border: Border(
-                                            right: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
-                                            left: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
-                                            top: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
-                                            bottom: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
+                                          border: const Border(
+                                            right: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
+                                            left: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
+                                            top: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
+                                            bottom: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
                                           ),
 
                                           color: const Color(0xFFF2F0F3),
@@ -276,8 +278,8 @@ class FilterLoading extends StatelessWidget {
 
                                           height:Get.height*0.05,
                                           width: Get.width*0.14,
-                                          decoration:BoxDecoration(
-                                            color:  const Color(0xFFDFDDDF),
+                                          decoration:const BoxDecoration(
+                                            color:  Color(0xFFDFDDDF),
                                             borderRadius:BorderRadius.only(topRight:Radius.circular(10),bottomRight:Radius.circular(10)),
 
 
@@ -402,11 +404,11 @@ class FilterLoading extends StatelessWidget {
                                         height:Get.height*0.05,
                                         decoration:BoxDecoration(
                                           borderRadius:BorderRadius.circular(10),
-                                          border: Border(
-                                            right: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
-                                            left: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
-                                            top: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
-                                            bottom: BorderSide(color:  const Color(0xFFDFDDDF),width: 1),
+                                          border: const Border(
+                                            right: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
+                                            left: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
+                                            top: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
+                                            bottom: BorderSide(color:  Color(0xFFDFDDDF),width: 1),
                                           ),
 
                                           color: const Color(0xFFF2F0F3),
@@ -423,8 +425,8 @@ class FilterLoading extends StatelessWidget {
 
                                           height:Get.height*0.05,
                                           width: Get.width*0.14,
-                                          decoration:BoxDecoration(
-                                            color:  const Color(0xFFDFDDDF),
+                                          decoration:const BoxDecoration(
+                                            color:  Color(0xFFDFDDDF),
                                             borderRadius:BorderRadius.only(topRight:Radius.circular(10),bottomRight:Radius.circular(10)),
 
 

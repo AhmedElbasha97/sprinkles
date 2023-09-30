@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 const String fontFamilyArabicName = "Al-Mujahed_Al-Anbobi";
 const String fontFamilyEnglishName = "alois";
 enum  Filters {

@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:sprinkles/Utils/api_service.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/models/products_model.dart';

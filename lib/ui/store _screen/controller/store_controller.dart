@@ -150,7 +150,6 @@ class StoreController extends GetxController {
         storeList = await SearchAndFilterServices.searchForShopInMainCategory(mainCategoryId,searchController.text,selectingFilterTag);
          fillData();
       }
-      print("hiii from Search${storeList?.length}");
 
 
     }

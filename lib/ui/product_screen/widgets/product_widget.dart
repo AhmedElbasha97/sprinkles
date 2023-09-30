@@ -1,4 +1,4 @@
-// ignore_for_file: empty_catches, avoid_print
+// ignore_for_file: empty_catches, avoid_print, sized_box_for_whitespace
 
 import 'dart:io';
 
@@ -13,17 +13,12 @@ import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
-import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/products_model.dart';
-import 'package:sprinkles/models/response_model.dart';
-import 'package:sprinkles/services/favorite_services.dart';
-import 'package:sprinkles/ui/login/login_screen.dart';
+
 import 'package:sprinkles/ui/ordering/ordering_screen.dart';
 import 'package:sprinkles/ui/product_detailed_screen/product_detailed_screen.dart';
-import 'package:sprinkles/ui/siginup/signup_screen.dart';
-import 'package:sprinkles/widgets/alert_dialogue.dart';
+
 import 'package:sprinkles/widgets/custom_text_widget.dart';
-import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -46,9 +41,9 @@ final ProductsModel? product;
   }
 
   whatsapp(String contact) async{
-
-    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help')}";
+  String   messageTextWhatsApp = " ${whatsAppTextInfoKey.tr} ${Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.nameEn??"":product?.name??""} ${whatsAppText1Key.tr} ";
+    var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
 
     try{
       if(Platform.isIOS){

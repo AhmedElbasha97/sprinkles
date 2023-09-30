@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/response_model.dart';
@@ -27,16 +30,18 @@ class StoreDetailedController extends GetxController{
  int selectedSubCategoryId = 0;
  List<Widget> products = [];
  bool storeAreAddedOrNot = false;
-
+ GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
  final String shopId;
  final int mainCategoryId;
  final BuildContext context;
 
   StoreDetailedController({required this.context, required this.mainCategoryId, required this.shopId});
 
- Future<void> onInit() async {
+ @override
+  Future<void> onInit() async {
    super.onInit();
-    await getData();
+   await getData();
+
  }
 
  selectingAnotherSubCategory(int subCategoryId){
@@ -69,8 +74,8 @@ getData() async {
       mapType: Platform.isAndroid
           ?MapType.google:MapType.apple,
       coords: Coords(double.parse( shopData?.locationLat??"0.0"), double.parse( shopData?.locationLon??"0.0")),
-      title: " موقع المحل: ${ shopData?.name}",
-      description: " موقع المحل: ${ shopData?.name}",
+      title: " ${storeLocation.tr} ${ Get.find<StorageService>().activeLocale == SupportedLocales.english?shopData?.nameEn:shopData?.name}",
+      description: " ${storeLocation.tr} ${ Get.find<StorageService>().activeLocale == SupportedLocales.english?shopData?.nameEn:shopData?.name}",
     );
   }
  Future<void> makePhoneCall() async {
@@ -82,11 +87,10 @@ getData() async {
  }
  fillingData()  async {
    products = [];
-   print("hi from fill data${productList?.length}");
+
    for (int i = 0; i <= productList!.length-1; i=i+2) {
      if(i<productList!.length-1){
 
-       print("hi from fill data${productList?.length}");
        var checker =await checkProductAddedOrNet("${productList?[i].id}");
        var checker1 =await checkProductAddedOrNet("${productList?[i+1].id}");
        products.add(
@@ -152,7 +156,7 @@ getData() async {
        if(data?.msg != "succeeded"){
          showDialog(context: context,
              builder: (context) {
-               return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+               return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
              }
          );
        }
@@ -202,7 +206,7 @@ getData() async {
        if(data?.msg != "succeeded"){
          showDialog(context: context,
              builder: (context) {
-               return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+               return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
              }
          );
        }else{
@@ -256,7 +260,7 @@ getData() async {
  showWarningFavorite(context){
    showDialog(context: context,
        builder: (context) {
-         return YesOrNoDialogue(alertText: 'لا تستطيع اضافه إلى قائمه المفضله إلا عند تسجيل دخول الحساب', alertTitle: 'لايمكنك اضافه إلى قائمه المفضله', alertYesButtonTitle: 'إنشاء حساب', alertNoButtonTitle: 'تسجيل دخول', alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
+         return YesOrNoDialogue(alertText: addToFavoriteValue.tr, alertTitle: addToFavoriteTitle.tr, alertYesButtonTitle: signUpProfile.tr, alertNoButtonTitle: signInProfile.tr, alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
            Get.to(()=>const SignupScreen());
          }, alertNoButtonFunction: (){
            Get.to(()=>LoginScreen());
@@ -265,8 +269,8 @@ getData() async {
  }
  whatsapp() async{
 
-   var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=Hi, I need some help";
-   var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse('Hi, I need some help')}";
+   var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=${whatsAppInfoText.tr}";
+   var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse(whatsAppInfoText.tr)}";
 
    try{
      if(Platform.isIOS){
@@ -305,7 +309,7 @@ getData() async {
        if(data?.msg != "succeeded"){
          showDialog(context: context,
              builder: (context) {
-               return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+               return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
              }
          );
        }

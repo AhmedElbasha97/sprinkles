@@ -126,6 +126,7 @@ class Shop {
   String? nameEn;
   String? phone;
   String? whatsapp;
+  String? image;
 
   Shop({
     this.id,
@@ -133,6 +134,7 @@ class Shop {
     this.nameEn,
     this.phone,
     this.whatsapp,
+    this.image,
   });
 
   factory Shop.fromJson(Map<String, dynamic> json) => Shop(
@@ -141,6 +143,7 @@ class Shop {
     nameEn: json["name_en"],
     phone: json["phone"],
     whatsapp: json["whatsapp"],
+    image: json["image"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -149,5 +152,6 @@ class Shop {
     "name_en": nameEn,
     "phone": phone,
     "whatsapp": whatsapp,
+    "image": image,
   };
 }

@@ -1,19 +1,20 @@
-// ignore_for_file: avoid_print, sized_box_for_whitespace, unnecessary_string_interpolations, unnecessary_brace_in_string_interps, avoid_unnecessary_containers
+// ignore_for_file: avoid_print, sized_box_for_whitespace, unnecessary_string_interpolations, unnecessary_brace_in_string_interps, avoid_unnecessary_containers, prefer_is_empty
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
+import 'package:sprinkles/ui/home_screen/home_screen.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_loading_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
 import 'package:sprinkles/ui/store_details_screen/controller/store_detailed_screen.dart';
+import 'package:sprinkles/widgets/DrawerWidget.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 import '../../Utils/constant.dart';
@@ -32,6 +33,8 @@ class StoreDetailedScreen extends StatelessWidget {
     return GetBuilder(
       init:  StoreDetailedController( context:context, mainCategoryId:mainCategoryId, shopId: shopId,  ),
       builder: (StoreDetailedController controller) =>  Scaffold(
+        key: controller.scaffoldState,
+        drawer: AppDrawers(scaffoldKey: controller.scaffoldState,),
         body:  SingleChildScrollView(
           controller: controller.scrollController,
           child: Container(
@@ -207,19 +210,36 @@ class StoreDetailedScreen extends StatelessWidget {
                                 children:[
                                   Container(
                                     width:Get.width*0.4,
-                                    child: const Padding(
-                                      padding:  EdgeInsets.fromLTRB(8,8,8,8),
+                                    child:  Padding(
+                                      padding:  const EdgeInsets.fromLTRB(8,8,8,8),
                                       child: Row(
                                         mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30),
-                                          CustomText(
-                                            'English',
-                                            style: TextStyle(
-                                              fontSize:15,
-                                              fontFamily: fontFamilyEnglishName,
-                                              fontWeight: FontWeight.w600,
-                                              color: kDarkPinkColor,
+                                          InkWell(
+                                              onTap:(){
+                                                controller.scaffoldState.currentState!.openDrawer();
+                                              },
+                                              child: const Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30)),
+                                          InkWell(
+                                            onTap: (){
+                                              final Locale newLocale =
+                                              Get.find<StorageService>().activeLocale == SupportedLocales.arabic
+                                                  ? SupportedLocales.english
+                                                  : SupportedLocales.arabic;
+                                              //in storage
+                                              Get.find<StorageService>().activeLocale = newLocale;
+                                              //in Getx
+                                              Get.updateLocale(newLocale);
+                                              Get.off(()=>const HomeScreen());
+                                            },
+                                            child: CustomText(
+                                              translateButton.tr,
+                                              style: const TextStyle(
+                                                fontSize:15,
+                                                fontFamily: fontFamilyEnglishName,
+                                                fontWeight: FontWeight.w600,
+                                                color: kDarkPinkColor,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -442,19 +462,36 @@ class StoreDetailedScreen extends StatelessWidget {
                                 children:[
                                   Container(
                                     width:Get.width*0.4,
-                                    child: const Padding(
-                                      padding:  EdgeInsets.fromLTRB(8,8,8,8),
-                                      child: Row(
+                                    child:  Padding(
+                                      padding:  const EdgeInsets.fromLTRB(8,8,8,8),
+                                      child:Row(
                                         mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30),
-                                          CustomText(
-                                            'English',
-                                            style: TextStyle(
-                                              fontSize:15,
-                                              fontFamily: fontFamilyEnglishName,
-                                              fontWeight: FontWeight.w600,
-                                              color: kDarkPinkColor,
+                                          InkWell(
+                                              onTap:(){
+                                                controller.scaffoldState.currentState!.openDrawer();
+                                              },
+                                              child: const Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30)),
+                                          InkWell(
+                                            onTap: (){
+                                              final Locale newLocale =
+                                              Get.find<StorageService>().activeLocale == SupportedLocales.arabic
+                                                  ? SupportedLocales.english
+                                                  : SupportedLocales.arabic;
+                                              //in storage
+                                              Get.find<StorageService>().activeLocale = newLocale;
+                                              //in Getx
+                                              Get.updateLocale(newLocale);
+                                              Get.off(()=>const HomeScreen());
+                                            },
+                                            child: CustomText(
+                                              translateButton.tr,
+                                              style: const TextStyle(
+                                                fontSize:15,
+                                                fontFamily: fontFamilyEnglishName,
+                                                fontWeight: FontWeight.w600,
+                                                color: kDarkPinkColor,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -811,7 +848,7 @@ class StoreDetailedScreen extends StatelessWidget {
 
                           Container(
                            decoration: BoxDecoration(
-                             gradient: LinearGradient(
+                             gradient: const LinearGradient(
                                begin: Alignment.topCenter,
                                end: Alignment.bottomCenter,
                                colors: [kDarkPinkColor,kLightPinkColor],
@@ -852,7 +889,7 @@ class StoreDetailedScreen extends StatelessWidget {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [kDarkPinkColor,kLightPinkColor],
@@ -894,7 +931,7 @@ class StoreDetailedScreen extends StatelessWidget {
 
                           Container(
                             decoration: BoxDecoration(
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [kDarkPinkColor,kLightPinkColor],
@@ -949,7 +986,7 @@ class StoreDetailedScreen extends StatelessWidget {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [kDarkPinkColor,kLightPinkColor],
@@ -1021,7 +1058,7 @@ class StoreDetailedScreen extends StatelessWidget {
                          CustomText(
                           controller.shopData?.ctgs?.length == 0?'ليس هناك منتجات متوفره فى هذا المحل':'ليس هناك منتجات متوفره فى هذه فئة حتى الأن',
                           textAlign:TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize:25,
                             fontFamily: fontFamilyEnglishName,
                             fontWeight: FontWeight.w600,
