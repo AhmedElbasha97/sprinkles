@@ -34,6 +34,7 @@ class AppDrawers extends StatefulWidget {
 }
 
 class _AppDrawersState extends State<AppDrawers> {
+  String userNameText = '';
   List<DrawerItem> data= [
    DrawerItem(drawerTag1.tr,"homeIconDrawer.png"),
    DrawerItem(drawerTag2.tr,"storeIconDrawer.png"),
@@ -54,6 +55,7 @@ class _AppDrawersState extends State<AppDrawers> {
     super.initState();
   if(Get.find<StorageService>().checkUserIsSignedIn){
       data.insert(5,  DrawerItem(favTitle.tr,"favoriteIcon.png"));
+      userNameText = Get.find<StorageService>().userName;
   }
 
   }
@@ -254,7 +256,7 @@ class _AppDrawersState extends State<AppDrawers> {
                 ),
                 Center(
                   child: CustomText(
-                    Get.find<StorageService>().checkUserIsSignedIn?Get.find<StorageService>().userName:"",
+                    userNameText,
                     style: const TextStyle(
 
                       fontSize: 15,

@@ -106,7 +106,7 @@ class FilterTapWidget extends StatelessWidget {
                             filterTapTitle,
                             style: TextStyle(
 
-                              fontSize: 15,
+                              fontSize: 18,
                               letterSpacing: 0,
                               fontWeight: FontWeight.w900,
                               fontFamily: fontFamilyArabicName,
@@ -120,7 +120,7 @@ class FilterTapWidget extends StatelessWidget {
                           CustomText(
                             filterTapTitle,
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 18,
                               letterSpacing: 0,
                               fontWeight: FontWeight.w900,
                               fontFamily: fontFamilyArabicName,

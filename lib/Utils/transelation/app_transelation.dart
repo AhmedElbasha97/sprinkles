@@ -110,6 +110,8 @@ class AppTranslations extends Translations {
       whatsAppTextInfoKey:"In the Sprinkles app and I want to inquire about it",
       storeLocation:"Store Location:",
    whatsAppInfoText: "I saw your store in the Sprinkles app and I want to inquire about something",
+      profileBtn1:"Edit Password",
+      profileBtn2:"Edit Profile"
     },
     "ar": {
       requiredFiled:"هذه الخانة مطلوبه",
@@ -209,7 +211,9 @@ class AppTranslations extends Translations {
       whatsAppText2Key:"في تطبيق سبرينكلس وأريد عمل اوردر",
       whatsAppTextInfoKey:"في تطبيق سبرينكلس و وأريد الاستفسار عنه",
       storeLocation:"موقع المحل:",
-      whatsAppInfoText:"رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ"
+      whatsAppInfoText:"رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ",
+      profileBtn1:"تعديل كلمه السر",
+      profileBtn2:"تعديل الحساب"
 
 
 }

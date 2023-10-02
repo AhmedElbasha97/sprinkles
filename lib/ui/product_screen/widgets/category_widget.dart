@@ -20,7 +20,7 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.height*0.2,
+      height: Get.height*0.18,
       width:Get.width*0.2,
 
       child:Column(
@@ -33,7 +33,7 @@ class CategoryWidget extends StatelessWidget {
                 children:[
                   SizedBox(
                     height: Get.height*0.11,
-                    width:Get.width*0.2,
+                    width:Get.width*0.17,
 
                   ),
                   Positioned(
@@ -48,18 +48,21 @@ class CategoryWidget extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    bottom:0,
+                    bottom:6,
                     child: CachedNetworkImage(
                       fit:  BoxFit.contain,
                       imageUrl: "${Services.baseEndPoint}${category?.img??""}",
                       imageBuilder: ((context, image){
                         return   Container(
-                            height: Get.height*0.08,
+                            height: Get.height*0.075,
+
                             width:Get.width*0.17,
+
                             decoration: BoxDecoration(
+                              shape: BoxShape.circle,
                               image: DecorationImage(
                                 image: image,
-                                fit:  BoxFit.contain,
+                                fit:  BoxFit.fitHeight,
                               ),
                             ));
                       }),
@@ -111,8 +114,8 @@ class CategoryWidget extends StatelessWidget {
                       },
                       errorWidget: (context, url, error){
                         return SizedBox(
-                          height: Get.height*0.04,
-                          width:Get.width*0.1,
+                          height: Get.height*0.075,
+                          width:Get.width*0.17,
                           child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
                         );
                       },
@@ -131,6 +134,7 @@ class CategoryWidget extends StatelessWidget {
                 fontFamily: fontFamilyArabicName,
                 color:selectedCategoryId == category?.id?kDarkPinkColor:kLightPinkColor,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
         ],

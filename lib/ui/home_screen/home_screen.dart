@@ -65,7 +65,6 @@ class HomeScreen extends StatelessWidget {
                                 Get.find<StorageService>().activeLocale = newLocale;
                                 //in Getx
                                 Get.updateLocale(newLocale);
-                                Get.off(()=>const HomeScreen());
                               },
                               child: CustomText(
                                 translateButton.tr,

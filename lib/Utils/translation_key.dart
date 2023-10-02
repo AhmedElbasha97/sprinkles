@@ -101,3 +101,5 @@ const whatsAppText2Key = "whats_App_Text_2_Key";
 const whatsAppTextInfoKey = "whats_App_Text_6_Key";
 const storeLocation = "Store_location";
 const whatsAppInfoText = "whats_App_Info_Text";
+const profileBtn1 = "Profile_Btn_1";
+const profileBtn2 = "Profile_Btn_2";

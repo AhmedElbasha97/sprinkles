@@ -9,7 +9,6 @@ import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
-import 'package:sprinkles/ui/home_screen/home_screen.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_loading_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
@@ -52,9 +51,10 @@ class StoreDetailedScreen extends StatelessWidget {
                           width:Get.width,
                           child:const Padding(padding: EdgeInsets.all(0),
                           ),
-                        ), Positioned(
+                        ),
+                        Positioned(
 
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           right:0,
                           child: Stack(
                             children: [
@@ -70,7 +70,8 @@ class StoreDetailedScreen extends StatelessWidget {
                                     child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitWidth,),
                                   )),
                               Positioned(
-                                left:20,
+                                top:10,
+                                left:10,
                                 child: Container(
                                   width:Get.width*0.48,
                                   child: Row(
@@ -200,7 +201,7 @@ class StoreDetailedScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           left:0,
                           child: Container(
 
@@ -230,7 +231,6 @@ class StoreDetailedScreen extends StatelessWidget {
                                               Get.find<StorageService>().activeLocale = newLocale;
                                               //in Getx
                                               Get.updateLocale(newLocale);
-                                              Get.off(()=>const HomeScreen());
                                             },
                                             child: CustomText(
                                               translateButton.tr,
@@ -442,7 +442,8 @@ class StoreDetailedScreen extends StatelessWidget {
 
 
                       ]
-                  ):Stack(
+                  )
+                      :Stack(
 
                       children:[
                         Container(
@@ -452,7 +453,7 @@ class StoreDetailedScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           right:0,
                           child: Container(
 
@@ -482,7 +483,6 @@ class StoreDetailedScreen extends StatelessWidget {
                                               Get.find<StorageService>().activeLocale = newLocale;
                                               //in Getx
                                               Get.updateLocale(newLocale);
-                                              Get.off(()=>const HomeScreen());
                                             },
                                             child: CustomText(
                                               translateButton.tr,
@@ -693,7 +693,7 @@ class StoreDetailedScreen extends StatelessWidget {
                         ),
                         Positioned(
 
-                              top:statusBarHeight,
+                              top:statusBarHeight-5,
                               left:0,
                           child: Stack(
                             children: [
@@ -709,7 +709,8 @@ class StoreDetailedScreen extends StatelessWidget {
                                     child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitWidth,),
                                   )),
                              Positioned(
-                                left:20,
+                               top:10,
+                                left:10,
                                 child: Container(
                                   width:Get.width*0.48,
                                   child: Row(
@@ -847,32 +848,7 @@ class StoreDetailedScreen extends StatelessWidget {
                         children: [
 
                           Container(
-                           decoration: BoxDecoration(
-                             gradient: const LinearGradient(
-                               begin: Alignment.topCenter,
-                               end: Alignment.bottomCenter,
-                               colors: [kDarkPinkColor,kLightPinkColor],
-                             ),
-                              border: Border.all(  color:Colors.white,width: 1),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  offset: const Offset(
-                                    0.0,
-                                    0.0,
-                                  ),
-                                  blurRadius: 13.0,
-                                  spreadRadius: 2.0,
-                                ), //BoxShadow
-                                BoxShadow(
-                                  color: Colors.white.withOpacity(0.2),
-                                  offset: const Offset(0.0, 0.0),
-                                  blurRadius: 0.0,
-                                  spreadRadius: 0.0,
-                                ), //BoxShadow
-                              ],
-                              borderRadius: BorderRadius.circular(50), //
-                            ),
+
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: InkWell(
@@ -888,32 +864,7 @@ class StoreDetailedScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [kDarkPinkColor,kLightPinkColor],
-                              ),
-                              border: Border.all(  color:Colors.white,width: 1),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  offset: const Offset(
-                                    0.0,
-                                    0.0,
-                                  ),
-                                  blurRadius: 13.0,
-                                  spreadRadius: 2.0,
-                                ), //BoxShadow
-                                BoxShadow(
-                                  color: Colors.white.withOpacity(0.2),
-                                  offset: const Offset(0.0, 0.0),
-                                  blurRadius: 0.0,
-                                  spreadRadius: 0.0,
-                                ), //BoxShadow
-                              ],
-                              borderRadius: BorderRadius.circular(50), //
-                            ),
+
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: InkWell(
@@ -930,32 +881,7 @@ class StoreDetailedScreen extends StatelessWidget {
                           ),
 
                           Container(
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [kDarkPinkColor,kLightPinkColor],
-                              ),
-                              border: Border.all(  color:Colors.white,width: 1),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  offset: const Offset(
-                                    0.0,
-                                    0.0,
-                                  ),
-                                  blurRadius: 13.0,
-                                  spreadRadius: 2.0,
-                                ), //BoxShadow
-                                BoxShadow(
-                                  color: Colors.white.withOpacity(0.2),
-                                  offset: const Offset(0.0, 0.0),
-                                  blurRadius: 0.0,
-                                  spreadRadius: 0.0,
-                                ), //BoxShadow
-                              ],
-                              borderRadius: BorderRadius.circular(50), //
-                            ),
+
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: InkWell(
@@ -985,39 +911,14 @@ class StoreDetailedScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [kDarkPinkColor,kLightPinkColor],
-                              ),
-                              border: Border.all( color:Colors.white,width: 1),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  offset: const Offset(
-                                    0.0,
-                                    0.0,
-                                  ),
-                                  blurRadius: 13.0,
-                                  spreadRadius: 2.0,
-                                ), //BoxShadow
-                                BoxShadow(
-                                  color: Colors.white.withOpacity(0.2),
-                                  offset: const Offset(0.0, 0.0),
-                                  blurRadius: 0.0,
-                                  spreadRadius: 0.0,
-                                ), //BoxShadow
-                              ],
-                              borderRadius: BorderRadius.circular(50), //
-                            ),
+
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: InkWell(
                                 onTap:(){
                                   controller.showStoreLocation();
                                 },
-                                child:  const Icon(Icons.pin_drop_outlined,color: Colors.white,size:30)
+                                child:  const Icon(Icons.pin_drop_outlined,color:  kDarkPinkColor,size:30)
                               ),
                             ),
                           ),

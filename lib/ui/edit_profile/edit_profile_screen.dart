@@ -29,7 +29,8 @@ class EditProfileScreen extends StatelessWidget {
               child: Column(
 
                 children:[
-                  Get.find<StorageService>().activeLocale == SupportedLocales.english?Stack(
+                  Get.find<StorageService>().activeLocale == SupportedLocales.english?
+                  Stack(
                       children:[
                         Container(
                           height: Get.height*0.25,
@@ -37,7 +38,7 @@ class EditProfileScreen extends StatelessWidget {
 
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           right:0,
                           child: Stack(
                             children: [
@@ -54,6 +55,7 @@ class EditProfileScreen extends StatelessWidget {
                                 ),
                               ),
                               Positioned(
+                                top:5,
                                 right:5,
                                 child: Container(
                                   width:Get.width*0.26,
@@ -74,13 +76,13 @@ class EditProfileScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           left:0,
                           child: Container(
                               height: Get.height*0.25,
                               width:Get.width*0.5,
                               child:     Padding(
-                                padding: const EdgeInsets.fromLTRB(10.0,5,10.0,0),
+                                padding: const EdgeInsets.fromLTRB(10.0,10,10.0,0),
                                 child: Column(
                                     crossAxisAlignment:CrossAxisAlignment.start,
 
@@ -103,7 +105,7 @@ class EditProfileScreen extends StatelessWidget {
                                         width:10,
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
+                                        padding: const EdgeInsets.fromLTRB(10.0,10,10.0,0),
                                         child: CustomText(
                                           greetingText.tr,
                                           style: const TextStyle(
@@ -117,7 +119,7 @@ class EditProfileScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(7.0,0,7.0,0),
+                                        padding: const EdgeInsets.fromLTRB(17.0,0,7.0,0),
                                         child: Center(
                                           child: CustomText(
                                             editProfileTitle.tr,
@@ -137,7 +139,8 @@ class EditProfileScreen extends StatelessWidget {
 
 
                       ]
-                  ):Stack(
+                  ):
+                  Stack(
                       children:[
                         Container(
                           height: Get.height*0.25,
@@ -145,13 +148,13 @@ class EditProfileScreen extends StatelessWidget {
 
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           right:0,
                           child: Container(
                               height: Get.height*0.25,
-                              width:Get.width*0.5,
+                              width:Get.width*0.65,
                               child:     Padding(
-                                padding: const EdgeInsets.fromLTRB(0,5,10.0,0),
+                                padding: const EdgeInsets.fromLTRB(0,10,10.0,0),
                                 child: Column(
                                     crossAxisAlignment:CrossAxisAlignment.start,
 
@@ -206,7 +209,7 @@ class EditProfileScreen extends StatelessWidget {
                                 ),
                               )),),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           left:0,
                           child: Stack(
                             children: [
@@ -223,6 +226,7 @@ class EditProfileScreen extends StatelessWidget {
                                 ),
                               ),
                               Positioned(
+                                top:5,
                                 left:5,
                                 child: Container(
                                   width:Get.width*0.26,
@@ -253,9 +257,9 @@ class EditProfileScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: SizedBox(
                       height: Get.height*0.09,
-                      width: Get.width*0.95,
+                      width: Get.width*0.9,
                       child: CustomInputField(
-                        textAligning: TextAlign.center,
+                        textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
                         hasIntialValue: true,
                         labelText: signUpTitleName.tr,
                         textInputAction: TextInputAction.next,
@@ -283,9 +287,10 @@ class EditProfileScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: SizedBox(
                       height: Get.height*0.09,
-                      width: Get.width*0.95,
+                      width: Get.width*0.9,
                       child: CustomInputField(
                         hasIntialValue: true,
+                        textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
                         labelText: signUpTitleEmail.tr,
                         iconOfTextField: const Icon(Icons.email,
                             color: kDarkPinkColor),
@@ -313,9 +318,10 @@ class EditProfileScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: SizedBox(
                       height: Get.height*0.09,
-                      width: Get.width*0.95,
+                      width: Get.width*0.9,
                       child: CustomInputField(
                         hasIntialValue: true,
+                        textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
                         labelText: signUpTitlePhone.tr,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.number,
@@ -382,7 +388,7 @@ class EditProfileScreen extends StatelessWidget {
 
 
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: InkWell(
                       onTap: (){
                         if(!controller.editProfile) {

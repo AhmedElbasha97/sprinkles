@@ -36,8 +36,8 @@ class StoreWidget extends StatelessWidget {
 
   whatsapp(String contact) async{
 
-    var androidUrl = "whatsapp://send?phone=$contact&text=${whatsAppInfoText.tr}";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse(whatsAppInfoText.tr)}";
+    var androidUrl = "whatsapp://send?phone=$contact&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ'}";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ')}";
 
     try{
       if(Platform.isIOS){
@@ -108,78 +108,81 @@ class StoreWidget extends StatelessWidget {
                     fit: BoxFit.fitHeight),
               ),
               child: Center(
-                child: CachedNetworkImage(
-                  fit: BoxFit.contain,
-                  imageUrl: "${Services.baseEndPoint}${store?.image??""}",
-                  imageBuilder: ((context, image){
-                    return  ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Container(
-                          height: Get.height*0.09,
-                          width: Get.width*0.17,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: image,
-                              fit: BoxFit.contain,
-                            ),
-                          )
-                      ),
-                    );
-                  }),
-                  placeholder: (context, image){
-                    return   Container(
-
-                      height: Get.height*0.09,
-                      width: Get.width*0.17,
-                      decoration:BoxDecoration(
-                        color:  const Color(0xFFF2F0F3),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.contain,
+                    imageUrl: "${Services.baseEndPoint}${store?.image??""}",
+                    imageBuilder: ((context, image){
+                      return  ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            offset: const Offset(
-                              0.0,
-                              0.0,
-                            ),
-                            blurRadius: 13.0,
-                            spreadRadius: 2.0,
-                          ), //BoxShadow
-                          BoxShadow(
-                            color: Colors.white.withOpacity(0.2),
-                            offset: const Offset(0.0, 0.0),
-                            blurRadius: 0.0,
-                            spreadRadius: 0.0,
-                          ), //BoxShadow
-                        ],
-                      ),
-                      child:Center(
                         child: Container(
+                            height: Get.height*0.08,
+                            width: Get.width*0.17,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: image,
+                                fit: BoxFit.contain,
+                              ),
+                            )
+                        ),
+                      );
+                    }),
+                    placeholder: (context, image){
+                      return   Container(
 
-                          height: Get.height*0.07,
-                          width: Get.width*0.15,
-                          decoration:BoxDecoration(
-                            color:  const Color(0xFFDFDDDF),
-                            borderRadius: BorderRadius.circular(15),
+                        height: Get.height*0.09,
+                        width: Get.width*0.17,
+                        decoration:BoxDecoration(
+                          color:  const Color(0xFFF2F0F3),
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              offset: const Offset(
+                                0.0,
+                                0.0,
+                              ),
+                              blurRadius: 13.0,
+                              spreadRadius: 2.0,
+                            ), //BoxShadow
+                            BoxShadow(
+                              color: Colors.white.withOpacity(0.2),
+                              offset: const Offset(0.0, 0.0),
+                              blurRadius: 0.0,
+                              spreadRadius: 0.0,
+                            ), //BoxShadow
+                          ],
+                        ),
+                        child:Center(
+                          child: Container(
 
-                          ),
-                        ).animate(onPlay: (controller) => controller.repeat())
-                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                            .animate() // this wraps the previous Animate in another Animate
-                        ,
-                      ),
-                    ).animate(onPlay: (controller) => controller.repeat())
-                        .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                        .animate() // this wraps the previous Animate in another Animate
-                        ;
-                  },
-                  errorWidget: (context, url, error){
-                    return SizedBox(
-                      height: Get.height*0.09,
-                      width: Get.width*0.17,
-                      child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.contain,),
-                    );
-                  },
+                            height: Get.height*0.07,
+                            width: Get.width*0.15,
+                            decoration:BoxDecoration(
+                              color:  const Color(0xFFDFDDDF),
+                              borderRadius: BorderRadius.circular(15),
+
+                            ),
+                          ).animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                              .animate() // this wraps the previous Animate in another Animate
+                          ,
+                        ),
+                      ).animate(onPlay: (controller) => controller.repeat())
+                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                          .animate() // this wraps the previous Animate in another Animate
+                          ;
+                    },
+                    errorWidget: (context, url, error){
+                      return SizedBox(
+                        height: Get.height*0.09,
+                        width: Get.width*0.17,
+                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.contain,),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

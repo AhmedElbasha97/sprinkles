@@ -52,7 +52,7 @@ class StoreScreen extends StatelessWidget {
 
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           left:0,
                           child: Container(
 
@@ -82,7 +82,6 @@ class StoreScreen extends StatelessWidget {
                                               Get.find<StorageService>().activeLocale = newLocale;
                                               //in Getx
                                               Get.updateLocale(newLocale);
-                                              Get.off(()=>const HomeScreen());
                                             },
                                             child: CustomText(
                                               translateButton.tr,
@@ -376,7 +375,7 @@ class StoreScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           right:0,
                           child: Stack(
                             children: [
@@ -393,6 +392,8 @@ class StoreScreen extends StatelessWidget {
                                 ),
                               ),Positioned(
                                 right:10,
+                                top:5,
+
                                 child: Container(
                                   width:Get.width*0.48,
                                   child: Row(
@@ -425,7 +426,7 @@ class StoreScreen extends StatelessWidget {
 
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           right:0,
                           child: Container(
 
@@ -455,7 +456,6 @@ class StoreScreen extends StatelessWidget {
                                               Get.find<StorageService>().activeLocale = newLocale;
                                               //in Getx
                                               Get.updateLocale(newLocale);
-                                              Get.off(()=>const HomeScreen());
                                             },
                                             child: CustomText(
                                               translateButton.tr,
@@ -749,7 +749,7 @@ class StoreScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           left:0,
                           child: Stack(
                             children: [
@@ -765,6 +765,8 @@ class StoreScreen extends StatelessWidget {
                                   child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitWidth,),
                                 ),
                               ),Positioned(
+                                top:5,
+
                                 left:10,
                                 child: Container(
                                   width:Get.width*0.48,
@@ -792,7 +794,7 @@ class StoreScreen extends StatelessWidget {
                   selectedFromDrawer?controller.categoryIsLoading?const CategoryLoadingWidget():
                   Container(
                     width:Get.width*0.95,
-                    height: Get.height*0.15,
+                    height: Get.height*0.18,
                     child: ListView.builder(
                       scrollDirection:Axis.horizontal,
                       controller: controller.scrollController,

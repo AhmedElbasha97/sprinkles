@@ -90,7 +90,7 @@ class FilterWidget extends StatelessWidget {
                         CustomText(
                           Get.find<StorageService>().activeLocale == SupportedLocales.english? data?.filterEn??"":data?.filter??"",
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 18,
                             letterSpacing: 0,
                             fontWeight: FontWeight.w900,
                             fontFamily: fontFamilyArabicName,
@@ -104,7 +104,7 @@ class FilterWidget extends StatelessWidget {
                          CustomText(
                           Get.find<StorageService>().activeLocale == SupportedLocales.english? data?.filterEn??"":data?.filter??"",
                           style: const TextStyle(
-                            fontSize: 15,
+                            fontSize: 18,
                             letterSpacing: 0,
                             fontWeight: FontWeight.w900,
                             fontFamily: fontFamilyArabicName,

@@ -269,8 +269,8 @@ getData() async {
  }
  whatsapp() async{
 
-   var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=${whatsAppInfoText.tr}";
-   var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse(whatsAppInfoText.tr)}";
+   var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ'}";
+   var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ')}";
 
    try{
      if(Platform.isIOS){

@@ -45,7 +45,6 @@ class EditProfileController extends GetxController{
   bool nameState = false;
   bool phoneState = false;
   bool editProfile = false ;
-
   @override
   void onInit() {
     super.onInit();
@@ -72,7 +71,7 @@ class EditProfileController extends GetxController{
   getData() async {
     data = await AuthServices.getUserData( Get.find<StorageService>().getId);
     nameController.text = data?.name??"";
-    phoneController.text = "${data?.phone??0}";
+    phoneController.text = "${(data?.phone??0)}".substring(3);
     emailController.text = data?.email??"";
     isLoading = false;
     update();

@@ -40,7 +40,7 @@ class LoginScreen extends StatelessWidget {
 
                   ),
                   Positioned(
-                    top:statusBarHeight,
+                    top:statusBarHeight-5,
                     right:0,
                     child: Stack(
                       children: [
@@ -53,10 +53,12 @@ class LoginScreen extends StatelessWidget {
                           child: SizedBox(
                             height: Get.height*0.19,
                             width: Get.width*0.47,
-                            child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitHeight,),
+                            child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitHeight,),
                           ),
                         ),
                         Positioned(
+                          top:5,
+
                           right:5,
                           child: Container(
                             width:Get.width*0.26,
@@ -77,13 +79,13 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top:statusBarHeight,
-                    left:0,
+                    top:statusBarHeight-5,
+                    left:10,
                     child: Container(
                         height: Get.height*0.25,
                         width:Get.width*0.5,
                         child:   Padding(
-                          padding: const EdgeInsets.fromLTRB(10.0,5,10.0,0),
+                          padding: const EdgeInsets.fromLTRB(0,10,0,0),
                           child: Column(
                               crossAxisAlignment:CrossAxisAlignment.start,
 
@@ -106,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                                   width:10,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
+                                  padding: const EdgeInsets.fromLTRB(15.0,10.0,10.0,0),
                                   child: CustomText(
                                     greetingText.tr,
                                     style: const TextStyle(
@@ -120,17 +122,14 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(15.0,0,15.0,0),
-                                  child: Center(
-                                    child: CustomText(
-                                      signInBTN.tr,
-                                      style: const TextStyle(
-
-                                        fontSize: 22,
-                                        letterSpacing: 0,
-                                        fontFamily: fontFamilyArabicName,
-                                        color: kDarkPinkColor,
-                                      ),
+                                  padding: const EdgeInsets.fromLTRB(23.0,0,0.0,0),
+                                  child: CustomText(
+                                    signInBTN.tr,
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      letterSpacing: 0,
+                                      fontFamily: fontFamilyArabicName,
+                                      color: kDarkPinkColor,
                                     ),
                                   ),
                                 ),
@@ -140,7 +139,8 @@ class LoginScreen extends StatelessWidget {
 
 
                 ]
-            ) :Stack(
+            ) :
+                Stack(
                     children:[
                       Container(
                         height: Get.height*0.25,
@@ -148,15 +148,16 @@ class LoginScreen extends StatelessWidget {
 
                       ),
                       Positioned(
-                        top:statusBarHeight,
+                        top:statusBarHeight-5,
                         right:0,
                         child: Container(
                           height: Get.height*0.25,
                           width:Get.width*0.5,
                           child:   Padding(
-                            padding: const EdgeInsets.fromLTRB(0,5,10.0,0),
+                            padding: const EdgeInsets.fromLTRB(0,10,10.0,0),
                             child: Column(
-                                crossAxisAlignment:CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+
 
                                 children:[
                                   InkWell(
@@ -177,7 +178,7 @@ class LoginScreen extends StatelessWidget {
                                     width:10,
                                   ),
                                    Padding(
-                                    padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
+                                    padding: const EdgeInsets.fromLTRB(0,0,5.0,0),
                                     child: CustomText(
                                       greetingText.tr,
                                       style: const TextStyle(
@@ -191,17 +192,15 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                   ),
                                    Padding(
-                                    padding: const EdgeInsets.fromLTRB(0,0,15.0,0),
-                                    child: Center(
-                                      child: CustomText(
-                                        signInBTN.tr,
-                                        style: const TextStyle(
+                                    padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
+                                    child: CustomText(
+                                      signInBTN.tr,
+                                      style: const TextStyle(
 
-                                          fontSize: 22,
-                                          letterSpacing: 0,
-                                          fontFamily: fontFamilyArabicName,
-                                          color: kDarkPinkColor,
-                                        ),
+                                        fontSize: 22,
+                                        letterSpacing: 0,
+                                        fontFamily: fontFamilyArabicName,
+                                        color: kDarkPinkColor,
                                       ),
                                     ),
                                   ),
@@ -209,7 +208,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                           )),),
                       Positioned(
-                        top:statusBarHeight,
+                        top:statusBarHeight-5,
                         left:0,
                         child: Stack(
                           children: [
@@ -226,6 +225,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ),
                             Positioned(
+                              top:5,
                               left:5,
                               child: Container(
                                 width:Get.width*0.26,
@@ -249,13 +249,15 @@ class LoginScreen extends StatelessWidget {
                     ]
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10),
                   child: SizedBox(
                     height: 80,
                     child: CustomInputField(
                       iconOfTextField: const Icon(Icons.email,
                           color: kDarkPinkColor),
                       hasIntialValue: false,
+                      textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
+
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
                       controller: controller.emailController,
@@ -277,11 +279,13 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10),
                   child: SizedBox(
                     height:  80,
                     child: CustomInputField(
                         hasIntialValue: false,
+                        textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
+
                         iconOfTextField: const Icon(Icons.password,
                             color: kDarkPinkColor),
                         hasGreenBorder: true,

@@ -26,7 +26,7 @@ class StorageService extends GetxService {
   Future<void> saveAccountId(String userId) async =>
       _prefs.setString(StorageKeys.userId, userId);
   Future<void> saveAccountName(String userName) async =>
-      _prefs.setString(StorageKeys.userId, userName);
+      _prefs.setString(StorageKeys.userName, userName);
 
   String get getId {
     return _prefs.getString(StorageKeys.userId)?? "0";

@@ -249,6 +249,7 @@ class StoreController extends GetxController {
     storeIsLoading = true;
     update();
     storeList = await ShopServices.getShopsForMainCategory(mainCategoryId,"${0}");
+    await fillData();
     storeIsLoading = false;
     update();
   }

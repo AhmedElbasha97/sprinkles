@@ -39,6 +39,20 @@ class _MyAppState extends State<MyApp> {
       translations: AppTranslations(),
 
 
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.white),
+
+
+          systemOverlayStyle: SystemUiOverlayStyle( //<-- SEE HERE
+
+            statusBarColor:  kDarkPinkColor,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
+          ),
+        ),
+      ),
 
       locale:  Get.find<LocalizationService>().activeLocale,
       supportedLocales: SupportedLocales.all,

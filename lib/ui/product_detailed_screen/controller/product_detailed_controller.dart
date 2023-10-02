@@ -75,7 +75,7 @@ class ProductDetailedController extends GetxController{
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
               }
           );
         }
@@ -85,7 +85,7 @@ class ProductDetailedController extends GetxController{
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
               }
           );
         }
@@ -110,7 +110,7 @@ class ProductDetailedController extends GetxController{
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
               }
           );
         }
@@ -121,7 +121,7 @@ class ProductDetailedController extends GetxController{
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle:errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
               }
           );
         }
@@ -162,7 +162,7 @@ class ProductDetailedController extends GetxController{
     if(Get.find<StorageService>().checkUserIsSignedIn) {
       checkProductAddedOrNet();
     }
-    messageTextWhatsApp = " ${whatsAppTextInfoKey.tr} ${Get.find<StorageService>().activeLocale == SupportedLocales.english?productData?.nameEn??"":productData?.name??""} ${whatsAppText1Key.tr} ";
+    messageTextWhatsApp = ' رأيت هذا ال ${productData?.name??""} في تطبيق سبرينكلس و وأريد الاستفسار عنه ' + '\n I saw this ${productData?.nameEn??""} In the Sprinkles app and I want to make an order';
     productIsLoading = false;
     update();
   }

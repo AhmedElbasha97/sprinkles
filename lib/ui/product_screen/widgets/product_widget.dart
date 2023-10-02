@@ -41,7 +41,7 @@ final ProductsModel? product;
   }
 
   whatsapp(String contact) async{
-  String   messageTextWhatsApp = " ${whatsAppTextInfoKey.tr} ${Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.nameEn??"":product?.name??""} ${whatsAppText1Key.tr} ";
+  String   messageTextWhatsApp = ' رأيت هذا ال ${product?.name??""} في تطبيق سبرينكلس و وأريد الاستفسار عنه ' + '\n I saw this ${product?.nameEn??""} In the Sprinkles app and I want to make an order';
     var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
     var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
 
@@ -75,7 +75,7 @@ final ProductsModel? product;
         },
       child: Container(
           width:Get.width*0.44,
-          height:Get.height*0.305,
+
           decoration: BoxDecoration(
             color:Colors.white,
             boxShadow: [
@@ -98,7 +98,7 @@ final ProductsModel? product;
             borderRadius: BorderRadius.circular(15),
           ),
           child:Padding(
-            padding: const EdgeInsets.only(top:8.0,left:8.0,right: 8.0),
+            padding: const EdgeInsets.only(top:8.0,left:8.0,right: 8.0,bottom: 8.0),
             child: Column(
                 children:[
                   Stack(

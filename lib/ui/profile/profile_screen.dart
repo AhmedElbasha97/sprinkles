@@ -7,6 +7,7 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/edit_profile/edit_profile_screen.dart';
 import 'package:sprinkles/ui/profile/controller/profile_controller.dart';
 import 'package:sprinkles/widgets/DrawerWidget.dart';
@@ -30,7 +31,8 @@ class ProfileScreen extends StatelessWidget {
           children:[
             Column(
               children: [
-                Get.find<StorageService>().activeLocale == SupportedLocales.english?Stack(
+                Get.find<StorageService>().activeLocale == SupportedLocales.english?
+                Stack(
                     children:[
                       Container(
                         height: Get.height*0.25,
@@ -38,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
 
                       ),
                       Positioned(
-                        top:statusBarHeight,
+                        top:statusBarHeight-5,
                         right:0,
                         child: Stack(
                           children: [
@@ -55,6 +57,7 @@ class ProfileScreen extends StatelessWidget {
                               ),
                             ),
                             Positioned(
+                              top:5,
                               right:5,
                               child: Container(
                                 width:Get.width*0.26,
@@ -75,7 +78,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top:statusBarHeight,
+                        top:statusBarHeight-5,
                         left:0,
                         child: Container(
                             height: Get.height*0.25,
@@ -96,9 +99,9 @@ class ProfileScreen extends StatelessWidget {
                                         const SizedBox(
                                           width:20,
                                         ),
-                                        const CustomText(
-                                          'مرحبًا',
-                                          style: TextStyle(
+                                         CustomText(
+                                          greetingText.tr,
+                                          style: const TextStyle(
 
                                             fontSize: 25,
                                             letterSpacing: 0,
@@ -149,7 +152,8 @@ class ProfileScreen extends StatelessWidget {
 
 
                     ]
-                ):Stack(
+                ):
+                Stack(
                     children:[
                       Container(
                         height: Get.height*0.25,
@@ -157,7 +161,7 @@ class ProfileScreen extends StatelessWidget {
 
                       ),
                       Positioned(
-                        top:statusBarHeight,
+                        top:statusBarHeight-5,
                         right:0,
                         child: Container(
                             height: Get.height*0.25,
@@ -178,8 +182,8 @@ class ProfileScreen extends StatelessWidget {
                                         const SizedBox(
                                           width:20,
                                         ),
-                                        const CustomText(
-                                          'مرحبًا',
+                                         CustomText(
+                                          greetingText.tr,
                                           style: TextStyle(
 
                                             fontSize: 25,
@@ -229,7 +233,7 @@ class ProfileScreen extends StatelessWidget {
                               ),
                             )),),
                       Positioned(
-                        top:statusBarHeight,
+                        top:statusBarHeight-5,
                         left:0,
                         child: Stack(
                           children: [
@@ -246,6 +250,7 @@ class ProfileScreen extends StatelessWidget {
                               ),
                             ),
                             Positioned(
+                              top:5,
                               left:5,
                               child: Container(
                                 width:Get.width*0.26,
@@ -406,7 +411,7 @@ class ProfileScreen extends StatelessWidget {
                               child:  Container(
                                 width:Get.width*0.8,
                                 child: CustomText(
-                                  "edit password",
+                                  profileBtn1.tr,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     shadows: <Shadow>[
@@ -490,7 +495,7 @@ class ProfileScreen extends StatelessWidget {
                               child:  Container(
                                 width:Get.width*0.8,
                                 child: CustomText(
-                                  "edit Profile",
+                                  profileBtn2.tr,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     shadows: <Shadow>[

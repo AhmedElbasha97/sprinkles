@@ -43,20 +43,34 @@ choosingFilterValue(int index,String choosedFilterTitle){
   choosedData[index] =  ChoosingFilterModel(Get.find<StorageService>().activeLocale == SupportedLocales.english? (data?.itemFilter?[index].filterEn??""):(data?.itemFilter?[index].filter??""),choosedFilterTitle);
   update();
 }
-ordering(){
-messageTextWhatsApp = " ${whatsAppText2Key.tr} ${Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.nameEn??"":data?.name??""} ${whatsAppText1Key.tr} ";
+settingWhatsAppText(){
+ messageTextWhatsApp = ' رأيت هذا ال ${data?.name??""} في تطبيق سبرينكلس وأريد عمل اوردر';
+ if(data?.itemFilter?.length != 0) {
+  for (int i = 0; i < choosedData.length ; i++) {
+   messageTextWhatsApp =
+   '$messageTextWhatsApp \n${choosedData[i].filterTitle} \n${choosedData[i]
+       .filterValue}';
+  }
 
-if(data?.itemFilter?.length!=0) {
- for (int i = 0; i > choosedData.length - 1; i++) {
-  messageTextWhatsApp =
-  "$messageTextWhatsApp\n ${choosedData[i].filterTitle} \n ${choosedData[i]
-      .filterValue}";
+ }
+ messageTextWhatsApp =
+ '$messageTextWhatsApp \n I saw this ${data?.nameEn??""} In the Sprinkles app and I want to make an order';
+ if(data?.itemFilter?.length != 0) {
+  for (int i = 0; i < choosedData.length ; i++) {
+   messageTextWhatsApp =
+   '$messageTextWhatsApp \n${choosedData[i].filterTitle} \n${choosedData[i]
+       .filterValue}';
+  }
+
  }
 }
+ordering() async {
+
+await settingWhatsAppText();
 whatsapp(data?.shop?.whatsapp??"");
 }
  whatsapp(String contact) async{
-
+  print(messageTextWhatsApp);
   var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
   var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
 

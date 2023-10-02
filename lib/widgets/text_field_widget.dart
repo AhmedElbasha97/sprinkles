@@ -98,11 +98,11 @@ class CustomInputField extends StatelessWidget {
             borderSide: const BorderSide(color: Colors.red),
             borderRadius: BorderRadius.circular(50)),
         enabledBorder:   OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color:kDarkPinkColor,),
+          borderSide: const BorderSide(width: 1.5, color:kDarkPinkColor,),
             borderRadius: BorderRadius.circular(50)
         ),
         focusedBorder: OutlineInputBorder(
-            borderSide:   const BorderSide(color: kDarkPinkColor,width: 3.0),
+            borderSide:   const BorderSide(color: kDarkPinkColor,width: 1.5),
             borderRadius: BorderRadius.circular(50)),
       ),
       onChanged: onchange,

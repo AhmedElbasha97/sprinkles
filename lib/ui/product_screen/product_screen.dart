@@ -65,6 +65,7 @@ class ProductScreen extends StatelessWidget {
                                 width: Get.width*0.6,
                               ),
                               Positioned(
+
                                   right:0,
                                   child: SizedBox(
                                     height: Get.height*0.235,
@@ -72,9 +73,10 @@ class ProductScreen extends StatelessWidget {
                                     child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitWidth,),
                                   )),
                               Positioned(
+                                top:10,
                                 right:10,
                                 child: Container(
-                                  width:Get.width*0.48,
+                                  width:Get.width*0.45,
                                   child: Row(
                                     mainAxisAlignment:MainAxisAlignment.end,
                                     crossAxisAlignment:CrossAxisAlignment.start,
@@ -111,7 +113,9 @@ class ProductScreen extends StatelessWidget {
                                             fontFamily: fontFamilyArabicName,
                                             color: kBackGroundColor,
                                         ),
-                                      ),
+                                              textAlign: TextAlign.center,
+
+                                            ),
                                           ):controller.categoryIsLoading?Container(
                                         width:Get.width*0.1,
                                         height: 13,
@@ -142,13 +146,15 @@ class ProductScreen extends StatelessWidget {
                                             fontFamily: fontFamilyArabicName,
                                             color: kBackGroundColor,
                                         ),
-                                      ),
+                                              textAlign: TextAlign.center,
+
+                                            ),
                                           ),
                                       selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?
                                       Container(
 
-                                        height: Get.height*0.15,
-                                        width: Get.width*0.33,
+                                        height: Get.height*0.14,
+                                        width: Get.width*0.25,
                                         decoration:BoxDecoration(
 
                                           color:  const Color(0xFFF2F0F3),
@@ -174,8 +180,8 @@ class ProductScreen extends StatelessWidget {
                                         child:Center(
                                           child: Container(
 
-                                            height: Get.height*0.14,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.12,
+                                            width: Get.width*0.23,
                                             decoration:BoxDecoration(
                                               color:  const Color(0xFFDFDDDF),
                                               borderRadius: BorderRadius.circular(50),
@@ -194,8 +200,8 @@ class ProductScreen extends StatelessWidget {
                                         imageUrl: "${Services.baseEndPoint}${controller.data?.img??""}",
                                         imageBuilder: ((context, image){
                                           return   Container(
-                                              height: Get.height*0.15,
-                                              width: Get.width*0.28,
+                                              height: Get.height*0.14,
+                                              width: Get.width*0.25,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
@@ -206,8 +212,8 @@ class ProductScreen extends StatelessWidget {
                                         }),
                                         placeholder: (context, image){
                                           return   Container(
-                                            height: Get.height*0.2,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.14,
+                                            width: Get.width*0.25,
                                             decoration:BoxDecoration(
                                               color:  const Color(0xFFF2F0F3),
                                               borderRadius: BorderRadius.circular(50),
@@ -232,8 +238,8 @@ class ProductScreen extends StatelessWidget {
                                             child:Center(
                                               child: Container(
 
-                                                height: Get.height*0.14,
-                                                width: Get.width*0.3,
+                                                height: Get.height*0.12,
+                                                width: Get.width*0.23,
                                                 decoration:BoxDecoration(
                                                   color:  const Color(0xFFDFDDDF),
                                                   borderRadius: BorderRadius.circular(50),
@@ -251,16 +257,16 @@ class ProductScreen extends StatelessWidget {
                                         },
                                         errorWidget: (context, url, error){
                                           return SizedBox(
-                                            height: Get.height*0.2,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.14,
+                                            width: Get.width*0.25,
                                             child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
                                           );
                                         },
                                       ):controller.categoryIsLoading?
                                       Container(
 
-                                        height: Get.height*0.15,
-                                        width: Get.width*0.33,
+                                        height: Get.height*0.14,
+                                        width: Get.width*0.25,
                                         decoration:BoxDecoration(
 
                                           color:  const Color(0xFFF2F0F3),
@@ -286,8 +292,8 @@ class ProductScreen extends StatelessWidget {
                                         child:Center(
                                           child: Container(
 
-                                            height: Get.height*0.14,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.12,
+                                            width: Get.width*0.23,
                                             decoration:BoxDecoration(
                                               color:  const Color(0xFFDFDDDF),
                                               borderRadius: BorderRadius.circular(50),
@@ -305,8 +311,8 @@ class ProductScreen extends StatelessWidget {
                                         imageUrl: "${Services.baseEndPoint}${controller.data?.img??""}",
                                         imageBuilder: ((context, image){
                                           return   Container(
-                                              height: Get.height*0.15,
-                                              width: Get.width*0.28,
+                                              height: Get.height*0.14,
+                                              width: Get.width*0.25,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
@@ -317,8 +323,8 @@ class ProductScreen extends StatelessWidget {
                                         }),
                                         placeholder: (context, image){
                                           return   Container(
-                                            height: Get.height*0.2,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.14,
+                                            width: Get.width*0.25,
                                             decoration:BoxDecoration(
                                               color:  const Color(0xFFF2F0F3),
                                               borderRadius: BorderRadius.circular(50),
@@ -343,8 +349,8 @@ class ProductScreen extends StatelessWidget {
                                             child:Center(
                                               child: Container(
 
-                                                height: Get.height*0.14,
-                                                width: Get.width*0.3,
+                                                height: Get.height*0.12,
+                                                width: Get.width*0.23,
                                                 decoration:BoxDecoration(
                                                   color:  const Color(0xFFDFDDDF),
                                                   borderRadius: BorderRadius.circular(50),
@@ -362,8 +368,8 @@ class ProductScreen extends StatelessWidget {
                                         },
                                         errorWidget: (context, url, error){
                                           return SizedBox(
-                                            height: Get.height*0.2,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.14,
+                                            width: Get.width*0.25,
                                             child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
                                           );
                                         },
@@ -377,7 +383,7 @@ class ProductScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           left:0,
                           child: Container(
 
@@ -398,7 +404,7 @@ class ProductScreen extends StatelessWidget {
                                               },
                                               child: const Icon( Icons.subject_rounded ,color:kDarkPinkColor,size:30)),
                                           InkWell(
-                                            onTap: (){
+                                            onTap: () async {
                                               final Locale newLocale =
                                               Get.find<StorageService>().activeLocale == SupportedLocales.arabic
                                                   ? SupportedLocales.english
@@ -407,7 +413,7 @@ class ProductScreen extends StatelessWidget {
                                               Get.find<StorageService>().activeLocale = newLocale;
                                               //in Getx
                                               Get.updateLocale(newLocale);
-                                              Get.off(()=>const HomeScreen());
+
                                             },
                                             child: CustomText(
                                               translateButton.tr,
@@ -708,7 +714,8 @@ class ProductScreen extends StatelessWidget {
 
 
                       ]
-                  ):Stack(
+                  ):
+                  Stack(
                     children:[
                       Container(
                         height: Get.height*0.33,
@@ -717,7 +724,7 @@ class ProductScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top:statusBarHeight,
+                        top:statusBarHeight-5,
                         right:0,
                         child: Container(
 
@@ -747,7 +754,7 @@ class ProductScreen extends StatelessWidget {
                                              Get.find<StorageService>().activeLocale = newLocale;
                                              //in Getx
                                              Get.updateLocale(newLocale);
-                                             Get.off(()=>const HomeScreen());
+
                                            },
                                            child: CustomText(
                                              translateButton.tr,
@@ -1046,7 +1053,7 @@ class ProductScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top:statusBarHeight,
+                        top:statusBarHeight-5,
                         left:0,
                         child: Stack(
                           children: [
@@ -1062,9 +1069,10 @@ class ProductScreen extends StatelessWidget {
                                 child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitWidth,),
                               )),
                             Positioned(
-                              left:20,
+                              top: 10,
+                              left:10,
                               child: Container(
-                                width:Get.width*0.48,
+                                width:Get.width*0.45,
                                 child: Row(
                                   mainAxisAlignment:MainAxisAlignment.start,
                                   crossAxisAlignment:CrossAxisAlignment.start,
@@ -1086,6 +1094,7 @@ class ProductScreen extends StatelessWidget {
                                           child: CustomText(
                                 Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
                                       style: TextStyle(
+
                                           shadows: <Shadow>[
                                             Shadow(
                                                 offset: const Offset(2.0, 2.0),
@@ -1094,11 +1103,13 @@ class ProductScreen extends StatelessWidget {
                                                 color: Colors.black.withOpacity(0.5)
                                             ),
                                           ],
+
                                           fontSize: 18,
                                           letterSpacing: 0,
                                           fontFamily: fontFamilyArabicName,
                                           color: kBackGroundColor,
                                       ),
+                                            textAlign: TextAlign.center,
                                     ),
                                         ):controller.categoryIsLoading?Container(
                                       width:Get.width*0.1,
@@ -1125,11 +1136,13 @@ class ProductScreen extends StatelessWidget {
                                                 color: Colors.black.withOpacity(0.5)
                                             ),
                                           ],
+
                                           fontSize: 18,
                                           letterSpacing: 0,
                                           fontFamily: fontFamilyArabicName,
                                           color: kBackGroundColor,
                                       ),
+                                            textAlign: TextAlign.center,
                                     ),
                                         ),
                                     selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?
@@ -1182,8 +1195,8 @@ class ProductScreen extends StatelessWidget {
                                       imageUrl: "${Services.baseEndPoint}${controller.data?.img??""}",
                                       imageBuilder: ((context, image){
                                         return   Container(
-                                            height: Get.height*0.15,
-                                            width: Get.width*0.28,
+                                            height: Get.height*0.14,
+                                            width: Get.width*0.25,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(
@@ -1289,13 +1302,14 @@ class ProductScreen extends StatelessWidget {
                                       ),
                                     ).animate(onPlay: (controller) => controller.repeat())
                                         .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                        .animate():CachedNetworkImage(
+                                        .animate():
+                                    CachedNetworkImage(
                                       fit:  BoxFit.contain,
                                       imageUrl: "${Services.baseEndPoint}${controller.data?.img??""}",
                                       imageBuilder: ((context, image){
                                         return   Container(
-                                            height: Get.height*0.15,
-                                            width: Get.width*0.28,
+                                            height: Get.height*0.14,
+                                            width: Get.width*0.25,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(

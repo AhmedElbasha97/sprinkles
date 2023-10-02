@@ -37,7 +37,7 @@ class EditPasswordScreen extends StatelessWidget {
 
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           right:0,
                           child: Stack(
                             children: [
@@ -54,6 +54,7 @@ class EditPasswordScreen extends StatelessWidget {
                                 ),
                               ),
                               Positioned(
+                                top:5,
                                 right:5,
                                 child: Container(
                                   width:Get.width*0.26,
@@ -74,13 +75,13 @@ class EditPasswordScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           left:0,
                           child: Container(
                               height: Get.height*0.25,
-                              width:Get.width*0.6,
+                              width:Get.width*0.7,
                               child:     Padding(
-                                padding: const EdgeInsets.fromLTRB(20.0,0,20.0,0),
+                                padding: const EdgeInsets.fromLTRB(20.0,10,20.0,0),
                                 child: Column(
                                     crossAxisAlignment:CrossAxisAlignment.start,
 
@@ -103,7 +104,7 @@ class EditPasswordScreen extends StatelessWidget {
                                         width:10,
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
+                                        padding: const EdgeInsets.fromLTRB(10.0,10,10.0,0),
                                         child: CustomText(
                                           greetingText.tr,
                                           style: const TextStyle(
@@ -145,13 +146,13 @@ class EditPasswordScreen extends StatelessWidget {
 
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           right:0,
                           child: Container(
                               height: Get.height*0.25,
                               width:Get.width*0.6,
                               child:     Padding(
-                                padding: const EdgeInsets.fromLTRB(0,0,20.0,0),
+                                padding: const EdgeInsets.fromLTRB(0,10,20.0,0),
                                 child: Column(
                                     crossAxisAlignment:CrossAxisAlignment.start,
 
@@ -206,7 +207,7 @@ class EditPasswordScreen extends StatelessWidget {
                                 ),
                               )),),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           left:0,
                           child: Stack(
                             children: [
@@ -223,6 +224,7 @@ class EditPasswordScreen extends StatelessWidget {
                                 ),
                               ),
                               Positioned(
+                                top:5,
                                 left:5,
                                 child: Container(
                                   width:Get.width*0.26,
@@ -255,9 +257,11 @@ class EditPasswordScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: SizedBox(
                       height: Get.height*0.09,
-                      width: Get.width*0.95,
+                      width: Get.width*0.9,
                       child: CustomInputField(
                           hasIntialValue: true,
+                          textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
+
                           labelText:  changePassScreenText1.tr,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.visiblePassword,
@@ -288,9 +292,11 @@ class EditPasswordScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: SizedBox(
                       height: Get.height*0.09,
-                      width: Get.width*0.95,
+                      width: Get.width*0.9,
                       child: CustomInputField(
                           hasIntialValue: true,
+                          textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
+
                           labelText: changePassScreenText2.tr,
                           iconOfTextField: const Icon(Icons.password,
                               color: kDarkPinkColor),
@@ -319,7 +325,7 @@ class EditPasswordScreen extends StatelessWidget {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: RichText(
                       text:    TextSpan(
                         children: [

@@ -40,13 +40,43 @@ class SignupScreen extends StatelessWidget {
 
                         ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
                           right:0,
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: Get.height*0.19,
+                                width: Get.width*0.47,
+                              ),
+                              Positioned(
+                                top:0,
+                                child: SizedBox(
+                                  height: Get.height*0.19,
+                                  width: Get.width*0.47,
+                                  child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitHeight,),
+                                ),
+                              ),
+                              Positioned(
+                                right:5,
+                                top:5,
+
+                                child: SizedBox(
+                                  height: Get.height*0.14,
+                                  width: Get.width*0.27,
+                                  child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top:statusBarHeight-5,
+                          left:10,
                           child: Container(
                               height: Get.height*0.25,
                               width:Get.width*0.5,
                               child:    Padding(
-                                padding: const EdgeInsets.fromLTRB(0,5,10.0,0),
+                                padding: const EdgeInsets.fromLTRB(0,10,10.0,0),
                                 child: Column(
                                     crossAxisAlignment:CrossAxisAlignment.start,
 
@@ -69,7 +99,7 @@ class SignupScreen extends StatelessWidget {
                                         width:10,
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
+                                        padding: const EdgeInsets.fromLTRB(10.0,10,0,0),
                                         child: CustomText(
                                           greetingText.tr,
                                           style: const TextStyle(
@@ -83,7 +113,7 @@ class SignupScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(0,0,15.0,0),
+                                        padding: const EdgeInsets.fromLTRB(15.0,0,0,0),
                                         child: Center(
                                           child: CustomText(
                                             signUpProfile.tr,
@@ -100,8 +130,75 @@ class SignupScreen extends StatelessWidget {
                                     ]
                                 ),
                               )),),
+
+
+                      ]
+                  ):
+                  Stack(
+                      children:[
+                        Container(
+                          height: Get.height*0.25,
+                          width:Get.width,
+
+                        ),
                         Positioned(
-                          top:statusBarHeight,
+                          top:statusBarHeight-5,
+                          right:10,
+                          child: Container(
+                              height: Get.height*0.25,
+                              width:Get.width*0.5,
+                              child:    Padding(
+                                padding: const EdgeInsets.fromLTRB(0,10,10.0,0),
+                                child: Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+
+                                    children:[
+                                      InkWell(
+                                        onTap:(){
+                                          Get.back();
+                                        },
+                                        child: Container(
+                                          child: Icon(
+                                              Icons.arrow_back_ios  ,color:kDarkPinkColor,size:20
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width:10,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
+                                        child: CustomText(
+                                          greetingText.tr,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w900,
+
+                                            fontSize: 25,
+                                            letterSpacing: 0,
+                                            fontFamily: fontFamilyArabicName,
+                                            color: kDarkPinkColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(0,5,25.0,0),
+                                        child: CustomText(
+                                          signUpProfile.tr,
+                                          style: const TextStyle(
+
+                                            fontSize: 22,
+                                            letterSpacing: 0,
+                                            fontFamily: fontFamilyArabicName,
+                                            color: kDarkPinkColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ]
+                                ),
+                              )),),
+
+                        Positioned(
+                          top:statusBarHeight-5,
                           left:0,
                           child: Stack(
                             children: [
@@ -119,131 +216,26 @@ class SignupScreen extends StatelessWidget {
                               ),
                               Positioned(
                                 left:5,
+                                top:5,
+
                                 child: Container(
                                   width:Get.width*0.26,
                                   child: Row(
                                     mainAxisAlignment:MainAxisAlignment.start,
-                                    crossAxisAlignment:CrossAxisAlignment.end,
-                                    children: [
-                                      SizedBox(
-                                        height: Get.height*0.14,
-                                        width: Get.width*0.26,
-                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                      ]
-                  ):Stack(
-                      children:[
-                        Container(
-                          height: Get.height*0.25,
-                          width:Get.width,
-
-                        ),
-                        Positioned(
-                          top:statusBarHeight,
-                          right:0,
-                          child: Stack(
-                            children: [
-                              Container(
-                                height: Get.height*0.19,
-                                width: Get.width*0.47,
-                              ),
-                              Positioned(
-                                top:0,
-                                child: SizedBox(
-                                  height: Get.height*0.19,
-                                  width: Get.width*0.47,
-                                  child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitHeight,),
-                                ),
-                              ),
-                              Positioned(
-                                left:5,
-                                child: Container(
-                                  width:Get.width*0.26,
-                                  child: Row(
-                                    mainAxisAlignment:MainAxisAlignment.start,
-                                    crossAxisAlignment:CrossAxisAlignment.end,
-                                    children: [
-                                      SizedBox(
-                                        height: Get.height*0.14,
-                                        width: Get.width*0.26,
-                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          top:statusBarHeight,
-                          left:0,
-                          child: Container(
-                              height: Get.height*0.25,
-                              width:Get.width*0.5,
-                              child:    Padding(
-                                padding: const EdgeInsets.fromLTRB(0,5,10.0,0),
-                                child: Column(
                                     crossAxisAlignment:CrossAxisAlignment.start,
-
-                                    children:[
-                                      InkWell(
-                                        onTap:(){
-                                          Get.back();
-                                        },
-                                        child: Container(
-                                          child: const Row(
-                                              children:[
-                                                Icon(
-                                                    Icons.arrow_back_ios_rounded  ,color:kDarkPinkColor,size:20
-                                                ),
-                                              ]
-                                          ),
-                                        ),
+                                    children: [
+                                      SizedBox(
+                                        height: Get.height*0.14,
+                                        width: Get.width*0.26,
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
                                       ),
-                                      const SizedBox(
-                                        width:10,
-                                      ),
-                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
-                                        child: CustomText(
-                                          greetingText.tr,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w900,
-
-                                            fontSize: 25,
-                                            letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
-                                            color: kDarkPinkColor,
-                                          ),
-                                        ),
-                                      ),
-                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(0,0,15.0,0),
-                                        child: Center(
-                                          child: CustomText(
-                                            signUpProfile.tr,
-                                            style: const TextStyle(
-
-                                              fontSize: 22,
-                                              letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
-                                              color: kDarkPinkColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ]
+                                    ],
+                                  ),
                                 ),
-                              )),),
+                              ),
+                            ],
+                          ),
+                        ),
 
 
                       ]
@@ -253,12 +245,12 @@ class SignupScreen extends StatelessWidget {
 
 
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: SizedBox(
                       height: Get.height*0.09,
                       width: Get.width*0.95,
                       child: CustomInputField(
-                        textAligning: TextAlign.center,
+                        textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
                         hasIntialValue: true,
                         labelText: signUpTitleName.tr,
                         textInputAction: TextInputAction.next,
@@ -283,11 +275,13 @@ class SignupScreen extends StatelessWidget {
                   ),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: SizedBox(
                         height: Get.height*0.09,
                         width: Get.width*0.95,
                         child: CustomInputField(
+                          textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
+
                           hasIntialValue: true,
                           labelText: signUpTitleEmail.tr,
                           iconOfTextField: const Icon(Icons.email,
@@ -313,11 +307,13 @@ class SignupScreen extends StatelessWidget {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: SizedBox(
                         height: Get.height*0.09,
                         width: Get.width*0.95,
                         child: CustomInputField(
+                          textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
+
                           hasIntialValue: true,
                           labelText: signUpTitlePhone.tr,
                           textInputAction: TextInputAction.next,
@@ -375,11 +371,13 @@ class SignupScreen extends StatelessWidget {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: SizedBox(
                         height: Get.height*0.09,
                         width: Get.width*0.95,
                         child: CustomInputField(
+                            textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
+
                             hasIntialValue: true,
                             labelText: signUpTitlePass.tr,
                             textInputAction: TextInputAction.next,
@@ -408,11 +406,13 @@ class SignupScreen extends StatelessWidget {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: SizedBox(
                         height: Get.height*0.09,
                         width: Get.width*0.95,
                         child: CustomInputField(
+                            textAligning: Get.find<StorageService>().activeLocale == SupportedLocales.english?TextAlign.left:TextAlign.right,
+
                             hasIntialValue: true,
                             labelText:  signUpTitleConfirmPass.tr,
                             iconOfTextField: const Icon(Icons.password,
@@ -442,7 +442,7 @@ class SignupScreen extends StatelessWidget {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: RichText(
                         text:    TextSpan(
                           children: [
