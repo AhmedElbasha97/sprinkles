@@ -128,6 +128,7 @@ class ProductDetailedScreen extends StatelessWidget {
 
         InkWell(
           onTap: (){
+            controller.videoPlayerController.pause();
             Get.to(()=>OrderingScreen(productId: controller.productData?.id??0),transition:Transition.upToDown);
           },
           child: Container(
@@ -896,7 +897,7 @@ class ProductDetailedScreen extends StatelessWidget {
       ).animate(onPlay: (controller) => controller.repeat())
           .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
           .animate():controller.productData?.video==""?const SizedBox() // this wraps the previous Animate in another Animate
-      :VideoPlayerWidget(videoPlayer: '${Services.baseEndPoint}${controller.productData?.video??""}',),
+      :VideoPlayerWidget(videoPlayer: '${Services.baseEndPoint}${controller.productData?.video??""}', videoPlayerController: controller.videoPlayerController,),
               Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(

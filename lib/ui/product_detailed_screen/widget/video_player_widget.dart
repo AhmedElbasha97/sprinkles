@@ -11,8 +11,9 @@ import 'package:sprinkles/ui/product_detailed_screen/widget/full_screen_widget.d
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
+  final VideoPlayerController videoPlayerController;
   final String videoPlayer;
-  const VideoPlayerWidget({Key? key, required this.videoPlayer}) : super(key: key);
+  const VideoPlayerWidget({Key? key, required this.videoPlayer, required this.videoPlayerController}) : super(key: key);
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -20,7 +21,7 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
-  late VideoPlayerController _videoPlayerController;
+
   String timePlay = "0:0";
   Timer? timer;
   bool showReplayIcon = false;
@@ -29,23 +30,16 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   void initState() {
     super.initState();
     timer = Timer.periodic(const Duration(seconds: 1), (Timer t) => renewTimeText());
-    _videoPlayerController =
-    VideoPlayerController.network(widget.videoPlayer)
+    widget.videoPlayerController.addListener(() {
+      checkVideo();
+    }) ;
 
-      ..addListener(() {
-        checkVideo();
-      })
-
-      ..initialize().then((_) {
-        setState(() {});
-        _videoPlayerController.play();
-      });
 
   }
 
   void checkVideo(){
-    if (!_videoPlayerController.value.isPlaying &&_videoPlayerController.value.isInitialized &&
-        (_videoPlayerController.value.duration ==_videoPlayerController.value.position)) { //checking the duration and position every time
+    if (! widget.videoPlayerController.value.isPlaying && widget.videoPlayerController.value.isInitialized &&
+        ( widget.videoPlayerController.value.duration == widget.videoPlayerController.value.position)) { //checking the duration and position every time
 
       showReplayIcon = true;
       setState(() {
@@ -56,7 +50,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   }
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    widget.videoPlayerController.dispose();
     timer?.cancel();
     super.dispose();
   }
@@ -76,7 +70,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
      });
    }
   renewTimeText()async{
-    var time = await _videoPlayerController.position;
+    var time = await  widget.videoPlayerController.position;
     timePlay = "${time?.inMinutes}:${time?.inSeconds}";
     setState(() {
 
@@ -103,61 +97,18 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       padding: const EdgeInsets.all(8.0),
       child: Stack(
         children: [
-          _videoPlayerController.value.isInitialized
-              ?InkWell(
+          InkWell(
             onTap: (){
               showingController();
             },
                 child: ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
                   child: AspectRatio(
-                  aspectRatio: _videoPlayerController.value.aspectRatio,
-                  child: VideoPlayer(_videoPlayerController)),
+                  aspectRatio:  widget.videoPlayerController.value.aspectRatio,
+                  child: VideoPlayer( widget.videoPlayerController)),
                 ),
-              )
-              : Container(
+              ),
 
-            width:MediaQuery.of(context).size.width,
-        height: 150.0,
-            decoration:BoxDecoration(
-              color:  const Color(0xFFF2F0F3),
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  offset: const Offset(
-                    0.0,
-                    0.0,
-                  ),
-                  blurRadius: 13.0,
-                  spreadRadius: 2.0,
-                ), //BoxShadow
-                BoxShadow(
-                  color: Colors.white.withOpacity(0.2),
-                  offset: const Offset(0.0, 0.0),
-                  blurRadius: 0.0,
-                  spreadRadius: 0.0,
-                ), //BoxShadow
-              ],
-            ),
-            child:Center(
-              child: Container(
-
-                width:Get.width*0.95,
-                height:Get.height*0.38,
-                decoration:BoxDecoration(
-                  color:  const Color(0xFFDFDDDF),
-                  borderRadius: BorderRadius.circular(15),
-
-                ),
-              ).animate(onPlay: (controller) => controller.repeat())
-                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                  .animate() // this wraps the previous Animate in another Animate
-              ,
-            ),
-          ).animate(onPlay: (controller) => controller.repeat())
-              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-              .animate(),
           showController?Positioned(
             top: 10,
               left: 10,
@@ -208,28 +159,28 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                     child: Row(
                       children: [  IconButton(onPressed: (){
                         showingController();
-                        _videoPlayerController.seekTo(Duration(
-                            seconds: _videoPlayerController.value.position.inSeconds - 10));
+                        widget.videoPlayerController.seekTo(Duration(
+                            seconds:  widget.videoPlayerController.value.position.inSeconds - 10));
                       }, icon: const Icon(Icons.fast_forward,color: kBackGroundColor,)),
                         IconButton(onPressed: (){
-                          if(_videoPlayerController.value.isPlaying){
-                            _videoPlayerController.pause();
+                          if( widget.videoPlayerController.value.isPlaying){
+                            widget.videoPlayerController.pause();
                             showingController();
                             setState(() {
 
                             });
                           }else{
-                            _videoPlayerController.play();
+                            widget.videoPlayerController.play();
                             showingController();
                             setState(() {
 
                             });
                           }
-                        }, icon: _videoPlayerController.value.isPlaying?const Icon(Icons.pause,color: kBackGroundColor,):const Icon(Icons.play_arrow,color: kBackGroundColor,)),
+                        }, icon:  widget.videoPlayerController.value.isPlaying?const Icon(Icons.pause,color: kBackGroundColor,):const Icon(Icons.play_arrow,color: kBackGroundColor,)),
                         IconButton(onPressed: (){
                           showingController();
-                          _videoPlayerController.seekTo(Duration(
-                              seconds: _videoPlayerController.value.position.inSeconds + 10));
+                          widget.videoPlayerController.seekTo(Duration(
+                              seconds:  widget.videoPlayerController.value.position.inSeconds + 10));
                         }, icon: const Icon(Icons.fast_rewind,color: kBackGroundColor,)),
 
                         Container(
@@ -239,7 +190,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                             borderRadius: BorderRadius.circular(3.0),
                             child: VideoProgressIndicator(
 
-                              _videoPlayerController,
+                              widget.videoPlayerController,
                               allowScrubbing: true,
                               colors:  VideoProgressColors(
 
@@ -250,22 +201,22 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                           ),
                         ),
                         IconButton(onPressed: (){
-                          if(_videoPlayerController.value.volume == 0.0){
-                            _videoPlayerController.setVolume(50);
+                          if( widget.videoPlayerController.value.volume == 0.0){
+                            widget.videoPlayerController.setVolume(50);
                             showingController();
                             setState(() {
 
                             });
                           }else{
-                            _videoPlayerController.setVolume(0);
+                            widget.videoPlayerController.setVolume(0);
                             showingController();
                             setState(() {
 
                             });
                           }
-                        }, icon: _videoPlayerController.value.volume == 0.0?const Icon(Icons.volume_mute,color: kBackGroundColor,):const Icon(Icons.volume_up,color: kBackGroundColor,)),
+                        }, icon:  widget.videoPlayerController.value.volume == 0.0?const Icon(Icons.volume_mute,color: kBackGroundColor,):const Icon(Icons.volume_up,color: kBackGroundColor,)),
                         Text(
-                            "${_videoPlayerController.value.duration.inMinutes}:${_videoPlayerController.value.duration.inSeconds}",
+                            "${ widget.videoPlayerController.value.duration.inMinutes}:${ widget.videoPlayerController.value.duration.inSeconds}",
                             style:const TextStyle(color: kBackGroundColor,fontWeight: FontWeight.bold,fontSize: 18)
 
                         ),
@@ -287,16 +238,15 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           showReplayIcon?InkWell(
             onTap: (){
               showReplayIcon = false;
-            setState(() {
+              widget.videoPlayerController.seekTo(Duration.zero);
+              widget.videoPlayerController.play();
+              setState(() {
 
-            });
-              _videoPlayerController.seekTo(Duration.zero);
-              _videoPlayerController.play();
-
+              });
             },
             child: Center(
               child: AspectRatio(
-                aspectRatio:  _videoPlayerController.value.aspectRatio,
+                aspectRatio:   widget.videoPlayerController.value.aspectRatio,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

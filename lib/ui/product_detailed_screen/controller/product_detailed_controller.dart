@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/product_detailed_model.dart';
@@ -18,6 +19,7 @@ import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/widgets/alert_dialogue.dart';
 import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:video_player/video_player.dart';
 import '../../../Utils/colors.dart';
 
 class ProductDetailedController extends GetxController{
@@ -27,6 +29,7 @@ class ProductDetailedController extends GetxController{
   ScrollController scrollController = ScrollController();
   int activeIndex = 0;
   bool productIsLoading = true;
+  late  VideoPlayerController videoPlayerController;
   late ProductDetailedModel? productData;
   late List<ProductsModel>? productsList;
   final String productId;
@@ -145,6 +148,14 @@ class ProductDetailedController extends GetxController{
       await ProductServices.getProductDetails("$selectedProductId");
       productsList =
       await ProductServices.getProducts(mainCategoryId, productData?.ctg?.id??0, "0");
+      if(productData?.video != ""){
+        videoPlayerController =
+        VideoPlayerController.network('${Services.baseEndPoint}${productData?.video??""}')
+          ..initialize().then((_) {
+            print("hi from video controller");
+            update();
+          });
+      }
       productsList?.removeWhere((element)=>
       element.id == selectedProductId
       );
@@ -153,6 +164,14 @@ class ProductDetailedController extends GetxController{
       await ProductServices.getProductDetails(productId);
       productsList =
       await ProductServices.getProducts(mainCategoryId, productData?.ctg?.id??0, "0");
+      if(productData?.video != ""){
+        videoPlayerController =
+        VideoPlayerController.network('${Services.baseEndPoint}${productData?.video??""}')
+          ..initialize().then((_) {
+            print("hi from video controller");
+            update();
+          });
+      }
       productsList?.removeWhere((element)=>
         "${element.id}" == productId
       );

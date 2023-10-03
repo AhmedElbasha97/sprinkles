@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, library_private_types_in_public_api, use_build_context_synchronously, sized_box_for_whitespace, prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
@@ -59,165 +60,262 @@ class _AppDrawersState extends State<AppDrawers> {
   }
 
   }
-  detectFunctionalityOfDrawerTap(String title){
-  switch(title){
-    case "الرئيسيّة":{
-      Get.to(()=>const HomeScreen(),transition:Transition.rightToLeftWithFade);
+  detectFunctionalityOfDrawerTap(String title) async {
+    switch (title) {
+      case "الرئيسيّة":
+        {
+          Get.to(() => const HomeScreen(),
+              transition: Transition.rightToLeftWithFade);
 
-        widget.scaffoldKey.currentState?.openEndDrawer();
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "عرض المحلات":
+        {
+          Get.to(() =>
+          const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+      case "قائمة المفضلة":
+        {
+          Get.to(() => const FavoriteScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "الحساب الشخصى":
+        {
+          Get.to(() => const ProfileScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
 
-    }
-    break;
-    case "عرض المحلات":{
-      Get.to(()=> const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    case "قائمة المفضلة":{
-      Get.to(()=> const FavoriteScreen(),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    break;
-    case "الحساب الشخصى":{
-      Get.to(()=>const ProfileScreen(),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    break;
-
-    case "سياسة الخصوصية":{
-      Get.to(()=> const PrivacyPolicyScreen() ,transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    case "الأحكام والشروط":{
-    Get.to(()=> const TermsScreen(),transition:Transition.rightToLeftWithFade);
-    widget.scaffoldKey.currentState?.openEndDrawer();
-  }
-  break;
-    case "عرض المنتجات ":{
-      Get.to(()=> const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    break;
-    case "تسجيل دخول":{
-      Get.to(()=> LoginScreen(),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    break;
-    case "انشاء حساب":{
-      Get.to(()=> const SignupScreen(),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    break;
-    case "تسجيل الخروج":{
-
-        showDialog(context: context,
-            builder: (context) {
-              return YesOrNoDialogue(alertText: logOutWarning.tr, alertTitle: drawerTag6.tr, alertYesButtonTitle: drawerTag6.tr, alertNoButtonTitle: deleteAcc.tr, alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
-                Get.find<StorageService>().loggingOut();
-                Get.offAll(()=>const SplashScreen());
-
-              }, alertNoButtonFunction: () async {
-                if(await BiomatricsAuthService.authenticateUser(deleteAcc.tr)) {
-                  ResponseModel? data = await AuthServices.deleteUserAccount(Get.find<StorageService>().getId);
-                  if(data?.msg == "succeeded"){
-                    Get.find<StorageService>().loggingOut();
-                    Get.offAll(()=>const SplashScreen());
-                  }
-                  else{
-                    showDialog(context: context,
-                        builder: (context) {
-                          return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+      case "سياسة الخصوصية":
+        {
+          Get.to(() => const PrivacyPolicyScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+      case "الأحكام والشروط":
+        {
+          Get.to(() => const TermsScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "عرض المنتجات ":
+        {
+          Get.to(() =>
+          const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "تسجيل دخول":
+        {
+          Get.to(() => LoginScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "انشاء حساب":
+        {
+          Get.to(() => const SignupScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "تسجيل الخروج":
+        {
+          showDialog(context: context,
+              builder: (context) {
+                return YesOrNoDialogue(alertText: logOutWarning.tr,
+                    alertTitle: drawerTag6.tr,
+                    alertYesButtonTitle: drawerTag6.tr,
+                    alertNoButtonTitle: deleteAcc.tr,
+                    alertYesButtonWidth: Get.width * 0.5,
+                    alertNoButtonWidth: Get.width * 0.5,
+                    alertYesButtonFunction: () {
+                      Get.find<StorageService>().loggingOut();
+                      Get.offAll(() => const SplashScreen());
+                    },
+                    alertNoButtonFunction: () async {
+                      if (await BiomatricsAuthService.authenticateUser(
+                          deleteAcc.tr)) {
+                        ResponseModel? data = await AuthServices
+                            .deleteUserAccount(Get
+                            .find<StorageService>()
+                            .getId);
+                        if (data?.msg == "succeeded") {
+                          Get.find<StorageService>().loggingOut();
+                          Get.offAll(() => const SplashScreen());
                         }
-                    );
-                  }
-
-                }
-              }, alertYesButtonIcon: 'assets/icons/logoutIcon.png', alertNoButtonIcon: 'assets/icons/deleteAccountIcon.png', alertIcon: 'assets/icons/logoutIcon.png',containerHeight:Get.height*0.57);
-            });
-        widget.scaffoldKey.currentState?.openEndDrawer();
-
-    }
-    break;
-    case "Home":{
-      Get.to(()=>const HomeScreen(),transition:Transition.rightToLeftWithFade);
-
-        widget.scaffoldKey.currentState?.openEndDrawer();
-
-    }
-    break;
-    case "Shop Display":{
-      Get.to(()=> const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    case 'Favorites list':{
-      Get.to(()=> const FavoriteScreen(),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    break;
-    case "Personal Account":{
-      Get.to(()=>const ProfileScreen(),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    break;
-
-        case "Privacy Policy":{
-      Get.to(()=> const PrivacyPolicyScreen() ,transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    case "Terms and Conditions":{
-    Get.to(()=> const TermsScreen(),transition:Transition.rightToLeftWithFade);
-    widget.scaffoldKey.currentState?.openEndDrawer();
-  }
-  break;
-    case  "Display Products":{
-      Get.to(()=> const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    break;
-    case "Log in":{
-      Get.to(()=> LoginScreen(),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    break;
-    case "Create an account":{
-      Get.to(()=> const SignupScreen(),transition:Transition.rightToLeftWithFade);
-      widget.scaffoldKey.currentState?.openEndDrawer();
-    }
-    break;
-    case "Log out":{
-
-        showDialog(context: context,
-            builder: (context) {
-              return YesOrNoDialogue(alertText: logOutWarning.tr, alertTitle:drawerTag6.tr, alertYesButtonTitle: drawerTag6.tr, alertNoButtonTitle:deleteAcc.tr, alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
-                Get.find<StorageService>().loggingOut();
-                Get.offAll(()=>const SplashScreen());
-
-              }, alertNoButtonFunction: () async {
-                if(await BiomatricsAuthService.authenticateUser(deleteAcc.tr)) {
-                  ResponseModel? data = await AuthServices.deleteUserAccount(Get.find<StorageService>().getId);
-                  if(data?.msg == "succeeded"){
-                    Get.find<StorageService>().loggingOut();
-                    Get.offAll(()=>const SplashScreen());
-                  }
-                  else{
-                    showDialog(context: context,
-                        builder: (context) {
-                          return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                        else {
+                          showDialog(context: context,
+                              builder: (context) {
+                                return AlertDialogue(alertTitle: errorKey.tr,
+                                    alertText: Get
+                                        .find<StorageService>()
+                                        .activeLocale == SupportedLocales
+                                        .english
+                                        ? data?.msg ?? ""
+                                        : data?.msgAr ?? "",
+                                    alertIcon: "assets/icons/warningIcon.png",
+                                    containerHeight: Get.height * 0.4);
+                              }
+                          );
                         }
-                    );
-                  }
+                      }
+                    },
+                    alertYesButtonIcon: 'assets/icons/logoutIcon.png',
+                    alertNoButtonIcon: 'assets/icons/deleteAccountIcon.png',
+                    alertIcon: 'assets/icons/logoutIcon.png',
+                    containerHeight: Get.height * 0.57);
+              });
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "Home":
+        {
+          Get.to(() => const HomeScreen(),
+              transition: Transition.rightToLeftWithFade);
 
-                }
-              }, alertYesButtonIcon: 'assets/icons/logoutIcon.png', alertNoButtonIcon: 'assets/icons/deleteAccountIcon.png', alertIcon: 'assets/icons/logoutIcon.png',containerHeight:Get.height*0.57);
-            });
-        widget.scaffoldKey.currentState?.openEndDrawer();
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "Shop Display":
+        {
+          Get.to(() =>
+          const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+      case 'Favorites list':
+        {
+          Get.to(() => const FavoriteScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "Personal Account":
+        {
+          Get.to(() => const ProfileScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
 
+      case "Privacy Policy":
+        {
+          Get.to(() => const PrivacyPolicyScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+      case "Terms and Conditions":
+        {
+          Get.to(() => const TermsScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "Display Products":
+        {
+          Get.to(() =>
+          const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "Log in":
+        {
+          Get.to(() => LoginScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "Create an account":
+        {
+          Get.to(() => const SignupScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "Log out":
+        {
+          showDialog(context: context,
+              builder: (context) {
+                return YesOrNoDialogue(alertText: logOutWarning.tr,
+                    alertTitle: drawerTag6.tr,
+                    alertYesButtonTitle: drawerTag6.tr,
+                    alertNoButtonTitle: deleteAcc.tr,
+                    alertYesButtonWidth: Get.width * 0.5,
+                    alertNoButtonWidth: Get.width * 0.5,
+                    alertYesButtonFunction: () {
+                      Get.find<StorageService>().loggingOut();
+                      Get.offAll(() => const SplashScreen());
+                    },
+                    alertNoButtonFunction: () async {
+                      if (await BiomatricsAuthService.authenticateUser(
+                          deleteAcc.tr)) {
+                        ResponseModel? data = await AuthServices
+                            .deleteUserAccount(Get
+                            .find<StorageService>()
+                            .getId);
+                        if (data?.msg == "succeeded") {
+                          Get.find<StorageService>().loggingOut();
+                          Get.offAll(() => const SplashScreen());
+                        }
+                        else {
+                          showDialog(context: context,
+                              builder: (context) {
+                                return AlertDialogue(alertTitle: errorKey.tr,
+                                    alertText: Get
+                                        .find<StorageService>()
+                                        .activeLocale == SupportedLocales
+                                        .english
+                                        ? data?.msg ?? ""
+                                        : data?.msgAr ?? "",
+                                    alertIcon: "assets/icons/warningIcon.png",
+                                    containerHeight: Get.height * 0.4);
+                              }
+                          );
+                        }
+                      }
+                    },
+                    alertYesButtonIcon: 'assets/icons/logoutIcon.png',
+                    alertNoButtonIcon: 'assets/icons/deleteAccountIcon.png',
+                    alertIcon: 'assets/icons/logoutIcon.png',
+                    containerHeight: Get.height * 0.57);
+              });
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "App Rating":
+        {
+          final InAppReview inAppReview = InAppReview.instance;
+          if (await inAppReview.isAvailable()) {
+            inAppReview.openStoreListing(
+              appStoreId: 'com.syncqatar.sprinkles',
+              microsoftStoreId: '...',
+            );
+          }
+        }
+        break;
+      case "تقييم التطبيق":
+        {
+          final InAppReview inAppReview = InAppReview.instance;
+          if (await inAppReview.isAvailable()) {
+            inAppReview.openStoreListing(
+              appStoreId: 'com.syncqatar.sprinkles',
+              microsoftStoreId: '...',
+            );
+          }
+        }
+        break;
     }
-    break;
-
-
   }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
