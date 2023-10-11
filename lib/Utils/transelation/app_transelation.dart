@@ -95,8 +95,8 @@ class AppTranslations extends Translations {
       moreButtonTitle:'More',
       addToFavoriteTitle: 'You cannot add it to your favorites list',
       addToFavoriteValue: 'You can only add it to your favorites list when you log in to your account',
-      detailsTitle: "'Details:'",
-      otherProductTitle: "'Other related products:'",
+      detailsTitle: "Details:",
+      otherProductTitle: "Other related products:",
       noDataSearchStore: "'There is no store with this name'",
       noStoreData: "'There are no stores available now'",
       noDataSearchProduct: "'There is no store with this name'",
@@ -111,7 +111,9 @@ class AppTranslations extends Translations {
       storeLocation:"Store Location:",
    whatsAppInfoText: "I saw your store in the Sprinkles app and I want to inquire about something",
       profileBtn1:"Edit Password",
-      profileBtn2:"Edit Profile"
+      profileBtn2:"Edit Profile",
+      mostSelling:"Best Selling",
+      mostRating: "Most Rated"
     },
     "ar": {
       requiredFiled:"هذه الخانة مطلوبه",
@@ -213,8 +215,9 @@ class AppTranslations extends Translations {
       storeLocation:"موقع المحل:",
       whatsAppInfoText:"رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ",
       profileBtn1:"تعديل كلمه السر",
-      profileBtn2:"تعديل الحساب"
-
+      profileBtn2:"تعديل الحساب",
+   mostSelling:"الأكثر مبيعًا",
+   mostRating: "الأكثر تقيماً"
 
 }
   };

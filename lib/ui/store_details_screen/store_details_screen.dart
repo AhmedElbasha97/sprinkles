@@ -70,7 +70,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                     child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitWidth,),
                                   )),
                               Positioned(
-                                top:10,
+                                top:15,
                                 left:10,
                                 child: Container(
                                   width:Get.width*0.48,
@@ -709,7 +709,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                     child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitWidth,),
                                   )),
                              Positioned(
-                               top:10,
+                               top:15,
                                 left:10,
                                 child: Container(
                                   width:Get.width*0.48,
@@ -858,7 +858,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                 child:  SizedBox(
                                   height: Get.height*0.045,
                                   width:Get.width*0.089,
-                                  child: Image.asset("assets/icons/c.png",fit: BoxFit.fitHeight,),
+                                  child: Image.asset("assets/icons/c.png",fit: BoxFit.fitWidth,),
                                 ),
                               ),
                             ),
@@ -874,7 +874,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                 child: SizedBox(
                                   height: Get.height*0.045,
                                   width:Get.width*0.089,
-                                  child: Image.asset("assets/icons/w.png",fit: BoxFit.fitHeight,),
+                                  child: Image.asset("assets/icons/w.png",fit: BoxFit.fitWidth,),
                                 ),
                               ),
                             ),

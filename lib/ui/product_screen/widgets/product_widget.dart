@@ -16,6 +16,7 @@ import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/products_model.dart';
 
 import 'package:sprinkles/ui/ordering/ordering_screen.dart';
+import 'package:sprinkles/ui/product_detailed_screen/controller/product_detailed_controller.dart';
 import 'package:sprinkles/ui/product_detailed_screen/product_detailed_screen.dart';
 
 import 'package:sprinkles/widgets/custom_text_widget.dart';
@@ -61,17 +62,21 @@ final ProductsModel? product;
   Widget build(BuildContext context) {
     return InkWell(
       onTap:(){
-        if(comingFromProductDetails){
-          productDetailsFunction!();
-        } else {
-          Get.to(() =>
-              ProductDetailedScreen(productId: '${product?.id ?? 0}',
-                mainCategoryId: mainCategoryId,
-                comingFromProductList: comingFromProductList,
-                comingFromFavoriteList: comingFromFavoriteList,
-                comingFromProductDetails: comingFromProductDetails,
-                branchCategoryId: branchCategoryId,));
+        bool test3 = Get.isRegistered<ProductDetailedController>();
+        if(test3){
+          Get.delete<ProductDetailedController>();
         }
+        Get.to(() =>
+            ProductDetailedScreen(productId: '${product?.id ?? 0}',
+              mainCategoryId: mainCategoryId,
+              comingFromProductList: comingFromProductList,
+              comingFromFavoriteList: comingFromFavoriteList,
+              comingFromProductDetails: comingFromProductDetails,
+              branchCategoryId: branchCategoryId,),preventDuplicates: false);
+
+
+
+
         },
       child: Container(
           width:Get.width*0.44,

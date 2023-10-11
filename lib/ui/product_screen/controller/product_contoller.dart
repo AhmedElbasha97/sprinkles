@@ -30,6 +30,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../widgets/alert_dialogue.dart';
 
 class ProductController extends GetxController {
+  FocusNode myFocusNode = FocusNode();
+
   bool productIsLoading = true;
   bool categoryIsLoading = true;
   bool advertisementsIsLoading = true;
@@ -40,7 +42,7 @@ class ProductController extends GetxController {
   ProductController(this.mainCategoryId, this.context, this.selectingFromDrawer);
   late TextEditingController searchController;
   bool hasBeenSelectedFromDrawer = false;
-  List<String> governmentData = [removeFilterTitle.tr,priceFilterDescTitle.tr,priceFilterDescTitle.tr,nameFilterDescTitle.tr,nameFilterAscTitle.tr,];
+  List<String> governmentData = [removeFilterTitle.tr,priceFilterDescTitle.tr,priceFilterDescTitle.tr,mostSelling.tr,mostRating.tr,];
   ScrollController scrollController = ScrollController();
   int selectedSubCategoryId = 0;
   String selectingFilterTag = "0";
@@ -59,6 +61,9 @@ class ProductController extends GetxController {
     super.onInit();
     hasBeenSelectedFromDrawer = selectingFromDrawer;
     searchController = TextEditingController();
+    myFocusNode.addListener( () {
+     update();
+    });
     if(selectingFromDrawer){
       await getMainCategoryData();
     }else{
@@ -107,9 +112,9 @@ class ProductController extends GetxController {
         }
       }
       break;
-      case "Sort by name from Z to A":{
+      case "Most Rated":{
         selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_desc.name:Filters.name_desc.name;
-        selectingFilterTagName = nameFilterDescTitle.tr;
+        selectingFilterTagName = mostRating.tr;
         update();
         if(activateSearching){
           searchingForKeyword();
@@ -118,9 +123,9 @@ class ProductController extends GetxController {
         }
       }
       break;
-      case "Sort by name from A to Z":{
+      case "mostSelling":{
         selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_asc.name:Filters.name_asc.name;
-        selectingFilterTagName = priceFilterAscTitle.tr;
+        selectingFilterTagName = mostSelling.tr;
         update();
         if(activateSearching){
           searchingForKeyword();
@@ -162,9 +167,9 @@ class ProductController extends GetxController {
         }
       }
       break;
-      case"ترتيب حسب الاسم من ى إلى أ":{
+      case"الأكثر تقيماً":{
         selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_desc.name:Filters.name_desc.name;
-        selectingFilterTagName = nameFilterDescTitle.tr;
+        selectingFilterTagName = mostRating.tr;
         update();
         if(activateSearching){
           searchingForKeyword();
@@ -173,9 +178,9 @@ class ProductController extends GetxController {
         }
       }
       break;
-      case"ترتيب حسب الاسم من أ إلى ى":{
+      case"الأكثر مبيعًا":{
         selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_asc.name:Filters.name_asc.name;
-        selectingFilterTagName = priceFilterAscTitle.tr;
+        selectingFilterTagName = mostSelling.tr;
         update();
         if(activateSearching){
           searchingForKeyword();

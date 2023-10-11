@@ -164,7 +164,7 @@ class ProductDetailedController extends GetxController{
       await ProductServices.getProductDetails(productId);
       productsList =
       await ProductServices.getProducts(mainCategoryId, productData?.ctg?.id??0, "0");
-      if(productData?.video != ""){
+      if(productData?.video != null){
         videoPlayerController =
         VideoPlayerController.network('${Services.baseEndPoint}${productData?.video??""}')
           ..initialize().then((_) {

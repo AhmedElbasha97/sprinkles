@@ -128,7 +128,11 @@ class ProductDetailedScreen extends StatelessWidget {
 
         InkWell(
           onTap: (){
-            controller.videoPlayerController.pause();
+            if(controller.productData?.video != ""){
+              controller.videoPlayerController.pause();
+            }
+
+
             Get.to(()=>OrderingScreen(productId: controller.productData?.id??0),transition:Transition.upToDown);
           },
           child: Container(
@@ -329,7 +333,387 @@ class ProductDetailedScreen extends StatelessWidget {
                     ); },
 
                   ),
-                  Padding(
+                  Get.find<StorageService>().activeLocale == SupportedLocales.english?Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Stack(
+                      children: [
+                        Container(
+                          width:Get.width,
+                          height:Get.height*0.16,
+                          decoration:BoxDecoration(
+                            borderRadius:BorderRadius.circular(10),
+                            color:Colors.white,
+
+                          ),
+                        ),
+                        Positioned(
+                          left:0,
+                          child: Container(
+                              width:Get.width*0.65,
+                              height:Get.height*0.15,
+                              decoration:BoxDecoration(
+                                borderRadius:BorderRadius.circular(10),
+                                color:Colors.transparent,
+
+                              ),
+                              child:Padding(
+                                padding: const EdgeInsets.only(left:10.0,right: 10,top:10,),
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    children:[
+                                      controller.productIsLoading?Center(
+                                        child:   Container(
+                                          width:Get.width*0.55,
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                              color: const Color(0xFFDFDDDF),
+                                              borderRadius: BorderRadius.circular(50)
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide():Container(
+                                        width:Get.width*0.55,
+                                        child: CustomText(
+                                          Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.productData?.nameEn??"":controller.productData?.name??"",
+                                          style: TextStyle(
+                                            shadows: <Shadow>[
+                                              Shadow(
+                                                  offset: const Offset(0.5, 0.5),
+                                                  blurRadius: 0.5,
+
+                                                  color: Colors.black.withOpacity(0.5)
+                                              ),
+
+                                            ],
+
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 16,
+                                            letterSpacing: 0,
+                                            fontFamily: fontFamilyArabicName,
+                                            color: kDarkPinkColor,
+                                          ),
+                                          maxLines: 2,
+                                        ),
+                                      ),
+
+                                      controller.productIsLoading?Center(
+                                        child:   Container(
+                                          width:Get.width*0.25,
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                              color: const Color(0xFFDFDDDF),
+                                              borderRadius: BorderRadius.circular(50)
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide():CustomText(
+                                        '${priceKey.tr} ${controller.productData?.price} ${currencyKey.tr}',
+                                        style: TextStyle(
+                                          shadows: <Shadow>[
+                                            Shadow(
+                                                offset: const Offset(0.5, 0.5),
+                                                blurRadius: 0.5,
+
+                                                color: Colors.black.withOpacity(0.5)
+                                            ),
+                                          ],
+                                          fontSize: 15,
+                                          letterSpacing: 0,
+                                          fontFamily: fontFamilyArabicName,
+                                          color: kDarkPinkColor,
+                                        ),
+                                      ),
+                                      Row(
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
+
+                                          children:[
+                                            controller.productIsLoading?Center(
+                                              child:   Container(
+                                                width: Get.width*0.09,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+
+
+                                            ).animate(onPlay: (controller) => controller.repeat())
+                                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                .animate() // this wraps the previous Animate in another Animate
+                                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                .slide():InkWell(
+                                              onTap:(){
+                                                controller.makePhoneCall( '${controller.productData?.shop?.phone}');
+                                              },
+                                              child: Row(
+                                                crossAxisAlignment:CrossAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    height: Get.height*0.037,
+                                                    width: Get.width*0.12,
+                                                    child: Image.asset("assets/icons/c.png",fit: BoxFit.fitHeight,),
+                                                  ),
+
+                                                ],
+                                              ),
+                                            ),
+                                            controller.productIsLoading?Center(
+                                              child:   Container(
+                                                width: Get.width*0.09,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+
+
+                                            ).animate(onPlay: (controller) => controller.repeat())
+                                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                .animate() // this wraps the previous Animate in another Animate
+                                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                .slide():InkWell(
+                                              onTap:(){
+                                                controller.whatsapp('${controller.productData?.shop?.whatsapp}');
+                                              },
+                                              child: Row(
+                                                crossAxisAlignment:CrossAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    height: Get.height*0.037,
+                                                    width: Get.width*0.13,
+                                                    child: Image.asset("assets/icons/w.png",fit: BoxFit.fitHeight,),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            controller.productIsLoading?Center(
+                                              child:   Container(
+                                                width:Get.width*0.25,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+
+
+                                            ).animate(onPlay: (controller) => controller.repeat())
+                                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                .animate() // this wraps the previous Animate in another Animate
+                                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                .slide():RatingBar.builder(
+                                              initialRating:double.parse(controller.productData?.rating??"0"),
+                                              minRating: double.parse(controller.productData?.rating??"0"),
+                                              itemSize:20,
+                                              direction: Axis.horizontal,
+                                              ignoreGestures:true,
+                                              allowHalfRating: true,
+                                              itemCount: 5,
+                                              itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                                              itemBuilder: (context, _) => const Icon(
+                                                Icons.star,
+                                                color: Colors.amber,
+                                              ),
+                                              onRatingUpdate: (rating) {
+                                                print(rating);
+                                              },
+                                            ),
+                                          ]
+                                      )
+                                    ]
+                                ),
+                              )
+
+                          ),
+                        ),
+                        Positioned(
+                          top:0,
+                          right:0,
+                          child: Container(
+                            height:Get.height*0.16,
+                            width: Get.width*0.4,
+                            decoration:const BoxDecoration(
+                              borderRadius:BorderRadius.only(topRight:Radius.circular(10),bottomRight:Radius.circular(10)),
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  "assets/images/cakeBG1.png",
+                                ),
+                                fit:  BoxFit.cover,
+                              ),
+
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right:5,
+                          child: Container(
+                            width:Get.width*0.2,
+                            child: Row(
+                              mainAxisAlignment:MainAxisAlignment.start,
+                              crossAxisAlignment:CrossAxisAlignment.end,
+                              children: [
+
+                                controller.productIsLoading?Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 7.0),
+                                  child: Container(
+
+                                    height: Get.height*0.08,
+                                    width:Get.width*0.17,
+                                    decoration:BoxDecoration(
+                                      color:  const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                    ),
+                                    child:Center(
+                                      child: Container(
+
+                                        height: Get.height*0.07,
+                                        width:Get.width*0.15,
+                                        decoration:BoxDecoration(
+                                          color:  const Color(0xFFDFDDDF),
+                                          borderRadius: BorderRadius.circular(50),
+
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                      ,
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate(),
+                                ) // this wraps the previous Animate in another Animate
+                                    :CachedNetworkImage(
+                                  fit:  BoxFit.contain,
+                                  imageUrl: "${Services.baseEndPoint}${controller.productData?.shop?.image??""}",
+                                  imageBuilder: ((context, image){
+                                    return   Container(
+                                        height: Get.height*0.13,
+                                        width:Get.width*0.2,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: image,
+                                            fit:  BoxFit.contain,
+                                          ),
+                                        ));
+                                  }),
+                                  placeholder: (context, image){
+                                    return   Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 7.0),
+
+                                      child: Container(
+
+                                        height: Get.height*0.08,
+                                        width:Get.width*0.17,
+                                        decoration:BoxDecoration(
+                                          color:  const Color(0xFFF2F0F3),
+                                          borderRadius: BorderRadius.circular(50),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.1),
+                                              offset: const Offset(
+                                                0.0,
+                                                0.0,
+                                              ),
+                                              blurRadius: 13.0,
+                                              spreadRadius: 2.0,
+                                            ), //BoxShadow
+                                            BoxShadow(
+                                              color: Colors.white.withOpacity(0.2),
+                                              offset: const Offset(0.0, 0.0),
+                                              blurRadius: 0.0,
+                                              spreadRadius: 0.0,
+                                            ), //BoxShadow
+                                          ],
+                                        ),
+                                        child:Center(
+                                          child: Container(
+                                            height: Get.height*0.07,
+                                            width:Get.width*0.15,
+                                            decoration:BoxDecoration(
+                                              color:  const Color(0xFFDFDDDF),
+                                              borderRadius: BorderRadius.circular(50),
+
+                                            ),
+                                          ).animate(onPlay: (controller) => controller.repeat())
+                                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                              .animate() // this wraps the previous Animate in another Animate
+                                          ,
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate(),
+                                    ) // this wraps the previous Animate in another Animate
+                                        ;
+                                  },
+                                  errorWidget: (context, url, error){
+                                    return SizedBox(
+                                      height: Get.height*0.1,
+                                      width:Get.width*0.2,
+                                      child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                    );
+                                  },
+                                ),
+
+                              ],
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+                  ):Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Stack(
                       children: [
@@ -619,7 +1003,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                           crossAxisAlignment:CrossAxisAlignment.center,
                                           children: [
                                             SizedBox(
-                                              height: Get.height*0.033,
+                                              height: Get.height*0.037,
                                               width: Get.width*0.12,
                                               child: Image.asset("assets/icons/c.png",fit: BoxFit.fitHeight,),
                                             ),
@@ -654,7 +1038,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                           crossAxisAlignment:CrossAxisAlignment.center,
                                           children: [
                                             SizedBox(
-                                              height: Get.height*0.033,
+                                              height: Get.height*0.037,
                                               width: Get.width*0.13,
                                               child: Image.asset("assets/icons/w.png",fit: BoxFit.fitHeight,),
                                             ),

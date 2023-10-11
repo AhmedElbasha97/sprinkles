@@ -13,10 +13,12 @@ import 'package:sprinkles/ui/favorite_screen/favorite_screen.dart';
 import 'package:sprinkles/ui/home_screen/home_screen.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/privacypolicy/privacyPolicyScreen.dart';
+import 'package:sprinkles/ui/product_screen/controller/product_contoller.dart';
 import 'package:sprinkles/ui/product_screen/product_screen.dart';
 import 'package:sprinkles/ui/profile/profile_screen.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/ui/splash_screen/splash_screen.dart';
+import 'package:sprinkles/ui/store%20_screen/controller/store_controller.dart';
 import 'package:sprinkles/ui/store%20_screen/store_screen.dart';
 import 'package:sprinkles/ui/term&condition/terms_screen.dart';
 import 'package:sprinkles/widgets/alert_dialogue.dart';
@@ -61,6 +63,14 @@ class _AppDrawersState extends State<AppDrawers> {
 
   }
   detectFunctionalityOfDrawerTap(String title) async {
+    bool test4 = Get.isRegistered<ProductController>();
+    if(test4){
+      Get.delete<ProductController>();
+    }
+    bool test3 = Get.isRegistered<StoreController>();
+    if(test3){
+      Get.delete<StoreController>();
+    }
     switch (title) {
       case "الرئيسيّة":
         {
@@ -74,7 +84,8 @@ class _AppDrawersState extends State<AppDrawers> {
         {
           Get.to(() =>
           const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),
-              transition: Transition.rightToLeftWithFade);
+              transition: Transition.rightToLeftWithFade, preventDuplicates: false);
+
           widget.scaffoldKey.currentState?.openEndDrawer();
         }
       case "قائمة المفضلة":
@@ -109,7 +120,7 @@ class _AppDrawersState extends State<AppDrawers> {
         {
           Get.to(() =>
           const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,),
-              transition: Transition.rightToLeftWithFade);
+              transition: Transition.rightToLeftWithFade,preventDuplicates: false);
           widget.scaffoldKey.currentState?.openEndDrawer();
         }
         break;
@@ -189,7 +200,7 @@ class _AppDrawersState extends State<AppDrawers> {
         {
           Get.to(() =>
           const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),
-              transition: Transition.rightToLeftWithFade);
+              transition: Transition.rightToLeftWithFade,preventDuplicates: false);
           widget.scaffoldKey.currentState?.openEndDrawer();
         }
       case 'Favorites list':
@@ -224,7 +235,7 @@ class _AppDrawersState extends State<AppDrawers> {
         {
           Get.to(() =>
           const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,),
-              transition: Transition.rightToLeftWithFade);
+              transition: Transition.rightToLeftWithFade,preventDuplicates: false);
           widget.scaffoldKey.currentState?.openEndDrawer();
         }
         break;

@@ -103,3 +103,5 @@ const storeLocation = "Store_location";
 const whatsAppInfoText = "whats_App_Info_Text";
 const profileBtn1 = "Profile_Btn_1";
 const profileBtn2 = "Profile_Btn_2";
+const mostSelling = "Most_Selling";
+const mostRating = "Most_Rating";

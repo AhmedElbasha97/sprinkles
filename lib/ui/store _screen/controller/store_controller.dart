@@ -19,6 +19,7 @@ import 'package:sprinkles/widgets/alert_dialogue.dart';
 import 'package:sprinkles/widgets/yes_or_no_dialogue.dart';
 
 class StoreController extends GetxController {
+  FocusNode myFocusNode = FocusNode();
   bool storeIsLoading = true;
   bool categoryIsLoading = true;
   bool advertisementsIsLoading = true;
@@ -44,6 +45,9 @@ class StoreController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     hasBeenSelectedFromDrawer = selectedFromDrawer;
+    myFocusNode.addListener( () {
+      update();
+    });
     searchController = TextEditingController();
     if(selectedFromDrawer){
     await getMainCategoryData();
