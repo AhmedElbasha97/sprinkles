@@ -71,7 +71,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                   )),
                               Positioned(
                                 top:15,
-                                left:10,
+                                right:10,
                                 child: Container(
                                   width:Get.width*0.48,
                                   child: Row(
