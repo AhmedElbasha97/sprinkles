@@ -395,7 +395,7 @@ class ProductScreen extends StatelessWidget {
                                   crossAxisAlignment:CrossAxisAlignment.start,
                                   children:[
                                     Container(
-                                      width:Get.width*0.4,
+                                      width:Get.width*0.3,
                                       child:  Padding(
                                         padding:  const EdgeInsets.fromLTRB(8,8,8,8),
                                         child: Row(
@@ -433,7 +433,7 @@ class ProductScreen extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(
-                                      height:Get.height*0.01,
+                                      height:Get.height*0.02,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
@@ -447,7 +447,7 @@ class ProductScreen extends StatelessWidget {
                                           }
                                         },
                                         child: Container(
-                                          height: Get.height*0.05,
+                                          height: Get.height*0.04,
                                           width:Get.width*0.35,
                                           decoration: BoxDecoration(
                                             color:Colors.white,
@@ -469,7 +469,7 @@ class ProductScreen extends StatelessWidget {
                                                 spreadRadius: 0.0,
                                               ), //BoxShadow
                                             ],
-                                            borderRadius: BorderRadius.circular(15), //
+                                            borderRadius: BorderRadius.circular(10), //
                                           ),
                                           child:  Center(
                                             child:  CustomText(
@@ -495,7 +495,7 @@ class ProductScreen extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(
-                                      height:Get.height*0.01,
+                                      height:Get.height*0.02,
                                     ),
                                     PopupMenuButton<String>(
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -503,8 +503,8 @@ class ProductScreen extends StatelessWidget {
                                       splashRadius:0.5,
                                       elevation: 3.0,
                                       constraints:BoxConstraints(
-                                        maxWidth:  Get.width*0.53,
-                                        minWidth:  Get.width*0.53,
+                                        maxWidth:  Get.width*0.45,
+                                        minWidth:  Get.width*0.45,
                                       ),
                                       itemBuilder: (context) =>
                                           controller.governmentData.map((e){
@@ -518,7 +518,7 @@ class ProductScreen extends StatelessWidget {
                                                 controller.selectingFilter(e);
                                               },
                                               child: SizedBox(
-                                                width: Get.width*0.53,
+                                                width: Get.width*0.5,
 
                                                 child: Column(
                                                   children: [
@@ -553,7 +553,7 @@ class ProductScreen extends StatelessWidget {
                                         padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
                                         child: Container(
 
-                                          width:Get.width*0.5,
+                                          width:Get.width*0.45,
                                           decoration: BoxDecoration(
                                             color:Colors.white,
                                             border: Border.all( color:kDarkPinkColor,width: 1),
@@ -574,18 +574,18 @@ class ProductScreen extends StatelessWidget {
                                                 spreadRadius: 0.0,
                                               ), //BoxShadow
                                             ],
-                                            borderRadius: BorderRadius.circular(15), //
+                                            borderRadius: BorderRadius.circular(10), //
                                           ),
                                           child:  Center(
                                             child:  Padding(
-                                              padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.009,8.0,Get.height*0.009),
+                                              padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.004,8.0,Get.height*0.004),
                                               child: Row(
                                                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                                 children: [
 
                                                   Container(
 
-                                                    width:Get.width*0.38,
+                                                    width:Get.width*0.34,
                                                     child: CustomText(
                                                       textAlign:TextAlign.center,
                                                       maxLines:3,
@@ -617,12 +617,12 @@ class ProductScreen extends StatelessWidget {
                                     ),
 
                                     SizedBox(
-                                      height:Get.height*0.01,
+                                      height:Get.height*0.022,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
                                       child: Container(
-                                        height: Get.height*0.05,
+                                        height: Get.height*0.04,
                                         width:Get.width*0.8,
                                         decoration: BoxDecoration(
                                           color:Colors.white,
@@ -643,7 +643,7 @@ class ProductScreen extends StatelessWidget {
                                               spreadRadius: 0.0,
                                             ), //BoxShadow
                                           ],
-                                          borderRadius: BorderRadius.circular(15), //
+                                          borderRadius: BorderRadius.circular(10), //
                                         ),
                                         child:TextFormField(
                                           controller:controller.searchController,
@@ -682,11 +682,11 @@ class ProductScreen extends StatelessWidget {
                                             contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                                             enabledBorder:  OutlineInputBorder(
                                                 borderSide: const BorderSide(width: 1, color: kDarkPinkColor,),
-                                                borderRadius: BorderRadius.circular(15)
+                                                borderRadius: BorderRadius.circular(10)
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                                 borderSide:   const BorderSide(color: kDarkPinkColor,width: 1.0),
-                                                borderRadius: BorderRadius.circular(15)),
+                                                borderRadius: BorderRadius.circular(10)),
 
                                             hintText: controller.myFocusNode.hasFocus ? "":searchKey.tr,
                                             hintStyle: TextStyle(
@@ -739,7 +739,7 @@ class ProductScreen extends StatelessWidget {
                                crossAxisAlignment:CrossAxisAlignment.start,
                                 children:[
                                   Container(
-                                    width:Get.width*0.4,
+                                    width:Get.width*0.35,
                                     child:  Padding(
                                       padding:  const EdgeInsets.fromLTRB(8,8,8,8),
                                       child: Row(
@@ -777,7 +777,7 @@ class ProductScreen extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(
-                                    height:Get.height*0.01,
+                                    height:Get.height*0.02,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
@@ -791,7 +791,7 @@ class ProductScreen extends StatelessWidget {
                                         }
                                         },
                                       child: Container(
-                                        height: Get.height*0.05,
+                                        height: Get.height*0.04,
                                         width:Get.width*0.35,
                                         decoration: BoxDecoration(
                                           color:Colors.white,
@@ -813,7 +813,7 @@ class ProductScreen extends StatelessWidget {
                                               spreadRadius: 0.0,
                                             ), //BoxShadow
                                           ],
-                                          borderRadius: BorderRadius.circular(15), //
+                                          borderRadius: BorderRadius.circular(10), //
                                         ),
                                         child:  Center(
                                           child:  CustomText(
@@ -839,7 +839,7 @@ class ProductScreen extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(
-                                    height:Get.height*0.01,
+                                    height:Get.height*0.02,
                                   ),
                                   PopupMenuButton<String>(
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -847,8 +847,8 @@ class ProductScreen extends StatelessWidget {
                                     splashRadius:0.5,
                                       elevation: 3.0,
                                       constraints:BoxConstraints(
-                                        maxWidth:  Get.width*0.53,
-                                        minWidth:  Get.width*0.53,
+                                        maxWidth:  Get.width*0.45,
+                                        minWidth:  Get.width*0.45,
                                       ),
                                     itemBuilder: (context) =>
                                         controller.governmentData.map((e){
@@ -862,7 +862,7 @@ class ProductScreen extends StatelessWidget {
                                               controller.selectingFilter(e);
                                             },
                                             child: SizedBox(
-                                              width: Get.width*0.53,
+                                              width: Get.width*0.45,
 
                                               child: Column(
                                                 children: [
@@ -897,7 +897,7 @@ class ProductScreen extends StatelessWidget {
                                       padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
                                       child: Container(
 
-                                        width:Get.width*0.5,
+                                        width:Get.width*0.45,
                                         decoration: BoxDecoration(
                                           color:Colors.white,
                                           border: Border.all( color:kDarkPinkColor,width: 1),
@@ -918,18 +918,18 @@ class ProductScreen extends StatelessWidget {
                                               spreadRadius: 0.0,
                                             ), //BoxShadow
                                           ],
-                                          borderRadius: BorderRadius.circular(15), //
+                                          borderRadius: BorderRadius.circular(10), //
                                         ),
                                         child:  Center(
                                           child:  Padding(
-                                            padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.009,8.0,Get.height*0.009),
+                                            padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.003,8.0,Get.height*0.003),
                                             child: Row(
                                               mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                               children: [
 
                                                 Container(
 
-                                                  width:Get.width*0.38,
+                                                  width:Get.width*0.34,
                                                   child: CustomText(
                                                     textAlign:TextAlign.center,
                                                     maxLines:3,
@@ -961,12 +961,12 @@ class ProductScreen extends StatelessWidget {
                                   ),
 
                                   SizedBox(
-                                    height:Get.height*0.01,
+                                    height:Get.height*0.02,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(0,0,8.0,0),
                                     child: Container(
-                                      height: Get.height*0.05,
+                                      height: Get.height*0.04,
                                       width:Get.width*0.8,
                                       decoration: BoxDecoration(
                                         color:Colors.white,
@@ -987,7 +987,7 @@ class ProductScreen extends StatelessWidget {
                                             spreadRadius: 0.0,
                                           ), //BoxShadow
                                         ],
-                                        borderRadius: BorderRadius.circular(15), //
+                                        borderRadius: BorderRadius.circular(10), //
                                       ),
                                       child:TextFormField(
                                         controller:controller.searchController,
@@ -1019,11 +1019,11 @@ class ProductScreen extends StatelessWidget {
                                           contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                                             enabledBorder:  OutlineInputBorder(
                                                 borderSide: const BorderSide(width: 1, color: kDarkPinkColor,),
-                                                borderRadius: BorderRadius.circular(15)
+                                                borderRadius: BorderRadius.circular(10)
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                                 borderSide:   const BorderSide(color: kDarkPinkColor,width: 1.0),
-                                                borderRadius: BorderRadius.circular(15)),
+                                                borderRadius: BorderRadius.circular(10)),
 
                                             hintText:  controller.myFocusNode.hasFocus ?"":searchKey.tr,
                                             hintStyle: TextStyle(

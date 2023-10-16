@@ -63,6 +63,8 @@ settingWhatsAppText(){
   }
 
  }
+ messageTextWhatsApp =
+ '$messageTextWhatsApp \n ${data?.link??""} ';
 }
 ordering() async {
 
@@ -71,14 +73,17 @@ whatsapp(data?.shop?.whatsapp??"");
 }
  whatsapp(String contact) async{
   print(messageTextWhatsApp);
-  var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
-  var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
+
+
 
   try{
    if(Platform.isIOS){
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
     await launchUrl(Uri.parse(iosUrl));
+
    }
    else{
+    var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
     await launchUrl(Uri.parse(androidUrl));
    }
   } on Exception{

@@ -42,15 +42,17 @@ final ProductsModel? product;
   }
 
   whatsapp(String contact) async{
-  String   messageTextWhatsApp = ' رأيت هذا ال ${product?.name??""} في تطبيق سبرينكلس و وأريد الاستفسار عنه ' + '\n I saw this ${product?.nameEn??""} In the Sprinkles app and I want to make an order';
-    var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
+  String   messageTextWhatsApp = ' رأيت هذا ال ${product?.name??""} في تطبيق سبرينكلس و وأريد الاستفسار عنه \n I saw this ${product?.nameEn??""} In the Sprinkles app and I want to make an order \n'+"${product?.link}";
+
+
 
     try{
       if(Platform.isIOS){
+        var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
         await launchUrl(Uri.parse(iosUrl));
       }
       else{
+        var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
         await launchUrl(Uri.parse(androidUrl));
       }
     } on Exception{

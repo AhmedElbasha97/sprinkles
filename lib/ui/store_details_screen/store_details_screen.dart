@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
@@ -256,7 +257,7 @@ class StoreDetailedScreen extends StatelessWidget {
 
                                       },
                                       child: Container(
-                                        height: Get.height*0.05,
+                                        height: Get.height*0.03,
                                         width:Get.width*0.3,
                                         decoration: BoxDecoration(
                                           color:Colors.white,
@@ -278,7 +279,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                               spreadRadius: 0.0,
                                             ), //BoxShadow
                                           ],
-                                          borderRadius: BorderRadius.circular(15), //
+                                          borderRadius: BorderRadius.circular(5), //
                                         ),
                                         child:  controller.shopIsLoading?
                                         Center(
@@ -508,7 +509,7 @@ class StoreDetailedScreen extends StatelessWidget {
 
                                       },
                                       child: Container(
-                                        height: Get.height*0.05,
+                                        height: Get.height*0.03,
                                         width:Get.width*0.3,
                                         decoration: BoxDecoration(
                                           color:Colors.white,
@@ -530,7 +531,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                               spreadRadius: 0.0,
                                             ), //BoxShadow
                                           ],
-                                          borderRadius: BorderRadius.circular(15), //
+                                          borderRadius: BorderRadius.circular(5), //
                                         ),
                                         child:  controller.shopIsLoading?
                                         Center(
@@ -921,6 +922,45 @@ class StoreDetailedScreen extends StatelessWidget {
                                 child:  const Icon(Icons.pin_drop_outlined,color:  kDarkPinkColor,size:30)
                               ),
                             ),
+                          ),
+
+                          controller.shopIsLoading?
+                          Center(
+                            child:   Container(
+                              width:Get.width*0.35,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFFDFDDDF),
+                                  borderRadius: BorderRadius.circular(50)
+                              ),
+                            ).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                .animate() // this wraps the previous Animate in another Animate
+                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                .slide(),
+
+
+                          ).animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                              .animate() // this wraps the previous Animate in another Animate
+                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                              .slide()
+                              :RatingBar.builder(
+                            initialRating:double.parse("${controller.shopData?.star??0}") ,
+                            minRating: 1,
+                            itemSize:15,
+                            direction: Axis.horizontal,
+                            ignoreGestures:true,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                            itemBuilder: (context, _) => const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: (rating) {
+                              print(rating);
+                            },
                           ),
                         ],
                       ),

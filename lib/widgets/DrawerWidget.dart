@@ -1,7 +1,10 @@
 // ignore_for_file: file_names, library_private_types_in_public_api, use_build_context_synchronously, sized_box_for_whitespace, prefer_typing_uninitialized_variables
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
@@ -37,6 +40,7 @@ class AppDrawers extends StatefulWidget {
 }
 
 class _AppDrawersState extends State<AppDrawers> {
+
   String userNameText = '';
   List<DrawerItem> data= [
    DrawerItem(drawerTag1.tr,"homeIconDrawer.png"),
@@ -59,7 +63,10 @@ class _AppDrawersState extends State<AppDrawers> {
   if(Get.find<StorageService>().checkUserIsSignedIn){
       data.insert(5,  DrawerItem(favTitle.tr,"favoriteIcon.png"));
       userNameText = Get.find<StorageService>().userName;
+      setState(() {
+      });
   }
+
 
   }
   detectFunctionalityOfDrawerTap(String title) async {
@@ -135,6 +142,26 @@ class _AppDrawersState extends State<AppDrawers> {
         {
           Get.to(() => const SignupScreen(),
               transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "شارك التطبيق":
+        {
+
+            Share.share(Platform.isAndroid
+                ? "https://play.google.com/store/apps/details?id=com.Sync.sprinkles"
+                : "https://apps.apple.com/us/app/sprinkles/id6468032576",);
+
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case "Share the app":
+        {
+
+            Share.share(Platform.isAndroid
+                ? "https://play.google.com/store/apps/details?id=com.Sync.sprinkles"
+                : "https://apps.apple.com/us/app/sprinkles/id6468032576",);
+
           widget.scaffoldKey.currentState?.openEndDrawer();
         }
         break;
@@ -408,7 +435,7 @@ class _AppDrawersState extends State<AppDrawers> {
                               SizedBox(
                                 height: Get.height*0.12,
                                 width: Get.width*0.22,
-                                child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitWidth,),
                               ),
                             ],
                           ),

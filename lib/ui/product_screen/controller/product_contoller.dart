@@ -90,7 +90,7 @@ class ProductController extends GetxController {
         }
       }
       break;
-      case "Price from lowest price to highest price":{
+      case "Price from lowest to highest":{
         selectingFilterTag = Filters.price_desc.name;
         selectingFilterTagName = priceFilterDescTitle.tr;
         update();
@@ -101,7 +101,7 @@ class ProductController extends GetxController {
         }
       }
       break;
-      case "Price from highest price to lowest price":{
+      case "Price from highest to lowest":{
         selectingFilterTag = Filters. price_asc.name;
         selectingFilterTagName = priceFilterAscTitle.tr;
         update();
@@ -145,7 +145,7 @@ class ProductController extends GetxController {
         }
       }
       break;
-      case"السعر من الأقل سعر إلى أعلى السعر":{
+      case"السعر من الأقل إلى أعلى":{
         selectingFilterTag = Filters.price_desc.name;
         selectingFilterTagName = priceFilterDescTitle.tr;
         update();
@@ -156,7 +156,7 @@ class ProductController extends GetxController {
         }
       }
       break;
-      case"السعر من أعلى سعر إلى الأقل السعر":{
+      case"السعر من أعلى إلى الأقل ":{
         selectingFilterTag = Filters. price_asc.name;
         selectingFilterTagName = priceFilterAscTitle.tr;
         update();

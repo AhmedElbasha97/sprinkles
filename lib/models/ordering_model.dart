@@ -14,6 +14,7 @@ class OrderingModel {
   String? nameEn;
   List<String>? images;
   String? price;
+  String? link;
   Ctg? ctg;
   Shop? shop;
   List<ItemFilter>? itemFilter;
@@ -24,6 +25,7 @@ class OrderingModel {
     this.nameEn,
     this.images,
     this.price,
+    this.link,
     this.ctg,
     this.shop,
     this.itemFilter,
@@ -35,6 +37,7 @@ class OrderingModel {
     nameEn: json["name_en"],
     images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
     price: json["price"],
+    link: json["link"],
     ctg: json["ctg"] == null ? null : Ctg.fromJson(json["ctg"]),
     shop: json["shop"] == null ? null : Shop.fromJson(json["shop"]),
     itemFilter: json["item_filter"] == null ? [] : List<ItemFilter>.from(json["item_filter"]!.map((x) => ItemFilter.fromJson(x))),
@@ -46,6 +49,7 @@ class OrderingModel {
     "name_en": nameEn,
     "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
     "price": price,
+    "link": link,
     "ctg": ctg?.toJson(),
     "shop": shop?.toJson(),
     "item_filter": itemFilter == null ? [] : List<dynamic>.from(itemFilter!.map((x) => x.toJson())),

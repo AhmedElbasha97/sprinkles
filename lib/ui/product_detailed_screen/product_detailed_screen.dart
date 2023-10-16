@@ -1393,7 +1393,7 @@ class ProductDetailedScreen extends StatelessWidget {
                         fontSize: 13,
                         letterSpacing: 0,
                         fontFamily: fontFamilyArabicName,
-                        color: kLightPinkColor,
+                        color: Colors.black,
                       ), textAlign: TextAlign.center, textDirection: TextDirection.rtl, semanticsLabel: '',),
                     ],
                   ),

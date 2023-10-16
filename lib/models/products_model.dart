@@ -1,4 +1,4 @@
-/// To parse this JSON data, do
+// To parse this JSON data, do
 //
 //     final productsModel = productsModelFromJson(jsonString);
 
@@ -17,8 +17,9 @@ class ProductsModel {
   String? price;
   int? persons;
   List<String>? images;
-  Ctg? ctg;
+  String? rating;
   Shop? shop;
+  String? link;
 
   ProductsModel({
     this.id,
@@ -29,8 +30,9 @@ class ProductsModel {
     this.price,
     this.persons,
     this.images,
-    this.ctg,
+    this.rating,
     this.shop,
+    this.link,
   });
 
   factory ProductsModel.fromJson(Map<String, dynamic> json) => ProductsModel(
@@ -42,8 +44,9 @@ class ProductsModel {
     price: json["price"],
     persons: json["persons"],
     images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
-    ctg: json["ctg"] == null ? null : Ctg.fromJson(json["ctg"]),
+    rating: json["rating"],
     shop: json["shop"] == null ? null : Shop.fromJson(json["shop"]),
+    link: json["link"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -55,32 +58,9 @@ class ProductsModel {
     "price": price,
     "persons": persons,
     "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
-    "ctg": ctg?.toJson(),
+    "rating": rating,
     "shop": shop?.toJson(),
-  };
-}
-
-class Ctg {
-  int? id;
-  String? name;
-  String? nameEn;
-
-  Ctg({
-    this.id,
-    this.name,
-    this.nameEn,
-  });
-
-  factory Ctg.fromJson(Map<String, dynamic> json) => Ctg(
-    id: json["id"],
-    name: json["name"],
-    nameEn: json["name_en"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "name_en": nameEn,
+    "link": link,
   };
 }
 
@@ -115,3 +95,4 @@ class Shop {
     "whatsapp": whatsapp,
   };
 }
+

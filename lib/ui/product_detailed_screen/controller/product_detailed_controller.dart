@@ -181,7 +181,7 @@ class ProductDetailedController extends GetxController{
     if(Get.find<StorageService>().checkUserIsSignedIn) {
       checkProductAddedOrNet();
     }
-    messageTextWhatsApp = ' رأيت هذا ال ${productData?.name??""} في تطبيق سبرينكلس و وأريد الاستفسار عنه ' + '\n I saw this ${productData?.nameEn??""} In the Sprinkles app and I want to make an order';
+    messageTextWhatsApp = ' رأيت هذا ال ${productData?.name??""} في تطبيق سبرينكلس و وأريد الاستفسار عنه ' + '\n I saw this ${productData?.nameEn??""} In the Sprinkles app and I want to make an order \n'+" ${productData?.link} " ;
     productIsLoading = false;
     update();
   }
@@ -236,14 +236,16 @@ class ProductDetailedController extends GetxController{
   }
   whatsapp(String contact) async{
 
-    var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
+
+
 
     try{
       if(Platform.isIOS){
+        var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
         await launchUrl(Uri.parse(iosUrl));
       }
       else{
+        var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
         await launchUrl(Uri.parse(androidUrl));
       }
     } on Exception{
