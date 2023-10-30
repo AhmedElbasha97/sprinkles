@@ -15,6 +15,7 @@ class ProductDetailedModel {
   String? desc;
   String? descEn;
   String? price;
+  int? visitors;
   String? link;
   String? rating;
   List<String>? images;
@@ -30,6 +31,7 @@ class ProductDetailedModel {
     this.desc,
     this.descEn,
     this.price,
+    this.visitors,
     this.link,
     this.rating,
     this.images,
@@ -46,6 +48,7 @@ class ProductDetailedModel {
     desc: json["desc"],
     descEn: json["desc_en"],
     price: json["price"],
+    visitors: json["visitors"],
     link: json["link"],
     rating: json["rating"],
     images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
@@ -62,6 +65,7 @@ class ProductDetailedModel {
     "desc": desc,
     "desc_en": descEn,
     "price": price,
+    "visitors": visitors,
     "link": link,
     "rating": rating,
     "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),

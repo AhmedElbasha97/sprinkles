@@ -26,5 +26,11 @@ class Services {
  static String addOrRemoveProductToFavoriteEndPoint = "ifavorite/new"; //Post
  static String privacyPolicyEndPoint = "policy"; //post
  static String termsAndConditionEndPoint = "terms"; //post
+ static String sendingReportEndPoint = "report";//post
+ static String getOrdersHistoryEndPoint = "order/history";//post
+ static String advancedSearchEndPoint = "search";//post
+ static String statsEndPoint = "order/new";//post
+ static String addingCommentEndPoint = "review/new";//post
+ static String getCommentEndPoint = "review";//post
 
 }

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
@@ -14,6 +15,7 @@ import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/products_model.dart';
+import 'package:sprinkles/services/stats_services.dart';
 
 import 'package:sprinkles/ui/ordering/ordering_screen.dart';
 import 'package:sprinkles/ui/product_detailed_screen/controller/product_detailed_controller.dart';
@@ -34,18 +36,21 @@ final ProductsModel? product;
   final bool comingFromProductDetails;
   final Function? productDetailsFunction;
   Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
+    var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${product?.shop?.id??0}", "${product?.id}", OrderType.CALL.name, "0");
+    if(result?.status == "true") {
+      final Uri launchUri = Uri(
+        scheme: 'tel',
+        path: phoneNumber,
+      );
+      await launchUrl(launchUri);
+    }
+
   }
 
   whatsapp(String contact) async{
   String   messageTextWhatsApp = ' رأيت هذا ال ${product?.name??""} في تطبيق سبرينكلس و وأريد الاستفسار عنه \n I saw this ${product?.nameEn??""} In the Sprinkles app and I want to make an order \n'+"${product?.link}";
-
-
-
+  var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${product?.shop?.id??0}", "${product?.id}", OrderType.WHATSAPP.name, "0");
+  if(result?.status == "true") {
     try{
       if(Platform.isIOS){
         var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
@@ -58,6 +63,10 @@ final ProductsModel? product;
     } on Exception{
 
     }
+  }
+
+
+
   }
 
   @override
@@ -229,57 +238,69 @@ final ProductsModel? product;
                                 crossAxisAlignment:CrossAxisAlignment.start,
                                 mainAxisAlignment:MainAxisAlignment.start,
                                 children: [
-                                   CustomText(
-                                    Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.nameEn??"":product?.name??"",
-                                     maxLines: 1,
-                                    style: const TextStyle(
-                                      height: 1.3,
-                                      fontSize: 12,
-                                      letterSpacing: 0,
-                                      fontFamily: fontFamilyArabicName,
-                                      color: Colors.black,
-                                    ),
+                                   Padding(
+                                     padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                     child: CustomText(
+                                      Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.nameEn??"":product?.name??"",
+                                       maxLines: 1,
+                                      style: const TextStyle(
+                                        height: 1.3,
+                                        fontSize: 12,
+                                        letterSpacing: 0,
+                                        fontFamily: fontFamilyArabicName,
+                                        color: Colors.black,
+                                      ),
                                   ),
-                                   CustomText(
-
-                                    Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.descEn??"":product?.desc??"",
-                                     maxLines: 1,
-                                    style: const TextStyle(
-
-                                      height: 1.3,
-                                      fontSize: 12,
-                                      letterSpacing: 0,
-                                      fontFamily: fontFamilyArabicName,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  CustomText(
-                                   "${noOfPeople.tr} ${product?.persons??0}",
-                                   maxLines: 1,
-                                   style: const TextStyle(
-                                     height: 1.3,
-                                     fontSize: 12,
-                                     letterSpacing: 0,
-                                     fontFamily: fontFamilyArabicName,
-                                     color: Colors.black,
                                    ),
+                                   Padding(
+                                     padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                     child: CustomText(
+
+                                      Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.descEn??"":product?.desc??"",
+                                       maxLines: 1,
+                                      style: const TextStyle(
+
+                                        height: 1.3,
+                                        fontSize: 12,
+                                        letterSpacing: 0,
+                                        fontFamily: fontFamilyArabicName,
+                                        color: Colors.black,
+                                      ),
                                   ),
-                                  RatingBar.builder(
-                                    initialRating:double.parse("${product?.persons??0}"),
-                                    minRating: 1,
-                                    itemSize:15,
-                                    direction: Axis.horizontal,
-                                    ignoreGestures:true,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemPadding: const EdgeInsets.only(left: 2.0),
-                                    itemBuilder: (context, _) => const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
+                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                    child: CustomText(
+                                     "${noOfPeople.tr} ${product?.persons??0}",
+                                     maxLines: 1,
+                                     style: const TextStyle(
+                                       height: 1.3,
+                                       fontSize: 12,
+                                       letterSpacing: 0,
+                                       fontFamily: fontFamilyArabicName,
+                                       color: Colors.black,
+                                     ),
                                     ),
-                                    onRatingUpdate: (rating) {
-                                      print(rating);
-                                    },
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                    child: RatingBar.builder(
+                                      initialRating:double.parse("${product?.rating??0}"),
+                                      minRating: 1,
+                                      itemSize:15,
+                                      direction: Axis.horizontal,
+                                      ignoreGestures:true,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemPadding: const EdgeInsets.only(left: 2.0),
+                                      itemBuilder: (context, _) => const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      onRatingUpdate: (rating) {
+                                        print(rating);
+                                      },
+                                    ),
                                   ),
 
                                 ],
@@ -288,38 +309,50 @@ final ProductsModel? product;
                             Column(
 
                               children: [
-                                InkWell(
-                                  onTap:(){
-                                    _makePhoneCall(product?.shop?.phone??"");
-                                    },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 2.0),
-                                    child: SizedBox(
-                                      height: Get.height*0.025,
-                                      width: Get.width*0.09,
-                                      child: Image.asset("assets/icons/c.png",fit: BoxFit.fitHeight,),
-                                    ),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap:(){
-                                    whatsapp(product?.shop?.whatsapp??"");
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 2,bottom: 2),
-                                    child: SizedBox(
-                                      height: Get.height*0.025,
-                                      width: Get.width*0.09,
-                                      child: Image.asset("assets/icons/w.png",fit: BoxFit.fitHeight,),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                  child: InkWell(
+                                    onTap:(){
+                                      _makePhoneCall(product?.shop?.phone??"");
+                                      },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 2.0),
+                                      child: SizedBox(
+                                        height: Get.height*0.025,
+                                        width: Get.width*0.09,
+                                        child: Image.asset("assets/icons/c.png",fit: BoxFit.fitHeight,),
+                                      ),
                                     ),
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 3.0),
-                                  child: SizedBox(
-                                    height: Get.height*0.02,
-                                    width: Get.width*0.09,
-                                    child: Image.asset("assets/icons/s.png",fit: BoxFit.fitHeight,),
+                                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                  child: InkWell(
+                                    onTap:(){
+                                      whatsapp(product?.shop?.whatsapp??"");
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 2,bottom: 2),
+                                      child: SizedBox(
+                                        height: Get.height*0.025,
+                                        width: Get.width*0.09,
+                                        child: Image.asset("assets/icons/w.png",fit: BoxFit.fitHeight,),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                  child: InkWell(
+                                    onTap: (){
+                                      Share.share(product?.link??"");
+
+                                    },
+                                    child: SizedBox(
+                                      height: Get.height*0.02,
+                                      width: Get.width*0.09,
+                                      child: Image.asset("assets/icons/s.png",fit: BoxFit.fitHeight,),
+                                    ),
                                   ),
                                 ),
 

@@ -10,6 +10,7 @@ import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
+import 'package:sprinkles/ui/contact_us/report_screen.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_loading_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
@@ -435,6 +436,44 @@ class StoreDetailedScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      onTap:(){
+                                        Get.to(()=>ReportScreen(productId: '0', storeId:"${controller.shopData?.id??0}" ,),transition:Transition.upToDown);
+                                      },
+                                      child: Container(
+                                        child: Row(
+                                            children:[
+                                              const Icon(
+                                                Icons.report_gmailerrorred  ,color:kDarkPinkColor,size:20
+                                            ),
+                                              CustomText(
+                                                reportTitle.tr,
+                                                textAlign:TextAlign.left,
+                                                style: TextStyle(
+                                                  shadows: <Shadow>[
+                                                    Shadow(
+                                                        offset: const Offset(0.5, 0.5),
+                                                        blurRadius: 0.5,
+
+                                                        color: Colors.black.withOpacity(0.5)
+                                                    ),
+                                                  ],
+                                                  fontSize: 13,
+                                                  letterSpacing: 0,
+                                                  fontFamily: fontFamilyArabicName,
+                                                  color: kDarkPinkColor,
+                                                ),
+                                              ),
+
+
+                                            ]
+
+                                        ),
+                                      ),
+                                    ),
+                                  ),
 
                                 ]
                             ),
@@ -683,6 +722,44 @@ class StoreDetailedScreen extends StatelessWidget {
                                             ),
 
                                           ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0,5,8.0,0),
+                                    child: InkWell(
+                                      onTap:(){
+                                        Get.to(()=>ReportScreen(productId: '0', storeId:"${controller.shopData?.id??0}" ,),transition:Transition.upToDown);
+                                      },
+                                      child: Container(
+                                        child: Row(
+                                            children:[
+                                              const Icon(
+                                                Icons.report_gmailerrorred  ,color:kDarkPinkColor,size:20
+                                            ),
+                                              CustomText(
+                                                reportTitle.tr,
+                                                textAlign:TextAlign.left,
+                                                style: TextStyle(
+                                                  shadows: <Shadow>[
+                                                    Shadow(
+                                                        offset: const Offset(0.5, 0.5),
+                                                        blurRadius: 0.5,
+
+                                                        color: Colors.black.withOpacity(0.5)
+                                                    ),
+                                                  ],
+                                                  fontSize: 13,
+                                                  letterSpacing: 0,
+                                                  fontFamily: fontFamilyArabicName,
+                                                  color: kDarkPinkColor,
+                                                ),
+                                              ),
+
+
+                                            ]
+
                                         ),
                                       ),
                                     ),
@@ -962,6 +1039,52 @@ class StoreDetailedScreen extends StatelessWidget {
                               print(rating);
                             },
                           ),
+                          controller.shopIsLoading?Center(
+                            child:   Container(
+                              width: Get.width*0.09,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFFDFDDDF),
+                                  borderRadius: BorderRadius.circular(50)
+                              ),
+                            ).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                .animate() // this wraps the previous Animate in another Animate
+                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                .slide(),
+
+
+                          ).animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                              .animate() // this wraps the previous Animate in another Animate
+                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                              .slide(): Row(
+                              children:[
+                                CustomText(
+                                  "${controller.shopData?.visitors??0}",
+                                  textAlign:TextAlign.left,
+                                  style: TextStyle(
+                                    shadows: <Shadow>[
+                                      Shadow(
+                                          offset: const Offset(0.5, 0.5),
+                                          blurRadius: 0.5,
+
+                                          color: Colors.black.withOpacity(0.5)
+                                      ),
+                                    ],
+                                    fontSize: 13,
+                                    letterSpacing: 0,
+                                    fontFamily: fontFamilyArabicName,
+                                    color: kDarkPinkColor,
+                                  ),
+                                ),
+                                const Icon(
+                                    Icons.remove_red_eye_outlined  ,color:kDarkPinkColor,size:20
+                                ),
+
+                              ]
+
+                          )
                         ],
                       ),
 
@@ -979,7 +1102,7 @@ class StoreDetailedScreen extends StatelessWidget {
                               onTap:(){
                                 controller.selectingAnotherSubCategory(controller.shopData?.ctgs?[index].id??0);
                               },
-                              child: CategoryWidget(category:controller.shopData?.ctgs?[index], selectedCategoryId:  controller.selectedSubCategoryId,)); },
+                              child: CategoryWidget(category:controller.shopData?.ctgs![index], selectedCategoryId:  controller.selectedSubCategoryId,)); },
 
                     ),
                   ),

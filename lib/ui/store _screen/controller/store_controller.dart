@@ -238,7 +238,7 @@ class StoreController extends GetxController {
   fillData() async {
     storeListWidget = [];
     for (int i = 0; i <= storeList!.length-1; i=i+1) {
-              var checker =  await checkStoreAddedOrNet( "${storeList?[i].id}");
+              var checker = Get.find<StorageService>().checkUserIsSignedIn? await checkStoreAddedOrNet( "${storeList?[i].id}"):false;
               storeListWidget.add(
                   StoreWidget(store:storeList?[i], addingOrRemovingForFav: (){addingOrRemovingProductToFavorite(context,"${storeList?[i].id}",i);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId,)
               );

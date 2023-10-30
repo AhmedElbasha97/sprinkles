@@ -113,7 +113,13 @@ class AppTranslations extends Translations {
       profileBtn1:"Edit Password",
       profileBtn2:"Edit Profile",
       mostSelling:"Best Selling",
-      mostRating: "Most Rated"
+      mostRating: "Most Rated",
+      sendingReport:"Send the report",
+      reportTitle:"Report a problem",
+      reportStoreText:"If you encounter a problem with this store, you can report it",
+      reportProductText:"If you encounter a problem with this product, you can report it",
+      reasonForReport:"Reason for the report",
+      moreInfo:"More details"
     },
     "ar": {
       requiredFiled:"هذه الخانة مطلوبه",
@@ -216,8 +222,14 @@ class AppTranslations extends Translations {
       whatsAppInfoText:"رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ",
       profileBtn1:"تعديل كلمه السر",
       profileBtn2:"تعديل الحساب",
-   mostSelling:"الأكثر مبيعًا",
-   mostRating: "الأكثر تقيماً"
+      mostSelling:"الأكثر مبيعًا",
+      mostRating: "الأكثر تقيماً",
+      sendingReport:"ارسل البلاغ",
+      reportTitle:"الأبلاغ عن مشكلة",
+      reportStoreText:"اذا واجهتك مشكله مع هذا المحل يمكنك الأبلاغ عنها",
+      reportProductText:"اذا واجهتك مشكله مع هذا المنتج يمكنك الأبلاغ عنها",
+      reasonForReport:"سبب البلاغ",
+      moreInfo:"مزيد من التفاصيل"
 
 }
   };

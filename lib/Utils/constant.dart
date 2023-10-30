@@ -9,4 +9,11 @@ enum  Filters {
   name_asc,
   name_en_desc,
   name_en_asc,
+  review_asc,
+  views_asc,
+}
+enum OrderType{
+  FORM,
+  WHATSAPP,
+  CALL ,
 }

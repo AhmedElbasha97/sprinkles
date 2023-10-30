@@ -113,7 +113,7 @@ class ProductController extends GetxController {
       }
       break;
       case "Most Rated":{
-        selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_desc.name:Filters.name_desc.name;
+        selectingFilterTag = Filters.review_asc.name;
         selectingFilterTagName = mostRating.tr;
         update();
         if(activateSearching){
@@ -124,7 +124,7 @@ class ProductController extends GetxController {
       }
       break;
       case "mostSelling":{
-        selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_asc.name:Filters.name_asc.name;
+        selectingFilterTag =  Filters.views_asc.name;
         selectingFilterTagName = mostSelling.tr;
         update();
         if(activateSearching){
@@ -168,7 +168,7 @@ class ProductController extends GetxController {
       }
       break;
       case"الأكثر تقيماً":{
-        selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_desc.name:Filters.name_desc.name;
+        selectingFilterTag = Filters.review_asc.name;
         selectingFilterTagName = mostRating.tr;
         update();
         if(activateSearching){
@@ -179,7 +179,7 @@ class ProductController extends GetxController {
       }
       break;
       case"الأكثر مبيعًا":{
-        selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_asc.name:Filters.name_asc.name;
+        selectingFilterTag = Filters.views_asc.name;
         selectingFilterTagName = mostSelling.tr;
         update();
         if(activateSearching){
@@ -279,8 +279,8 @@ class ProductController extends GetxController {
           );
         }
       if(doubleProductOrNot){
-        var checker =await checkProductAddedOrNet("${productList?[index].id}");
-        var checker1 =await checkProductAddedOrNet("${productList?[index+1].id}");
+        var checker =  Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[index].id}"):false;
+        var checker1 =Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[index+1].id}"):false;
         products[i]=Padding(
           padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
           child: Row(
@@ -298,7 +298,7 @@ class ProductController extends GetxController {
         );
         update();
       }else{
-        var checker =await checkProductAddedOrNet("${productList?[index].id}");
+        var checker = Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[index].id}"):false;
         products[i]=Column(
           children: [
             Row(
@@ -574,8 +574,8 @@ print("hi from fill data${productList?.length}");
         if(i<productList!.length-1){
 
           print("hi from fill data${i} hi 2product");
-          var checker =await checkProductAddedOrNet("${productList?[i].id}");
-          var checker1 =await checkProductAddedOrNet("${productList?[i+1].id}");
+          var checker =Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[i].id}"):false;
+          var checker1 =Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[i+1].id}"):false;
           products.add(
             Padding(
               padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
@@ -593,7 +593,7 @@ print("hi from fill data${productList?.length}");
               ),
             )
           );
-          if(i%2==0&&i!=0||productList!.length == 2){
+          if(i%5==0&&i!=0||productList!.length <= 10){
             print(i);
             if(advertList?.length !=0) {
               products.add(
@@ -679,7 +679,7 @@ print("hi from fill data${productList?.length}");
           }
         }
         else{
-          var checker =await checkProductAddedOrNet("${productList?[i].id}");
+          var checker = Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[i].id}"):false;
           products.add(
               Column(
                 children: [

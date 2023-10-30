@@ -15,6 +15,7 @@ import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 
 import 'package:sprinkles/models/shops_model.dart';
+import 'package:sprinkles/services/stats_services.dart';
 
 import 'package:sprinkles/ui/store_details_screen/store_details_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
@@ -27,28 +28,36 @@ class StoreWidget extends StatelessWidget {
  final Function addingOrRemovingForFav;
   final int mainCategoryId;
   Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
+    var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${store?.id??0}", "0", OrderType.CALL.name, "0");
+    if(result?.status == "true") {
+      final Uri launchUri = Uri(
+        scheme: 'tel',
+        path: phoneNumber,
+      );
+      await launchUrl(launchUri);
+    }
+
   }
 
   whatsapp(String contact) async{
 
     var androidUrl = "whatsapp://send?phone=$contact&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ'}";
     var iosUrl = "https://wa.me/$contact?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ')}";
+    var data = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${store?.id??0}", "0", OrderType.WHATSAPP.name, "0");
+    if(data?.status == "true") {
+      try{
+        if(Platform.isIOS){
+          await launchUrl(Uri.parse(iosUrl));
+        }
+        else{
+          await launchUrl(Uri.parse(androidUrl));
+        }
+      } on Exception{
 
-    try{
-      if(Platform.isIOS){
-        await launchUrl(Uri.parse(iosUrl));
       }
-      else{
-        await launchUrl(Uri.parse(androidUrl));
-      }
-    } on Exception{
-
     }
+
+
   }
 
   @override
@@ -64,34 +73,39 @@ class StoreWidget extends StatelessWidget {
           Positioned(
             top:Get.height*0.005,
             left:Get.width*0.1,
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Container(
-                height: Get.height*0.05,
-                width:Get.width*0.725,
-                decoration: BoxDecoration(
+            child: InkWell(
+              onTap: (){
+                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Container(
+                  height: Get.height*0.05,
+                  width:Get.width*0.725,
+                  decoration: BoxDecoration(
 
-                  border:  const Border(
-                    bottom:BorderSide( color:kDarkPinkColor,width: 2,),
-                    top:BorderSide( color:kDarkPinkColor,width: 2),
-                    right:BorderSide( color:kDarkPinkColor,width: 7),
-                    left:BorderSide( color:kDarkPinkColor,width: 5),
+                    border:  const Border(
+                      bottom:BorderSide( color:kDarkPinkColor,width: 2,),
+                      top:BorderSide( color:kDarkPinkColor,width: 2),
+                      right:BorderSide( color:kDarkPinkColor,width: 7),
+                      left:BorderSide( color:kDarkPinkColor,width: 5),
 
-                  ),
-
-                  borderRadius: BorderRadius.circular(40), //
-                ),
-                child:   Center(
-                  child:  CustomText(
-                    Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.nameEn??"":store?.name??"",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      letterSpacing: 0,
-                      fontFamily: fontFamilyArabicName,
-                      color: kDarkPinkColor,
                     ),
-                  ),
 
+                    borderRadius: BorderRadius.circular(40), //
+                  ),
+                  child:   Center(
+                    child:  CustomText(
+                      Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.nameEn??"":store?.name??"",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 0,
+                        fontFamily: fontFamilyArabicName,
+                        color: kDarkPinkColor,
+                      ),
+                    ),
+
+                  ),
                 ),
               ),
             ),
@@ -99,89 +113,94 @@ class StoreWidget extends StatelessWidget {
 
           Positioned(
             left:0,
-            child: Container(
-              height: Get.height*0.15,
-              width: Get.width*0.31,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/store frame.png"),
-                    fit: BoxFit.fitHeight),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.contain,
-                    imageUrl: "${Services.baseEndPoint}${store?.image??""}",
-                    imageBuilder: ((context, image){
-                      return  ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                            height: Get.height*0.08,
-                            width: Get.width*0.17,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: image,
-                                fit: BoxFit.contain,
-                              ),
-                            )
-                        ),
-                      );
-                    }),
-                    placeholder: (context, image){
-                      return   Container(
-
-                        height: Get.height*0.09,
-                        width: Get.width*0.17,
-                        decoration:BoxDecoration(
-                          color:  const Color(0xFFF2F0F3),
+            child: InkWell(
+              onTap: (){
+                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
+              },
+              child: Container(
+                height: Get.height*0.15,
+                width: Get.width*0.31,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/store frame.png"),
+                      fit: BoxFit.fitHeight),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.contain,
+                      imageUrl: "${Services.baseEndPoint}${store?.image??""}",
+                      imageBuilder: ((context, image){
+                        return  ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              offset: const Offset(
-                                0.0,
-                                0.0,
-                              ),
-                              blurRadius: 13.0,
-                              spreadRadius: 2.0,
-                            ), //BoxShadow
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.2),
-                              offset: const Offset(0.0, 0.0),
-                              blurRadius: 0.0,
-                              spreadRadius: 0.0,
-                            ), //BoxShadow
-                          ],
-                        ),
-                        child:Center(
                           child: Container(
+                              height: Get.height*0.08,
+                              width: Get.width*0.17,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: image,
+                                  fit: BoxFit.contain,
+                                ),
+                              )
+                          ),
+                        );
+                      }),
+                      placeholder: (context, image){
+                        return   Container(
 
-                            height: Get.height*0.07,
-                            width: Get.width*0.15,
-                            decoration:BoxDecoration(
-                              color:  const Color(0xFFDFDDDF),
-                              borderRadius: BorderRadius.circular(15),
+                          height: Get.height*0.09,
+                          width: Get.width*0.17,
+                          decoration:BoxDecoration(
+                            color:  const Color(0xFFF2F0F3),
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                offset: const Offset(
+                                  0.0,
+                                  0.0,
+                                ),
+                                blurRadius: 13.0,
+                                spreadRadius: 2.0,
+                              ), //BoxShadow
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.2),
+                                offset: const Offset(0.0, 0.0),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
+                              ), //BoxShadow
+                            ],
+                          ),
+                          child:Center(
+                            child: Container(
 
-                            ),
-                          ).animate(onPlay: (controller) => controller.repeat())
-                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                              .animate() // this wraps the previous Animate in another Animate
-                          ,
-                        ),
-                      ).animate(onPlay: (controller) => controller.repeat())
-                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                          .animate() // this wraps the previous Animate in another Animate
-                          ;
-                    },
-                    errorWidget: (context, url, error){
-                      return SizedBox(
-                        height: Get.height*0.09,
-                        width: Get.width*0.17,
-                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.contain,),
-                      );
-                    },
+                              height: Get.height*0.07,
+                              width: Get.width*0.15,
+                              decoration:BoxDecoration(
+                                color:  const Color(0xFFDFDDDF),
+                                borderRadius: BorderRadius.circular(15),
+
+                              ),
+                            ).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                .animate() // this wraps the previous Animate in another Animate
+                            ,
+                          ),
+                        ).animate(onPlay: (controller) => controller.repeat())
+                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                            .animate() // this wraps the previous Animate in another Animate
+                            ;
+                      },
+                      errorWidget: (context, url, error){
+                        return SizedBox(
+                          height: Get.height*0.09,
+                          width: Get.width*0.17,
+                          child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.contain,),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

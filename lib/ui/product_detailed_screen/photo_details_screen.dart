@@ -60,7 +60,7 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                   resetDuration:const Duration(milliseconds: 100000),
                 child: CachedNetworkImage(
                   color: Colors.grey.withOpacity(0.5),
-                  imageUrl:   "${Services.baseEndPoint}${widget.link?[activeIndex]??""}",
+                  imageUrl:   widget.index == -1?"${Services.baseEndPoint}${widget.link?[0]??""}":"${Services.baseEndPoint}${widget.link?[activeIndex]??""}",
                   imageBuilder: ((context, image){
                     return  Container(
                         width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,
@@ -116,7 +116,7 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                   size: 50,
                 ),
               )),
-          widget.link?.length == 0?const SizedBox():Positioned(
+          widget.index == -1?const SizedBox():Positioned(
             right:10,
             top:15,
             child: Container(
@@ -154,7 +154,7 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                 )
             ),
           ),
-          widget.link?.length == 0?const SizedBox():activeIndex != ((widget.link?.length??0)-1)?Positioned(
+          widget.index == -1?const SizedBox():activeIndex != ((widget.link?.length??0)-1)?Positioned(
               top: Get.height*0.45,
               left: 10,
               child: GestureDetector(
@@ -167,7 +167,7 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                   size: 50,
                 ),
               )):const SizedBox(),
-          widget.link?.length == 0?const SizedBox():activeIndex != 0?Positioned(
+          widget.index == -1?const SizedBox():activeIndex != 0?Positioned(
               top: Get.height*0.45,
               right: 10,
               child: GestureDetector(

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
@@ -14,6 +15,7 @@ import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/services/product_service.dart';
+import 'package:sprinkles/services/stats_services.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/widgets/alert_dialogue.dart';
@@ -228,28 +230,31 @@ class ProductDetailedController extends GetxController{
     update(["Carsoul"]);
   }
   Future<void> makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
+    var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${productData?.shop?.id??0}", "${productData?.id}", OrderType.CALL.name, "0");
+    if(result?.status == "true") {
+      final Uri launchUri = Uri(
+        scheme: 'tel',
+        path: phoneNumber,
+      );
+      await launchUrl(launchUri);
+    }
   }
   whatsapp(String contact) async{
-
-
-
-
-    try{
-      if(Platform.isIOS){
-        var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
-        await launchUrl(Uri.parse(iosUrl));
-      }
-      else{
-        var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
-        await launchUrl(Uri.parse(androidUrl));
-      }
-    } on Exception{
-
+    var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${productData?.shop?.id??0}", "${productData?.id}", OrderType.WHATSAPP.name, "0");
+if(result?.status == "true") {
+  try {
+    if (Platform.isIOS) {
+      var iosUrl = "https://wa.me/$contact?text=${Uri.parse(
+          messageTextWhatsApp)}";
+      await launchUrl(Uri.parse(iosUrl));
     }
+    else {
+      var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
+      await launchUrl(Uri.parse(androidUrl));
+    }
+  } on Exception {
+
+  }
+}
   }
 }

@@ -53,7 +53,7 @@ class ProductScreen extends StatelessWidget {
 
                         children:[
                           Container(
-                            height: Get.height*0.33,
+                            height: Get.height*0.29,
                             width:Get.width,
                             child:const Padding(padding: EdgeInsets.all(0),
                             ),
@@ -156,8 +156,8 @@ class ProductScreen extends StatelessWidget {
                                         selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?
                                         Container(
 
-                                          height: Get.height*0.14,
-                                          width: Get.width*0.25,
+                                          height: Get.height*0.11,
+                                          width: Get.width*0.23,
                                           decoration:BoxDecoration(
 
                                             color:  const Color(0xFFF2F0F3),
@@ -183,8 +183,8 @@ class ProductScreen extends StatelessWidget {
                                           child:Center(
                                             child: Container(
 
-                                              height: Get.height*0.12,
-                                              width: Get.width*0.23,
+                                              height: Get.height*0.09,
+                                              width: Get.width*0.2,
                                               decoration:BoxDecoration(
                                                 color:  const Color(0xFFDFDDDF),
                                                 borderRadius: BorderRadius.circular(50),
@@ -200,7 +200,7 @@ class ProductScreen extends StatelessWidget {
                                             .animate()
                                             :CachedNetworkImage(
                                           fit:  BoxFit.contain,
-                                          imageUrl: "${Services.baseEndPoint}${controller.data?.img??""}",
+                                          imageUrl: "${Services.baseEndPoint}${controller.data?.img2??""}",
                                           imageBuilder: ((context, image){
                                             return   Container(
                                                 height: Get.height*0.14,
@@ -215,8 +215,8 @@ class ProductScreen extends StatelessWidget {
                                           }),
                                           placeholder: (context, image){
                                             return   Container(
-                                              height: Get.height*0.14,
-                                              width: Get.width*0.25,
+                                              height: Get.height*0.11,
+                                              width: Get.width*0.23,
                                               decoration:BoxDecoration(
                                                 color:  const Color(0xFFF2F0F3),
                                                 borderRadius: BorderRadius.circular(50),
@@ -241,8 +241,8 @@ class ProductScreen extends StatelessWidget {
                                               child:Center(
                                                 child: Container(
 
-                                                  height: Get.height*0.12,
-                                                  width: Get.width*0.23,
+                                                  height: Get.height*0.09,
+                                                  width: Get.width*0.2,
                                                   decoration:BoxDecoration(
                                                     color:  const Color(0xFFDFDDDF),
                                                     borderRadius: BorderRadius.circular(50),
@@ -268,8 +268,8 @@ class ProductScreen extends StatelessWidget {
                                         ):controller.categoryIsLoading?
                                         Container(
 
-                                          height: Get.height*0.14,
-                                          width: Get.width*0.25,
+                                          height: Get.height*0.11,
+                                          width: Get.width*0.23,
                                           decoration:BoxDecoration(
 
                                             color:  const Color(0xFFF2F0F3),
@@ -295,8 +295,8 @@ class ProductScreen extends StatelessWidget {
                                           child:Center(
                                             child: Container(
 
-                                              height: Get.height*0.12,
-                                              width: Get.width*0.23,
+                                              height: Get.height*0.09,
+                                              width: Get.width*0.2,
                                               decoration:BoxDecoration(
                                                 color:  const Color(0xFFDFDDDF),
                                                 borderRadius: BorderRadius.circular(50),
@@ -311,7 +311,7 @@ class ProductScreen extends StatelessWidget {
                                             .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
                                             .animate():CachedNetworkImage(
                                           fit:  BoxFit.contain,
-                                          imageUrl: "${Services.baseEndPoint}${controller.data?.img??""}",
+                                          imageUrl: "${Services.baseEndPoint}${controller.data?.img2??""}",
                                           imageBuilder: ((context, image){
                                             return   Container(
                                                 height: Get.height*0.14,
@@ -326,8 +326,8 @@ class ProductScreen extends StatelessWidget {
                                           }),
                                           placeholder: (context, image){
                                             return   Container(
-                                              height: Get.height*0.14,
-                                              width: Get.width*0.25,
+                                              height: Get.height*0.11,
+                                              width: Get.width*0.23,
                                               decoration:BoxDecoration(
                                                 color:  const Color(0xFFF2F0F3),
                                                 borderRadius: BorderRadius.circular(50),
@@ -352,8 +352,8 @@ class ProductScreen extends StatelessWidget {
                                               child:Center(
                                                 child: Container(
 
-                                                  height: Get.height*0.12,
-                                                  width: Get.width*0.23,
+                                                  height: Get.height*0.09,
+                                                  width: Get.width*0.2,
                                                   decoration:BoxDecoration(
                                                     color:  const Color(0xFFDFDDDF),
                                                     borderRadius: BorderRadius.circular(50),
@@ -1150,8 +1150,8 @@ class ProductScreen extends StatelessWidget {
                                       selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?
                                       Container(
 
-                                        height: Get.height*0.15,
-                                        width: Get.width*0.33,
+                                        height: Get.height*0.11,
+                                        width: Get.width*0.23,
                                         decoration:BoxDecoration(
 
                                           color:  const Color(0xFFF2F0F3),
@@ -1177,8 +1177,8 @@ class ProductScreen extends StatelessWidget {
                                         child:Center(
                                           child: Container(
 
-                                            height: Get.height*0.14,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.09,
+                                            width: Get.width*0.2,
                                             decoration:BoxDecoration(
                                               color:  const Color(0xFFDFDDDF),
                                               borderRadius: BorderRadius.circular(50),
@@ -1194,7 +1194,7 @@ class ProductScreen extends StatelessWidget {
                                           .animate()
                                           :CachedNetworkImage(
                                         fit:  BoxFit.contain,
-                                        imageUrl: "${Services.baseEndPoint}${controller.data?.img??""}",
+                                        imageUrl: "${Services.baseEndPoint}${controller.data?.img2??""}",
                                         imageBuilder: ((context, image){
                                           return   Container(
                                               height: Get.height*0.14,
@@ -1209,8 +1209,8 @@ class ProductScreen extends StatelessWidget {
                                         }),
                                         placeholder: (context, image){
                                           return   Container(
-                                            height: Get.height*0.2,
-                                            width: Get.width*0.28,
+                                            height: Get.height*0.11,
+                                            width: Get.width*0.23,
                                             decoration:BoxDecoration(
                                               color:  const Color(0xFFF2F0F3),
                                               borderRadius: BorderRadius.circular(50),
@@ -1235,8 +1235,8 @@ class ProductScreen extends StatelessWidget {
                                             child:Center(
                                               child: Container(
 
-                                                height: Get.height*0.14,
-                                                width: Get.width*0.3,
+                                                height: Get.height*0.09,
+                                                width: Get.width*0.2,
                                                 decoration:BoxDecoration(
                                                   color:  const Color(0xFFDFDDDF),
                                                   borderRadius: BorderRadius.circular(50),
@@ -1254,8 +1254,8 @@ class ProductScreen extends StatelessWidget {
                                         },
                                         errorWidget: (context, url, error){
                                           return SizedBox(
-                                            height: Get.height*0.2,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.14,
+                                            width: Get.width*0.25,
                                             child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
                                           );
                                         },
@@ -1263,8 +1263,8 @@ class ProductScreen extends StatelessWidget {
                                       controller.categoryIsLoading?
                                       Container(
 
-                                        height: Get.height*0.15,
-                                        width: Get.width*0.33,
+                                        height: Get.height*0.11,
+                                        width: Get.width*0.23,
                                         decoration:BoxDecoration(
 
                                           color:  const Color(0xFFF2F0F3),
@@ -1290,8 +1290,8 @@ class ProductScreen extends StatelessWidget {
                                         child:Center(
                                           child: Container(
 
-                                            height: Get.height*0.14,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.09,
+                                            width: Get.width*0.2,
                                             decoration:BoxDecoration(
                                               color:  const Color(0xFFDFDDDF),
                                               borderRadius: BorderRadius.circular(50),
@@ -1307,7 +1307,7 @@ class ProductScreen extends StatelessWidget {
                                           .animate():
                                       CachedNetworkImage(
                                         fit:  BoxFit.contain,
-                                        imageUrl: "${Services.baseEndPoint}${controller.data?.img??""}",
+                                        imageUrl: "${Services.baseEndPoint}${controller.data?.img2??""}",
                                         imageBuilder: ((context, image){
                                           return   Container(
                                               height: Get.height*0.14,
@@ -1322,8 +1322,8 @@ class ProductScreen extends StatelessWidget {
                                         }),
                                         placeholder: (context, image){
                                           return   Container(
-                                            height: Get.height*0.2,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.11,
+                                            width: Get.width*0.23,
                                             decoration:BoxDecoration(
                                               color:  const Color(0xFFF2F0F3),
                                               borderRadius: BorderRadius.circular(50),
@@ -1348,8 +1348,8 @@ class ProductScreen extends StatelessWidget {
                                             child:Center(
                                               child: Container(
 
-                                                height: Get.height*0.14,
-                                                width: Get.width*0.3,
+                                                height: Get.height*0.09,
+                                                width: Get.width*0.2,
                                                 decoration:BoxDecoration(
                                                   color:  const Color(0xFFDFDDDF),
                                                   borderRadius: BorderRadius.circular(50),
@@ -1367,8 +1367,8 @@ class ProductScreen extends StatelessWidget {
                                         },
                                         errorWidget: (context, url, error){
                                           return SizedBox(
-                                            height: Get.height*0.2,
-                                            width: Get.width*0.3,
+                                            height: Get.height*0.14,
+                                            width: Get.width*0.25,
                                             child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
                                           );
                                         },
@@ -1405,7 +1405,7 @@ class ProductScreen extends StatelessWidget {
                   ):
                     controller.categoryIsLoading?const CategoryLoadingWidget():Container(
                       width:Get.width*0.95,
-                      height: Get.height*0.15,
+                      height: Get.height*0.16,
                       child: ListView.builder(
                         scrollDirection:Axis.horizontal,
                         controller: controller.scrollController,

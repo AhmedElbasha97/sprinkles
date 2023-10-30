@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
+import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/ui/product_detailed_screen/photo_details_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
@@ -21,7 +22,7 @@ class ProductImageWidget extends StatelessWidget {
       },
       child: CachedNetworkImage(
         fit: BoxFit.cover,
-        imageUrl:  "https://cake.syncqatar.com${imageUrl??""}",
+        imageUrl:  "${Services.baseEndPoint}${imageUrl??""}",
         imageBuilder: ((context, image){
           return  Stack(
             children: [
@@ -29,7 +30,7 @@ class ProductImageWidget extends StatelessWidget {
                 tag:"imageHero$activeIndex",
                 child: Container(
                     width:Get.width,
-                    height:Get.height*0.4,
+                    height:Get.height*0.5,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: image,

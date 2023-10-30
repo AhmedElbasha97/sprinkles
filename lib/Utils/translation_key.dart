@@ -105,3 +105,11 @@ const profileBtn1 = "Profile_Btn_1";
 const profileBtn2 = "Profile_Btn_2";
 const mostSelling = "Most_Selling";
 const mostRating = "Most_Rating";
+const sendingReport = "Sending_Report";
+const reportTitle = "Report_Title";
+const reportStoreText = "Report_Store_Text";
+const reportProductText = "Report_Product_Text";
+const reasonForReport = "Reason_For_Report";
+const moreInfo = "More_Info";
+const successSendingReport = "Success_Sending_Report";
+

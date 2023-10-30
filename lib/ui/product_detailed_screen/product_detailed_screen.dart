@@ -6,15 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
+import 'package:sprinkles/ui/contact_us/report_screen.dart';
 import 'package:sprinkles/ui/favorite_screen/controller/favorite_controller.dart';
 import 'package:sprinkles/ui/ordering/ordering_screen.dart';
 import 'package:sprinkles/ui/product_detailed_screen/controller/product_detailed_controller.dart';
+import 'package:sprinkles/ui/product_detailed_screen/photo_details_screen.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/product_image_widget.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/read_more_widget.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/seller_product_loading_widget.dart';
@@ -41,7 +44,6 @@ class ProductDetailedScreen extends StatelessWidget {
       builder: (ProductDetailedController controller) => Scaffold(
         appBar: AppBar(
           backgroundColor:kBackGroundColor,
-
             leading:
               InkWell(
                 onTap:(){
@@ -75,7 +77,44 @@ class ProductDetailedScreen extends StatelessWidget {
 
                   ),
                 ),
-              )
+              ),
+          actions: [
+            InkWell(
+              onTap:(){
+                Get.to(()=>ReportScreen(productId: "${controller.productData?.id??0}", storeId: '0',),transition:Transition.upToDown);
+              },
+              child: Container(
+                child: Row(
+                    children:[
+                      CustomText(
+                      reportTitle.tr,
+                      textAlign:TextAlign.left,
+                      style: TextStyle(
+                        shadows: <Shadow>[
+                          Shadow(
+                              offset: const Offset(0.5, 0.5),
+                              blurRadius: 0.5,
+
+                              color: Colors.black.withOpacity(0.5)
+                          ),
+                        ],
+                        fontSize: 13,
+                        letterSpacing: 0,
+                        fontFamily: fontFamilyArabicName,
+                        color: kDarkPinkColor,
+                      ),
+                    ),
+                      const Icon(
+                          Icons.report_gmailerrorred  ,color:kDarkPinkColor,size:20
+                      ),
+
+                    ]
+
+                ),
+              ),
+            ),
+          ],
+
 
         ),
         backgroundColor:kBackGroundColor,
@@ -206,7 +245,7 @@ class ProductDetailedScreen extends StatelessWidget {
                   controller.productIsLoading? Container(
 
               width:Get.width,
-                height:Get.height*0.4,
+                height:Get.height*0.5,
                 decoration:BoxDecoration(
                   color:  const Color(0xFFF2F0F3),
                   borderRadius: BorderRadius.circular(15),
@@ -247,20 +286,88 @@ class ProductDetailedScreen extends StatelessWidget {
                   .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
                   .animate() // this wraps the previous Animate in another Animate
               : controller.productData?.images?.length ==0?const SizedBox():
-                  controller.productData?.images?.length ==1? Container(
-                      width:Get.width,
-                      height:Get.height*0.4,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            "${Services.baseEndPoint}${controller.productData!.images?[0]??""}",
-                          ),
-                          fit:  BoxFit.fill,
+                  controller.productData?.images?.length ==1? InkWell(
+                    onTap:(){
+                      Get.to(()=> PhotoDetailedScreen(link: controller.productData!.images,index:-1));
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
+                            width:Get.width,
+                            height:Get.height*0.5,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  "${Services.baseEndPoint}${controller.productData!.images?[0]??""}",
+                                ),
+                                fit:  BoxFit.fill,
+                              ),
+                            )
                         ),
-                      )
+                        Positioned(
+                          right:20,
+                          bottom:25,
+                          child: InkWell(
+                            onTap:(){
+                              controller.addingOrRemovingProductToFavorite(context);
+                              if(comingFromProductList){
+                                gController.getProductData(false);}
+                              if(comingFromFavoriteList){
+                                fController.getData();
+                              }
+
+                            },
+                            child: Container(
+                                height: Get.height*0.04,
+                                width:Get.width*0.08,
+                                decoration: BoxDecoration(
+                                  color:kLightPinkColor,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Center(
+                                  child:controller.productAreAddedOrNot?const Icon(
+                                      Icons.favorite,
+                                      color: Colors.white,
+                                      size:14
+                                  ):const Icon(
+                                      Icons.favorite_border_rounded,
+                                      color: Colors.white,
+                                      size:18
+                                  ),
+                                )
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left:15,
+                          top:20,
+                          child: InkWell(
+                            onTap:(){
+                              Share.share(controller.productData?.link??"");
+                            },
+                            child: Container(
+                                height: Get.height*0.04,
+                                width:Get.width*0.08,
+                                decoration: BoxDecoration(
+                                  color:kBackGroundColor,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child:  Center(
+                                  child: SizedBox(
+                                    height: Get.height*0.02,
+                                    width: Get.width*0.09,
+                                    child: Image.asset("assets/icons/s.png",fit: BoxFit.fitHeight,),
+                                  ),
+                                )
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ):GetBuilder<ProductDetailedController>(
                     id: "Carsoul",
-                    builder: (ProductDetailedController controller) { return Stack(
+                    builder: (ProductDetailedController controller) {
+                      return Stack(
                       children: [
 
                         CarouselSlider.builder(
@@ -270,13 +377,37 @@ class ProductDetailedScreen extends StatelessWidget {
                             return ProductImageWidget(imageUrl: "${controller.productData?.images?[index]??""}", activeIndex: index, imageTotalCount:"${controller.productData?.images?.length??0}",imagesLink:controller.productData?.images);
                           },
                           options: CarouselOptions(
-                              height:Get.height*0.4,
+                              height:Get.height*0.5,
                               autoPlay: true,
                               enlargeCenterPage: false,
                               viewportFraction: 1,
                               onPageChanged: (val, _) {
                                 controller.onImageChange(val);
                               }
+                          ),
+                        ),
+                        Positioned(
+                          right:25,
+                          top:10,
+                          child: InkWell(
+                            onTap:(){
+                              Share.share(controller.productData?.link??"");
+                            },
+                            child: Container(
+                                height: Get.height*0.04,
+                                width:Get.width*0.08,
+                                decoration: BoxDecoration(
+                                  color:kBackGroundColor,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child:  Center(
+                                  child: SizedBox(
+                                    height: Get.height*0.02,
+                                    width: Get.width*0.09,
+                                    child: Image.asset("assets/icons/s.png",fit: BoxFit.fitHeight,),
+                                  ),
+                                )
+                            ),
                           ),
                         ),
                         Positioned(
@@ -328,7 +459,7 @@ class ProductDetailedScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ); },
 
@@ -551,6 +682,53 @@ class ProductDetailedScreen extends StatelessWidget {
                                                 print(rating);
                                               },
                                             ),
+
+                                            controller.productIsLoading?Center(
+                                              child:   Container(
+                                                width: Get.width*0.09,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+
+
+                                            ).animate(onPlay: (controller) => controller.repeat())
+                                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                .animate() // this wraps the previous Animate in another Animate
+                                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                .slide(): Row(
+                                                children:[
+                                                  CustomText(
+                                                    "${controller.productData?.visitors??0}",
+                                                    textAlign:TextAlign.left,
+                                                    style: TextStyle(
+                                                      shadows: <Shadow>[
+                                                        Shadow(
+                                                            offset: const Offset(0.5, 0.5),
+                                                            blurRadius: 0.5,
+
+                                                            color: Colors.black.withOpacity(0.5)
+                                                        ),
+                                                      ],
+                                                      fontSize: 13,
+                                                      letterSpacing: 0,
+                                                      fontFamily: fontFamilyArabicName,
+                                                      color: kDarkPinkColor,
+                                                    ),
+                                                  ),
+                                                  const Icon(
+                                                      Icons.remove_red_eye_outlined  ,color:kDarkPinkColor,size:20
+                                                  ),
+
+                                                ]
+
+                                            )
                                           ]
                                       )
                                     ]
@@ -713,7 +891,8 @@ class ProductDetailedScreen extends StatelessWidget {
 
                       ],
                     ),
-                  ):Padding(
+                  ):
+                  Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Stack(
                       children: [
@@ -879,7 +1058,7 @@ class ProductDetailedScreen extends StatelessWidget {
                         Positioned(
                           right:0,
                           child: Container(
-                              width:Get.width*0.65,
+                              width:Get.width*0.7,
                               height:Get.height*0.15,
                             decoration:BoxDecoration(
                               borderRadius:BorderRadius.circular(10),
@@ -1003,8 +1182,8 @@ class ProductDetailedScreen extends StatelessWidget {
                                           crossAxisAlignment:CrossAxisAlignment.center,
                                           children: [
                                             SizedBox(
-                                              height: Get.height*0.037,
-                                              width: Get.width*0.12,
+                                              height: Get.height*0.035,
+                                              width: Get.width*0.1,
                                               child: Image.asset("assets/icons/c.png",fit: BoxFit.fitHeight,),
                                             ),
 
@@ -1038,8 +1217,8 @@ class ProductDetailedScreen extends StatelessWidget {
                                           crossAxisAlignment:CrossAxisAlignment.center,
                                           children: [
                                             SizedBox(
-                                              height: Get.height*0.037,
-                                              width: Get.width*0.13,
+                                              height: Get.height*0.035,
+                                              width: Get.width*0.12,
                                               child: Image.asset("assets/icons/w.png",fit: BoxFit.fitHeight,),
                                             ),
                                           ],
@@ -1081,6 +1260,52 @@ class ProductDetailedScreen extends StatelessWidget {
                                           print(rating);
                                         },
                                       ),
+                                      controller.productIsLoading?Center(
+                                        child:   Container(
+                                          width: Get.width*0.09,
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                              color: const Color(0xFFDFDDDF),
+                                              borderRadius: BorderRadius.circular(50)
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(): Row(
+                                          children:[
+                                            CustomText(
+                                              "${controller.productData?.visitors??0}",
+                                              textAlign:TextAlign.left,
+                                              style: TextStyle(
+                                                shadows: <Shadow>[
+                                                  Shadow(
+                                                      offset: const Offset(0.5, 0.5),
+                                                      blurRadius: 0.5,
+
+                                                      color: Colors.black.withOpacity(0.5)
+                                                  ),
+                                                ],
+                                                fontSize: 13,
+                                                letterSpacing: 0,
+                                                fontFamily: fontFamilyArabicName,
+                                                color: kDarkPinkColor,
+                                              ),
+                                            ),
+                                            const Icon(
+                                                Icons.remove_red_eye_outlined  ,color:kDarkPinkColor,size:20
+                                            ),
+
+                                          ]
+
+                                      )
                                     ]
                                   )
                                 ]
@@ -1438,7 +1663,7 @@ class ProductDetailedScreen extends StatelessWidget {
                       children:[
                         SizedBox(
                           width:Get.width*0.4,
-                          height:Get.height*0.33,
+                          height:Get.height*0.36,
                           child: Image.asset("assets/images/Product quality-bro.png",fit: BoxFit.fitWidth,),
                         ),
                         const SizedBox(
@@ -1460,7 +1685,7 @@ class ProductDetailedScreen extends StatelessWidget {
                       ]
                   ):Container(
                     width:Get.width*0.95,
-                    height:Get.height*0.33,
+                    height:Get.height*0.36,
                     child: ListView.builder(
                       scrollDirection:Axis.horizontal,
                       shrinkWrap:true,

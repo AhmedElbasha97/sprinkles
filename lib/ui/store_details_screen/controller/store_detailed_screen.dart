@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
@@ -14,6 +15,7 @@ import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/models/shop_detailed_model.dart';
 import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/services/shop_services.dart';
+import 'package:sprinkles/services/stats_services.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_widget.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
@@ -79,11 +81,14 @@ getData() async {
     );
   }
  Future<void> makePhoneCall() async {
-   final Uri launchUri = Uri(
-     scheme: 'tel',
-     path: shopData?.phone,
-   );
-   await launchUrl(launchUri);
+   var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked(shopId, "0", OrderType.CALL.name, "0");
+   if(result?.status == "true") {
+     final Uri launchUri = Uri(
+       scheme: 'tel',
+       path: shopData?.phone,
+     );
+     await launchUrl(launchUri);
+   }
  }
  fillingData()  async {
    products = [];
@@ -271,17 +276,20 @@ getData() async {
 
    var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ'}";
    var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ')}";
+   var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked(shopId, "0", OrderType.WHATSAPP.name, "0");
+   if(result?.status == "true") {
+     try{
+       if(Platform.isIOS){
+         await launchUrl(Uri.parse(iosUrl));
+       }
+       else{
+         await launchUrl(Uri.parse(androidUrl));
+       }
+     } on Exception{
 
-   try{
-     if(Platform.isIOS){
-       await launchUrl(Uri.parse(iosUrl));
      }
-     else{
-       await launchUrl(Uri.parse(androidUrl));
-     }
-   } on Exception{
-
    }
+
  }
  checkStoreAddedOrNet() async {
    FavoriteStatusModel? data= await  FavoriteServices.getShopIsInFavoriteOrNot(shopId);
