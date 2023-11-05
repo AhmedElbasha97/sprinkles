@@ -18,7 +18,7 @@ class AdvancedSearchServices{
       ) async {
     List<ProductsModel>? productsList = [];
     var data = await api.request(Services.advancedSearchEndPoint, "POST",queryParamters: {
-      "type": "p",
+      "type": "P",
       "ctgid":mainCategoryId,
       "ctgid2":subCategoryId,
       "review":rating,
@@ -35,21 +35,18 @@ class AdvancedSearchServices{
     return null;
   }
   Future<List<ShopsModel>?> searchingForStore(
-      String searchType,
       String mainCategoryId,
-      String subCategoryId,
+
       String rating,
-      String priceFrom,
-      String priceTo,
       ) async {
     List<ShopsModel>? shopList = [];
     var data = await api.request(Services.advancedSearchEndPoint, "POST",queryParamters: {
-      "type": "s",
+      "type": "S",
       "ctgid":mainCategoryId,
-      "ctgid2":subCategoryId,
+      "ctgid2":"0",
       "review":rating,
-      "price_from":priceFrom,
-      "price_to":priceTo,
+      "price_from":"0",
+      "price_to":"0",
       "member_id": Get.find<StorageService>().getId
     });
     if (data != null) {

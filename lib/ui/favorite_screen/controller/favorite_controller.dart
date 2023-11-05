@@ -94,11 +94,11 @@ fillingProductData()  async {
             child: Row(
                 mainAxisAlignment:MainAxisAlignment.spaceAround,
                 children:[
-                  ProductWidget(product:productFavList?[i], productAreAddedOrNot: productFavList?[i].favorite==1 , addingOrRemovingProductToFavorite: (){
+                  ProductWidget(product:productFavList?[i], productAreAddedOrNot: true , addingOrRemovingProductToFavorite: (){
                     addingOrRemovingProductToFavorite(context,"${productFavList?[i].id}",i,true);
                   }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,),
 
-                  ProductWidget(product:productFavList?[i+1], productAreAddedOrNot: productFavList?[i+1].favorite==1 , addingOrRemovingProductToFavorite: (){
+                  ProductWidget(product:productFavList?[i+1], productAreAddedOrNot: true , addingOrRemovingProductToFavorite: (){
                     addingOrRemovingProductToFavorite(context,"${productFavList?[i+1].id}",i,true);
                   }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,)
                 ]
@@ -115,7 +115,7 @@ fillingProductData()  async {
               children:[
                 Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ProductWidget(product:productFavList?[i], productAreAddedOrNot: productFavList?[i].favorite==1 , addingOrRemovingProductToFavorite: (){
+                    child: ProductWidget(product:productFavList?[i], productAreAddedOrNot: true , addingOrRemovingProductToFavorite: (){
                       addingOrRemovingProductToFavorite(context,"${productFavList?[i].id}",i,false);
                     }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,)
                 ),
@@ -169,7 +169,7 @@ fillStoreData(context) async {
   for (int i = 0; i <= shopFavList!.length-1; i++) {
 
     storeListWidget.add(
-        StoreWidget(store:shopFavList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[i].id}",i);}, shopAreAddedOrNot: shopFavList?[i].id==1, mainCategoryId: 0,)
+        StoreWidget(store:shopFavList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[i].id}",i);}, shopAreAddedOrNot: true, mainCategoryId: 0,)
     );
 
   }

@@ -212,7 +212,7 @@ class ReviewingMessageWidget extends StatelessWidget {
                           Container(
 
                             padding:const EdgeInsets.all(2),
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
 
                                 shape: BoxShape.circle,color:kDarkPinkColor
                             ),

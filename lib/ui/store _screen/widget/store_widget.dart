@@ -75,12 +75,17 @@ class StoreWidget extends StatelessWidget {
             left:Get.width*0.1,
             child: InkWell(
               onTap: (){
+
+                bool test3 = Get.isRegistered<StoreDetailedScreen>();
+                if(test3){
+                  Get.delete<StoreDetailedScreen>();
+                }
                 Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
               },
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Container(
-                  height: Get.height*0.05,
+
                   width:Get.width*0.725,
                   decoration: BoxDecoration(
 
@@ -95,15 +100,40 @@ class StoreWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(40), //
                   ),
                   child:   Center(
-                    child:  CustomText(
-                      Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.nameEn??"":store?.name??"",
-                      style: TextStyle(
-                        fontSize: 18,
-                        letterSpacing: 0,
-                        fontFamily: Get
-                            .find<StorageService>()
-                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                        color: kDarkPinkColor,
+                    child:  Padding(
+                      padding:  EdgeInsets.only(left:Get.width*0.07),
+                      child:  Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center
+                        ,
+                        children: [
+                          Flexible(
+                            child: ConstrainedBox(
+                              constraints:BoxConstraints(
+                                minHeight: Get.height*0.05,
+
+                              ),
+                              child: DecoratedBox(
+                                decoration: const BoxDecoration(color: Colors.transparent),
+                                child: Center(
+                                  child: CustomText(
+                                    Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.nameEn??"":store?.name??"",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      letterSpacing: 0,
+                                      fontFamily: Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                      color: kDarkPinkColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 
@@ -117,6 +147,10 @@ class StoreWidget extends StatelessWidget {
             left:0,
             child: InkWell(
               onTap: (){
+                bool test3 = Get.isRegistered<StoreDetailedScreen>();
+                if(test3){
+                  Get.delete<StoreDetailedScreen>();
+                }
                 Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
               },
               child: Container(
@@ -239,7 +273,7 @@ class StoreWidget extends StatelessWidget {
           Get.find<StorageService>().activeLocale == SupportedLocales.english?Positioned(
             left: Get.width*0.25,
 
-            top:Get.height*0.09,
+            top:Get.height*0.095,
             child: Container(
                 width:Get.width*0.61,
                 child:Column(
@@ -300,6 +334,10 @@ class StoreWidget extends StatelessWidget {
 
                             InkWell(
                               onTap:(){
+                                bool test3 = Get.isRegistered<StoreDetailedScreen>();
+                                if(test3){
+                                  Get.delete<StoreDetailedScreen>();
+                                }
                                 Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
                               },
                               child: Container(
@@ -358,11 +396,11 @@ class StoreWidget extends StatelessWidget {
             ),
           ):Positioned(
             left: Get.width*0.25,
-
-            top:Get.height*0.09,
+            top:Get.height*0.1,
             child: Container(
                 width:Get.width*0.61,
                 child:Column(
+
                     crossAxisAlignment:CrossAxisAlignment.end,
                     children:[
                        Padding(
@@ -383,6 +421,10 @@ class StoreWidget extends StatelessWidget {
                           children:[
                             InkWell(
                               onTap:(){
+                                bool test3 = Get.isRegistered<StoreDetailedScreen>();
+                                if(test3){
+                                  Get.delete<StoreDetailedScreen>();
+                                }
                                 Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
                               },
                               child: Container(

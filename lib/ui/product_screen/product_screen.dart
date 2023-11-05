@@ -85,7 +85,7 @@ class ProductScreen extends StatelessWidget {
                                       crossAxisAlignment:CrossAxisAlignment.start,
                                       children: [
                                         selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?Container(
-                                          width:Get.width*0.1,
+                                          width: Get.width*0.2,
                                           height: 13,
                                           decoration: BoxDecoration(
                                               color:  const Color(0xFFF2F0F3),
@@ -97,7 +97,7 @@ class ProductScreen extends StatelessWidget {
                                             .animate() // this wraps the previous Animate in another Animate
                                             .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                             .slide():Container(
-                                          width: Get.width*0.15,
+                                          width: Get.width*0.2,
                                               child: CustomText(
                                           Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
                                           maxLines: 2,
@@ -122,7 +122,7 @@ class ProductScreen extends StatelessWidget {
 
                                               ),
                                             ):controller.categoryIsLoading?Container(
-                                          width:Get.width*0.1,
+                                          width: Get.width*0.2,
                                           height: 13,
                                           decoration: BoxDecoration(
                                               color:  const Color(0xFFF2F0F3),
@@ -210,7 +210,7 @@ class ProductScreen extends StatelessWidget {
                                                 height: Get.height*0.14,
                                                 width: Get.width*0.25,
                                                 decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
+
                                                   image: DecorationImage(
                                                     image: image,
                                                     fit:  BoxFit.contain,
@@ -321,7 +321,7 @@ class ProductScreen extends StatelessWidget {
                                                 height: Get.height*0.14,
                                                 width: Get.width*0.25,
                                                 decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
+
                                                   image: DecorationImage(
                                                     image: image,
                                                     fit:  BoxFit.contain,
@@ -1111,7 +1111,7 @@ class ProductScreen extends StatelessWidget {
                                     crossAxisAlignment:CrossAxisAlignment.start,
                                     children: [
                                       selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?Container(
-                                        width:Get.width*0.1,
+                                        width: Get.width*0.2,
                                         height: 13,
                                         decoration: BoxDecoration(
                                             color:  const Color(0xFFF2F0F3),
@@ -1123,7 +1123,7 @@ class ProductScreen extends StatelessWidget {
                                           .animate() // this wraps the previous Animate in another Animate
                                           .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                           .slide():Container(
-                                        width: Get.width*0.14,
+                                        width: Get.width*0.2,
                                             child: CustomText(
                                   Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
                                         style: TextStyle(
@@ -1141,13 +1141,13 @@ class ProductScreen extends StatelessWidget {
                                             letterSpacing: 0,
                                             fontFamily: Get
                                                 .find<StorageService>()
-                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                                .activeLocale == SupportedLocales.english ?fontFamilyArabicName:fontFamilyEnglishName,
                                             color: kBackGroundColor,
                                         ),
                                               textAlign: TextAlign.center,
                                       ),
                                           ):controller.categoryIsLoading?Container(
-                                        width:Get.width*0.1,
+                                        width: Get.width*0.2,
                                         height: 13,
                                         decoration: BoxDecoration(
                                             color:  const Color(0xFFF2F0F3),
@@ -1228,17 +1228,17 @@ class ProductScreen extends StatelessWidget {
                                           .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
                                           .animate()
                                           :CachedNetworkImage(
-                                        fit:  BoxFit.contain,
+                                          fit:  BoxFit.fitWidth,
                                         imageUrl: "${Services.baseEndPoint}${controller.data?.img2??""}",
                                         imageBuilder: ((context, image){
                                           return   Container(
                                               height: Get.height*0.14,
                                               width: Get.width*0.25,
                                               decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
+
                                                 image: DecorationImage(
                                                   image: image,
-                                                  fit:  BoxFit.contain,
+                                                  fit:  BoxFit.fitWidth,
                                                 ),
                                               ));
                                         }),
@@ -1348,10 +1348,9 @@ class ProductScreen extends StatelessWidget {
                                               height: Get.height*0.14,
                                               width: Get.width*0.25,
                                               decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
                                                 image: DecorationImage(
                                                   image: image,
-                                                  fit:  BoxFit.cover,
+                                                  fit:  BoxFit.fitWidth,
                                                 ),
                                               ));
                                         }),

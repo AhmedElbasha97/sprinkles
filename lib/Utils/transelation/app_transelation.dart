@@ -128,7 +128,7 @@ class AppTranslations extends Translations {
       orderStatusWarning1: "There are no orders in progress",
       orderStatusWarning2: "No order has been completed yet",
       orderStatusWarning3: "No orders have been canceled yet",
-      commentsTitle: "Comments:",
+      commentsTitle: "Comments",
       commentTitle:"Add a comment",
       ratingProduct:"Product Rating",
       ratingStore:"Rate the store",
@@ -141,7 +141,7 @@ class AppTranslations extends Translations {
       fiveStarRat: "5 Stars",
       advancedSearchTitle: "Advanced Search",
       advancedSearchBTN: "Start Search",
-      searchPriceTitle: "Select a price range to display:",
+      searchPriceTitle: "Select a price range of The Product:",
       searchPriceText1: "Start Price",
       searchPriceText2: "Final Price",
       mainCategoryTitle: "Choose the main section:",
@@ -156,6 +156,8 @@ class AppTranslations extends Translations {
       orderingText2:"Selected",
       storeDetailedError1:"There are no products available in this category yet",
       storeDetailedError2:"There are no products available in this store",
+      readMoreKey:' ...read more',
+      readLessKey:' read less',
     },
     "ar": {
       requiredFiled:"هذه الخانة مطلوبه",
@@ -273,7 +275,7 @@ class AppTranslations extends Translations {
       orderStatusWarning1: "ليس هناك طلبات قيد التنفيذ",
       orderStatusWarning2: "لم يكتمل إى طلب حتى الأن",
       orderStatusWarning3: "لم يتم إلغاء إى طلب حتى الأن",
-      commentsTitle: "التعليقــات:",
+      commentsTitle: "التعليقــات",
       commentTitle:"أضف تعليق",
       ratingProduct:"تقيم المنتج",
       ratingStore:"تقيم المحل",
@@ -286,7 +288,7 @@ class AppTranslations extends Translations {
       fiveStarRat: "خمس نجوم",
       advancedSearchTitle: "البحث المتقدم",
       advancedSearchBTN: "ابداء البحث",
-      searchPriceTitle: "إختر مدي السعر للكشف :",
+      searchPriceTitle: "إختر مدي السعر المنتج :",
       searchPriceText1: "السعر المبدئي",
       searchPriceText2: "السعر النهائي",
       searchRateTitle: "إختر مستوى التقيم :",
@@ -304,7 +306,8 @@ class AppTranslations extends Translations {
       orderingText2:"الذى تم إختيار",
       storeDetailedError1:"ليس هناك منتجات متوفره فى هذه فئة حتى الأن",
       storeDetailedError2:"ليس هناك منتجات متوفره فى هذا المحل",
-
+      readMoreKey:' ...اقرأ أكثر',
+      readLessKey:' أقرأ أقل',
     }
   };
 }

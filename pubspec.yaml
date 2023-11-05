@@ -115,6 +115,8 @@ flutter:
         fonts:
           - asset: assets/fonts/Alois.ttf
             weight: 600
+          - asset: assets/fonts/Alois.ttf
+            weight: 700
           - asset: assets/fonts/alois-heavy_bigfontsite.com.ttf
             weight: 800
           - asset: assets/fonts/Alois Bold.ttf

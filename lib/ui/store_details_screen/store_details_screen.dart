@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -17,13 +18,14 @@ import 'package:sprinkles/ui/product_screen/widgets/category_loading_widget.dart
 import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
 import 'package:sprinkles/ui/store_details_screen/controller/store_detailed_screen.dart';
+import 'package:sprinkles/ui/store_details_screen/widget/commet_screen.dart';
 import 'package:sprinkles/widgets/DrawerWidget.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 import '../../Utils/constant.dart';
 
 
-class StoreDetailedScreen extends StatelessWidget {
+class StoreDetailedScreen extends StatefulWidget {
   const StoreDetailedScreen({Key? key, required this.shopId, required this.mainCategoryId}) : super(key: key);
 
   final String shopId;
@@ -31,13 +33,70 @@ class StoreDetailedScreen extends StatelessWidget {
   final int mainCategoryId;
 
   @override
+  State<StoreDetailedScreen> createState() => _StoreDetailedScreenState();
+}
+
+class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
+
+  bool _isAppbar = true;
+  @override
+  void initState() {
+    super.initState();
+
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).viewPadding.top;
     return GetBuilder(
-      init:  StoreDetailedController( context:context, mainCategoryId:mainCategoryId, shopId: shopId,  ),
+      init:  StoreDetailedController( context:context, mainCategoryId:widget.mainCategoryId, shopId: widget.shopId,  ),
       builder: (StoreDetailedController controller) =>  Scaffold(
         key: controller.scaffoldState,
         drawer: AppDrawers(scaffoldKey: controller.scaffoldState,),
+        floatingActionButton: AnimatedOpacity(
+          duration: const Duration(milliseconds: 100),  //show/hide animation
+          opacity: _isAppbar?1.0:0.0, //set obacity to 1 on visible, or hide
+          child: FloatingActionButton(
+            onPressed: () {
+             controller.scrollController.animateTo( //go to top of scroll
+                  0,  //scroll offset to go
+                  duration: const Duration(milliseconds: 500), //duration of scroll
+                  curve:Curves.fastOutSlowIn //scroll type
+              );
+            },
+            child:  Container(
+                width: Get.width*0.35,
+                height: Get.height*0.08,
+                decoration: BoxDecoration(
+                  border: Border.all( color:kBackGroundColor,width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      offset: const Offset(
+                        0.0,
+                        0.0,
+                      ),
+                      blurRadius: 13.0,
+                      spreadRadius: 2.0,
+                    ), //BoxShadow
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.2),
+                      offset: const Offset(0.0, 0.0),
+                      blurRadius: 0.0,
+                      spreadRadius: 0.0,
+                    ), //BoxShadow
+                  ],
+                  gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [kDarkPinkColor,kLightPinkColor],
+                  ),borderRadius: BorderRadius.circular(40), //
+                ),
+                child: Center(child: Icon(Icons.arrow_upward))),
+
+          ),
+        ),
         body:  SingleChildScrollView(
           controller: controller.scrollController,
           child: Container(
@@ -47,6 +106,7 @@ class StoreDetailedScreen extends StatelessWidget {
             child:   Center(
               child: Column(
                 children: [
+
                   Get.find<StorageService>().activeLocale == SupportedLocales.english?Stack(
 
                       children:[
@@ -137,6 +197,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                               width: Get.width*0.33,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
+                                                color: Colors.white,
                                                 image: DecorationImage(
                                                   image: image,
                                                   fit:  BoxFit.contain,
@@ -308,23 +369,30 @@ class StoreDetailedScreen extends StatelessWidget {
                                             .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                             .slide()
                                             :Center(
-                                          child:  CustomText(
-                                            Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.nameEn??"":controller.shopData?.name??"",
-                                            style: TextStyle(
-                                              shadows: <Shadow>[
-                                                Shadow(
-                                                    offset: const Offset(0.5, 0.5),
-                                                    blurRadius: 0.5,
+                                          child:  Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2.0),
+                                              child: CustomText(
+                                                Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.nameEn??"":controller.shopData?.name??"",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
 
-                                                    color: Colors.black.withOpacity(0.5)
+                                                  shadows: <Shadow>[
+                                                    Shadow(
+                                                        offset: const Offset(0.5, 0.5),
+                                                        blurRadius: 0.5,
+
+                                                        color: Colors.black.withOpacity(0.5)
+                                                    ),
+                                                  ],
+                                                  fontSize: 12,
+                                                  letterSpacing: 0,
+                                                  fontFamily: Get
+                                                      .find<StorageService>()
+                                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                                  color: kDarkPinkColor,
                                                 ),
-                                              ],
-                                              fontSize: 12,
-                                              letterSpacing: 0,
-                                              fontFamily: Get
-                                                  .find<StorageService>()
-                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                                              color: kDarkPinkColor,
+                                              ),
                                             ),
                                           ),
 
@@ -560,7 +628,7 @@ class StoreDetailedScreen extends StatelessWidget {
 
                                       },
                                       child: Container(
-                                        height: Get.height*0.03,
+
                                         width:Get.width*0.3,
                                         decoration: BoxDecoration(
                                           color:Colors.white,
@@ -606,23 +674,30 @@ class StoreDetailedScreen extends StatelessWidget {
                                             .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                             .slide()
                                             :Center(
-                                          child:  CustomText(
-                                              Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.nameEn??"":controller.shopData?.name??"",
-                                            style: TextStyle(
-                                              shadows: <Shadow>[
-                                                Shadow(
-                                                    offset: const Offset(0.5, 0.5),
-                                                    blurRadius: 0.5,
+                                          child:  Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2.0),
+                                              child: CustomText(
+                                                  Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.nameEn??"":controller.shopData?.name??"",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
 
-                                                    color: Colors.black.withOpacity(0.5)
+                                                  shadows: <Shadow>[
+                                                    Shadow(
+                                                        offset: const Offset(0.5, 0.5),
+                                                        blurRadius: 0.5,
+
+                                                        color: Colors.black.withOpacity(0.5)
+                                                    ),
+                                                  ],
+                                                  fontSize: 12,
+                                                  letterSpacing: 0,
+                                                  fontFamily: Get
+                                                      .find<StorageService>()
+                                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                                  color: kDarkPinkColor,
                                                 ),
-                                              ],
-                                              fontSize: 12,
-                                              letterSpacing: 0,
-                                              fontFamily: Get
-                                                  .find<StorageService>()
-                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                                              color: kDarkPinkColor,
+                                              ),
                                             ),
                                           ),
 
@@ -758,14 +833,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                                 reportTitle.tr,
                                                 textAlign:TextAlign.left,
                                                 style: TextStyle(
-                                                  shadows: <Shadow>[
-                                                    Shadow(
-                                                        offset: const Offset(0.5, 0.5),
-                                                        blurRadius: 0.5,
 
-                                                        color: Colors.black.withOpacity(0.5)
-                                                    ),
-                                                  ],
                                                   fontSize: 13,
                                                   letterSpacing: 0,
                                                   fontFamily: Get
@@ -867,6 +935,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                               height: Get.height*0.15,
                                               width: Get.width*0.33,
                                               decoration: BoxDecoration(
+                                                color: Colors.white,
                                               shape: BoxShape.circle,
                                                 image: DecorationImage(
                                                   image: image,
@@ -943,7 +1012,26 @@ class StoreDetailedScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
 
-                          Container(
+                          controller.shopIsLoading?Center(
+                            child:   Container(
+                              width: Get.width*0.06,
+                              height: 20,
+                              decoration: const BoxDecoration(
+                                  color: Color(0xFFDFDDDF),
+                                 shape: BoxShape.circle,
+                              ),
+                            ).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                .animate() // this wraps the previous Animate in another Animate
+                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                .slide(),
+
+
+                          ).animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                              .animate() // this wraps the previous Animate in another Animate
+                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                              .slide():Container(
 
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
@@ -959,7 +1047,26 @@ class StoreDetailedScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Container(
+                          controller.shopIsLoading?Center(
+                            child:   Container(
+                              width: Get.width*0.06,
+                              height: 20,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFDFDDDF),
+                                shape: BoxShape.circle,
+                              ),
+                            ).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                .animate() // this wraps the previous Animate in another Animate
+                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                .slide(),
+
+
+                          ).animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                              .animate() // this wraps the previous Animate in another Animate
+                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                              .slide():Container(
 
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
@@ -976,7 +1083,26 @@ class StoreDetailedScreen extends StatelessWidget {
                             ),
                           ),
 
-                          Container(
+                          controller.shopIsLoading?Center(
+                            child:   Container(
+                              width: Get.width*0.06,
+                              height: 20,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFDFDDDF),
+                                shape: BoxShape.circle,
+                              ),
+                            ).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                .animate() // this wraps the previous Animate in another Animate
+                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                .slide(),
+
+
+                          ).animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                              .animate() // this wraps the previous Animate in another Animate
+                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                              .slide():Container(
 
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
@@ -1006,7 +1132,71 @@ class StoreDetailedScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Container(
+                          controller.shopIsLoading?Center(
+                            child:   Container(
+                              width: Get.width*0.06,
+                              height: 20,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFDFDDDF),
+                                shape: BoxShape.circle,
+                              ),
+                            ).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                .animate() // this wraps the previous Animate in another Animate
+                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                .slide(),
+
+
+                          ).animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                              .animate() // this wraps the previous Animate in another Animate
+                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                              .slide():Container(
+
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: InkWell(
+                                onTap:(){
+                                  Get.to(() =>CommentsScreen(comments:controller.comments,));
+                                },
+                                child: Container(
+                                    height: Get.height*0.045,
+                                    width:Get.width*0.089,
+                                    decoration: const BoxDecoration(
+                                      color:kDarkPinkColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Center(
+                                      child:Icon(
+                                          Icons.comment,
+                                          color: Colors.white,
+                                          size:20
+                                      ),
+                                    )
+                                ),
+                              ),
+                            ),
+                          ),
+                          controller.shopIsLoading?Center(
+                            child:   Container(
+                              width: Get.width*0.06,
+                              height: 20,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFDFDDDF),
+                                shape: BoxShape.circle,
+                              ),
+                            ).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                .animate() // this wraps the previous Animate in another Animate
+                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                .slide(),
+
+
+                          ).animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                              .animate() // this wraps the previous Animate in another Animate
+                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                              .slide():Container(
 
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
@@ -1059,7 +1249,7 @@ class StoreDetailedScreen extends StatelessWidget {
                           ),
                           controller.shopIsLoading?Center(
                             child:   Container(
-                              width: Get.width*0.09,
+                              width: Get.width*0.06,
                               height: 20,
                               decoration: BoxDecoration(
                                   color: const Color(0xFFDFDDDF),
@@ -1107,63 +1297,7 @@ class StoreDetailedScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                  Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                  width:Get.width*0.95,
 
-                  decoration:BoxDecoration(
-                  borderRadius:BorderRadius.circular(15),
-
-                  ),
-                  child:Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                  crossAxisAlignment:CrossAxisAlignment.start,
-                  children:[
-                  CustomText(
-                  commentsTitle.tr,
-                  textAlign:TextAlign.left,
-                  style: TextStyle(
-                  shadows: <Shadow>[
-                  Shadow(
-                  offset: const Offset(0.5, 0.5),
-                  blurRadius: 0.5,
-
-                  color: Colors.black.withOpacity(0.5)
-                  ),
-                  ],
-                  fontWeight: FontWeight.w900,
-                  fontSize: 15,
-                  letterSpacing: 0,
-                  fontFamily: Get
-                      .find<StorageService>()
-                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                  color: kDarkPinkColor,
-                  ),
-                  ),
-                  controller.shopIsLoading?const CommentLoadingWidget():controller.comments?.length == 0?Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-
-                  Image.asset("assets/images/Online Review-rafiki.png",height: Get.width*0.23,),
-                  CustomText(noReviews.tr,style: const TextStyle(color: kDarkPinkColor,fontWeight: FontWeight.bold,fontSize: 18),textAlign: TextAlign.center,),
-                  ],):
-                  Container(
-                  width:Get.width*0.95,
-
-
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-
-                      child: Row(
-                        children: controller.comments!.map((e){
-                          return CommentWidget(data: e, isStoreComment: false,);
-                        }).toList(),
-                      ),
-                    ),
-
-                  )])))),
                  controller.shopIsLoading?const CategoryLoadingWidget():controller.shopData?.ctgs?.length == 0||controller.shopData?.ctgs?.length == 1? const SizedBox():Container(
                     width:Get.width*0.95,
                    height: Get.height*0.18,

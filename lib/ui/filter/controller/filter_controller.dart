@@ -423,7 +423,7 @@ class FilterController extends GetxController{
     update();
     Get.to(()=>const AdvancedSearchScreen());
     }else{
-     shopList =  await AdvancedSearchServices().searchingForStore(selectedTap, "$mainCategoryId", "$subCategoryId", ratingId, "$sVal", "$sFal",);
+     shopList =  await AdvancedSearchServices().searchingForStore("$mainCategoryId", ratingId,);
      await fillingData(context);
      searchIsLoading = false;
      if(shopList?.length == 0||shopList == []){

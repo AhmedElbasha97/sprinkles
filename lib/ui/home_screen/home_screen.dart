@@ -6,6 +6,8 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
+import 'package:sprinkles/ui/filter/controller/filter_controller.dart';
+import 'package:sprinkles/ui/filter/filter_screen.dart';
 import 'package:sprinkles/ui/home_screen/controller/home_controller.dart';
 import 'package:sprinkles/ui/home_screen/widget/home_loading_widget.dart';
 import 'package:sprinkles/ui/home_screen/widget/home_widget.dart';
@@ -49,7 +51,18 @@ class HomeScreen extends StatelessWidget {
                             child: const Icon( Icons.subject_rounded ,color:Colors.white,size:30)),
                         Row(
                           children:[
-                            const Icon( Icons.search ,color:Colors.white,size:30),
+                            InkWell(
+                              onTap: (){
+                                bool test4 = Get.isRegistered<FilterController>();
+                                if(test4){
+                                  Get.delete<FilterController>();
+                                }
+                                Get.to(() => const FilterScreen(),
+                                    transition: Transition.upToDown);
+
+
+                              },
+                                child: const Icon( Icons.search ,color:Colors.white,size:30)),
 
 
                             SizedBox(

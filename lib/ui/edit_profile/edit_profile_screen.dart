@@ -51,7 +51,7 @@ class EditProfileScreen extends StatelessWidget {
                                 child: SizedBox(
                                   height: Get.height*0.19,
                                   width: Get.width*0.47,
-                                  child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitHeight,),
+                                  child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitWidth,),
                                 ),
                               ),
                               Positioned(
@@ -66,7 +66,7 @@ class EditProfileScreen extends StatelessWidget {
                                       SizedBox(
                                         height: Get.height*0.14,
                                         width: Get.width*0.26,
-                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitWidth,),
                                       ),
                                     ],
                                   ),
@@ -230,7 +230,7 @@ class EditProfileScreen extends StatelessWidget {
                                 child: SizedBox(
                                   height: Get.height*0.19,
                                   width: Get.width*0.47,
-                                  child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitHeight,),
+                                  child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitWidth,),
                                 ),
                               ),
                               Positioned(
@@ -245,7 +245,7 @@ class EditProfileScreen extends StatelessWidget {
                                       SizedBox(
                                         height: Get.height*0.14,
                                         width: Get.width*0.26,
-                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitWidth,),
                                       ),
                                     ],
                                   ),

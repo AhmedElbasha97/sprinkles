@@ -43,7 +43,7 @@ class ProductController extends GetxController {
   ProductController(this.mainCategoryId, this.context, this.selectingFromDrawer);
   late TextEditingController searchController;
   bool hasBeenSelectedFromDrawer = false;
-  List<String> governmentData = [removeFilterTitle.tr,priceFilterDescTitle.tr,priceFilterDescTitle.tr,mostSelling.tr,mostRating.tr,];
+  List<String> governmentData = [removeFilterTitle.tr,priceFilterDescTitle.tr,priceFilterAscTitle.tr,mostSelling.tr,mostRating.tr,];
   ScrollController scrollController = ScrollController();
   int selectedSubCategoryId = 0;
   String selectingFilterTag = "0";
@@ -678,7 +678,7 @@ class ProductController extends GetxController {
         }
       }
       update();
-    }else{
+    }else {
       showWarningFavorite(context);
     }
 
@@ -885,7 +885,8 @@ class ProductController extends GetxController {
                                   },
                                 child:CachedNetworkImage(
                                   fit: BoxFit.cover,
-                                  imageUrl: "https://cake.syncqatar.com${e.img??""}",
+                                  imageUrl: "${Services.baseEndPoint}${e.img ??
+                                      ""}",
                                   imageBuilder: ((context, image){
                                     return  ClipRRect(
                                       borderRadius: BorderRadius.circular(15),

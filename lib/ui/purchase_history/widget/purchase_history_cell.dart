@@ -399,7 +399,7 @@ class PurchaseHistoryCell extends StatelessWidget {
                           ),
                         ),
 
-                        counter==1?InkWell(
+                        counter==1&&data?.review==1 ?InkWell(
                           onTap: (){
                             showDialog(context: context,
                               builder: (context) =>

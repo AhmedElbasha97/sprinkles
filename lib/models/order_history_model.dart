@@ -12,6 +12,7 @@ class OrderHistoryModel {
   String? shopName;
   String? shopNameEn;
   String? date;
+  int? review;
 
   OrderHistoryModel({
     this.id,
@@ -21,6 +22,8 @@ class OrderHistoryModel {
     this.shopName,
     this.shopNameEn,
     this.date,
+    this.review,
+
   });
 
   factory OrderHistoryModel.fromJson(Map<String, dynamic> json) => OrderHistoryModel(
@@ -31,6 +34,7 @@ class OrderHistoryModel {
     shopName: json["shop_name"],
     shopNameEn: json["shop_name_en"],
     date: json["date"],
+    review: json["review"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -41,5 +45,6 @@ class OrderHistoryModel {
     "shop_name": shopName,
     "shop_name_en": shopNameEn,
     "date": date,
+    "review": review,
   };
 }

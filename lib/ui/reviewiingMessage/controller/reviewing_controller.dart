@@ -37,7 +37,7 @@ addReview(context) async {
     type: CoolAlertType.loading,
   );
 
-    ResponseModel? data = await ReviewsServices().sendingComment("$historyId",  "$doctorReview", msgController.text, "$hospitalReview",);
+    ResponseModel? data = await ReviewsServices().sendingComment("$historyId", msgController.text , "$doctorReview", "$hospitalReview",);
     if(data?.msg == "succeeded"){
       Get.back();
       showDialog(context: context,

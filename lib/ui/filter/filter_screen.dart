@@ -54,7 +54,7 @@ class FilterScreen extends StatelessWidget {
                                 child: SizedBox(
                                   height: Get.height*0.19,
                                   width: Get.width*0.47,
-                                  child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitHeight,),
+                                  child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitWidth,),
                                 ),
                               ),
                               Positioned(
@@ -69,7 +69,7 @@ class FilterScreen extends StatelessWidget {
                                       SizedBox(
                                         height: Get.height*0.14,
                                         width: Get.width*0.26,
-                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitWidth,),
                                       ),
                                     ],
                                   ),
@@ -214,7 +214,7 @@ class FilterScreen extends StatelessWidget {
                                 child: SizedBox(
                                   height: Get.height*0.19,
                                   width: Get.width*0.47,
-                                  child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitHeight,),
+                                  child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitWidth,),
                                 ),
                               ),
                               Positioned(
@@ -229,7 +229,7 @@ class FilterScreen extends StatelessWidget {
                                       SizedBox(
                                         height: Get.height*0.14,
                                         width: Get.width*0.26,
-                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitWidth,),
                                       ),
                                     ],
                                   ),
@@ -860,20 +860,20 @@ class FilterScreen extends StatelessWidget {
 
 
                   ///seprate
-                  controller.mainCategoryName == ""?const SizedBox():const SizedBox(
+                  controller.selectedTap != "p"?const SizedBox():controller.mainCategoryName == ""?const SizedBox():const SizedBox(
                     height: 10,
                   ),
-                  controller.mainCategoryName == ""?const SizedBox():const Divider(
+                  controller.selectedTap != "p"?const SizedBox():controller.mainCategoryName == ""?const SizedBox():const Divider(
                     color: kDarkPinkColor,
                     height: 1,
                     thickness: 2,
                     endIndent: 0,
                     indent: 0,
                   ),
-                  controller.mainCategoryName == ""?const SizedBox():const SizedBox(
+                  controller.selectedTap != "p"?const SizedBox():  controller.mainCategoryName == ""?const SizedBox():const SizedBox(
                     height: 10,
                   ),
-                  controller.mainCategoryName == ""?const SizedBox():Padding(
+                  controller.selectedTap != "p"?const SizedBox(): controller.mainCategoryName == ""?const SizedBox():Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Container(
                       width: Get.width,
@@ -889,10 +889,10 @@ class FilterScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  controller.mainCategoryName == ""?const SizedBox():const SizedBox(
+                  controller.selectedTap != "p"?const SizedBox(): controller.mainCategoryName == ""?const SizedBox():const SizedBox(
                     height: 10,
                   ),
-                  controller.mainCategoryName == ""?const SizedBox():controller.categoryIsLoading? Center(
+                  controller.selectedTap != "p"?const SizedBox():controller.mainCategoryName == ""?const SizedBox():controller.categoryIsLoading? Center(
                     child: Container(
                       width: Get.width*0.9,
                       height: Get.height*0.07,
@@ -1278,7 +1278,8 @@ class FilterScreen extends StatelessWidget {
                               data: SliderTheme.of(context).copyWith(
                                 showValueIndicator: ShowValueIndicator.always,
                                 thumbShape:
-                                const RoundSliderThumbShape(enabledThumbRadius: 15),
+                                const RoundSliderThumbShape(enabledThumbRadius: 10),
+                                trackHeight: 1
                               ),
                               child: RangeSlider(
                                 min: 0,

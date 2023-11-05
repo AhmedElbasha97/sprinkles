@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:sprinkles/Utils/constant.dart';
@@ -27,7 +28,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class StoreDetailedController extends GetxController{
  bool shopIsLoading = true;
- ScrollController scrollController = ScrollController();
+
  bool shopProductIsLoading = true;
  late List<ProductsModel>? productList;
  List<CommentModel>? comments = [];
@@ -39,6 +40,7 @@ class StoreDetailedController extends GetxController{
  final String shopId;
  final int mainCategoryId;
  final BuildContext context;
+ ScrollController scrollController = ScrollController();
 
   StoreDetailedController({required this.context, required this.mainCategoryId, required this.shopId});
 
@@ -48,6 +50,7 @@ class StoreDetailedController extends GetxController{
    await getData();
 
  }
+ @override
 
  selectingAnotherSubCategory(int subCategoryId){
    selectedSubCategoryId = subCategoryId;
