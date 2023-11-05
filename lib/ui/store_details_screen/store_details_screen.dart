@@ -11,6 +11,8 @@ import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/contact_us/report_screen.dart';
+import 'package:sprinkles/ui/product_detailed_screen/widget/comment_loading_widget.dart';
+import 'package:sprinkles/ui/product_detailed_screen/widget/comment_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_loading_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
@@ -89,7 +91,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                         decoration:BoxDecoration(
 
                                           color:  const Color(0xFFF2F0F3),
-                                          borderRadius: BorderRadius.circular(50),
+                                          shape: BoxShape.circle,
                                           boxShadow: [
                                             BoxShadow(
                                               color: Colors.black.withOpacity(0.1),
@@ -113,9 +115,9 @@ class StoreDetailedScreen extends StatelessWidget {
 
                                             height: Get.height*0.14,
                                             width: Get.width*0.3,
-                                            decoration:BoxDecoration(
-                                              color:  const Color(0xFFDFDDDF),
-                                              borderRadius: BorderRadius.circular(50),
+                                            decoration:const BoxDecoration(
+                                              color:  Color(0xFFDFDDDF),
+                                              shape: BoxShape.circle,
 
                                             ),
                                           ).animate(onPlay: (controller) => controller.repeat())
@@ -148,7 +150,7 @@ class StoreDetailedScreen extends StatelessWidget {
                                             width: Get.width*0.33,
                                             decoration:BoxDecoration(
                                               color:  const Color(0xFFF2F0F3),
-                                              borderRadius: BorderRadius.circular(50),
+                                              shape: BoxShape.circle,
                                               boxShadow: [
                                                 BoxShadow(
                                                   color: Colors.black.withOpacity(0.1),
@@ -172,9 +174,9 @@ class StoreDetailedScreen extends StatelessWidget {
 
                                                 height: Get.height*0.14,
                                                 width: Get.width*0.3,
-                                                decoration:BoxDecoration(
-                                                  color:  const Color(0xFFDFDDDF),
-                                                  borderRadius: BorderRadius.circular(50),
+                                                decoration:const BoxDecoration(
+                                                  color:  Color(0xFFDFDDDF),
+                                                  shape: BoxShape.circle,
 
                                                 ),
                                               ).animate(onPlay: (controller) => controller.repeat())
@@ -236,9 +238,11 @@ class StoreDetailedScreen extends StatelessWidget {
                                             },
                                             child: CustomText(
                                               translateButton.tr,
-                                              style: const TextStyle(
+                                              style:  TextStyle(
                                                 fontSize:15,
-                                                fontFamily: fontFamilyEnglishName,
+                                                fontFamily: Get
+                                                    .find<StorageService>()
+                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 fontWeight: FontWeight.w600,
                                                 color: kDarkPinkColor,
                                               ),
@@ -317,7 +321,9 @@ class StoreDetailedScreen extends StatelessWidget {
                                               ],
                                               fontSize: 12,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kDarkPinkColor,
                                             ),
                                           ),
@@ -426,7 +432,9 @@ class StoreDetailedScreen extends StatelessWidget {
                                                 ],
                                                 fontSize: 12,
                                                 letterSpacing: 0,
-                                                fontFamily: fontFamilyArabicName,
+                                                fontFamily: Get
+                                                    .find<StorageService>()
+                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 color: kDarkPinkColor,
                                               ),
                                             ),
@@ -462,7 +470,9 @@ class StoreDetailedScreen extends StatelessWidget {
                                                   ],
                                                   fontSize: 13,
                                                   letterSpacing: 0,
-                                                  fontFamily: fontFamilyArabicName,
+                                                  fontFamily: Get
+                                                      .find<StorageService>()
+                                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                   color: kDarkPinkColor,
                                                 ),
                                               ),
@@ -526,9 +536,11 @@ class StoreDetailedScreen extends StatelessWidget {
                                             },
                                             child: CustomText(
                                               translateButton.tr,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontSize:15,
-                                                fontFamily: fontFamilyEnglishName,
+                                                fontFamily: Get
+                                                    .find<StorageService>()
+                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 fontWeight: FontWeight.w600,
                                                 color: kDarkPinkColor,
                                               ),
@@ -607,7 +619,9 @@ class StoreDetailedScreen extends StatelessWidget {
                                               ],
                                               fontSize: 12,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kDarkPinkColor,
                                             ),
                                           ),
@@ -716,7 +730,9 @@ class StoreDetailedScreen extends StatelessWidget {
                                                 ],
                                                 fontSize: 12,
                                                 letterSpacing: 0,
-                                                fontFamily: fontFamilyArabicName,
+                                                fontFamily: Get
+                                                    .find<StorageService>()
+                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 color: kDarkPinkColor,
                                               ),
                                             ),
@@ -752,7 +768,9 @@ class StoreDetailedScreen extends StatelessWidget {
                                                   ],
                                                   fontSize: 13,
                                                   letterSpacing: 0,
-                                                  fontFamily: fontFamilyArabicName,
+                                                  fontFamily: Get
+                                                      .find<StorageService>()
+                                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                   color: kDarkPinkColor,
                                                 ),
                                               ),
@@ -969,9 +987,9 @@ class StoreDetailedScreen extends StatelessWidget {
                                 child: Container(
                                     height: Get.height*0.045,
                                     width:Get.width*0.089,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       color:kLightPinkColor,
-                                      borderRadius: BorderRadius.circular(50),
+                                      shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child:controller.storeAreAddedOrNot?const Icon(
@@ -1074,7 +1092,9 @@ class StoreDetailedScreen extends StatelessWidget {
                                     ],
                                     fontSize: 13,
                                     letterSpacing: 0,
-                                    fontFamily: fontFamilyArabicName,
+                                    fontFamily: Get
+                                        .find<StorageService>()
+                                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                     color: kDarkPinkColor,
                                   ),
                                 ),
@@ -1087,10 +1107,66 @@ class StoreDetailedScreen extends StatelessWidget {
                           )
                         ],
                       ),
+                  Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                  width:Get.width*0.95,
 
+                  decoration:BoxDecoration(
+                  borderRadius:BorderRadius.circular(15),
+
+                  ),
+                  child:Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                  crossAxisAlignment:CrossAxisAlignment.start,
+                  children:[
+                  CustomText(
+                  commentsTitle.tr,
+                  textAlign:TextAlign.left,
+                  style: TextStyle(
+                  shadows: <Shadow>[
+                  Shadow(
+                  offset: const Offset(0.5, 0.5),
+                  blurRadius: 0.5,
+
+                  color: Colors.black.withOpacity(0.5)
+                  ),
+                  ],
+                  fontWeight: FontWeight.w900,
+                  fontSize: 15,
+                  letterSpacing: 0,
+                  fontFamily: Get
+                      .find<StorageService>()
+                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                  color: kDarkPinkColor,
+                  ),
+                  ),
+                  controller.shopIsLoading?const CommentLoadingWidget():controller.comments?.length == 0?Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                  Image.asset("assets/images/Online Review-rafiki.png",height: Get.width*0.23,),
+                  CustomText(noReviews.tr,style: const TextStyle(color: kDarkPinkColor,fontWeight: FontWeight.bold,fontSize: 18),textAlign: TextAlign.center,),
+                  ],):
+                  Container(
+                  width:Get.width*0.95,
+
+
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+
+                      child: Row(
+                        children: controller.comments!.map((e){
+                          return CommentWidget(data: e, isStoreComment: false,);
+                        }).toList(),
+                      ),
+                    ),
+
+                  )])))),
                  controller.shopIsLoading?const CategoryLoadingWidget():controller.shopData?.ctgs?.length == 0||controller.shopData?.ctgs?.length == 1? const SizedBox():Container(
                     width:Get.width*0.95,
-                    height: Get.height*0.18,
+                   height: Get.height*0.18,
                     child: ListView.builder(
                       scrollDirection:Axis.horizontal,
                       controller: controller.scrollController,
@@ -1120,11 +1196,14 @@ class StoreDetailedScreen extends StatelessWidget {
                             height:50
                         ),
                          CustomText(
-                          controller.shopData?.ctgs?.length == 0?'ليس هناك منتجات متوفره فى هذا المحل':'ليس هناك منتجات متوفره فى هذه فئة حتى الأن',
+                          controller.shopData?.ctgs?.length == 0?storeDetailedError2.tr:storeDetailedError1.tr
+                           ,
                           textAlign:TextAlign.center,
-                          style: const TextStyle(
+                          style:  TextStyle(
                             fontSize:25,
-                            fontFamily: fontFamilyEnglishName,
+                            fontFamily: Get
+                                .find<StorageService>()
+                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                             fontWeight: FontWeight.w600,
                             color: kDarkPinkColor,
                           ),

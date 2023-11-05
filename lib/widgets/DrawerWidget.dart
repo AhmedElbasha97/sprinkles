@@ -13,12 +13,15 @@ import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/services/auth_services.dart';
 import 'package:sprinkles/services/biomatrics_auth_services.dart';
 import 'package:sprinkles/ui/favorite_screen/favorite_screen.dart';
+import 'package:sprinkles/ui/filter/controller/filter_controller.dart';
+import 'package:sprinkles/ui/filter/filter_screen.dart';
 import 'package:sprinkles/ui/home_screen/home_screen.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/privacypolicy/privacyPolicyScreen.dart';
 import 'package:sprinkles/ui/product_screen/controller/product_contoller.dart';
 import 'package:sprinkles/ui/product_screen/product_screen.dart';
 import 'package:sprinkles/ui/profile/profile_screen.dart';
+import 'package:sprinkles/ui/purchase_history/purchase_history_screen.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/ui/splash_screen/splash_screen.dart';
 import 'package:sprinkles/ui/store%20_screen/controller/store_controller.dart';
@@ -51,6 +54,7 @@ class _AppDrawersState extends State<AppDrawers> {
    DrawerItem(drawerTag5.tr,"loginIcon.png"),
   Get.find<StorageService>().checkUserIsSignedIn?
    DrawerItem(drawerTag6.tr,"logoutIcon.png"):
+   DrawerItem(advancedSearchTitle.tr,"searchIconDrawer.png"),
    DrawerItem(drawerTag7.tr,"signUpIconDrawer.png"),
    DrawerItem(drawerTag8.tr,"privacyIconDrawer.png"),
    DrawerItem(drawerTag9.tr,"termsIconDrawer.png"),
@@ -62,6 +66,7 @@ class _AppDrawersState extends State<AppDrawers> {
     super.initState();
   if(Get.find<StorageService>().checkUserIsSignedIn){
       data.insert(5,  DrawerItem(favTitle.tr,"favoriteIcon.png"));
+      data.insert(6,  DrawerItem(drawerTag12.tr,"user_history-icon.png"));
       userNameText = Get.find<StorageService>().userName;
       setState(() {
       });
@@ -79,6 +84,17 @@ class _AppDrawersState extends State<AppDrawers> {
       Get.delete<StoreController>();
     }
     switch (title) {
+      case"البحث المتقدم":{
+        bool test4 = Get.isRegistered<FilterController>();
+        if(test4){
+          Get.delete<FilterController>();
+        }
+        Get.to(() => const FilterScreen(),
+            transition: Transition.rightToLeftWithFade);
+
+        widget.scaffoldKey.currentState?.openEndDrawer();
+      }
+      break;
       case "الرئيسيّة":
         {
           Get.to(() => const HomeScreen(),
@@ -155,6 +171,30 @@ class _AppDrawersState extends State<AppDrawers> {
           widget.scaffoldKey.currentState?.openEndDrawer();
         }
         break;
+      case "الطلبات":
+        {
+          Get.to(() => const PurchaseHistoryScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
+      case"Advanced Search":{
+        bool test4 = Get.isRegistered<FilterController>();
+        if(test4){
+          Get.delete<FilterController>();
+        }
+      Get.to(() => const FilterScreen(),
+          transition: Transition.rightToLeftWithFade);
+
+      widget.scaffoldKey.currentState?.openEndDrawer();
+    }break;
+      case "Orders":
+        {
+          Get.to(() => const PurchaseHistoryScreen(),
+              transition: Transition.rightToLeftWithFade);
+          widget.scaffoldKey.currentState?.openEndDrawer();
+        }
+        break;
       case "Share the app":
         {
 
@@ -201,7 +241,7 @@ class _AppDrawersState extends State<AppDrawers> {
                                         ? data?.msg ?? ""
                                         : data?.msgAr ?? "",
                                     alertIcon: "assets/icons/warningIcon.png",
-                                    containerHeight: Get.height * 0.4);
+                                    containerHeight: Get.height*0.4);
                               }
                           );
                         }
@@ -210,7 +250,7 @@ class _AppDrawersState extends State<AppDrawers> {
                     alertYesButtonIcon: 'assets/icons/logoutIcon.png',
                     alertNoButtonIcon: 'assets/icons/deleteAccountIcon.png',
                     alertIcon: 'assets/icons/logoutIcon.png',
-                    containerHeight: Get.height * 0.57);
+                    containerHeight: Get.height <= 800? Get.height * 0.57:Get.height * 0.5);
               });
           widget.scaffoldKey.currentState?.openEndDrawer();
         }
@@ -325,7 +365,7 @@ class _AppDrawersState extends State<AppDrawers> {
                     alertYesButtonIcon: 'assets/icons/logoutIcon.png',
                     alertNoButtonIcon: 'assets/icons/deleteAccountIcon.png',
                     alertIcon: 'assets/icons/logoutIcon.png',
-                    containerHeight: Get.height * 0.57);
+                    containerHeight: Get.height <= 700? Get.height * 0.57:Get.height * 0.5);
               });
           widget.scaffoldKey.currentState?.openEndDrawer();
         }
@@ -406,7 +446,7 @@ class _AppDrawersState extends State<AppDrawers> {
             ),
           )),),
                 Positioned(
-                  top:0,
+                  top:0-5,
                   left:0,
                   child: Stack(
                     children: [
@@ -432,7 +472,10 @@ class _AppDrawersState extends State<AppDrawers> {
                             children: [
 
 
-                              SizedBox(
+                              Container(
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
                                 height: Get.height*0.12,
                                 width: Get.width*0.22,
                                 child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitWidth,),

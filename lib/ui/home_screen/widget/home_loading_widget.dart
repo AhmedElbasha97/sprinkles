@@ -84,7 +84,7 @@ class HomeLoadingWidget extends StatelessWidget {
                     width: Get.width*0.29,
                     decoration:BoxDecoration(
                       color:  const Color(0xFFF2F0F3),
-                      borderRadius: BorderRadius.circular(50),
+                      shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
@@ -108,9 +108,9 @@ class HomeLoadingWidget extends StatelessWidget {
 
                         height: Get.height*0.12,
                         width: Get.width*0.25,
-                        decoration:BoxDecoration(
-                          color:  const Color(0xFFDFDDDF),
-                          borderRadius: BorderRadius.circular(50),
+                        decoration:const BoxDecoration(
+                          color:  Color(0xFFDFDDDF),
+                          shape: BoxShape.circle,
 
                         ),
                       ).animate(onPlay: (controller) => controller.repeat())

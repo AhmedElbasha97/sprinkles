@@ -74,19 +74,12 @@ class AlertDialogue extends StatelessWidget {
                                   child: CustomText(
                                     alertTitle,
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      shadows: <Shadow>[
-                                        Shadow(
-                                            offset: const Offset(2.0, 2.0),
-                                            blurRadius: 13.0,
+                                    style: const TextStyle(
 
-                                            color: Colors.black.withOpacity(0.5)
-                                        ),
-                                      ],
                                       fontSize: 18,
                                       letterSpacing: 0,
                                       fontFamily: fontFamilyArabicName,
-                                      color: kBackGroundColor,
+                                      color: kDarkPinkColor,
                                     ),
                                   ),
                                 ),
@@ -98,15 +91,8 @@ class AlertDialogue extends StatelessWidget {
                                   child: CustomText(
                                     alertText,
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      shadows: <Shadow>[
-                                        Shadow(
-                                            offset: const Offset(2.0, 2.0),
-                                            blurRadius: 13.0,
+                                    style: const TextStyle(
 
-                                            color: Colors.black.withOpacity(0.5)
-                                        ),
-                                      ],
                                       fontSize: 18,
                                       letterSpacing: 0,
                                       fontFamily: fontFamilyArabicName,
@@ -209,17 +195,25 @@ class AlertDialogue extends StatelessWidget {
               ),
               Positioned(
                 top:0,
-                left:Get.width*0.3,
+
                 child: Container(
+                  width:Get.width*0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
 
-                  padding:const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
+                        padding:const EdgeInsets.all(2),
+                        decoration: const BoxDecoration(
 
-                      borderRadius:BorderRadius.circular(50),color:kDarkPinkColor
+                            shape: BoxShape.circle,color:kDarkPinkColor
+                        ),
+                        height: Get.height*0.15,
+                        width: Get.width*0.3,
+                        child: Image.asset(alertIcon,fit: BoxFit.fitHeight,),
+                      ),
+                    ],
                   ),
-                  height: Get.height*0.15,
-                  width: Get.width*0.3,
-                  child: Image.asset(alertIcon,fit: BoxFit.fitHeight,),
                 ),
               ),
 

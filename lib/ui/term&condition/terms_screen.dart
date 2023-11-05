@@ -43,7 +43,9 @@ class TermsScreen extends StatelessWidget {
                     fontSize: 15,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w900,
-                    fontFamily: fontFamilyArabicName,
+                    fontFamily:  Get
+                        .find<StorageService>()
+                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                     foreground: Paint()
                       ..style = PaintingStyle.stroke
                       ..strokeWidth =3
@@ -53,11 +55,13 @@ class TermsScreen extends StatelessWidget {
                 // The text inside
                  CustomText(
                   drawerTag9.tr,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     fontSize: 15,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w900,
-                    fontFamily: fontFamilyArabicName,
+                    fontFamily:  Get
+                        .find<StorageService>()
+                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                     color: kDarkPinkColor,
                   ),
                 ),
@@ -115,7 +119,9 @@ class TermsScreen extends StatelessWidget {
                             ],
                             fontSize: 13,
                             letterSpacing: 0,
-                            fontFamily: fontFamilyArabicName,
+                            fontFamily: Get
+                                .find<StorageService>()
+                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                             color: kDarkPinkColor,
                           ),
                         ),

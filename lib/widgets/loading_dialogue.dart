@@ -42,22 +42,15 @@ class LoadingDialogue extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment:MainAxisAlignment.center,
                       children: [
-                        CustomText(
+                        const CustomText(
                           "تحميل....",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            shadows: <Shadow>[
-                              Shadow(
-                                  offset: const Offset(2.0, 2.0),
-                                  blurRadius: 13.0,
 
-                                  color: Colors.black.withOpacity(0.5)
-                              ),
-                            ],
                             fontSize: 18,
                             letterSpacing: 0,
                             fontFamily: fontFamilyArabicName,
-                            color: kLightPinkColor,
+                            color: kDarkPinkColor,
                           ),
                         ).animate(onPlay: (controller) => controller.repeat())
                             .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(30))
@@ -77,16 +70,23 @@ class LoadingDialogue extends StatelessWidget {
             ),
             Positioned(
               top:0,
-              left:Get.width*0.3,
-              child: Container(
+              child: SizedBox(
+                width:Get.width*0.9,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
 
-                padding:const EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                    borderRadius:BorderRadius.circular(50),color:kDarkPinkColor
+                      padding:const EdgeInsets.all(2),
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,color:kDarkPinkColor
+                      ),
+                      height: Get.height*0.15,
+                      width: Get.width*0.3,
+                      child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                    ),
+                  ],
                 ),
-                height: Get.height*0.15,
-                width: Get.width*0.3,
-                child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
               ),
             ),
           ],

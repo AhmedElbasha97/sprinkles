@@ -10,6 +10,7 @@ import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
+import 'package:sprinkles/models/ordering_model.dart';
 import 'package:sprinkles/ui/ordering/controller/ordering_controller.dart';
 import 'package:sprinkles/ui/ordering/widget/filter_loading.dart';
 import 'package:sprinkles/ui/ordering/widget/filter_widget.dart';
@@ -45,7 +46,9 @@ class OrderingScreen extends StatelessWidget {
                     fontSize: 15,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w900,
-                    fontFamily: fontFamilyArabicName,
+                    fontFamily: Get
+                        .find<StorageService>()
+                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                     foreground: Paint()
                       ..style = PaintingStyle.stroke
                       ..strokeWidth =3
@@ -55,11 +58,13 @@ class OrderingScreen extends StatelessWidget {
                 // The text inside
                  CustomText(
                   orderNowBTN.tr,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     fontSize: 15,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w900,
-                    fontFamily: fontFamilyArabicName,
+                    fontFamily: Get
+                        .find<StorageService>()
+                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                     color: kDarkPinkColor,
                   ),
                 ),
@@ -117,7 +122,9 @@ class OrderingScreen extends StatelessWidget {
                             ],
                             fontSize: 13,
                             letterSpacing: 0,
-                            fontFamily: fontFamilyArabicName,
+                            fontFamily: Get
+                                .find<StorageService>()
+                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                             color: kDarkPinkColor,
                           ),
                         ),
@@ -208,7 +215,9 @@ class OrderingScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w900,
                                         fontSize: 16,
                                         letterSpacing: 0,
-                                        fontFamily: fontFamilyArabicName,
+                                        fontFamily: Get
+                                            .find<StorageService>()
+                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                         color: kDarkPinkColor,
                                       ),
                                       maxLines: 2,
@@ -275,11 +284,13 @@ class OrderingScreen extends StatelessWidget {
                                             child: CustomText(
                                               Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.shop?.nameEn??"":controller.data?.shop?.name??"",
                                               textAlign: TextAlign.right,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 14,
                                                 letterSpacing: 0,
-                                                fontFamily: fontFamilyArabicName,
+                                                fontFamily: Get
+                                                    .find<StorageService>()
+                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 color: kLightPinkColor,
                                               ),
                                               maxLines: 1,
@@ -707,7 +718,9 @@ class OrderingScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w900,
                                         fontSize: 16,
                                         letterSpacing: 0,
-                                        fontFamily: fontFamilyArabicName,
+                                        fontFamily: Get
+                                            .find<StorageService>()
+                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                         color: kDarkPinkColor,
                                       ),
                                       maxLines: 2,
@@ -744,7 +757,9 @@ class OrderingScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w600,
                                         fontSize: 15,
                                         letterSpacing: 0,
-                                        fontFamily: fontFamilyArabicName,
+                                        fontFamily: Get
+                                            .find<StorageService>()
+                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                         color: kDarkPinkColor,
                                       ),
                                       maxLines: 2,
@@ -872,11 +887,13 @@ class OrderingScreen extends StatelessWidget {
                                             child: CustomText(
                                               Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.shop?.nameEn??"":controller.data?.shop?.name??"",
                                               textAlign: TextAlign.right,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 14,
                                                 letterSpacing: 0,
-                                                fontFamily: fontFamilyArabicName,
+                                                fontFamily: Get
+                                                    .find<StorageService>()
+                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 color: kLightPinkColor,
                                               ),
                                               maxLines: 1,
@@ -904,7 +921,7 @@ class OrderingScreen extends StatelessWidget {
                 itemCount:controller.data?.itemFilter?.length,
                 itemBuilder: (_, index) =>
                     FilterWidget(data: controller.data?.itemFilter?[index],
-                      selectingFilterTap: (e){
+                      selectingFilterTap: (Item e){
                       controller.choosingFilterValue(index,e);
                       },
                       selectedValue: controller.choosedData[index],)
@@ -968,7 +985,9 @@ class OrderingScreen extends StatelessWidget {
                             ],
                             fontSize: 18,
                             letterSpacing: 0,
-                            fontFamily: fontFamilyArabicName,
+                            fontFamily: Get
+                                .find<StorageService>()
+                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                             color: kBackGroundColor,
                           ),
                         ),

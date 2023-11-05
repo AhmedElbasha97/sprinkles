@@ -9,7 +9,7 @@ class CommentModel {
   String? review;
   double? shopRate;
   double? itemRate;
-  DateTime? datetime;
+  String? datetime;
 
   CommentModel({
     this.name,
@@ -22,9 +22,9 @@ class CommentModel {
   factory CommentModel.fromJson(Map<String, dynamic> json) => CommentModel(
     name: json["name"],
     review: json["review"],
-    shopRate: json["shop_rate"],
+    shopRate: json["shop_rate"]?.toDouble(),
     itemRate: json["item_rate"]?.toDouble(),
-    datetime: json["datetime"] == null ? null : DateTime.parse(json["datetime"]),
+    datetime: json["datetime"] ,
   );
 
   Map<String, dynamic> toJson() => {
@@ -32,6 +32,6 @@ class CommentModel {
     "review": review,
     "shop_rate": shopRate,
     "item_rate": itemRate,
-    "datetime": datetime?.toIso8601String(),
+    "datetime": datetime,
   };
 }

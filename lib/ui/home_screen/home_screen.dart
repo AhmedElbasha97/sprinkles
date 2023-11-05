@@ -68,9 +68,11 @@ class HomeScreen extends StatelessWidget {
                               },
                               child: CustomText(
                                 translateButton.tr,
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   fontSize:15,
-                                  fontFamily: fontFamilyEnglishName,
+                                  fontFamily: Get
+                                      .find<StorageService>()
+                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                   fontWeight: FontWeight.w600,
                                   color: kBackGroundColor,
                                 ),

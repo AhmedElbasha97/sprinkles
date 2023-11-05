@@ -107,12 +107,14 @@ class EditPasswordScreen extends StatelessWidget {
                                         padding: const EdgeInsets.fromLTRB(10.0,10,10.0,0),
                                         child: CustomText(
                                           greetingText.tr,
-                                          style: const TextStyle(
+                                          style:  TextStyle(
                                             fontWeight: FontWeight.w900,
 
                                             fontSize: 25,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -122,11 +124,13 @@ class EditPasswordScreen extends StatelessWidget {
                                         child: Center(
                                           child: CustomText(
                                             changePassScreenTitle.tr,
-                                            style: const TextStyle(
+                                            style:  TextStyle(
 
                                               fontSize: 22,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kDarkPinkColor,
                                             ),
                                           ),
@@ -138,7 +142,8 @@ class EditPasswordScreen extends StatelessWidget {
 
 
                       ]
-                  ):Stack(
+                  ):
+                  Stack(
                       children:[
                         Container(
                           height: Get.height*0.25,
@@ -178,12 +183,14 @@ class EditPasswordScreen extends StatelessWidget {
                                         padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
                                         child: CustomText(
                                           greetingText.tr,
-                                          style: const TextStyle(
+                                          style:  TextStyle(
                                             fontWeight: FontWeight.w900,
 
                                             fontSize: 25,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -193,11 +200,13 @@ class EditPasswordScreen extends StatelessWidget {
                                         child: Center(
                                           child: CustomText(
                                             changePassScreenTitle.tr,
-                                            style: const TextStyle(
+                                            style:  TextStyle(
 
                                               fontSize: 22,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kDarkPinkColor,
                                             ),
                                           ),

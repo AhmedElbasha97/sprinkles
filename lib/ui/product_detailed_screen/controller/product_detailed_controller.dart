@@ -1,4 +1,4 @@
-// ignore_for_file: empty_catches, unrelated_type_equality_checks
+// ignore_for_file: empty_catches, unrelated_type_equality_checks, prefer_adjacent_string_concatenation, deprecated_member_use, prefer_interpolation_to_compose_strings
 
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -9,12 +9,14 @@ import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
+import 'package:sprinkles/models/comment_model.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/product_detailed_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/services/product_service.dart';
+import 'package:sprinkles/services/reviews_services.dart';
 import 'package:sprinkles/services/stats_services.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
@@ -30,6 +32,7 @@ class ProductDetailedController extends GetxController{
   CarouselController carouselController = CarouselController();
   ScrollController scrollController = ScrollController();
   int activeIndex = 0;
+  List<CommentModel>? comments = [];
   bool productIsLoading = true;
   late  VideoPlayerController videoPlayerController;
   late ProductDetailedModel? productData;
@@ -41,48 +44,52 @@ class ProductDetailedController extends GetxController{
   final int mainCategoryId;
   final int branchCategoryId;
   int selectedProductId = 24543;
+  bool favoriteHasBeenSelected = false;
   @override
   Future<void> onInit() async {
     super.onInit();
 
     getProductData();
   }
-   checkProductsAddedOrNet(String productId) async {
+
+  checkerProductsAddedOrNet(String productId) async {
      if(Get.find<StorageService>().checkUserIsSignedIn) {
        FavoriteStatusModel? data = await FavoriteServices
            .getProductIsInFavoriteOrNot(productId);
        if (data == 1) {
-         checker = true;
+
+        return true;
+
+
        } else {
-         checker = false;
-       }
-     }else{
-       checker = false;
-     }
-  }
-   checkerProductsAddedOrNet(String productId) async {
-     if(Get.find<StorageService>().checkUserIsSignedIn) {
-       FavoriteStatusModel? data = await FavoriteServices
-           .getProductIsInFavoriteOrNot(productId);
-       if (data == 1) {
-         return true;
-       } else {
+
+
          return false;
+
        }
      }else{
+
        return false;
+
      }
   }
-  addingOrRemovingProductsToFavorite(context,String productId) async {
+  addingOrRemovingProductsToFavorite(context,String productId,int index) async {
+
     if(Get.find<StorageService>().checkUserIsSignedIn){
-      if( await checkProductsAddedOrNet(productId)){
+      if( await  checkerProductsAddedOrNet(productId)){
         ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"0");
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
               }
           );
+        }else{
+          productsList?.elementAt(index).favorite = 0;
+          productsList?[index].favorite = 0;
+          update();
+
+
         }
 
       }else{
@@ -90,9 +97,14 @@ class ProductDetailedController extends GetxController{
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
               }
           );
+        }else{
+          productsList?.elementAt(index).favorite = 1;
+          productsList?[index].favorite = 1;
+          update();
+
         }
 
       }
@@ -115,7 +127,7 @@ class ProductDetailedController extends GetxController{
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
               }
           );
         }
@@ -126,7 +138,7 @@ class ProductDetailedController extends GetxController{
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle:errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle:errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
               }
           );
         }
@@ -146,6 +158,7 @@ class ProductDetailedController extends GetxController{
     productIsLoading = true;
     update();
     if(selectedProductId != 24543){
+      comments = await ReviewsServices().getProductComment("$selectedProductId");
       productData =
       await ProductServices.getProductDetails("$selectedProductId");
       productsList =
@@ -154,7 +167,6 @@ class ProductDetailedController extends GetxController{
         videoPlayerController =
         VideoPlayerController.network('${Services.baseEndPoint}${productData?.video??""}')
           ..initialize().then((_) {
-            print("hi from video controller");
             update();
           });
       }
@@ -162,6 +174,7 @@ class ProductDetailedController extends GetxController{
       element.id == selectedProductId
       );
     }else {
+      comments = await ReviewsServices().getProductComment(productId);
       productData =
       await ProductServices.getProductDetails(productId);
       productsList =
@@ -170,7 +183,6 @@ class ProductDetailedController extends GetxController{
         videoPlayerController =
         VideoPlayerController.network('${Services.baseEndPoint}${productData?.video??""}')
           ..initialize().then((_) {
-            print("hi from video controller");
             update();
           });
       }
@@ -183,7 +195,7 @@ class ProductDetailedController extends GetxController{
     if(Get.find<StorageService>().checkUserIsSignedIn) {
       checkProductAddedOrNet();
     }
-    messageTextWhatsApp = ' رأيت هذا ال ${productData?.name??""} في تطبيق سبرينكلس و وأريد الاستفسار عنه ' + '\n I saw this ${productData?.nameEn??""} In the Sprinkles app and I want to make an order \n'+" ${productData?.link} " ;
+    messageTextWhatsApp = ' رأيت هذا ال ${productData?.name??""} في تطبيق سبرينكلز و وأريد الاستفسار عنه ' + '\n I saw this ${productData?.nameEn??""} In the Sprinkles app and I want to make an order ' ;
     productIsLoading = false;
     update();
   }
@@ -194,7 +206,7 @@ class ProductDetailedController extends GetxController{
         Get.to(()=>const SignupScreen());
       }, alertNoButtonFunction: (){
         Get.to(()=>LoginScreen());
-      }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height*0.6);
+      }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height <= 800? Get.height*0.6: Get.height*0.5);
     });
   }
   makingDotsForCarouselSlider(){
@@ -245,11 +257,11 @@ if(result?.status == "true") {
   try {
     if (Platform.isIOS) {
       var iosUrl = "https://wa.me/$contact?text=${Uri.parse(
-          messageTextWhatsApp)}";
+          messageTextWhatsApp)} /n  ${productData?.link}" ;
       await launchUrl(Uri.parse(iosUrl));
     }
     else {
-      var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
+      var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp /n ${productData?.link} ";
       await launchUrl(Uri.parse(androidUrl));
     }
   } on Exception {

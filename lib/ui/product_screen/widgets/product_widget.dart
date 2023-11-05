@@ -1,4 +1,4 @@
-// ignore_for_file: empty_catches, avoid_print, sized_box_for_whitespace
+// ignore_for_file: empty_catches, avoid_print, sized_box_for_whitespace, prefer_adjacent_string_concatenation
 
 import 'dart:io';
 
@@ -48,16 +48,16 @@ final ProductsModel? product;
   }
 
   whatsapp(String contact) async{
-  String   messageTextWhatsApp = ' رأيت هذا ال ${product?.name??""} في تطبيق سبرينكلس و وأريد الاستفسار عنه \n I saw this ${product?.nameEn??""} In the Sprinkles app and I want to make an order \n'+"${product?.link}";
+  String   messageTextWhatsApp = ' رأيت هذا ال ${product?.name??""} في تطبيق سبرينكلز و وأريد الاستفسار عنه \n I saw this ${product?.nameEn??""} In the Sprinkles app and I want to make an order ';
   var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${product?.shop?.id??0}", "${product?.id}", OrderType.WHATSAPP.name, "0");
   if(result?.status == "true") {
     try{
       if(Platform.isIOS){
-        var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)}";
+        var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)} /n ${product?.link}";
         await launchUrl(Uri.parse(iosUrl));
       }
       else{
-        var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
+        var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp /n ${product?.link}";
         await launchUrl(Uri.parse(androidUrl));
       }
     } on Exception{
@@ -204,9 +204,9 @@ final ProductsModel? product;
                           child: Container(
                               height: Get.height*0.03,
                               width:Get.width*0.06,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color:kLightPinkColor,
-                                borderRadius: BorderRadius.circular(50),
+                                shape: BoxShape.circle,
                               ),
                               child: Center(
                                 child:productAreAddedOrNot?const Icon(
@@ -257,7 +257,7 @@ final ProductsModel? product;
                                      child: CustomText(
 
                                       Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.descEn??"":product?.desc??"",
-                                       maxLines: 1,
+                                       maxLines: 2,
                                       style: const TextStyle(
 
                                         height: 1.3,
@@ -268,20 +268,7 @@ final ProductsModel? product;
                                       ),
                                   ),
                                    ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 2.0),
-                                    child: CustomText(
-                                     "${noOfPeople.tr} ${product?.persons??0}",
-                                     maxLines: 1,
-                                     style: const TextStyle(
-                                       height: 1.3,
-                                       fontSize: 12,
-                                       letterSpacing: 0,
-                                       fontFamily: fontFamilyArabicName,
-                                       color: Colors.black,
-                                     ),
-                                    ),
-                                  ),
+
                                   Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 2.0),
                                     child: RatingBar.builder(

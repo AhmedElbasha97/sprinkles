@@ -17,6 +17,7 @@ class ProductsModel {
   String? price;
   int? persons;
   List<String>? images;
+  int? favorite;
   String? rating;
   Shop? shop;
   String? link;
@@ -31,6 +32,7 @@ class ProductsModel {
     this.persons,
     this.images,
     this.rating,
+    this.favorite,
     this.shop,
     this.link,
   });
@@ -47,6 +49,8 @@ class ProductsModel {
     rating: json["rating"],
     shop: json["shop"] == null ? null : Shop.fromJson(json["shop"]),
     link: json["link"],
+    favorite: json["favorite"],
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -61,6 +65,7 @@ class ProductsModel {
     "rating": rating,
     "shop": shop?.toJson(),
     "link": link,
+    "favorite": favorite,
   };
 }
 

@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
-import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/choosing_filiter_model.dart';
 import 'package:sprinkles/services/order_services.dart';
 import 'package:sprinkles/services/stats_services.dart';
@@ -38,19 +37,20 @@ class OrderingController extends GetxController{
  fillingChoosedData() {
   for (int i = 0; i < (data?.itemFilter?.length ?? 0 - 1); i++) {
    choosedData.add(ChoosingFilterModel(data?.itemFilter?[i].filter ?? "",
-       data?.itemFilter?[i].items?[0].filterItem ?? ""));
+       "",data?.itemFilter?[i].filter ?? "",""));
   }
  }
-choosingFilterValue(int index,String choosedFilterTitle){
-  choosedData[index] =  ChoosingFilterModel(Get.find<StorageService>().activeLocale == SupportedLocales.english? (data?.itemFilter?[index].filterEn??""):(data?.itemFilter?[index].filter??""),choosedFilterTitle);
+choosingFilterValue(int index,Item choosedFilterTitle){
+  choosedData[index] =  ChoosingFilterModel(data?.itemFilter?[index].filter??"",choosedFilterTitle.filterItem??""
+  ,data?.itemFilter?[index].filterEn??"",choosedFilterTitle.filterItemEn??"");
   update();
 }
 settingWhatsAppText(){
- messageTextWhatsApp = ' رأيت هذا ال ${data?.name??""} في تطبيق سبرينكلس وأريد عمل اوردر';
+ messageTextWhatsApp = ' رأيت هذا ال ${data?.name??""} في تطبيق سبرينكلز وأريد عمل اوردر';
  if(data?.itemFilter?.length != 0) {
   for (int i = 0; i < choosedData.length ; i++) {
    messageTextWhatsApp =
-   '$messageTextWhatsApp \n${choosedData[i].filterTitle} \n${choosedData[i]
+   '$messageTextWhatsApp \n${choosedData[i].filterTitle}: \n${choosedData[i]
        .filterValue}';
   }
 
@@ -60,13 +60,15 @@ settingWhatsAppText(){
  if(data?.itemFilter?.length != 0) {
   for (int i = 0; i < choosedData.length ; i++) {
    messageTextWhatsApp =
-   '$messageTextWhatsApp \n${choosedData[i].filterTitle} \n${choosedData[i]
-       .filterValue}';
+   '$messageTextWhatsApp \n${choosedData[i].filterTitleEn}: \n${choosedData[i]
+       .filterValueEn}';
   }
 
  }
- messageTextWhatsApp =
- '$messageTextWhatsApp \n ${data?.link??""} ';
+ if (Platform.isAndroid) {
+  messageTextWhatsApp =
+  '$messageTextWhatsApp \n ${data?.link ?? ""} ';
+ }
 }
 ordering() async {
 
@@ -74,7 +76,6 @@ await settingWhatsAppText();
 whatsapp(data?.shop?.whatsapp??"");
 }
  whatsapp(String contact) async {
-  print(messageTextWhatsApp);
   var result = await StatsServices()
       .sendingOrderNowOrWhatsAppOrCallHasBeenClicked(
       "${data?.shop?.id ?? 0}", "${data?.id}", OrderType.FORM.name,
@@ -83,7 +84,7 @@ whatsapp(data?.shop?.whatsapp??"");
    try {
     if (Platform.isIOS) {
      var iosUrl = "https://wa.me/$contact?text=${Uri.parse(
-         messageTextWhatsApp)}";
+         messageTextWhatsApp)} ${data?.link ?? ""}";
      await launchUrl(Uri.parse(iosUrl));
     }
     else {

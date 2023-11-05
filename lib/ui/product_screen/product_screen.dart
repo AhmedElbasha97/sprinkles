@@ -113,7 +113,9 @@ class ProductScreen extends StatelessWidget {
                                               fontSize: 18,
                                               letterSpacing: 0,
 
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kBackGroundColor,
                                           ),
                                                 textAlign: TextAlign.center,
@@ -146,7 +148,9 @@ class ProductScreen extends StatelessWidget {
                                               ],
                                               fontSize: 18,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kBackGroundColor,
                                           ),
                                                 textAlign: TextAlign.center,
@@ -161,7 +165,7 @@ class ProductScreen extends StatelessWidget {
                                           decoration:BoxDecoration(
 
                                             color:  const Color(0xFFF2F0F3),
-                                            borderRadius: BorderRadius.circular(50),
+                                            shape: BoxShape.circle,
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.black.withOpacity(0.1),
@@ -185,9 +189,9 @@ class ProductScreen extends StatelessWidget {
 
                                               height: Get.height*0.09,
                                               width: Get.width*0.2,
-                                              decoration:BoxDecoration(
-                                                color:  const Color(0xFFDFDDDF),
-                                                borderRadius: BorderRadius.circular(50),
+                                              decoration:const BoxDecoration(
+                                                color:  Color(0xFFDFDDDF),
+                                                shape: BoxShape.circle,
 
                                               ),
                                             ).animate(onPlay: (controller) => controller.repeat())
@@ -219,7 +223,7 @@ class ProductScreen extends StatelessWidget {
                                               width: Get.width*0.23,
                                               decoration:BoxDecoration(
                                                 color:  const Color(0xFFF2F0F3),
-                                                borderRadius: BorderRadius.circular(50),
+                                                shape: BoxShape.circle,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     color: Colors.black.withOpacity(0.1),
@@ -243,9 +247,9 @@ class ProductScreen extends StatelessWidget {
 
                                                   height: Get.height*0.09,
                                                   width: Get.width*0.2,
-                                                  decoration:BoxDecoration(
-                                                    color:  const Color(0xFFDFDDDF),
-                                                    borderRadius: BorderRadius.circular(50),
+                                                  decoration:const BoxDecoration(
+                                                    color:  Color(0xFFDFDDDF),
+                                                    shape: BoxShape.circle,
 
                                                   ),
                                                 ).animate(onPlay: (controller) => controller.repeat())
@@ -273,7 +277,7 @@ class ProductScreen extends StatelessWidget {
                                           decoration:BoxDecoration(
 
                                             color:  const Color(0xFFF2F0F3),
-                                            borderRadius: BorderRadius.circular(50),
+                                            shape: BoxShape.circle,
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.black.withOpacity(0.1),
@@ -297,9 +301,9 @@ class ProductScreen extends StatelessWidget {
 
                                               height: Get.height*0.09,
                                               width: Get.width*0.2,
-                                              decoration:BoxDecoration(
-                                                color:  const Color(0xFFDFDDDF),
-                                                borderRadius: BorderRadius.circular(50),
+                                              decoration:const BoxDecoration(
+                                                color:  Color(0xFFDFDDDF),
+                                                shape: BoxShape.circle,
 
                                               ),
                                             ).animate(onPlay: (controller) => controller.repeat())
@@ -330,7 +334,7 @@ class ProductScreen extends StatelessWidget {
                                               width: Get.width*0.23,
                                               decoration:BoxDecoration(
                                                 color:  const Color(0xFFF2F0F3),
-                                                borderRadius: BorderRadius.circular(50),
+                                                shape: BoxShape.circle,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     color: Colors.black.withOpacity(0.1),
@@ -354,9 +358,9 @@ class ProductScreen extends StatelessWidget {
 
                                                   height: Get.height*0.09,
                                                   width: Get.width*0.2,
-                                                  decoration:BoxDecoration(
-                                                    color:  const Color(0xFFDFDDDF),
-                                                    borderRadius: BorderRadius.circular(50),
+                                                  decoration:const BoxDecoration(
+                                                    color:  Color(0xFFDFDDDF),
+                                                    shape: BoxShape.circle,
 
                                                   ),
                                                 ).animate(onPlay: (controller) => controller.repeat())
@@ -420,9 +424,11 @@ class ProductScreen extends StatelessWidget {
                                               },
                                               child: CustomText(
                                                 translateButton.tr,
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontSize:15,
-                                                  fontFamily: fontFamilyEnglishName,
+                                                  fontFamily: Get
+                                                      .find<StorageService>()
+                                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                   fontWeight: FontWeight.w600,
                                                   color: kDarkPinkColor,
                                                 ),
@@ -485,7 +491,9 @@ class ProductScreen extends StatelessWidget {
                                                 ],
                                                 fontSize: 15,
                                                 letterSpacing: 0,
-                                                fontFamily: fontFamilyArabicName,
+                                                fontFamily: Get
+                                                    .find<StorageService>()
+                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 color: kDarkPinkColor,
                                               ),
                                             ),
@@ -510,9 +518,11 @@ class ProductScreen extends StatelessWidget {
                                           controller.governmentData.map((e){
                                             return   PopupMenuItem(
                                               value:e,
-                                              textStyle: const TextStyle(
+                                              textStyle:  TextStyle(
                                                   color: kDarkPinkColor,
-                                                  fontFamily: fontFamilyArabicName,
+                                                  fontFamily: Get
+                                                      .find<StorageService>()
+                                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                   fontWeight: FontWeight.w700),
                                               onTap: (){
                                                 controller.selectingFilter(e);
@@ -525,10 +535,12 @@ class ProductScreen extends StatelessWidget {
                                                     CustomText(
                                                       e,
                                                       textAlign: TextAlign.center,
-                                                      style: const TextStyle(
+                                                      style:  TextStyle(
 
                                                           color: kDarkPinkColor,
-                                                          fontFamily: fontFamilyArabicName,
+                                                          fontFamily: Get
+                                                              .find<StorageService>()
+                                                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                           fontWeight: FontWeight.w600),
                                                     ),
                                                     const SizedBox(
@@ -578,8 +590,7 @@ class ProductScreen extends StatelessWidget {
                                           ),
                                           child:  Center(
                                             child:  Padding(
-                                              padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.004,8.0,Get.height*0.004),
-                                              child: Row(
+                                              padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.005,8.0,Get.height*0.005),                                              child: Row(
                                                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                                 children: [
 
@@ -601,7 +612,9 @@ class ProductScreen extends StatelessWidget {
                                                         ],
                                                         fontSize: 15,
                                                         letterSpacing: 0,
-                                                        fontFamily: fontFamilyArabicName,
+                                                        fontFamily: Get
+                                                            .find<StorageService>()
+                                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                         color: kDarkPinkColor,
                                                       ),
                                                     ),
@@ -665,7 +678,9 @@ class ProductScreen extends StatelessWidget {
                                             ],
                                             fontSize: 15,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                           onChanged:(e){
@@ -701,7 +716,9 @@ class ProductScreen extends StatelessWidget {
                                               ],
                                               fontSize: 15,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kDarkPinkColor,
                                             ),
 
@@ -764,9 +781,11 @@ class ProductScreen extends StatelessWidget {
                                              },
                                              child: CustomText(
                                                translateButton.tr,
-                                              style: const TextStyle(
+                                              style:  TextStyle(
                                                 fontSize:15,
-                                                fontFamily: fontFamilyEnglishName,
+                                                fontFamily: Get
+                                                    .find<StorageService>()
+                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 fontWeight: FontWeight.w600,
                                                 color: kDarkPinkColor,
                                               ),
@@ -829,7 +848,9 @@ class ProductScreen extends StatelessWidget {
                                               ],
                                               fontSize: 15,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kDarkPinkColor,
                                             ),
                                           ),
@@ -854,9 +875,11 @@ class ProductScreen extends StatelessWidget {
                                         controller.governmentData.map((e){
                                           return   PopupMenuItem(
                                             value:e,
-                                            textStyle: const TextStyle(
+                                            textStyle:  TextStyle(
                                                 color: kDarkPinkColor,
-                                                fontFamily: fontFamilyArabicName,
+                                                fontFamily: Get
+                                                    .find<StorageService>()
+                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 fontWeight: FontWeight.w700),
                                             onTap: (){
                                               controller.selectingFilter(e);
@@ -869,10 +892,12 @@ class ProductScreen extends StatelessWidget {
                                                   CustomText(
                                                     e,
                                                     textAlign: TextAlign.center,
-                                                    style: const TextStyle(
+                                                    style:  TextStyle(
 
                                                         color: kDarkPinkColor,
-                                                        fontFamily: fontFamilyArabicName,
+                                                        fontFamily: Get
+                                                            .find<StorageService>()
+                                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                         fontWeight: FontWeight.w600),
                                                   ),
                                                   const SizedBox(
@@ -922,7 +947,7 @@ class ProductScreen extends StatelessWidget {
                                         ),
                                         child:  Center(
                                           child:  Padding(
-                                            padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.003,8.0,Get.height*0.003),
+                                            padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.005,8.0,Get.height*0.005),
                                             child: Row(
                                               mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                               children: [
@@ -945,7 +970,9 @@ class ProductScreen extends StatelessWidget {
                                                       ],
                                                       fontSize: 15,
                                                       letterSpacing: 0,
-                                                      fontFamily: fontFamilyArabicName,
+                                                      fontFamily: Get
+                                                          .find<StorageService>()
+                                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                       color: kDarkPinkColor,
                                                     ),
                                                   ),
@@ -998,11 +1025,13 @@ class ProductScreen extends StatelessWidget {
                                         inputFormatters: [
                                           FilteringTextInputFormatter.allow(RegExp("[a-zA-Z\u0621-\u064A]")),
                                         ],
-                                        style: const TextStyle(
+                                        style: TextStyle(
 
                                           fontSize: 15,
                                           letterSpacing: 0,
-                                          fontFamily: fontFamilyArabicName,
+                                          fontFamily: Get
+                                              .find<StorageService>()
+                                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                           color: kDarkPinkColor,
                                         ),
                                         onChanged:(e){
@@ -1038,7 +1067,9 @@ class ProductScreen extends StatelessWidget {
                                               ],
                                               fontSize: 15,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kDarkPinkColor,
                                             ),
 
@@ -1108,7 +1139,9 @@ class ProductScreen extends StatelessWidget {
 
                                             fontSize: 18,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kBackGroundColor,
                                         ),
                                               textAlign: TextAlign.center,
@@ -1141,7 +1174,9 @@ class ProductScreen extends StatelessWidget {
 
                                             fontSize: 18,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kBackGroundColor,
                                         ),
                                               textAlign: TextAlign.center,
@@ -1451,9 +1486,11 @@ class ProductScreen extends StatelessWidget {
                           ),
                            CustomText(
                             noDataSearchProduct.tr,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               fontSize:25,
-                              fontFamily: fontFamilyEnglishName,
+                              fontFamily: Get
+                                  .find<StorageService>()
+                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                               fontWeight: FontWeight.w600,
                               color: kDarkPinkColor,
                             ),
@@ -1471,9 +1508,11 @@ class ProductScreen extends StatelessWidget {
                           ),
                            CustomText(
                             noProductData.tr,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               fontSize:25,
-                              fontFamily: fontFamilyEnglishName,
+                              fontFamily: Get
+                                  .find<StorageService>()
+                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                               fontWeight: FontWeight.w600,
                               color: kDarkPinkColor,
                             ),

@@ -18,6 +18,8 @@ class ShopsModel {
   String? whatsapp;
   String? rating;
   String? image;
+  int? favorite;
+
 
   ShopsModel({
     this.id,
@@ -29,6 +31,7 @@ class ShopsModel {
     this.whatsapp,
     this.rating,
     this.image,
+    this.favorite,
   });
 
   factory ShopsModel.fromJson(Map<String, dynamic> json) => ShopsModel(
@@ -41,6 +44,8 @@ class ShopsModel {
     whatsapp: json["whatsapp"],
     rating: json["rating"],
     image: json["image"],
+    favorite: json["favorite"],
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -53,5 +58,7 @@ class ShopsModel {
     "whatsapp": whatsapp,
     "rating": rating,
     "image": image,
+    "favorite": favorite,
+
   };
 }

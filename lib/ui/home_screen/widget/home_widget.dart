@@ -77,9 +77,11 @@ class HomeWidget extends StatelessWidget {
                                 color: Colors.black.withOpacity(0.5)
                             ),
                           ],
-                          fontSize: 18,
+                          fontSize: 20,
                           letterSpacing: 0,
-                          fontFamily: fontFamilyArabicName,
+                          fontFamily: Get
+                              .find<StorageService>()
+                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                           color: kBackGroundColor,
                         ),
                       ),
@@ -113,7 +115,7 @@ class HomeWidget extends StatelessWidget {
                     width: Get.width*0.29,
                     decoration:BoxDecoration(
                       color:  const Color(0xFFF2F0F3),
-                      borderRadius: BorderRadius.circular(50),
+                      shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
@@ -137,9 +139,9 @@ class HomeWidget extends StatelessWidget {
 
                         height: Get.height*0.12,
                         width: Get.width*0.25,
-                        decoration:BoxDecoration(
-                          color:  const Color(0xFFDFDDDF),
-                          borderRadius: BorderRadius.circular(50),
+                        decoration:const BoxDecoration(
+                          color:  Color(0xFFDFDDDF),
+                          shape: BoxShape.circle,
 
                         ),
                       ).animate(onPlay: (controller) => controller.repeat())
@@ -219,7 +221,9 @@ class HomeWidget extends StatelessWidget {
                           ],
                           fontSize: 18,
                           letterSpacing: 0,
-                          fontFamily: fontFamilyArabicName,
+                          fontFamily: Get
+                              .find<StorageService>()
+                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                           color: kBackGroundColor,
                         ),
                       ),
@@ -253,7 +257,7 @@ class HomeWidget extends StatelessWidget {
                     width: Get.width*0.29,
                     decoration:BoxDecoration(
                       color:  const Color(0xFFF2F0F3),
-                      borderRadius: BorderRadius.circular(50),
+                      shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
@@ -277,9 +281,9 @@ class HomeWidget extends StatelessWidget {
 
                         height: Get.height*0.12,
                         width: Get.width*0.25,
-                        decoration:BoxDecoration(
-                          color:  const Color(0xFFDFDDDF),
-                          borderRadius: BorderRadius.circular(50),
+                        decoration:const BoxDecoration(
+                          color:  Color(0xFFDFDDDF),
+                          shape: BoxShape.circle,
 
                         ),
                       ).animate(onPlay: (controller) => controller.repeat())

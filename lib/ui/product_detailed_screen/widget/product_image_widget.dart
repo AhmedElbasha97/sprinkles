@@ -4,6 +4,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/ui/product_detailed_screen/photo_details_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
@@ -52,11 +54,13 @@ class ProductImageWidget extends StatelessWidget {
                   child:Center(
                     child: CustomText(
                       "${activeIndex+1}/$imageTotalCount",
-                      style: const TextStyle(
+                      style:  TextStyle(
                         height: 1.3,
                         fontSize: 12,
                         letterSpacing: 0,
-                        fontFamily: fontFamilyArabicName,
+                        fontFamily: Get
+                            .find<StorageService>()
+                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                         color: kDarkPinkColor,
                       ),
                     ),

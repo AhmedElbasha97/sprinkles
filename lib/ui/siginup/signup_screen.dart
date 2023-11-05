@@ -102,12 +102,14 @@ class SignupScreen extends StatelessWidget {
                                         padding: const EdgeInsets.fromLTRB(10.0,10,0,0),
                                         child: CustomText(
                                           greetingText.tr,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontWeight: FontWeight.w900,
 
                                             fontSize: 25,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -117,11 +119,13 @@ class SignupScreen extends StatelessWidget {
                                         child: Center(
                                           child: CustomText(
                                             signUpProfile.tr,
-                                            style: const TextStyle(
+                                            style: TextStyle(
 
                                               fontSize: 22,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kDarkPinkColor,
                                             ),
                                           ),
@@ -158,7 +162,7 @@ class SignupScreen extends StatelessWidget {
                                           Get.back();
                                         },
                                         child: Container(
-                                          child: Icon(
+                                          child: const Icon(
                                               Icons.arrow_back_ios  ,color:kDarkPinkColor,size:20
                                           ),
                                         ),
@@ -170,12 +174,14 @@ class SignupScreen extends StatelessWidget {
                                         padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
                                         child: CustomText(
                                           greetingText.tr,
-                                          style: const TextStyle(
+                                          style:  TextStyle(
                                             fontWeight: FontWeight.w900,
 
                                             fontSize: 25,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -184,11 +190,13 @@ class SignupScreen extends StatelessWidget {
                                         padding: const EdgeInsets.fromLTRB(0,5,25.0,0),
                                         child: CustomText(
                                           signUpProfile.tr,
-                                          style: const TextStyle(
+                                          style:  TextStyle(
 
                                             fontSize: 22,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -329,9 +337,11 @@ class SignupScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
 
-                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
+                              CustomText("   ${signUpTextPhoneKey.tr}    ", style:  TextStyle(
                                 fontSize: 15.0,
-                                fontFamily: fontFamilyArabicName,
+                                fontFamily: Get
+                                    .find<StorageService>()
+                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                 color: kDarkPinkColor,
                               ),),
                               const Icon(Icons.check_rounded,
@@ -343,9 +353,11 @@ class SignupScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
 
-                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
+                              CustomText("   ${signUpTextPhoneKey.tr}    ", style:  TextStyle(
                                 fontSize: 15.0,
-                                fontFamily: fontFamilyArabicName,
+                                fontFamily: Get
+                                    .find<StorageService>()
+                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                 color: kDarkPinkColor,
                               ),),
                               const Icon(
@@ -358,9 +370,11 @@ class SignupScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
 
-                              CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
+                              CustomText("   ${signUpTextPhoneKey.tr}    ", style:  TextStyle(
                                 fontSize: 15.0,
-                                fontFamily: fontFamilyArabicName,
+                                fontFamily: Get
+                                    .find<StorageService>()
+                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                 color: kDarkPinkColor,
                               ),),
                             ],
@@ -452,9 +466,11 @@ class SignupScreen extends StatelessWidget {
                             ),
                             TextSpan(
                               text: changePassScreenText3.tr,
-                              style:  const TextStyle(
+                              style:   TextStyle(
                                   fontSize: 12.0,
-                                  fontFamily: fontFamilyArabicName,
+                                  fontFamily: Get
+                                      .find<StorageService>()
+                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                   fontWeight: FontWeight.w600,
                                   color: kDarkPinkColor
                               ),
@@ -471,8 +487,10 @@ class SignupScreen extends StatelessWidget {
                       children:   [
                          CustomText(signUpText1.tr,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontFamily:fontFamilyArabicName,
+                          style:  TextStyle(
+                              fontFamily:Get
+                                  .find<StorageService>()
+                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                               color: kLightPinkColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 15),),
@@ -483,8 +501,10 @@ class SignupScreen extends StatelessWidget {
                           },
                           child:   CustomText(signInBTN.tr,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontFamily: fontFamilyArabicName,
+                            style:  TextStyle(
+                                fontFamily:Get
+                                    .find<StorageService>()
+                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                 color: kDarkPinkColor,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 15),),
@@ -548,8 +568,10 @@ class SignupScreen extends StatelessWidget {
                         child:   Center(
                           child:  CustomText(signUpProfile.tr,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontFamily:fontFamilyArabicName,
+                            style: TextStyle(
+                                fontFamily:Get
+                                    .find<StorageService>()
+                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 22),),

@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
 
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           iconTheme: IconThemeData(color: Colors.white),
 
 

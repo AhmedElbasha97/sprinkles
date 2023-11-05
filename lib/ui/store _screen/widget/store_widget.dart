@@ -41,8 +41,8 @@ class StoreWidget extends StatelessWidget {
 
   whatsapp(String contact) async{
 
-    var androidUrl = "whatsapp://send?phone=$contact&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ'}";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ')}";
+    var androidUrl = "whatsapp://send?phone=$contact&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ'}";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ')}";
     var data = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${store?.id??0}", "0", OrderType.WHATSAPP.name, "0");
     if(data?.status == "true") {
       try{
@@ -97,10 +97,12 @@ class StoreWidget extends StatelessWidget {
                   child:   Center(
                     child:  CustomText(
                       Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.nameEn??"":store?.name??"",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
                         letterSpacing: 0,
-                        fontFamily: fontFamilyArabicName,
+                        fontFamily: Get
+                            .find<StorageService>()
+                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                         color: kDarkPinkColor,
                       ),
                     ),
@@ -247,10 +249,12 @@ class StoreWidget extends StatelessWidget {
                         padding: const EdgeInsets.fromLTRB(20.0,0,15.0,0),
                         child: CustomText(
                           Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.descEn??"":store?.desc??"",
-                          style: const TextStyle(
+                          style:  TextStyle(
                             fontSize: 12,
                             letterSpacing: 0,
-                            fontFamily: fontFamilyArabicName,
+                            fontFamily: Get
+                                .find<StorageService>()
+                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                             color: kDarkPinkColor,
                           ),
                         ),
@@ -332,12 +336,14 @@ class StoreWidget extends StatelessWidget {
                                 child:  Center(
                                   child: CustomText(
                                     moreButtonTitle.tr,
-                                    style: const TextStyle(
+                                    style:  TextStyle(
                                       height: 1.3,
                                       fontSize: 12,
                                       letterSpacing: 0,
-                                      fontFamily: fontFamilyArabicName,
-                                      color:Color(0xFF641B46),
+                                      fontFamily: Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                      color:const Color(0xFF641B46),
                                     ),
                                   ),
                                 ),
@@ -363,10 +369,12 @@ class StoreWidget extends StatelessWidget {
                          padding: const EdgeInsets.fromLTRB(20.0,0,15.0,0),
                          child: CustomText(
                           Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.descEn??"":store?.desc??"",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             letterSpacing: 0,
-                            fontFamily: fontFamilyArabicName,
+                            fontFamily: Get
+                                .find<StorageService>()
+                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                             color: kDarkPinkColor,
                           ),
                       ),
@@ -411,12 +419,14 @@ class StoreWidget extends StatelessWidget {
                                 child:  Center(
                                   child: CustomText(
                                     moreButtonTitle.tr,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       height: 1.3,
                                       fontSize: 12,
                                       letterSpacing: 0,
-                                      fontFamily: fontFamilyArabicName,
-                                      color:Color(0xFF641B46),
+                                      fontFamily: Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                      color:const Color(0xFF641B46),
                                     ),
                                   ),
                                 ),

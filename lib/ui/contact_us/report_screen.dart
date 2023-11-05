@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/contact_us/controller/report_controller.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
@@ -41,7 +43,9 @@ class ReportScreen extends StatelessWidget {
                       fontSize: 15,
                       letterSpacing: 0,
                       fontWeight: FontWeight.w900,
-                      fontFamily: fontFamilyArabicName,
+                      fontFamily: Get
+                          .find<StorageService>()
+                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth =3
@@ -51,11 +55,13 @@ class ReportScreen extends StatelessWidget {
                   // The text inside
                   CustomText(
                     reportTitle.tr,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       fontSize: 15,
                       letterSpacing: 0,
                       fontWeight: FontWeight.w900,
-                      fontFamily: fontFamilyArabicName,
+                      fontFamily: Get
+                          .find<StorageService>()
+                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                       color: kDarkPinkColor,
                     ),
                   ),

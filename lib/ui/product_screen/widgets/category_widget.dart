@@ -45,7 +45,7 @@ class CategoryWidget extends StatelessWidget {
                         width:Get.width*0.17,
                         decoration: BoxDecoration(
                           color:selectedCategoryId == category?.id?kDarkPinkColor:kLightPinkColor,
-                          borderRadius: BorderRadius.circular(50), //
+                          shape: BoxShape.circle
                         ),
                       ),
                     ),
@@ -135,7 +135,9 @@ class CategoryWidget extends StatelessWidget {
 
                   fontSize: 15,
                   letterSpacing: 0,
-                  fontFamily: fontFamilyArabicName,
+                  fontFamily: Get
+                      .find<StorageService>()
+                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                   color:selectedCategoryId == category?.id?kDarkPinkColor:kLightPinkColor,
                 ),
                 textAlign: TextAlign.center,

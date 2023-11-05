@@ -111,12 +111,14 @@ class LoginScreen extends StatelessWidget {
                                   padding: const EdgeInsets.fromLTRB(15.0,10.0,10.0,0),
                                   child: CustomText(
                                     greetingText.tr,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontWeight: FontWeight.w900,
 
                                       fontSize: 25,
                                       letterSpacing: 0,
-                                      fontFamily: fontFamilyArabicName,
+                                      fontFamily: Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                       color: kDarkPinkColor,
                                     ),
                                   ),
@@ -125,10 +127,12 @@ class LoginScreen extends StatelessWidget {
                                   padding: const EdgeInsets.fromLTRB(23.0,0,0.0,0),
                                   child: CustomText(
                                     signInBTN.tr,
-                                    style: const TextStyle(
+                                    style:  TextStyle(
                                       fontSize: 22,
                                       letterSpacing: 0,
-                                      fontFamily: fontFamilyArabicName,
+                                      fontFamily: Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                       color: kDarkPinkColor,
                                     ),
                                   ),
@@ -181,12 +185,14 @@ class LoginScreen extends StatelessWidget {
                                     padding: const EdgeInsets.fromLTRB(0,0,5.0,0),
                                     child: CustomText(
                                       greetingText.tr,
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                         fontWeight: FontWeight.w900,
 
                                         fontSize: 25,
                                         letterSpacing: 0,
-                                        fontFamily: fontFamilyArabicName,
+                                        fontFamily: Get
+                                            .find<StorageService>()
+                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                         color: kDarkPinkColor,
                                       ),
                                     ),
@@ -195,11 +201,13 @@ class LoginScreen extends StatelessWidget {
                                     padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
                                     child: CustomText(
                                       signInBTN.tr,
-                                      style: const TextStyle(
+                                      style:  TextStyle(
 
                                         fontSize: 22,
                                         letterSpacing: 0,
-                                        fontFamily: fontFamilyArabicName,
+                                        fontFamily: Get
+                                            .find<StorageService>()
+                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                         color: kDarkPinkColor,
                                       ),
                                     ),
@@ -317,8 +325,10 @@ class LoginScreen extends StatelessWidget {
 
                   },
                   child:   Text(signInTextForgetPass.tr ,
-                    style: const TextStyle(
-                        fontFamily: fontFamilyArabicName,
+                    style:  TextStyle(
+                        fontFamily: Get
+                            .find<StorageService>()
+                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                         color: kDarkPinkColor,
                         fontWeight: FontWeight.w700,
                         fontSize: 15),),
@@ -367,8 +377,10 @@ class LoginScreen extends StatelessWidget {
                       child:   Center(
                         child:  CustomText(signInBTN.tr,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontFamily:fontFamilyArabicName,
+                          style:  TextStyle(
+                              fontFamily:Get
+                                  .find<StorageService>()
+                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontSize: 22),),

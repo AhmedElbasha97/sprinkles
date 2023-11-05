@@ -9,6 +9,7 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/advertisment_model.dart';
 import 'package:sprinkles/models/category_model.dart';
@@ -73,7 +74,6 @@ class ProductController extends GetxController {
   }
   getMainCategoryData() async {
     mainCategoryList = await CategoryServices.getHomeCategory();
-
     mainCategoryIsLoading = false;
     update();
   }
@@ -263,11 +263,14 @@ class ProductController extends GetxController {
       return false;
     }
   }
-  addingOrRemovingProductToFavorite(context,String productId,int index,bool doubleProductOrNot) async {
-    var i = 0;
-    if(index != 0){
-      i = index - 1;
+  addingOrRemovingProductToFavorite(context,String productId,int index,bool doubleProductOrNot,) async {
+    int i = 0;
+    if(index!=0){
+      i = (index/2).round();
     }
+
+    print(i);
+    print(index);
     if(Get.find<StorageService>().checkUserIsSignedIn){
       if( await checkProductAddedOrNet(productId)){
         ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"0");
@@ -281,22 +284,103 @@ class ProductController extends GetxController {
       if(doubleProductOrNot){
         var checker =  Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[index].id}"):false;
         var checker1 =Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[index+1].id}"):false;
-        products[i]=Padding(
-          padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
-          child: Row(
-              mainAxisAlignment:MainAxisAlignment.spaceAround,
-              children:[
-                ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
-                  addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
-                }, mainCategoryId: mainCategoryId, comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true, branchCategoryId: selectedSubCategoryId,),
+        products[i]=Column(
+          children: [
+            Padding(
+              padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+              child: Row(
+                  mainAxisAlignment:MainAxisAlignment.spaceAround,
+                  children:[
+                    ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                      addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
+                    }, mainCategoryId: mainCategoryId, comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true, branchCategoryId: selectedSubCategoryId,),
 
-                ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
-                  addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
-                }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
-              ]
-          ),
+                    ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
+                      addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
+                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                  ]
+              ),
+            ),
+            advertList?.length !=0?(index%5==0&&index!=0||(productList!.length == index||productList!.length == index-1))?Padding(
+              padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
+              child: Container(
+                height: Get.height * 0.2,
+                width: Get.width,
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                        height: Get.height * 0.19,
+                        aspectRatio: 2.0,
+                        enlargeCenterPage: false,
+                        viewportFraction: 1,
+                        autoPlay: true),
+
+                    items: advertList?.map(
+                            (e) {
+                          return InkWell(
+                            onTap: () {
+                              selectingAdvertisements(
+                                  e.link ?? "", e.id ?? 0);
+                            },
+                            child: CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              imageUrl: "${Services.baseEndPoint}${e.img ??
+                                  ""}",
+                              imageBuilder: ((context, image) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width: Get.width,
+                                      height: Get.height * 0.16,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: image,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                  ),
+                                );
+                              }),
+                              placeholder: (context, image) {
+                                return Container(
+
+                                  width: Get.width,
+                                  height: Get.height * 0.16,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFDFDDDF),
+                                    borderRadius: BorderRadius.circular(15),
+
+                                  ),
+                                ).animate(onPlay: (controller) =>
+                                    controller.repeat())
+                                    .shimmer(duration: 1200.ms,
+                                    color: kDarkPinkColor.withAlpha(10))
+                                    .animate(); // this wraps the previous Animate in another Animate
+
+
+                              },
+                              errorWidget: (context, url, error) {
+                                return SizedBox(
+                                  width: Get.width,
+                                  height: Get.height * 0.16,
+                                  child: Image.asset(
+                                    "assets/images/logo sprinkles.png",
+                                    fit: BoxFit.contain,),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                    ).toList(),
+                  ),
+                ),
+              ),
+            ):const SizedBox():const SizedBox()
+          ],
         );
-        update();
+
       }else{
         var checker = Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[index].id}"):false;
         products[i]=Column(
@@ -337,7 +421,7 @@ class ProductController extends GetxController {
                             },
                             child:CachedNetworkImage(
                               fit: BoxFit.cover,
-                              imageUrl: "https://cake.syncqatar.com${e.img??""}",
+                              imageUrl: "${Services.baseEndPoint}${e.img??""}",
                               imageBuilder: ((context, image){
                                 return  ClipRRect(
                                   borderRadius: BorderRadius.circular(15),
@@ -387,7 +471,7 @@ class ProductController extends GetxController {
             ),
           ],
         );
-        update();
+
       }
 
       }else{
@@ -402,202 +486,24 @@ class ProductController extends GetxController {
           if(doubleProductOrNot){
             var checker =await checkProductAddedOrNet("${productList?[index].id}");
             var checker1 =await checkProductAddedOrNet("${productList?[index+1].id}");
-            products[i]=Padding(
-              padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
-              child: Row(
-                  mainAxisAlignment:MainAxisAlignment.spaceAround,
-                  children:[
-                    ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
-                      addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
-                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
-
-                    ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
-                      addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
-                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
-                  ]
-              ),
-            );
-            update();
-          }else{
-            var checker =await checkProductAddedOrNet("${productList?[index].id}");
             products[i]=Column(
               children: [
-                Row(
-                    mainAxisAlignment:MainAxisAlignment.start,
-                    children:[
-                      Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
-                            addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,false);
-                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
-                      ),
-
-                    ]
-                ),
                 Padding(
                   padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
-                  child: Container(
-                    height: Get.height*0.2,
-                    width:Get.width,
-                    color:Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CarouselSlider(
-                        options:  CarouselOptions(
-                            height: Get.height*0.19,
-                            aspectRatio: 2.0,
-                            enlargeCenterPage: false,
-                            viewportFraction: 1,
-                            autoPlay: true),
+                  child: Row(
+                      mainAxisAlignment:MainAxisAlignment.spaceAround,
+                      children:[
+                        ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                          addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
+                        }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
 
-                        items: advertList!.map(
-                                (e){
-                              return InkWell(
-                                onTap:(){
-                                  selectingAdvertisements(e.link??"",e.id??0);
-                                },
-                                child:CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  imageUrl: "https://cake.syncqatar.com${e.img??""}",
-                                  imageBuilder: ((context, image){
-                                    return  ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Container(
-                                          width:Get.width,
-                                          height:Get.height*0.16,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: image,
-                                              fit:  BoxFit.cover,
-                                            ),
-                                          )
-                                      ),
-                                    );
-                                  }),
-                                  placeholder: (context, image){
-                                    return   Container(
-
-                                      width:Get.width,
-                                      height:Get.height*0.16,
-                                      decoration:BoxDecoration(
-                                        color:  const Color(0xFFDFDDDF),
-                                        borderRadius: BorderRadius.circular(15),
-
-                                      ),
-                                    ).animate(onPlay: (controller) => controller.repeat())
-                                        .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                        .animate(); // this wraps the previous Animate in another Animate
-
-
-                                  },
-                                  errorWidget: (context, url, error){
-                                    return SizedBox(
-                                      width:Get.width,
-                                      height:Get.height*0.16,
-                                      child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.contain,),
-                                    );
-                                  },
-                                ),
-                              );
-
-                            }
-                        ).toList(),
-                      ),
-                    ),
+                        ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
+                          addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
+                        }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                      ]
                   ),
                 ),
-              ],
-            );
-            update();
-          }
-        }
-      }
-
-    }else{
-      showWarningFavorite(context);
-    }
-  }
-  showWarningFavorite(context){
-    showDialog(context: context,
-        builder: (context) {
-          return YesOrNoDialogue(alertText: addToFavoriteValue.tr, alertTitle: addToFavoriteTitle.tr, alertYesButtonTitle: signUpProfile.tr, alertNoButtonTitle: signInProfile.tr, alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
-            Get.to(()=>const SignupScreen());
-          }, alertNoButtonFunction: (){
-            Get.to(()=>LoginScreen());
-          }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height*0.6);
-        });
-  }
-  getSubCategoryData() async {
-    if(selectedMainCategoryId!=240){
-      subCategoryList = await CategoryServices.getSupCategory(selectedMainCategoryId);
-      data = await ProductServices.getMainProductData("$selectedMainCategoryId");
-      categoryIsLoading = false;
-      update();
-    }else{
-      subCategoryList = await CategoryServices.getSupCategory(mainCategoryId);
-      data = await ProductServices.getMainProductData("$mainCategoryId");
-      categoryIsLoading = false;
-      update();
-    }
-
-  }
-  getAdvertisementsData() async {
-    if(selectingFromDrawer){
-      advertList = await AdvertisementServices.getAdvertisements(selectedMainCategoryId);
-      await  getProductData(true);
-      advertisementsIsLoading = false;
-      update();
-    }else{
-      advertList = await AdvertisementServices.getAdvertisements(mainCategoryId);
-      await  getProductData(true);
-      advertisementsIsLoading = false;
-      update();
-    }
-
-  }
-  selectingAnotherSubCategory(int subCategoryId){
-    selectedSubCategoryId = subCategoryId;
-
-    getAdvertisementsData();
-  }
-  selectingAdvertisements(String link,int advertisementsId) async {
-    await AdvertisementServices.advertisementsHasBeenViewed("$advertisementsId");
-    final Uri url = Uri.parse(link);
-    if (!await launchUrl(url,mode:LaunchMode.externalNonBrowserApplication)) {
-    throw Exception('Could not launch $url');
-    }
-  }
-  fillingData()  async {
-    products = [];
-print("hi from fill data${productList?.length}");
-      for (int i = 0; i <= productList!.length-1; i=i+2) {
-        if(i<productList!.length-1){
-
-          print("hi from fill data${i} hi 2product");
-          var checker =Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[i].id}"):false;
-          var checker1 =Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[i+1].id}"):false;
-          products.add(
-            Padding(
-              padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
-              child: Row(
-                  mainAxisAlignment:MainAxisAlignment.spaceAround,
-                children:[
-             ProductWidget(product:productList?[i], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
-                    addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,true);
-                  }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
-
-                 ProductWidget(product:productList?[i+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
-                    addingOrRemovingProductToFavorite(context,"${productList?[i+1].id}",i,true);
-                  }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
-                ]
-              ),
-            )
-          );
-          if(i%5==0&&i!=0||productList!.length <= 10){
-            print(i);
-            if(advertList?.length !=0) {
-              products.add(
-                Padding(
+                advertList?.length !=0?i%5==0&&i!=0||(productList!.length == i||productList!.length == i-1)?Padding(
                   padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
                   child: Container(
                     height: Get.height * 0.2,
@@ -622,7 +528,7 @@ print("hi from fill data${productList?.length}");
                                 },
                                 child: CachedNetworkImage(
                                   fit: BoxFit.cover,
-                                  imageUrl: "https://cake.syncqatar.com${e.img ??
+                                  imageUrl: "${Services.baseEndPoint}${e.img ??
                                       ""}",
                                   imageBuilder: ((context, image) {
                                     return ClipRRect(
@@ -673,13 +579,273 @@ print("hi from fill data${productList?.length}");
                       ),
                     ),
                   ),
+                ):const SizedBox():const SizedBox()
+              ],
+            );
+            update();
+          }else{
+            var checker =await checkProductAddedOrNet("${productList?[index].id}");
+            products[i]=Column(
+              children: [
+                Row(
+                    mainAxisAlignment:MainAxisAlignment.start,
+                    children:[
+                      Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                            addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,false);
+                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                      ),
+
+                    ]
                 ),
-              );
-            }
+                Padding(
+                  padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+                  child: Container(
+                    height: Get.height*0.2,
+                    width:Get.width,
+                    color:Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CarouselSlider(
+                        options:  CarouselOptions(
+                            height: Get.height*0.19,
+                            aspectRatio: 2.0,
+                            enlargeCenterPage: false,
+                            viewportFraction: 1,
+                            autoPlay: true),
+
+                        items: advertList!.map(
+                                (e){
+                              return InkWell(
+                                onTap:(){
+                                  selectingAdvertisements(e.link??"",e.id??0);
+                                },
+                                child:CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: "${Services.baseEndPoint}${e.img??""}",
+                                  imageBuilder: ((context, image){
+                                    return  ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Container(
+                                          width:Get.width,
+                                          height:Get.height*0.16,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: image,
+                                              fit:  BoxFit.cover,
+                                            ),
+                                          )
+                                      ),
+                                    );
+                                  }),
+                                  placeholder: (context, image){
+                                    return   Container(
+
+                                      width:Get.width,
+                                      height:Get.height*0.16,
+                                      decoration:BoxDecoration(
+                                        color:  const Color(0xFFDFDDDF),
+                                        borderRadius: BorderRadius.circular(15),
+
+                                      ),
+                                    ).animate(onPlay: (controller) => controller.repeat())
+                                        .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                        .animate(); // this wraps the previous Animate in another Animate
+
+
+                                  },
+                                  errorWidget: (context, url, error){
+                                    return SizedBox(
+                                      width:Get.width,
+                                      height:Get.height*0.16,
+                                      child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.contain,),
+                                    );
+                                  },
+                                ),
+                              );
+
+                            }
+                        ).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+
           }
         }
+      }
+      update();
+    }else{
+      showWarningFavorite(context);
+    }
+
+  }
+  showWarningFavorite(context){
+    showDialog(context: context,
+        builder: (context) {
+          return YesOrNoDialogue(alertText: addToFavoriteValue.tr, alertTitle: addToFavoriteTitle.tr, alertYesButtonTitle: signUpProfile.tr, alertNoButtonTitle: signInProfile.tr, alertYesButtonWidth: Get.width*0.5, alertNoButtonWidth: Get.width*0.5, alertYesButtonFunction: (){
+            Get.to(()=>const SignupScreen());
+          }, alertNoButtonFunction: (){
+            Get.to(()=>LoginScreen());
+          }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:   Get.height <= 800? Get.height*0.6: Get.height*0.5);
+        });
+  }
+  getSubCategoryData() async {
+    if(selectedMainCategoryId!=240){
+      subCategoryList = await CategoryServices.getSupCategory(selectedMainCategoryId);
+      data = await ProductServices.getMainProductData("$selectedMainCategoryId");
+      categoryIsLoading = false;
+      update();
+    }else{
+      subCategoryList = await CategoryServices.getSupCategory(mainCategoryId);
+      data = await ProductServices.getMainProductData("$mainCategoryId");
+      categoryIsLoading = false;
+      update();
+    }
+
+  }
+  getAdvertisementsData() async {
+    if(selectingFromDrawer){
+      advertList = await AdvertisementServices.getAdvertisements(selectedMainCategoryId);
+      await  getProductData(true);
+      advertisementsIsLoading = false;
+      update();
+    }else{
+      advertList = await AdvertisementServices.getAdvertisements(mainCategoryId);
+      await  getProductData(true);
+      advertisementsIsLoading = false;
+      update();
+    }
+
+  }
+  selectingAnotherSubCategory(int subCategoryId){
+    selectedSubCategoryId = subCategoryId;
+
+    getAdvertisementsData();
+  }
+  selectingAdvertisements(String link,int advertisementsId) async {
+    await AdvertisementServices.advertisementsHasBeenViewed("$advertisementsId");
+    final Uri url = Uri.parse(link);
+    if (!await launchUrl(url,mode:LaunchMode.externalNonBrowserApplication)) {
+    throw Exception('Could not launch $url');
+    }
+  }
+  fillingData()  async {
+    products = [];
+
+      for (int i = 0; i <= productList!.length-1; i=i+2) {
+
+        if(i<productList!.length-1){
+
+          print("hi from fill data${i} hi 2product");
+
+          products.add(
+            Column(
+              children: [
+                Padding(
+                  padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+                  child: Row(
+                      mainAxisAlignment:MainAxisAlignment.spaceAround,
+                    children:[
+                 ProductWidget(product:productList?[i], productAreAddedOrNot: productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
+                        addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,true,);
+                      }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
+
+                     ProductWidget(product:productList?[i+1], productAreAddedOrNot: productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
+                        addingOrRemovingProductToFavorite(context,"${productList?[i+1].id}",i,true,);
+                      }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                    ]
+                  ),
+                ),
+                advertList?.length !=0?i%5==0&&i!=0||(productList!.length == i||productList!.length == i-1)?Padding(
+                  padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
+                  child: Container(
+                    height: Get.height * 0.2,
+                    width: Get.width,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                            height: Get.height * 0.19,
+                            aspectRatio: 2.0,
+                            enlargeCenterPage: false,
+                            viewportFraction: 1,
+                            autoPlay: true),
+
+                        items: advertList?.map(
+                                (e) {
+                              return InkWell(
+                                onTap: () {
+                                  selectingAdvertisements(
+                                      e.link ?? "", e.id ?? 0);
+                                },
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: "${Services.baseEndPoint}${e.img ??
+                                      ""}",
+                                  imageBuilder: ((context, image) {
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Container(
+                                          width: Get.width,
+                                          height: Get.height * 0.16,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: image,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          )
+                                      ),
+                                    );
+                                  }),
+                                  placeholder: (context, image) {
+                                    return Container(
+
+                                      width: Get.width,
+                                      height: Get.height * 0.16,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFDFDDDF),
+                                        borderRadius: BorderRadius.circular(15),
+
+                                      ),
+                                    ).animate(onPlay: (controller) =>
+                                        controller.repeat())
+                                        .shimmer(duration: 1200.ms,
+                                        color: kDarkPinkColor.withAlpha(10))
+                                        .animate(); // this wraps the previous Animate in another Animate
+
+
+                                  },
+                                  errorWidget: (context, url, error) {
+                                    return SizedBox(
+                                      width: Get.width,
+                                      height: Get.height * 0.16,
+                                      child: Image.asset(
+                                        "assets/images/logo sprinkles.png",
+                                        fit: BoxFit.contain,),
+                                    );
+                                  },
+                                ),
+                              );
+                            }
+                        ).toList(),
+                      ),
+                    ),
+                  ),
+                ):const SizedBox():const SizedBox()
+              ],
+            )
+          );
+
+
+
+        }
         else{
-          var checker = Get.find<StorageService>().checkUserIsSignedIn?await checkProductAddedOrNet("${productList?[i].id}"):false;
+
           products.add(
               Column(
                 children: [
@@ -688,8 +854,8 @@ print("hi from fill data${productList?.length}");
                       children:[
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ProductWidget(product:productList?[i], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
-                            addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,false);
+                          child: ProductWidget(product:productList?[i], productAreAddedOrNot: productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
+                            addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,false,);
                           }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
                         ),
 
@@ -770,8 +936,10 @@ print("hi from fill data${productList?.length}");
                 ],
               )
           );
+
         }
 
+     
       }
     }
   }

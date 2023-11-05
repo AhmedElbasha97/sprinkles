@@ -108,12 +108,14 @@ class EditProfileScreen extends StatelessWidget {
                                         padding: const EdgeInsets.fromLTRB(10.0,10,10.0,0),
                                         child: CustomText(
                                           greetingText.tr,
-                                          style: const TextStyle(
+                                          style:  TextStyle(
                                             fontWeight: FontWeight.w900,
 
                                             fontSize: 25,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -123,11 +125,13 @@ class EditProfileScreen extends StatelessWidget {
                                         child: Center(
                                           child: CustomText(
                                             editProfileTitle.tr,
-                                            style: const TextStyle(
+                                            style:  TextStyle(
 
                                               fontSize: 22,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kDarkPinkColor,
                                             ),
                                           ),
@@ -180,12 +184,14 @@ class EditProfileScreen extends StatelessWidget {
                                         padding: const EdgeInsets.fromLTRB(0,0,10.0,0),
                                         child: CustomText(
                                           greetingText.tr,
-                                          style: const TextStyle(
+                                          style:  TextStyle(
                                             fontWeight: FontWeight.w900,
 
                                             fontSize: 25,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -195,11 +201,13 @@ class EditProfileScreen extends StatelessWidget {
                                         child: Center(
                                           child: CustomText(
                                             editProfileTitle.tr,
-                                            style: const TextStyle(
+                                            style:  TextStyle(
 
                                               fontSize: 22,
                                               letterSpacing: 0,
-                                              fontFamily: fontFamilyArabicName,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                               color: kDarkPinkColor,
                                             ),
                                           ),
@@ -350,9 +358,11 @@ class EditProfileScreen extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
 
-                            CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
+                            CustomText("   ${signUpTextPhoneKey.tr}    ", style:  TextStyle(
                               fontSize: 15.0,
-                              fontFamily: fontFamilyArabicName,
+                              fontFamily: Get
+                                  .find<StorageService>()
+                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                               color: kDarkPinkColor,
                             ),),
                             const Icon(
@@ -365,9 +375,11 @@ class EditProfileScreen extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
 
-                            CustomText("   ${signUpTextPhoneKey.tr}    ", style: const TextStyle(
+                            CustomText("   ${signUpTextPhoneKey.tr}    ", style:  TextStyle(
                               fontSize: 15.0,
-                              fontFamily: fontFamilyArabicName,
+                              fontFamily: Get
+                                  .find<StorageService>()
+                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                               color: kDarkPinkColor,
                             ),),
                           ],
@@ -431,8 +443,10 @@ class EditProfileScreen extends StatelessWidget {
                         child:   Center(
                           child:  CustomText(editProfileTitle.tr,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontFamily:fontFamilyArabicName,
+                            style:  TextStyle(
+                                fontFamily:Get
+                                    .find<StorageService>()
+                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 22),),

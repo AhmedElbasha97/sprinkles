@@ -24,7 +24,7 @@ class ReadMoreText extends StatefulWidget {
         this.trimMode = TrimMode.Length,
         required this.style,
         required this.textAlign,
-        required this.textDirection,
+          this.textDirection = TextDirection.rtl,
 
          this.textScaleFactor = 1.0,
         required this.semanticsLabel,

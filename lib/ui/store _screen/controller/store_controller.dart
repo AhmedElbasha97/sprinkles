@@ -167,7 +167,7 @@ class StoreController extends GetxController {
       return false;
     }
   }
-  addingOrRemovingProductToFavorite(context,String storeId,int index) async {
+  addingOrRemovingStoreToFavorite(context,String storeId,int index) async {
     await checkStoreAddedOrNet(storeId);
     if(Get.find<StorageService>().checkUserIsSignedIn){
       if(  await checkStoreAddedOrNet(storeId)){
@@ -180,7 +180,7 @@ class StoreController extends GetxController {
           );
         }else{
           var checker =  await checkStoreAddedOrNet( "${storeList?[index].id}");
-          storeListWidget[index]=StoreWidget(store:storeList?[index], addingOrRemovingForFav: (){addingOrRemovingProductToFavorite(context,"${storeList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId,);
+          storeListWidget[index]=StoreWidget(store:storeList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${storeList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId,);
 
 
           update();
@@ -192,12 +192,12 @@ class StoreController extends GetxController {
         if(data?.msg != "succeeded"){
           showDialog(context: context,
               builder: (context) {
-                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+                return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
               }
           );
         }else{
           var checker =  await checkStoreAddedOrNet( "${storeList?[index].id}");
-          storeListWidget[index]=StoreWidget(store:storeList?[index], addingOrRemovingForFav: (){addingOrRemovingProductToFavorite(context,"${storeList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId,);
+          storeListWidget[index]=StoreWidget(store:storeList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${storeList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId,);
           update();
         }
       }
@@ -213,7 +213,7 @@ class StoreController extends GetxController {
             Get.to(()=>const SignupScreen());
           }, alertNoButtonFunction: (){
             Get.to(()=>LoginScreen());
-          }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height*0.6);
+          }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height <= 800? Get.height*0.6: Get.height*0.5);
         });
   }
   getStoreData(bool selectCategory) async{
@@ -238,9 +238,8 @@ class StoreController extends GetxController {
   fillData() async {
     storeListWidget = [];
     for (int i = 0; i <= storeList!.length-1; i=i+1) {
-              var checker = Get.find<StorageService>().checkUserIsSignedIn? await checkStoreAddedOrNet( "${storeList?[i].id}"):false;
               storeListWidget.add(
-                  StoreWidget(store:storeList?[i], addingOrRemovingForFav: (){addingOrRemovingProductToFavorite(context,"${storeList?[i].id}",i);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId,)
+                  StoreWidget(store:storeList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${storeList?[i].id}",i);}, shopAreAddedOrNot: storeList?[i].favorite==1, mainCategoryId: mainCategoryId,)
               );
 
         }

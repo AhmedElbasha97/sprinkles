@@ -101,11 +101,13 @@ class ProfileScreen extends StatelessWidget {
                                         ),
                                          CustomText(
                                           greetingText.tr,
-                                          style: const TextStyle(
+                                          style:  TextStyle(
 
                                             fontSize: 25,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -135,11 +137,13 @@ class ProfileScreen extends StatelessWidget {
                                           .slide(): Center(
                                         child: CustomText(
                                           controller.userData?.name??"",
-                                          style: const TextStyle(
+                                          style:  TextStyle(
 
                                             fontSize: 22,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -188,7 +192,9 @@ class ProfileScreen extends StatelessWidget {
 
                                             fontSize: 25,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -218,11 +224,13 @@ class ProfileScreen extends StatelessWidget {
                                         .slide(): Center(
                                         child: CustomText(
                                           controller.userData?.name??"",
-                                          style: const TextStyle(
+                                          style:  TextStyle(
 
                                             fontSize: 22,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                         ),
@@ -303,11 +311,13 @@ class ProfileScreen extends StatelessWidget {
                           .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                           .slide(): CustomText(
                         controller.userData?.email??"",
-                        style: const TextStyle(
+                        style: TextStyle(
 
                           fontSize: 17,
                           letterSpacing: 0,
-                          fontFamily: fontFamilyArabicName,
+                          fontFamily: Get
+                              .find<StorageService>()
+                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                           color: kDarkPinkColor,
                         ),
                       ),
@@ -344,11 +354,13 @@ class ProfileScreen extends StatelessWidget {
                           .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                           .slide(): CustomText(
                         controller.userData?.phone??"",
-                        style: const TextStyle(
+                        style:  TextStyle(
 
                           fontSize: 17,
                           letterSpacing: 0,
-                          fontFamily: fontFamilyArabicName,
+                          fontFamily: Get
+                              .find<StorageService>()
+                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                           color: kDarkPinkColor,
                         ),
                       ),
@@ -424,7 +436,9 @@ class ProfileScreen extends StatelessWidget {
                                     ],
                                     fontSize: 18,
                                     letterSpacing: 0,
-                                    fontFamily: fontFamilyArabicName,
+                                    fontFamily: Get
+                                        .find<StorageService>()
+                                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                     color: kBackGroundColor,
                                   ),
                                 ),
@@ -508,7 +522,9 @@ class ProfileScreen extends StatelessWidget {
                                     ],
                                     fontSize: 18,
                                     letterSpacing: 0,
-                                    fontFamily: fontFamilyArabicName,
+                                    fontFamily: Get
+                                        .find<StorageService>()
+                                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                     fontWeight: FontWeight.w900,
                                     color: kBackGroundColor,
                                   ),

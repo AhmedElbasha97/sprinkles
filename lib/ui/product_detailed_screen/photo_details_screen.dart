@@ -6,7 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:sprinkles/Utils/colors.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
+import 'package:sprinkles/widgets/loader.dart';
 
 import '../../Utils/constant.dart';
 import '../../widgets/custom_text_widget.dart';
@@ -78,7 +81,7 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                     );
                   }),
                   placeholder:  (context, image){
-                    return  const CircularProgressIndicator();
+                    return  const Loader();
                   },
                   errorWidget: (context, url, error){
                     return Container(
@@ -110,9 +113,9 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                 onTap: (){
                   Navigator.pop(context);
                 },
-                child:  Icon(
+                child:  const Icon(
                   Icons.clear_outlined,
-                  color: Colors.grey.withOpacity(0.7),
+                  color: Colors.white,
                   size: 50,
                 ),
               )),
@@ -132,11 +135,13 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                     children: [
                       CustomText(
                         "${activeIndex + 1}/${widget.link?.length}",
-                        style: const TextStyle(
+                        style:  TextStyle(
                           height: 1.3,
                           fontSize: 12,
                           letterSpacing: 0,
-                          fontFamily: fontFamilyArabicName,
+                          fontFamily: Get
+                              .find<StorageService>()
+                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                           color: Colors.black,
                         ),
                       ),
@@ -161,9 +166,9 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                 onTap: (){
                   getNextImage();
                 },
-                child:  Icon(
+                child:  const Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: Colors.grey.withOpacity(0.7),
+                  color: Colors.white,
                   size: 50,
                 ),
               )):const SizedBox(),
@@ -174,9 +179,9 @@ class _PhotoDetailedScreenState extends State<PhotoDetailedScreen> {
                 onTap: (){
                   getPreviousImage();
                 },
-                child:  Icon(
+                child:  const Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: Colors.grey.withOpacity(0.7),
+                  color: Colors.white,
                   size: 50,
                 ),
               )):const SizedBox(),

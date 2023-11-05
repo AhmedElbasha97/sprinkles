@@ -9,11 +9,13 @@ import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
+import 'package:sprinkles/models/comment_model.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/models/shop_detailed_model.dart';
 import 'package:sprinkles/services/favorite_services.dart';
+import 'package:sprinkles/services/reviews_services.dart';
 import 'package:sprinkles/services/shop_services.dart';
 import 'package:sprinkles/services/stats_services.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
@@ -28,6 +30,7 @@ class StoreDetailedController extends GetxController{
  ScrollController scrollController = ScrollController();
  bool shopProductIsLoading = true;
  late List<ProductsModel>? productList;
+ List<CommentModel>? comments = [];
  late ShopDetailedModel? shopData;
  int selectedSubCategoryId = 0;
  List<Widget> products = [];
@@ -54,6 +57,7 @@ class StoreDetailedController extends GetxController{
 
 getData() async {
   shopData = await ShopServices.getShopDetails(shopId);
+  comments = await ReviewsServices().getStoreComment(shopId);
   selectedSubCategoryId = shopData?.ctgs?[0].id??0;
   await checkStoreAddedOrNet();
   shopIsLoading=false;
@@ -95,20 +99,17 @@ getData() async {
 
    for (int i = 0; i <= productList!.length-1; i=i+2) {
      if(i<productList!.length-1){
-
-       var checker =await checkProductAddedOrNet("${productList?[i].id}");
-       var checker1 =await checkProductAddedOrNet("${productList?[i+1].id}");
        products.add(
            Padding(
              padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
              child: Row(
                  mainAxisAlignment:MainAxisAlignment.spaceAround,
                  children:[
-                   ProductWidget(product:productList?[i], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                   ProductWidget(product:productList?[i], productAreAddedOrNot:  productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
                      addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,true);
                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
 
-                   ProductWidget(product:productList?[i+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
+                   ProductWidget(product:productList?[i+1], productAreAddedOrNot:  productList?[i+1].favorite == 1 , addingOrRemovingProductToFavorite: (){
                      addingOrRemovingProductToFavorite(context,"${productList?[i+1].id}",i,true);
                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
                  ]
@@ -118,7 +119,7 @@ getData() async {
 
      }
      else{
-       var checker =await checkProductAddedOrNet("${productList?[i].id}");
+
        products.add(
            Column(
              children: [
@@ -127,7 +128,7 @@ getData() async {
                    children:[
                      Padding(
                          padding: const EdgeInsets.all(8.0),
-                         child: ProductWidget(product:productList?[i], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                         child: ProductWidget(product:productList?[i], productAreAddedOrNot: productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
                            addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,false);
                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
                      ),
@@ -161,7 +162,7 @@ getData() async {
        if(data?.msg != "succeeded"){
          showDialog(context: context,
              builder: (context) {
-               return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+               return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
              }
          );
        }
@@ -211,7 +212,7 @@ getData() async {
        if(data?.msg != "succeeded"){
          showDialog(context: context,
              builder: (context) {
-               return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+               return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
              }
          );
        }else{
@@ -269,13 +270,13 @@ getData() async {
            Get.to(()=>const SignupScreen());
          }, alertNoButtonFunction: (){
            Get.to(()=>LoginScreen());
-         }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height*0.6);
+         }, alertYesButtonIcon: 'assets/icons/signUpIconDrawer.png', alertNoButtonIcon: 'assets/icons/loginIcon.png', alertIcon: 'assets/icons/favoriteIcon.png',containerHeight:Get.height <= 800? Get.height*0.6: Get.height*0.5);
        });
  }
  whatsapp() async{
 
-   var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ'}";
-   var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلس وأريد الاستفسار عن شئ')}";
+   var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ'}";
+   var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ')}";
    var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked(shopId, "0", OrderType.WHATSAPP.name, "0");
    if(result?.status == "true") {
      try{
@@ -306,7 +307,7 @@ getData() async {
        if(data?.msg != "succeeded"){
          showDialog(context: context,
              builder: (context) {
-               return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+               return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
              }
          );
        }
@@ -317,7 +318,7 @@ getData() async {
        if(data?.msg != "succeeded"){
          showDialog(context: context,
              builder: (context) {
-               return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+               return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
              }
          );
        }

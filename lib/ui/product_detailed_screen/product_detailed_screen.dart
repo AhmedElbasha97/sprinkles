@@ -18,6 +18,8 @@ import 'package:sprinkles/ui/favorite_screen/controller/favorite_controller.dart
 import 'package:sprinkles/ui/ordering/ordering_screen.dart';
 import 'package:sprinkles/ui/product_detailed_screen/controller/product_detailed_controller.dart';
 import 'package:sprinkles/ui/product_detailed_screen/photo_details_screen.dart';
+import 'package:sprinkles/ui/product_detailed_screen/widget/comment_loading_widget.dart';
+import 'package:sprinkles/ui/product_detailed_screen/widget/comment_widget.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/product_image_widget.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/read_more_widget.dart';
 import 'package:sprinkles/ui/product_detailed_screen/widget/seller_product_loading_widget.dart';
@@ -69,7 +71,9 @@ class ProductDetailedScreen extends StatelessWidget {
                           ],
                           fontSize: 13,
                           letterSpacing: 0,
-                          fontFamily: fontFamilyArabicName,
+                          fontFamily: Get
+                              .find<StorageService>()
+                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                           color: kDarkPinkColor,
                         ),
                       ),
@@ -89,18 +93,13 @@ class ProductDetailedScreen extends StatelessWidget {
                       CustomText(
                       reportTitle.tr,
                       textAlign:TextAlign.left,
-                      style: TextStyle(
-                        shadows: <Shadow>[
-                          Shadow(
-                              offset: const Offset(0.5, 0.5),
-                              blurRadius: 0.5,
+                      style:  TextStyle(
 
-                              color: Colors.black.withOpacity(0.5)
-                          ),
-                        ],
-                        fontSize: 13,
+                        fontSize: 12,
                         letterSpacing: 0,
-                        fontFamily: fontFamilyArabicName,
+                        fontFamily: Get
+                            .find<StorageService>()
+                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                         color: kDarkPinkColor,
                       ),
                     ),
@@ -227,7 +226,9 @@ class ProductDetailedScreen extends StatelessWidget {
                     ],
                     fontSize: 18,
                     letterSpacing: 0,
-                    fontFamily: fontFamilyArabicName,
+                    fontFamily: Get
+                        .find<StorageService>()
+                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                     color: kBackGroundColor,
                   ),
                 ),
@@ -292,18 +293,79 @@ class ProductDetailedScreen extends StatelessWidget {
                     },
                     child: Stack(
                       children: [
-                        Container(
-                            width:Get.width,
-                            height:Get.height*0.5,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  "${Services.baseEndPoint}${controller.productData!.images?[0]??""}",
-                                ),
-                                fit:  BoxFit.fill,
+                        CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl:  "${Services.baseEndPoint}${controller.productData!.images?[0]??""}",
+                          imageBuilder: ((context, image){
+                            return  Hero(
+                              tag:"imageHero${-1}",
+                              child: Container(
+                                  width:Get.width,
+                                  height:Get.height*0.5,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: image,
+                                      fit:  BoxFit.fill,
+                                    ),
+                                  )
                               ),
-                            )
+                            );
+                          }),
+                          placeholder: (context, image){
+                            return   Container(
+
+                              width:Get.width,
+                              height:Get.height*0.4,
+                              decoration:BoxDecoration(
+                                color:  const Color(0xFFF2F0F3),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    offset: const Offset(
+                                      0.0,
+                                      0.0,
+                                    ),
+                                    blurRadius: 13.0,
+                                    spreadRadius: 2.0,
+                                  ), //BoxShadow
+                                  BoxShadow(
+                                    color: Colors.white.withOpacity(0.2),
+                                    offset: const Offset(0.0, 0.0),
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ), //BoxShadow
+                                ],
+                              ),
+                              child:Center(
+                                child: Container(
+
+                                  width:Get.width*0.95,
+                                  height:Get.height*0.38,
+                                  decoration:BoxDecoration(
+                                    color:  const Color(0xFFDFDDDF),
+                                    borderRadius: BorderRadius.circular(15),
+
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                ,
+                              ),
+                            ).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                .animate() // this wraps the previous Animate in another Animate
+                                ;
+                          },
+                          errorWidget: (context, url, error){
+                            return SizedBox(
+                              width:Get.width,
+                              height:Get.height*0.4,
+                              child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                            );
+                          },
                         ),
+
                         Positioned(
                           right:20,
                           bottom:25,
@@ -320,9 +382,9 @@ class ProductDetailedScreen extends StatelessWidget {
                             child: Container(
                                 height: Get.height*0.04,
                                 width:Get.width*0.08,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color:kLightPinkColor,
-                                  borderRadius: BorderRadius.circular(50),
+                                  shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child:controller.productAreAddedOrNot?const Icon(
@@ -348,9 +410,9 @@ class ProductDetailedScreen extends StatelessWidget {
                             child: Container(
                                 height: Get.height*0.04,
                                 width:Get.width*0.08,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color:kBackGroundColor,
-                                  borderRadius: BorderRadius.circular(50),
+                                  shape: BoxShape.circle,
                                 ),
                                 child:  Center(
                                   child: SizedBox(
@@ -396,9 +458,9 @@ class ProductDetailedScreen extends StatelessWidget {
                             child: Container(
                                 height: Get.height*0.04,
                                 width:Get.width*0.08,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color:kBackGroundColor,
-                                  borderRadius: BorderRadius.circular(50),
+                                  shape: BoxShape.circle,
                                 ),
                                 child:  Center(
                                   child: SizedBox(
@@ -426,9 +488,9 @@ class ProductDetailedScreen extends StatelessWidget {
                             child: Container(
                                 height: Get.height*0.04,
                                 width:Get.width*0.08,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color:kLightPinkColor,
-                                  borderRadius: BorderRadius.circular(50),
+                                  shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child:controller.productAreAddedOrNot?const Icon(
@@ -495,7 +557,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                     children:[
                                       controller.productIsLoading?Center(
                                         child:   Container(
-                                          width:Get.width*0.55,
+                                          width:Get.width*0.5,
                                           height: 20,
                                           decoration: BoxDecoration(
                                               color: const Color(0xFFDFDDDF),
@@ -530,7 +592,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                             fontWeight: FontWeight.w900,
                                             fontSize: 16,
                                             letterSpacing: 0,
-                                            fontFamily: fontFamilyArabicName,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                             color: kDarkPinkColor,
                                           ),
                                           maxLines: 2,
@@ -569,7 +633,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                           ],
                                           fontSize: 15,
                                           letterSpacing: 0,
-                                          fontFamily: fontFamilyArabicName,
+                                          fontFamily: Get
+                                              .find<StorageService>()
+                                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                           color: kDarkPinkColor,
                                         ),
                                       ),
@@ -581,9 +647,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                               child:   Container(
                                                 width: Get.width*0.09,
                                                 height: 20,
-                                                decoration: BoxDecoration(
-                                                    color: const Color(0xFFDFDDDF),
-                                                    borderRadius: BorderRadius.circular(50)
+                                                decoration: const BoxDecoration(
+                                                    color: Color(0xFFDFDDDF),
+                                                  shape: BoxShape.circle,
                                                 ),
                                               ).animate(onPlay: (controller) => controller.repeat())
                                                   .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
@@ -616,9 +682,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                               child:   Container(
                                                 width: Get.width*0.09,
                                                 height: 20,
-                                                decoration: BoxDecoration(
-                                                    color: const Color(0xFFDFDDDF),
-                                                    borderRadius: BorderRadius.circular(50)
+                                                decoration: const BoxDecoration(
+                                                    color: Color(0xFFDFDDDF),
+                                                  shape: BoxShape.circle,
                                                 ),
                                               ).animate(onPlay: (controller) => controller.repeat())
                                                   .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
@@ -718,7 +784,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                                       ],
                                                       fontSize: 13,
                                                       letterSpacing: 0,
-                                                      fontFamily: fontFamilyArabicName,
+                                                      fontFamily: Get
+                                                          .find<StorageService>()
+                                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                       color: kDarkPinkColor,
                                                     ),
                                                   ),
@@ -772,7 +840,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                     width:Get.width*0.17,
                                     decoration:BoxDecoration(
                                       color:  const Color(0xFFF2F0F3),
-                                      borderRadius: BorderRadius.circular(50),
+                                      shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
                                           color: Colors.black.withOpacity(0.1),
@@ -796,9 +864,9 @@ class ProductDetailedScreen extends StatelessWidget {
 
                                         height: Get.height*0.07,
                                         width:Get.width*0.15,
-                                        decoration:BoxDecoration(
-                                          color:  const Color(0xFFDFDDDF),
-                                          borderRadius: BorderRadius.circular(50),
+                                        decoration:const BoxDecoration(
+                                          color:  Color(0xFFDFDDDF),
+                                          shape: BoxShape.circle,
 
                                         ),
                                       ).animate(onPlay: (controller) => controller.repeat())
@@ -835,7 +903,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                         width:Get.width*0.17,
                                         decoration:BoxDecoration(
                                           color:  const Color(0xFFF2F0F3),
-                                          borderRadius: BorderRadius.circular(50),
+                                          shape: BoxShape.circle,
                                           boxShadow: [
                                             BoxShadow(
                                               color: Colors.black.withOpacity(0.1),
@@ -858,9 +926,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                           child: Container(
                                             height: Get.height*0.07,
                                             width:Get.width*0.15,
-                                            decoration:BoxDecoration(
-                                              color:  const Color(0xFFDFDDDF),
-                                              borderRadius: BorderRadius.circular(50),
+                                            decoration:const BoxDecoration(
+                                              color:  Color(0xFFDFDDDF),
+                                              shape: BoxShape.circle,
 
                                             ),
                                           ).animate(onPlay: (controller) => controller.repeat())
@@ -1108,7 +1176,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w900,
                                         fontSize: 16,
                                         letterSpacing: 0,
-                                        fontFamily: fontFamilyArabicName,
+                                        fontFamily: Get
+                                            .find<StorageService>()
+                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                         color: kDarkPinkColor,
                                     ),
                                           maxLines: 2,
@@ -1147,7 +1217,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                       ],
                                       fontSize: 15,
                                       letterSpacing: 0,
-                                      fontFamily: fontFamilyArabicName,
+                                      fontFamily: Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                       color: kDarkPinkColor,
                                     ),
                                   ),
@@ -1295,7 +1367,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                                 ],
                                                 fontSize: 13,
                                                 letterSpacing: 0,
-                                                fontFamily: fontFamilyArabicName,
+                                                fontFamily: Get
+                                                    .find<StorageService>()
+                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 color: kDarkPinkColor,
                                               ),
                                             ),
@@ -1435,7 +1509,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                     letterSpacing: 0,
                                     fontWeight: FontWeight.w900,
 
-                                    fontFamily: fontFamilyArabicName,
+                                    fontFamily: Get
+                                        .find<StorageService>()
+                                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                     color: kDarkPinkColor,
                                   ),
                                 ),
@@ -1452,7 +1528,9 @@ class ProductDetailedScreen extends StatelessWidget {
                                     ],
                                     fontSize: 13,
                                     letterSpacing: 0,
-                                    fontFamily: fontFamilyArabicName,
+                                    fontFamily: Get
+                                        .find<StorageService>()
+                                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                     color: kLightPinkColor,
                                   ),
                                 ),
@@ -1539,7 +1617,9 @@ class ProductDetailedScreen extends StatelessWidget {
                           ],
                           fontSize: 15,
                           letterSpacing: 0,
-                          fontFamily: fontFamilyArabicName,
+                          fontFamily: Get
+                              .find<StorageService>()
+                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                           color: kDarkPinkColor,
                         ),
                       ),
@@ -1655,7 +1735,9 @@ class ProductDetailedScreen extends StatelessWidget {
                       fontWeight: FontWeight.w900,
                       fontSize: 15,
                       letterSpacing: 0,
-                      fontFamily: fontFamilyArabicName,
+                      fontFamily: Get
+                          .find<StorageService>()
+                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                       color: kDarkPinkColor,
                     ),
                   ),
@@ -1674,9 +1756,11 @@ class ProductDetailedScreen extends StatelessWidget {
                           child:  CustomText(
                             noProductData.tr,
                             textAlign:TextAlign.center,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               fontSize:20,
-                              fontFamily: fontFamilyArabicName,
+                              fontFamily: Get
+                                  .find<StorageService>()
+                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                               fontWeight: FontWeight.w900,
                               color: kDarkPinkColor,
                             ),
@@ -1691,11 +1775,13 @@ class ProductDetailedScreen extends StatelessWidget {
                       shrinkWrap:true,
                       itemCount:controller.productsList?.length,
                       itemBuilder: (BuildContext context, int index)  {
-                       controller.checkProductsAddedOrNet("${controller.productsList?[index].id}",);
+
                         return  Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ProductWidget(product:controller.productsList?[index], productAreAddedOrNot:   controller.checker, addingOrRemovingProductToFavorite: (){}, mainCategoryId: mainCategoryId, comingFromProductDetails: true, comingFromFavoriteList: false, comingFromProductList: false, branchCategoryId: branchCategoryId,productDetailsFunction: (){
-                          controller.selectingAnotherItem(controller.productsList?[index].id??0);
+                          child: ProductWidget(product:controller.productsList?[index], productAreAddedOrNot:controller.productsList?[index].favorite==1 , addingOrRemovingProductToFavorite: (){
+                            controller.addingOrRemovingProductsToFavorite(context, "${controller.productsList?[index].id}",index);
+                          }, mainCategoryId: mainCategoryId, comingFromProductDetails: true, comingFromFavoriteList: false, comingFromProductList: false, branchCategoryId: branchCategoryId,productDetailsFunction: (){
+
 
                           },),
                         );
@@ -1710,6 +1796,69 @@ class ProductDetailedScreen extends StatelessWidget {
           )
 
               ),
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          width:Get.width*0.95,
+
+                          decoration:BoxDecoration(
+                            borderRadius:BorderRadius.circular(15),
+                            color:Colors.white,
+                          ),
+                          child:Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                                crossAxisAlignment:CrossAxisAlignment.start,
+                                children:[
+                                  CustomText(
+                                    commentsTitle.tr,
+                                    textAlign:TextAlign.left,
+                                    style: TextStyle(
+                                      shadows: <Shadow>[
+                                        Shadow(
+                                            offset: const Offset(0.5, 0.5),
+                                            blurRadius: 0.5,
+
+                                            color: Colors.black.withOpacity(0.5)
+                                        ),
+                                      ],
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 15,
+                                      letterSpacing: 0,
+                                      fontFamily: Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                      color: kDarkPinkColor,
+                                    ),
+                                  ),
+                                  controller.productIsLoading?const CommentLoadingWidget():controller.comments?.length == 0?Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+
+                                Image.asset("assets/images/Online Review-rafiki.png",height: Get.width*0.23,),
+                                CustomText(noReviews.tr,style: const TextStyle(color: kDarkPinkColor,fontWeight: FontWeight.bold,fontSize: 18),textAlign: TextAlign.center,),
+                              ],): Container(
+                                    width:Get.width*0.95,
+
+
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+
+                                      child: Row(
+                                        children: controller.comments!.map((e){
+                                          return CommentWidget(data: e, isStoreComment: false,);
+                                        }).toList(),
+                                      ),
+                                    ),
+
+                                  )
+                                ]
+                            ),
+                          )
+
+                      )
+
+                  ),
           ]
               ),
             ),

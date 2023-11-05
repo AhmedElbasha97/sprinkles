@@ -4,12 +4,10 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
+import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/choosing_filiter_model.dart';
 import 'package:sprinkles/models/ordering_model.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
-
-import 'filter_tap_widget.dart';
-
 class FilterWidget extends StatelessWidget {
   final ItemFilter? data;
   final Function selectingFilterTap;
@@ -55,79 +53,104 @@ class FilterWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment:Get.find<StorageService>().activeLocale == SupportedLocales.english? CrossAxisAlignment.end: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: Get.height*0.1,
-                  width:Get.width,
-                  decoration: BoxDecoration(
+                const SizedBox(height: 10,),
 
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        offset: const Offset(
-                          0.0,
-                          0.0,
-                        ),
-                        blurRadius: 13.0,
-                        spreadRadius: 2.0,
-                      ), //BoxShadow
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.2),
-                        offset: const Offset(0.0, 0.0),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ), //BoxShadow
-                    ],
-                    gradient: const LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [kDarkPinkColor,kLightPinkColor],
-                    ),borderRadius:BorderRadius.circular(5), //
-                  ),
-                  child:  Center(
-                    child: Stack(
-                      children: [
-                        // Implement the stroke
-                        CustomText(
-                          Get.find<StorageService>().activeLocale == SupportedLocales.english? data?.filterEn??"":data?.filter??"",
-                          style: TextStyle(
-                            fontSize: 18,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.w900,
-                            fontFamily: fontFamilyArabicName,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth =3
-                              ..color = kBackGroundColor,
+                PopupMenuButton<Item>(
+                  itemBuilder: (context) =>
+                      data!.items!.map((e){
+                        return   PopupMenuItem(
+                          value:e,
+                          textStyle: const TextStyle(
+                              fontFamily: fontFamilyArabicName,
+                              color: kDarkPinkColor,
+                              fontWeight: FontWeight.w600),
+                          onTap: (){
+                            selectingFilterTap(e);
+                          },
+                          child: SizedBox(
+                            width: Get.width,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+
+                                    CustomText(
+                                      Get.find<StorageService>().activeLocale == SupportedLocales.english?e.filterItemEn??"":e.filterItem??"",
+                                      style:  TextStyle(
+                                          fontFamily: Get
+                                              .find<StorageService>()
+                                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                          color: kDarkPinkColor,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Divider(
+                                  color: kDarkPinkColor,
+                                  height: 1,
+                                  thickness: 1,
+                                  endIndent: 0,
+                                  indent: 0,
+                                ),
+                              ],
+                            ),
                           ),
+                        );
+                      }).toList(),
+
+                  child: Center(
+                    child: Container(
+                      width: Get.width*0.7,
+                      height: Get.height*0.07,
+
+                      child:   Center(
+                        child: selectedValue.filterValue==""?
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              "${orderingText1.tr}${Get.find<StorageService>().activeLocale == SupportedLocales.english? data?.filterEn??"":data?.filter??""}:",
+                              style:  TextStyle(
+                                  fontFamily: Get
+                                      .find<StorageService>()
+                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                  color: kDarkPinkColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15),
+                            ),
+                            const SizedBox(width: 10),
+                           Icon(Icons.arrow_drop_down_circle_outlined,size:25,color: kDarkPinkColor,)
+
+                          ],
+                        ):
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              (Get.find<StorageService>().activeLocale == SupportedLocales.english? data?.filterEn??"":data?.filter??"")+" ${orderingText2.tr} "+(Get.find<StorageService>().activeLocale == SupportedLocales.english? selectedValue.filterValueEn??"":selectedValue.filterValue??""),
+                              style: TextStyle(
+                                  fontFamily: Get
+                                      .find<StorageService>()
+                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                  color: kDarkPinkColor,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 15),
+                            ),
+                            const SizedBox(width: 10),
+
+
+                          ],
                         ),
-                        // The text inside
-                         CustomText(
-                          Get.find<StorageService>().activeLocale == SupportedLocales.english? data?.filterEn??"":data?.filter??"",
-                          style: const TextStyle(
-                            fontSize: 18,
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.w900,
-                            fontFamily: fontFamilyArabicName,
-                            color: kDarkPinkColor,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 10,),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-                  children: data!.items!.map((e) =>
-                      FilterTapWidget(filterTapTitle: Get.find<StorageService>().activeLocale == SupportedLocales.english? e.filterItemEn??"":e.filterItem??"",
-                        selected: e.filterItem == selectedValue.filterValue,
-                        selectingTap:(e){
-                          selectingFilterTap(e);
-                        }
-                       )).toList(),
-                ),
-                SizedBox(height:Get.height*0.015)
+                const SizedBox(height: 10,),
+
 
 
               ],

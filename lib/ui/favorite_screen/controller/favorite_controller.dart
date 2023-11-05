@@ -59,100 +59,27 @@ Future<bool> checkProductAddedOrNet(String productId) async {
   }
 }
 addingOrRemovingProductToFavorite(context,String productId,int index,bool doubleProductOrNot) async {
-  var i = 0;
-  if(index != 0){
-    i = index - 1;
+  int i = 0;
+  if(index!=0){
+    i = (index/2).round();
   }
     if( await checkProductAddedOrNet(productId)){
       ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"0");
       if(data?.msg != "succeeded"){
         showDialog(context: context,
             builder: (context) {
-              return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
-            }
-        );
-      }
-      if(doubleProductOrNot){
-        var checker =await checkProductAddedOrNet("${productFavList?[index].id}");
-        var checker1 =await checkProductAddedOrNet("${productFavList?[index+1].id}");
-        products[i]=Padding(
-          padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
-          child: Row(
-              mainAxisAlignment:MainAxisAlignment.spaceAround,
-              children:[
-                ProductWidget(product:productFavList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
-                  addingOrRemovingProductToFavorite(context,"${productFavList?[index].id}",index,true);
-                }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false, branchCategoryId: 0,),
-
-                ProductWidget(product:productFavList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
-                  addingOrRemovingProductToFavorite(context,"${productFavList?[index+1].id}",index,true);
-                }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,)
-              ]
-          ),
-        );
-        update();
-      }else{
-        var checker =await checkProductAddedOrNet("${productFavList?[index].id}");
-        products[i]=Row(
-            mainAxisAlignment:MainAxisAlignment.start,
-            children:[
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ProductWidget(product:productFavList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
-                    addingOrRemovingProductToFavorite(context,"${productFavList?[index].id}",index,false);
-                  }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,)
-              ),
-
-            ]
-        );
-        update();
-      }
-    }else{
-      ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"1");
-      if(data?.msg != "succeeded"){
-        showDialog(context: context,
-            builder: (context) {
-              return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
             }
         );
       }else{
-        if(doubleProductOrNot){
-          var checker =await checkProductAddedOrNet("${productFavList?[index].id}");
-          var checker1 =await checkProductAddedOrNet("${productFavList?[index+1].id}");
-          products[i]=Padding(
-            padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
-            child: Row(
-                mainAxisAlignment:MainAxisAlignment.spaceAround,
-                children:[
-                  ProductWidget(product:productFavList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
-                    addingOrRemovingProductToFavorite(context,"${productFavList?[index].id}",index,true);
-                  }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,),
-
-                  ProductWidget(product:productFavList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
-                    addingOrRemovingProductToFavorite(context,"${productFavList?[index+1].id}",index,true);
-                  }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,)
-                ]
-            ),
-          );
-          update();
-        }else{
-          var checker =await checkProductAddedOrNet("${productFavList?[index].id}");
-          products[i]=Row(
-              mainAxisAlignment:MainAxisAlignment.start,
-              children:[
-                Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ProductWidget(product:productFavList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
-                      addingOrRemovingProductToFavorite(context,"${productFavList?[index].id}",index,false);
-                    }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,)
-                ),
-
-              ]
-          );
-          update();
-        }
+        print(productFavList?[index].name);
+       productFavList?.removeAt(index);
+        fillingProductData();
+       update();
       }
+
     }
+
 
 }
 fillingProductData()  async {
@@ -160,19 +87,18 @@ fillingProductData()  async {
   for (int i = 0; i <= productFavList!.length-1; i=i+2) {
     if(i<productFavList!.length-1){
 
-      var checker =await checkProductAddedOrNet("${productFavList?[i].id}");
-      var checker1 =await checkProductAddedOrNet("${productFavList?[i+1].id}");
+
       products.add(
           Padding(
             padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
             child: Row(
                 mainAxisAlignment:MainAxisAlignment.spaceAround,
                 children:[
-                  ProductWidget(product:productFavList?[i], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                  ProductWidget(product:productFavList?[i], productAreAddedOrNot: productFavList?[i].favorite==1 , addingOrRemovingProductToFavorite: (){
                     addingOrRemovingProductToFavorite(context,"${productFavList?[i].id}",i,true);
                   }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,),
 
-                  ProductWidget(product:productFavList?[i+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
+                  ProductWidget(product:productFavList?[i+1], productAreAddedOrNot: productFavList?[i+1].favorite==1 , addingOrRemovingProductToFavorite: (){
                     addingOrRemovingProductToFavorite(context,"${productFavList?[i+1].id}",i,true);
                   }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,)
                 ]
@@ -182,14 +108,14 @@ fillingProductData()  async {
 
     }
     else{
-      var checker =await checkProductAddedOrNet("${productFavList?[i].id}");
+
       products.add(
           Row(
               mainAxisAlignment:MainAxisAlignment.start,
               children:[
                 Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ProductWidget(product:productFavList?[i], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
+                    child: ProductWidget(product:productFavList?[i], productAreAddedOrNot: productFavList?[i].favorite==1 , addingOrRemovingProductToFavorite: (){
                       addingOrRemovingProductToFavorite(context,"${productFavList?[i].id}",i,false);
                     }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,)
                 ),
@@ -217,41 +143,33 @@ addingOrRemovingStoreToFavorite(context,String storeId,int index) async {
       if(data?.msg != "succeeded"){
         showDialog(context: context,
             builder: (context) {
-              return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+              return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
             }
         );
       }else{
-        var checker =  await checkStoreAddedOrNet( "${shopFavList?[index].id}");
-        storeListWidget[index]=StoreWidget(store:shopFavList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: 0,);
+       storeListWidget.removeAt(index);
+       shopFavList?.removeAt(index);
+       for (int i =  index; i <= shopFavList!.length-1; i++) {
 
+         storeListWidget[i]=
+             StoreWidget(store:shopFavList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[i].id}",i);}, shopAreAddedOrNot: shopFavList?[i].id==1, mainCategoryId: 0,);
 
+       }
         update();
       }
 
 
-    }else{
-      ResponseModel? data = await FavoriteServices.addOrRemoveShopFromFavorite(storeId,"1");
-      if(data?.msg != "succeeded"){
-        showDialog(context: context,
-            builder: (context) {
-              return AlertDialogue(alertTitle: 'حدث خطأ', alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
-            }
-        );
-      }else{
-        var checker =  await checkStoreAddedOrNet( "${shopFavList?[index].id}");
-        storeListWidget[index]=StoreWidget(store:shopFavList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: 0,);
-        update();
-      }
     }
+
 
 
 }
 fillStoreData(context) async {
   storeListWidget =[];
-  for (int i = 0; i <= shopFavList!.length-1; i=i+1) {
-    var checker =  await checkStoreAddedOrNet( "${shopFavList?[i].id}");
+  for (int i = 0; i <= shopFavList!.length-1; i++) {
+
     storeListWidget.add(
-        StoreWidget(store:shopFavList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[i].id}",i);}, shopAreAddedOrNot: checker, mainCategoryId: 0,)
+        StoreWidget(store:shopFavList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[i].id}",i);}, shopAreAddedOrNot: shopFavList?[i].id==1, mainCategoryId: 0,)
     );
 
   }

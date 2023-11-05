@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/constant.dart';
+import 'package:sprinkles/Utils/localization_services.dart';
+import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/favorite_screen/controller/favorite_controller.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
@@ -39,7 +41,9 @@ class FavoriteScreen extends StatelessWidget {
                     fontSize: 15,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w900,
-                    fontFamily: fontFamilyArabicName,
+                    fontFamily: Get
+                        .find<StorageService>()
+                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                     foreground: Paint()
                       ..style = PaintingStyle.stroke
                       ..strokeWidth =3
@@ -49,11 +53,13 @@ class FavoriteScreen extends StatelessWidget {
                 // The text inside
                  CustomText(
                   favTitle.tr,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     fontSize: 15,
                     letterSpacing: 0,
                     fontWeight: FontWeight.w900,
-                    fontFamily: fontFamilyArabicName,
+                    fontFamily: Get
+                        .find<StorageService>()
+                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                     color: kDarkPinkColor,
                   ),
                 ),
@@ -212,7 +218,9 @@ class FavoriteScreen extends StatelessWidget {
                                         fontSize: 15,
                                         letterSpacing: 0,
                                         fontWeight: FontWeight.w900,
-                                        fontFamily: fontFamilyArabicName,
+                                        fontFamily: Get
+                                            .find<StorageService>()
+                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                         foreground: Paint()
                                           ..style = PaintingStyle.stroke
                                           ..strokeWidth =3
@@ -226,7 +234,9 @@ class FavoriteScreen extends StatelessWidget {
                                         fontSize: 15,
                                         letterSpacing: 0,
                                         fontWeight: FontWeight.w900,
-                                        fontFamily: fontFamilyArabicName,
+                                        fontFamily: Get
+                                            .find<StorageService>()
+                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                         color: controller.selectedTap == 0?kDarkPinkColor:kLightPinkColor,
                                       ),
                                     ),
@@ -326,7 +336,9 @@ class FavoriteScreen extends StatelessWidget {
                                         fontSize: 15,
                                         letterSpacing: 0,
                                         fontWeight: FontWeight.w900,
-                                        fontFamily: fontFamilyArabicName,
+                                        fontFamily: Get
+                                            .find<StorageService>()
+                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                         foreground: Paint()
                                           ..style = PaintingStyle.stroke
                                           ..strokeWidth =3
@@ -340,7 +352,9 @@ class FavoriteScreen extends StatelessWidget {
                                         fontSize: 15,
                                         letterSpacing: 0,
                                         fontWeight: FontWeight.w900,
-                                        fontFamily: fontFamilyArabicName,
+                                        fontFamily: Get
+                                            .find<StorageService>()
+                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                         color: controller.selectedTap == 1?kDarkPinkColor:kLightPinkColor,
                                       ),
                                     ),
@@ -376,9 +390,11 @@ class FavoriteScreen extends StatelessWidget {
                    CustomText(
                      noFavDataStoreList.tr,
                     textAlign:TextAlign.center,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       fontSize:25,
-                      fontFamily: fontFamilyArabicName,
+                      fontFamily: Get
+                          .find<StorageService>()
+                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                       fontWeight: FontWeight.w900,
 
                       color: kDarkPinkColor,
@@ -401,9 +417,11 @@ class FavoriteScreen extends StatelessWidget {
                  CustomText(
                   noFavDataProductList.tr,
                   textAlign:TextAlign.center,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     fontSize:25,
-                    fontFamily: fontFamilyEnglishName,
+                    fontFamily: Get
+                        .find<StorageService>()
+                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                     fontWeight: FontWeight.w600,
                     color: kDarkPinkColor,
                   ),

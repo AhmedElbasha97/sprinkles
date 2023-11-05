@@ -122,7 +122,7 @@ class EditPasswordController extends GetxController{
       changePassword = false;
       showDialog(context: context,
           builder: (context) {
-            return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"", alertIcon: "assets/icons/warningIcon.png",containerHeight:Get.height*0.4);
+            return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"", alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
           }
       );
     }

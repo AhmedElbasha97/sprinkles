@@ -60,7 +60,7 @@ class ReportController extends GetxController{
                         .activeLocale == SupportedLocales.english ? result
                         ?.msg ?? "" : result?.msgAr ?? "",
                     alertIcon: "assets/icons/okIcon.png",
-                    containerHeight: Get.height * 0.4);
+                    containerHeight: Get.height*0.4);
               }
           );
         } else {
@@ -74,7 +74,7 @@ class ReportController extends GetxController{
                         .activeLocale == SupportedLocales.english ? result
                         ?.msg ?? "" : result?.msgAr ?? "",
                     alertIcon: "assets/icons/warningIcon.png",
-                    containerHeight: Get.height * 0.4);
+                    containerHeight: Get.height*0.4);
               }
           );
         }

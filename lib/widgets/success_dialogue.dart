@@ -20,7 +20,7 @@ class SuccessDialogue extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 0,
       child: Container(
-        height:containerHeight==0?Get.height*0.19+Get.height*0.14:containerHeight??0+Get.height*0.14,
+        height:containerHeight==0?Get.height*0.19+Get.height*0.12:containerHeight??0+Get.height*0.12,
         color:Colors.transparent,
 
         child: Center(
@@ -72,15 +72,8 @@ class SuccessDialogue extends StatelessWidget {
                                   child: CustomText(
                                     successText,
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      shadows: <Shadow>[
-                                        Shadow(
-                                            offset: const Offset(2.0, 2.0),
-                                            blurRadius: 13.0,
+                                    style: const TextStyle(
 
-                                            color: Colors.black.withOpacity(0.5)
-                                        ),
-                                      ],
                                       fontSize: 18,
                                       letterSpacing: 0,
                                       fontFamily: fontFamilyArabicName,
@@ -186,17 +179,24 @@ class SuccessDialogue extends StatelessWidget {
               ),
               Positioned(
                 top:0,
-                left:Get.width*0.3,
                 child: Container(
+                  width:Get.width*0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
 
-                  padding:const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
+                        padding:const EdgeInsets.all(2),
+                        decoration: const BoxDecoration(
 
-                      borderRadius:BorderRadius.circular(50),color:kDarkPinkColor
+                            shape: BoxShape.circle,color:kDarkPinkColor
+                        ),
+                        height: Get.height*0.15,
+                        width: Get.width*0.3,
+                        child: Image.asset("assets/icons/succesIcon.png",fit: BoxFit.fitHeight,),
+                      ),
+                    ],
                   ),
-                  height: Get.height*0.15,
-                  width: Get.width*0.3,
-                  child: Image.asset("assets/icons/succesIcon.png",fit: BoxFit.fitHeight,),
                 ),
               ),
 
