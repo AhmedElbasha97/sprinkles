@@ -41,17 +41,43 @@ class StoreDetailedController extends GetxController{
  final int mainCategoryId;
  final BuildContext context;
  ScrollController scrollController = ScrollController();
-
+ bool isVisible = false;
   StoreDetailedController({required this.context, required this.mainCategoryId, required this.shopId});
 
  @override
   Future<void> onInit() async {
    super.onInit();
    await getData();
+   scrollController.addListener(() {
+     if (scrollController.position.userScrollDirection ==
+         ScrollDirection.reverse) {
+       if (isVisible == true) {
 
+         isVisible = false;
+         update();
+       }
+     } else {
+       if (scrollController.position.userScrollDirection ==
+           ScrollDirection.forward) {
+         if (isVisible == false) {
+
+           isVisible = true;
+           update();
+         }
+       }
+     }
+   });
  }
- @override
 
+ goUpToTopOfSScreen(){
+   scrollController.animateTo( //go to top of scroll
+       0,  //scroll offset to go
+       duration: const Duration(milliseconds: 500), //duration of scroll
+       curve:Curves.fastOutSlowIn //scroll type
+   );
+   isVisible = false;
+   update();
+ }
  selectingAnotherSubCategory(int subCategoryId){
    selectedSubCategoryId = subCategoryId;
    getProductData(true);

@@ -865,7 +865,7 @@ class FilterScreen extends StatelessWidget {
                   ),
                   controller.selectedTap != "p"?const SizedBox():controller.mainCategoryName == ""?const SizedBox():const Divider(
                     color: kDarkPinkColor,
-                    height: 1,
+                    height: 0.5,
                     thickness: 2,
                     endIndent: 0,
                     indent: 0,
@@ -1234,7 +1234,7 @@ class FilterScreen extends StatelessWidget {
                   ),
                   const Divider(
                     color: kDarkPinkColor,
-                    height: 1,
+                    height: 0.5,
                     thickness: 2,
                     endIndent: 0,
                     indent: 0,
@@ -1416,7 +1416,7 @@ class FilterScreen extends StatelessWidget {
                   ),
                   controller.selectedTap != "p"?const SizedBox():const Divider(
                     color: kDarkPinkColor,
-                    height: 1,
+                    height: 0.5,
                     thickness: 2,
                     endIndent: 0,
                     indent: 0,
@@ -1491,7 +1491,7 @@ class FilterScreen extends StatelessWidget {
                                   ),
                                   const Divider(
                                     color: kDarkPinkColor,
-                                    height: 1,
+                                    height: 0.5,
                                     thickness: 2,
                                     endIndent: 0,
                                     indent: 0,
@@ -1597,7 +1597,7 @@ class FilterScreen extends StatelessWidget {
                   ),
                   const Divider(
                     color: kDarkPinkColor,
-                    height: 1,
+                    height: 0.5,
                     thickness: 2,
                     endIndent: 0,
                     indent: 0,

@@ -15,6 +15,7 @@ import 'package:sprinkles/widgets/text_field_widget.dart';
 
 import '../../Utils/localization_services.dart';
 import '../../Utils/translation_key.dart';
+import '../forgetPassword/forget_password_screen.dart';
 
 class LoginScreen extends StatelessWidget {
    LoginScreen({Key? key}) : super(key: key);
@@ -322,7 +323,7 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 60),
                 InkWell(
                   onTap: (){
-
+                    Get.to(ForgettingPasswordScreen());
                   },
                   child:   Text(signInTextForgetPass.tr ,
                     style:  TextStyle(

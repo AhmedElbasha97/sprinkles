@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.6+7
+version: 1.0.7+9
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -70,6 +70,7 @@ dependencies:
       url: https://github.com/chornthorn/data_connection_checker.git
       ref: master
   cupertino_icons: ^1.0.5
+  flutter_native_splash: ^2.3.5
 
 
 
@@ -77,13 +78,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+flutter_lints: ^2.0.2
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^2.0.2
+
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -122,4 +121,18 @@ flutter:
           - asset: assets/fonts/Alois Bold.ttf
             weight: 900
 
+flutter_native_splash:
+  color: "#f56893"
+  image: assets/images/logo sprinkles.png
+  branding: assets/images/logo sprinkles.png
+  color_dark: "#f56893"
+  image_dark: assets/images/logo sprinkles.png
+  branding_dark: assets/images/logo sprinkles.png
+  fullscreen: true
+  android_12:
+    image: assets/images/logo sprinkles.png
+    icon_background_color: "#f56893"
+    image_dark: assets/images/logo sprinkles.png
+    icon_background_color_dark: "#f56893"
+  web: false
 

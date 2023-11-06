@@ -288,7 +288,7 @@ class AppTranslations extends Translations {
       fiveStarRat: "خمس نجوم",
       advancedSearchTitle: "البحث المتقدم",
       advancedSearchBTN: "ابداء البحث",
-      searchPriceTitle: "إختر مدي السعر المنتج :",
+      searchPriceTitle: "إختر مدي سعر المنتج :",
       searchPriceText1: "السعر المبدئي",
       searchPriceText2: "السعر النهائي",
       searchRateTitle: "إختر مستوى التقيم :",

@@ -2,7 +2,6 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -12,8 +11,6 @@ import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/ui/contact_us/report_screen.dart';
-import 'package:sprinkles/ui/product_detailed_screen/widget/comment_loading_widget.dart';
-import 'package:sprinkles/ui/product_detailed_screen/widget/comment_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_loading_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/category_widget.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_loading_widget.dart';
@@ -38,7 +35,7 @@ class StoreDetailedScreen extends StatefulWidget {
 
 class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
 
-  bool _isAppbar = true;
+
   @override
   void initState() {
     super.initState();
@@ -54,47 +51,48 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
       builder: (StoreDetailedController controller) =>  Scaffold(
         key: controller.scaffoldState,
         drawer: AppDrawers(scaffoldKey: controller.scaffoldState,),
-        floatingActionButton: AnimatedOpacity(
-          duration: const Duration(milliseconds: 100),  //show/hide animation
-          opacity: _isAppbar?1.0:0.0, //set obacity to 1 on visible, or hide
-          child: FloatingActionButton(
-            onPressed: () {
-             controller.scrollController.animateTo( //go to top of scroll
-                  0,  //scroll offset to go
-                  duration: const Duration(milliseconds: 500), //duration of scroll
-                  curve:Curves.fastOutSlowIn //scroll type
-              );
+        floatingActionButton: Visibility(
+          visible: controller.isVisible,
+          child: InkWell(
+            onTap: (){
+              controller. goUpToTopOfSScreen();
             },
-            child:  Container(
-                width: Get.width*0.35,
-                height: Get.height*0.08,
-                decoration: BoxDecoration(
-                  border: Border.all( color:kBackGroundColor,width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      offset: const Offset(
-                        0.0,
-                        0.0,
-                      ),
-                      blurRadius: 13.0,
-                      spreadRadius: 2.0,
-                    ), //BoxShadow
-                    BoxShadow(
-                      color: Colors.white.withOpacity(0.2),
-                      offset: const Offset(0.0, 0.0),
-                      blurRadius: 0.0,
-                      spreadRadius: 0.0,
-                    ), //BoxShadow
-                  ],
-                  gradient: const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [kDarkPinkColor,kLightPinkColor],
-                  ),borderRadius: BorderRadius.circular(40), //
+            child: Container(
+              width: Get.width*0.17,
+              height: Get.height*0.08,
+              decoration: BoxDecoration(
+                border: Border.all( color:kBackGroundColor,width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    offset: const Offset(
+                      0.0,
+                      0.0,
+                    ),
+                    blurRadius: 13.0,
+                    spreadRadius: 2.0,
+                  ), //BoxShadow
+                  BoxShadow(
+                    color: Colors.white.withOpacity(0.2),
+                    offset: const Offset(0.0, 0.0),
+                    blurRadius: 0.0,
+                    spreadRadius: 0.0,
+                  ), //BoxShadow
+                ],
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [kDarkPinkColor,kLightPinkColor],
+                ),shape: BoxShape.circle,
+              ),
+              child:  Center(
+                child: const Icon(
+                  Icons.arrow_upward_sharp,
+                  weight: 30,
+                  color: Colors.white,
                 ),
-                child: Center(child: Icon(Icons.arrow_upward))),
-
+              ),
+            ),
           ),
         ),
         body:  SingleChildScrollView(
@@ -376,7 +374,6 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                                 Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.nameEn??"":controller.shopData?.name??"",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-
                                                   shadows: <Shadow>[
                                                     Shadow(
                                                         offset: const Offset(0.5, 0.5),
@@ -385,7 +382,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                                         color: Colors.black.withOpacity(0.5)
                                                     ),
                                                   ],
-                                                  fontSize: 12,
+                                                  fontSize: 15,
                                                   letterSpacing: 0,
                                                   fontFamily: Get
                                                       .find<StorageService>()
@@ -512,46 +509,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: InkWell(
-                                      onTap:(){
-                                        Get.to(()=>ReportScreen(productId: '0', storeId:"${controller.shopData?.id??0}" ,),transition:Transition.upToDown);
-                                      },
-                                      child: Container(
-                                        child: Row(
-                                            children:[
-                                              const Icon(
-                                                Icons.report_gmailerrorred  ,color:kDarkPinkColor,size:20
-                                            ),
-                                              CustomText(
-                                                reportTitle.tr,
-                                                textAlign:TextAlign.left,
-                                                style: TextStyle(
-                                                  shadows: <Shadow>[
-                                                    Shadow(
-                                                        offset: const Offset(0.5, 0.5),
-                                                        blurRadius: 0.5,
 
-                                                        color: Colors.black.withOpacity(0.5)
-                                                    ),
-                                                  ],
-                                                  fontSize: 13,
-                                                  letterSpacing: 0,
-                                                  fontFamily: Get
-                                                      .find<StorageService>()
-                                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                                                  color: kDarkPinkColor,
-                                                ),
-                                              ),
-
-
-                                            ]
-
-                                        ),
-                                      ),
-                                    ),
-                                  ),
 
                                 ]
                             ),
@@ -681,7 +639,6 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                                   Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.nameEn??"":controller.shopData?.name??"",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-
                                                   shadows: <Shadow>[
                                                     Shadow(
                                                         offset: const Offset(0.5, 0.5),
@@ -690,7 +647,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                                         color: Colors.black.withOpacity(0.5)
                                                     ),
                                                   ],
-                                                  fontSize: 12,
+                                                  fontSize: 15,
                                                   letterSpacing: 0,
                                                   fontFamily: Get
                                                       .find<StorageService>()
@@ -817,39 +774,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(0,5,8.0,0),
-                                    child: InkWell(
-                                      onTap:(){
-                                        Get.to(()=>ReportScreen(productId: '0', storeId:"${controller.shopData?.id??0}" ,),transition:Transition.upToDown);
-                                      },
-                                      child: Container(
-                                        child: Row(
-                                            children:[
-                                              const Icon(
-                                                Icons.report_gmailerrorred  ,color:kDarkPinkColor,size:20
-                                            ),
-                                              CustomText(
-                                                reportTitle.tr,
-                                                textAlign:TextAlign.left,
-                                                style: TextStyle(
 
-                                                  fontSize: 13,
-                                                  letterSpacing: 0,
-                                                  fontFamily: Get
-                                                      .find<StorageService>()
-                                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                                                  color: kDarkPinkColor,
-                                                ),
-                                              ),
-
-
-                                            ]
-
-                                        ),
-                                      ),
-                                    ),
-                                  ),
 
                                 ]
                             ),
@@ -1299,11 +1224,11 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                       ),
 
                  controller.shopIsLoading?const CategoryLoadingWidget():controller.shopData?.ctgs?.length == 0||controller.shopData?.ctgs?.length == 1? const SizedBox():Container(
-                    width:Get.width*0.95,
-                   height: Get.height*0.18,
+                   width:Get.width*0.95,
+                   height: Get.height*0.13,
                     child: ListView.builder(
                       scrollDirection:Axis.horizontal,
-                      controller: controller.scrollController,
+
                       shrinkWrap:true,
                       itemCount:controller.shopData?.ctgs?.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -1347,6 +1272,44 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                       children:
                       controller.products
 
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,10,0,10),
+                    child: InkWell(
+                      onTap:(){
+                        Get.to(()=>ReportScreen(productId: '0', storeId:"${controller.shopData?.id??0}" ,),transition:Transition.upToDown);
+                      },
+                      child: Container(
+                        width: Get.width,
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                              children:[
+                                const Icon(
+                                    Icons.report_gmailerrorred  ,color:kDarkPinkColor,size:30
+                                ),
+                                CustomText(
+                                  reportTitle.tr,
+                                  textAlign:TextAlign.left,
+                                  style: TextStyle(
+
+                                    fontSize: 18,
+                                    letterSpacing: 0,
+                                    fontFamily: Get
+                                        .find<StorageService>()
+                                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                    color: kDarkPinkColor,
+                                    fontWeight: FontWeight.w900
+                                  ),
+                                ),
+
+
+                              ]
+
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),

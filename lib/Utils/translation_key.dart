@@ -56,7 +56,6 @@ const favTap1 = "Fav_Tap_1";
 const noFavDataProductList  = 'No_Fav_Data_Product_List' ;
 const noFavDataStoreList  = 'No_Fav_Data_Store_List' ;
 const favTap2 = "Fav_Tap_2";
-
 const editProfileTitle = "Edit_Profile_Title";
 const loadingKey = "loading_Key";
 const doctorInformation = "Doctor_Information";

@@ -22,7 +22,7 @@ class CategoryWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Container(
-        height: Get.height*0.15,
+        height: Get.height*0.13,
 
 
         child:Column(
@@ -34,12 +34,12 @@ class CategoryWidget extends StatelessWidget {
               child: Stack(
                   children:[
                     SizedBox(
-                      height: Get.height*0.12,
+                      height: Get.height*0.09,
                       width:Get.width*0.17,
 
                     ),
                     Positioned(
-                      bottom:0,
+                      top:0,
                       child: Container(
                         height: Get.height*0.08,
                         width:Get.width*0.17,
@@ -50,7 +50,7 @@ class CategoryWidget extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      bottom:0,
+                      top:0,
                       left: 5,
                       child: CachedNetworkImage(
                         fit:  BoxFit.contain,

@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
@@ -57,6 +58,7 @@ class ProductController extends GetxController {
   bool mainCategoryIsLoading = true;
   List<Widget> products = [];
  final GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
+  bool isVisible = false;
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -71,6 +73,34 @@ class ProductController extends GetxController {
       await getSubCategoryData();
     }
     await  getAdvertisementsData();
+    scrollController.addListener(() {
+      if (scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (isVisible == true) {
+
+            isVisible = false;
+          update();
+        }
+      } else {
+        if (scrollController.position.userScrollDirection ==
+            ScrollDirection.forward) {
+          if (isVisible == false) {
+
+              isVisible = true;
+              update();
+          }
+        }
+      }
+    });
+  }
+  goUpToTopOfSScreen(){
+    scrollController.animateTo( //go to top of scroll
+        0,  //scroll offset to go
+        duration: const Duration(milliseconds: 500), //duration of scroll
+        curve:Curves.fastOutSlowIn //scroll type
+    );
+    isVisible = false;
+    update();
   }
   getMainCategoryData() async {
     mainCategoryList = await CategoryServices.getHomeCategory();

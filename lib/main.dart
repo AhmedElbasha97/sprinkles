@@ -35,18 +35,17 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return GetMaterialApp(
       translations: AppTranslations(),
-
-
       theme: ThemeData(
         primarySwatch: Colors.blue,
         appBarTheme: const AppBarTheme(
           iconTheme: IconThemeData(color: Colors.white),
-
-
           systemOverlayStyle: SystemUiOverlayStyle( //<-- SEE HERE
-
             statusBarColor:  kDarkPinkColor,
             statusBarIconBrightness: Brightness.dark,
             statusBarBrightness: Brightness.light,

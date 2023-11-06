@@ -52,9 +52,10 @@ class _AppDrawersState extends State<AppDrawers> {
   Get.find<StorageService>().checkUserIsSignedIn?
    DrawerItem(drawerTag4.tr,"userIcon.png"):
    DrawerItem(drawerTag5.tr,"loginIcon.png"),
-
-   DrawerItem(advancedSearchTitle.tr,"searchIconDrawer.png"),
-   DrawerItem(drawerTag7.tr,"signUpIconDrawer.png"),
+    Get.find<StorageService>().checkUserIsSignedIn?
+    DrawerItem(drawerTag6.tr,"logoutIcon.png"):
+    DrawerItem(drawerTag7.tr,"signUpIconDrawer.png"),
+    DrawerItem(advancedSearchTitle.tr,"searchIconDrawer.png"),
    DrawerItem(drawerTag8.tr,"privacyIconDrawer.png"),
    DrawerItem(drawerTag9.tr,"termsIconDrawer.png"),
    DrawerItem(drawerTag11.tr,"shareIcon.png"),

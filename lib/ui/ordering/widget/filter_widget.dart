@@ -101,50 +101,56 @@ class FilterWidget extends StatelessWidget {
                         );
                       }).toList(),
 
-                  child: Center(
-                    child: Container(
-                      width: Get.width*0.7,
-                      height: Get.height*0.07,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: Get.width*0.4,
+                          height: Get.height*0.07,
 
-                      child:   Center(
-                        child: selectedValue.filterValue==""?
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              "${orderingText1.tr}${Get.find<StorageService>().activeLocale == SupportedLocales.english? data?.filterEn??"":data?.filter??""}:",
-                              style:  TextStyle(
-                                  fontFamily: Get
-                                      .find<StorageService>()
-                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                                  color: kDarkPinkColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15),
+                          child:   Center(
+                            child: selectedValue.filterValue==""?
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomText(
+                                  "${orderingText1.tr}${Get.find<StorageService>().activeLocale == SupportedLocales.english? data?.filterEn??"":data?.filter??""}:",
+                                  style:  TextStyle(
+                                      fontFamily: Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                      color: kDarkPinkColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15),
+                                ),
+                                const SizedBox(width: 10),
+                               Icon(Icons.arrow_drop_down_circle_outlined,size:25,color: kDarkPinkColor,)
+
+                              ],
+                            ):
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                  (Get.find<StorageService>().activeLocale == SupportedLocales.english? data?.filterEn??"":data?.filter??"")+" ${orderingText2.tr} "+(Get.find<StorageService>().activeLocale == SupportedLocales.english? selectedValue.filterValueEn:selectedValue.filterValue),
+                                  style: TextStyle(
+                                      fontFamily: Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                      color: kDarkPinkColor,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 15),
+                                ),
+                                const SizedBox(width: 10),
+
+
+                              ],
                             ),
-                            const SizedBox(width: 10),
-                           Icon(Icons.arrow_drop_down_circle_outlined,size:25,color: kDarkPinkColor,)
-
-                          ],
-                        ):
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            CustomText(
-                              (Get.find<StorageService>().activeLocale == SupportedLocales.english? data?.filterEn??"":data?.filter??"")+" ${orderingText2.tr} "+(Get.find<StorageService>().activeLocale == SupportedLocales.english? selectedValue.filterValueEn??"":selectedValue.filterValue??""),
-                              style: TextStyle(
-                                  fontFamily: Get
-                                      .find<StorageService>()
-                                      .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                                  color: kDarkPinkColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 15),
-                            ),
-                            const SizedBox(width: 10),
-
-
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),

@@ -26,6 +26,7 @@ import 'package:sprinkles/ui/product_detailed_screen/widget/seller_product_loadi
 import 'package:sprinkles/ui/product_detailed_screen/widget/video_player_widget.dart';
 import 'package:sprinkles/ui/product_screen/controller/product_contoller.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_widget.dart';
+import 'package:sprinkles/ui/store_details_screen/store_details_screen.dart';
 import 'package:sprinkles/ui/store_details_screen/widget/commet_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
@@ -855,79 +856,84 @@ class ProductDetailedScreen extends StatelessWidget {
                                       .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
                                       .animate(),
                                 ) // this wraps the previous Animate in another Animate
-                                    :CachedNetworkImage(
+                                    : InkWell(
+                                  onTap: (){
+                                    Get.to(()=> StoreDetailedScreen(shopId: "${controller.productData?.shop?.id??0}", mainCategoryId: mainCategoryId,),preventDuplicates: false);
+                                  },
+                                      child: CachedNetworkImage(
                                   fit:  BoxFit.contain,
                                   imageUrl: "${Services.baseEndPoint}${controller.productData?.shop?.image??""}",
                                   imageBuilder: ((context, image){
-                                    return   Container(
-                                        height: Get.height*0.13,
-                                        width:Get.width*0.2,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white,
-                                          image: DecorationImage(
-                                            image: image,
-                                            fit:  BoxFit.contain,
-                                          ),
-                                        ));
+                                      return   Container(
+                                          height: Get.height*0.13,
+                                          width:Get.width*0.2,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.white,
+                                            image: DecorationImage(
+                                              image: image,
+                                              fit:  BoxFit.contain,
+                                            ),
+                                          ));
                                   }),
                                   placeholder: (context, image){
-                                    return   Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 7.0),
+                                      return   Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 7.0),
 
-                                      child: Container(
+                                        child: Container(
 
-                                        height: Get.height*0.08,
-                                        width:Get.width*0.17,
-                                        decoration:BoxDecoration(
-                                          color:  const Color(0xFFF2F0F3),
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black.withOpacity(0.1),
-                                              offset: const Offset(
-                                                0.0,
-                                                0.0,
+                                          height: Get.height*0.08,
+                                          width:Get.width*0.17,
+                                          decoration:BoxDecoration(
+                                            color:  const Color(0xFFF2F0F3),
+                                            shape: BoxShape.circle,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black.withOpacity(0.1),
+                                                offset: const Offset(
+                                                  0.0,
+                                                  0.0,
+                                                ),
+                                                blurRadius: 13.0,
+                                                spreadRadius: 2.0,
+                                              ), //BoxShadow
+                                              BoxShadow(
+                                                color: Colors.white.withOpacity(0.2),
+                                                offset: const Offset(0.0, 0.0),
+                                                blurRadius: 0.0,
+                                                spreadRadius: 0.0,
+                                              ), //BoxShadow
+                                            ],
+                                          ),
+                                          child:Center(
+                                            child: Container(
+                                              height: Get.height*0.07,
+                                              width:Get.width*0.15,
+                                              decoration:const BoxDecoration(
+                                                color:  Color(0xFFDFDDDF),
+                                                shape: BoxShape.circle,
+
                                               ),
-                                              blurRadius: 13.0,
-                                              spreadRadius: 2.0,
-                                            ), //BoxShadow
-                                            BoxShadow(
-                                              color: Colors.white.withOpacity(0.2),
-                                              offset: const Offset(0.0, 0.0),
-                                              blurRadius: 0.0,
-                                              spreadRadius: 0.0,
-                                            ), //BoxShadow
-                                          ],
-                                        ),
-                                        child:Center(
-                                          child: Container(
-                                            height: Get.height*0.07,
-                                            width:Get.width*0.15,
-                                            decoration:const BoxDecoration(
-                                              color:  Color(0xFFDFDDDF),
-                                              shape: BoxShape.circle,
-
-                                            ),
-                                          ).animate(onPlay: (controller) => controller.repeat())
-                                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                              .animate() // this wraps the previous Animate in another Animate
-                                          ,
-                                        ),
-                                      ).animate(onPlay: (controller) => controller.repeat())
-                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                          .animate(),
-                                    ) // this wraps the previous Animate in another Animate
-                                        ;
+                                            ).animate(onPlay: (controller) => controller.repeat())
+                                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                .animate() // this wraps the previous Animate in another Animate
+                                            ,
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate(),
+                                      ) // this wraps the previous Animate in another Animate
+                                          ;
                                   },
                                   errorWidget: (context, url, error){
-                                    return SizedBox(
-                                      height: Get.height*0.1,
-                                      width:Get.width*0.2,
-                                      child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
-                                    );
+                                      return SizedBox(
+                                        height: Get.height*0.1,
+                                        width:Get.width*0.2,
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                      );
                                   },
                                 ),
+                                    ),
 
                               ],
                             ),
@@ -1020,76 +1026,81 @@ class ProductDetailedScreen extends StatelessWidget {
                                 ).animate(onPlay: (controller) => controller.repeat())
                                     .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
                                     .animate() // this wraps the previous Animate in another Animate
-                                    :CachedNetworkImage(
+                                    :InkWell(
+                                  onTap: (){
+                                    Get.to(()=> StoreDetailedScreen(shopId: "${controller.productData?.shop?.id??0}", mainCategoryId: mainCategoryId,),preventDuplicates: false);
+                                  },
+                                      child: CachedNetworkImage(
                                   imageUrl: "${Services.baseEndPoint}${controller.productData?.shop?.image??""}",
                                   imageBuilder: ((context, image){
-                                    return   Container(
-                                        height: Get.height*0.13,
-                                        width:Get.width*0.2,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white,
+                                      return   Container(
+                                          height: Get.height*0.13,
+                                          width:Get.width*0.2,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.white,
 
-                                          image: DecorationImage(
-                                            image: image,
-                                            fit:  BoxFit.contain,
-                                          ),
-                                        ));
+                                            image: DecorationImage(
+                                              image: image,
+                                              fit:  BoxFit.contain,
+                                            ),
+                                          ));
                                   }),
                                   placeholder: (context, image){
-                                    return   Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 7.0),
-                                      child: Container(
-                                        height: Get.height*0.08,
-                                        width:Get.width*0.17,
-                                        decoration:BoxDecoration(
-                                          color:  const Color(0xFFF2F0F3),
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black.withOpacity(0.1),
-                                              offset: const Offset(
-                                                0.0,
-                                                0.0,
+                                      return   Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 7.0),
+                                        child: Container(
+                                          height: Get.height*0.08,
+                                          width:Get.width*0.17,
+                                          decoration:BoxDecoration(
+                                            color:  const Color(0xFFF2F0F3),
+                                            shape: BoxShape.circle,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black.withOpacity(0.1),
+                                                offset: const Offset(
+                                                  0.0,
+                                                  0.0,
+                                                ),
+                                                blurRadius: 13.0,
+                                                spreadRadius: 2.0,
+                                              ), //BoxShadow
+                                              BoxShadow(
+                                                color: Colors.white.withOpacity(0.2),
+                                                offset: const Offset(0.0, 0.0),
+                                                blurRadius: 0.0,
+                                                spreadRadius: 0.0,
+                                              ), //BoxShadow
+                                            ],
+                                          ),
+                                          child:Center(
+                                            child: Container(
+                                              height: Get.height*0.07,
+                                              width:Get.width*0.15,
+                                              decoration:const BoxDecoration(
+                                                color:  Color(0xFFDFDDDF),
+                                                shape: BoxShape.circle,
                                               ),
-                                              blurRadius: 13.0,
-                                              spreadRadius: 2.0,
-                                            ), //BoxShadow
-                                            BoxShadow(
-                                              color: Colors.white.withOpacity(0.2),
-                                              offset: const Offset(0.0, 0.0),
-                                              blurRadius: 0.0,
-                                              spreadRadius: 0.0,
-                                            ), //BoxShadow
-                                          ],
-                                        ),
-                                        child:Center(
-                                          child: Container(
-                                            height: Get.height*0.07,
-                                            width:Get.width*0.15,
-                                            decoration:const BoxDecoration(
-                                              color:  Color(0xFFDFDDDF),
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ).animate(onPlay: (controller) => controller.repeat())
-                                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                              .animate() // this wraps the previous Animate in another Animate
-                                          ,
-                                        ),
-                                      ).animate(onPlay: (controller) => controller.repeat())
-                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                          .animate(),
-                                    ) // this wraps the previous Animate in another Animate
-                                        ;
+                                            ).animate(onPlay: (controller) => controller.repeat())
+                                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                .animate() // this wraps the previous Animate in another Animate
+                                            ,
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate(),
+                                      ) // this wraps the previous Animate in another Animate
+                                          ;
                                   },
                                   errorWidget: (context, url, error){
-                                    return SizedBox(
-                                      height: Get.height*0.1,
-                                      width:Get.width*0.2,
-                                      child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitWidth,),
-                                    );
+                                      return SizedBox(
+                                        height: Get.height*0.1,
+                                        width:Get.width*0.2,
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitWidth,),
+                                      );
                                   },
                                 ),
+                                    ),
 
                               ],
                             ),

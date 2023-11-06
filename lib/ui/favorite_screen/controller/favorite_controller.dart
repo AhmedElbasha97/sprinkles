@@ -59,10 +59,6 @@ Future<bool> checkProductAddedOrNet(String productId) async {
   }
 }
 addingOrRemovingProductToFavorite(context,String productId,int index,bool doubleProductOrNot) async {
-  int i = 0;
-  if(index!=0){
-    i = (index/2).round();
-  }
     if( await checkProductAddedOrNet(productId)){
       ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"0");
       if(data?.msg != "succeeded"){

@@ -32,5 +32,5 @@ class Services {
  static String statsEndPoint = "order/new";//post
  static String addingCommentEndPoint = "review/new";//post
  static String getCommentEndPoint = "review";//post
-
+ static String forgetPasswordEndPoint = "member/forget_password";//post
 }

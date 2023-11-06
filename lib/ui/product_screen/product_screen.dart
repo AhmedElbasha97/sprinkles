@@ -40,6 +40,50 @@ class ProductScreen extends StatelessWidget {
           key: controller.scaffoldState,
           drawer: AppDrawers(scaffoldKey: controller.scaffoldState,),
           backgroundColor:kBackGroundColor,
+          floatingActionButton: Visibility(
+            visible: controller.isVisible,
+            child: InkWell(
+              onTap: (){
+              controller. goUpToTopOfSScreen();
+              },
+              child: Container(
+                width: Get.width*0.17,
+                height: Get.height*0.08,
+                decoration: BoxDecoration(
+                  border: Border.all( color:kBackGroundColor,width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      offset: const Offset(
+                        0.0,
+                        0.0,
+                      ),
+                      blurRadius: 13.0,
+                      spreadRadius: 2.0,
+                    ), //BoxShadow
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.2),
+                      offset: const Offset(0.0, 0.0),
+                      blurRadius: 0.0,
+                      spreadRadius: 0.0,
+                    ), //BoxShadow
+                  ],
+                  gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [kDarkPinkColor,kLightPinkColor],
+                  ),shape: BoxShape.circle,
+                ),
+                child:  Center(
+                  child: const Icon(
+                    Icons.arrow_upward_sharp,
+                    weight: 30,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
           body:  SingleChildScrollView(
             controller: controller.scrollController,
             child: Container(
@@ -1418,31 +1462,34 @@ class ProductScreen extends StatelessWidget {
 
                       ]
                     ),
+                    SizedBox(height: 10,),
                     selectingFromDrawer?controller.mainCategoryIsLoading?const CategoryLoadingWidget():
                   Container(
                     width:Get.width*0.95,
-                    height: Get.height*0.18,
-                    child: ListView.builder(
-                      scrollDirection:Axis.horizontal,
-                      controller: controller.scrollController,
-                      shrinkWrap:true,
-                      itemCount:controller.mainCategoryList?.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return
-                          InkWell(
-                              onTap:(){
-                                controller.selectingCategoryFromMainCategory(controller.mainCategoryList?[index].id??0);
-                              },
-                              child: CategoryWidget(category:controller.mainCategoryList?[index], selectedCategoryId:  controller.selectedMainCategoryId,)); },
+                    height: Get.height*0.13,
+                    child: Center(
+                      child: ListView.builder(
+                        scrollDirection:Axis.horizontal,
 
+                        shrinkWrap:true,
+                        itemCount:controller.mainCategoryList?.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return
+                            InkWell(
+                                onTap:(){
+                                  controller.selectingCategoryFromMainCategory(controller.mainCategoryList?[index].id??0);
+                                },
+                                child: CategoryWidget(category:controller.mainCategoryList?[index], selectedCategoryId:  controller.selectedMainCategoryId,)); },
+
+                      ),
                     ),
                   ):
                     controller.categoryIsLoading?const CategoryLoadingWidget():Container(
                       width:Get.width*0.95,
-                      height: Get.height*0.16,
+                      height: Get.height*0.13,
                       child: ListView.builder(
                         scrollDirection:Axis.horizontal,
-                        controller: controller.scrollController,
+
                         shrinkWrap:true,
                         itemCount:controller.subCategoryList?.length,
                         itemBuilder: (BuildContext context, int index) {
@@ -1457,10 +1504,10 @@ class ProductScreen extends StatelessWidget {
                     ),
                     selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?const CategoryLoadingWidget():Container(
                       width:Get.width*0.95,
-                      height: Get.height*0.15,
+                      height: Get.height*0.13,
                       child: ListView.builder(
                         scrollDirection:Axis.horizontal,
-                        controller: controller.scrollController,
+
                         shrinkWrap:true,
                         itemCount:controller.subCategoryList?.length,
                         itemBuilder: (BuildContext context, int index) {

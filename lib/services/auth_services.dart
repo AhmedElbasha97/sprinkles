@@ -70,4 +70,13 @@ class AuthServices {
     return null;
   }
 
+  static Future<ResponseModel?> forgetPassword (String email) async {
+    var data = await api.request(Services.forgetPasswordEndPoint, "POST",queryParamters: {
+      "email":email,
+    });
+    if (data != null) {
+      return ResponseModel.fromJson(data);
+    }
+    return null;
+  }
 }
