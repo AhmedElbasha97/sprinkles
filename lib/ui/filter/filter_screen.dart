@@ -486,7 +486,6 @@ class FilterScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Container(
@@ -856,20 +855,6 @@ class FilterScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-
-
-
-                  ///seprate
-                  controller.selectedTap != "p"?const SizedBox():controller.mainCategoryName == ""?const SizedBox():const SizedBox(
-                    height: 10,
-                  ),
-                  controller.selectedTap != "p"?const SizedBox():controller.mainCategoryName == ""?const SizedBox():const Divider(
-                    color: kDarkPinkColor,
-                    height: 0.5,
-                    thickness: 2,
-                    endIndent: 0,
-                    indent: 0,
-                  ),
                   controller.selectedTap != "p"?const SizedBox():  controller.mainCategoryName == ""?const SizedBox():const SizedBox(
                     height: 10,
                   ),
@@ -1232,16 +1217,7 @@ class FilterScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Divider(
-                    color: kDarkPinkColor,
-                    height: 0.5,
-                    thickness: 2,
-                    endIndent: 0,
-                    indent: 0,
-                  ),
-                  controller.mainCategoryName == ""?const SizedBox():const SizedBox(
-                    height: 10,
-                  ),
+
 
                   controller.selectedTap != "p"?const SizedBox():Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -1414,16 +1390,8 @@ class FilterScreen extends StatelessWidget {
                   controller.selectedTap != "p"?const SizedBox():const SizedBox(
                     height: 10,
                   ),
-                  controller.selectedTap != "p"?const SizedBox():const Divider(
-                    color: kDarkPinkColor,
-                    height: 0.5,
-                    thickness: 2,
-                    endIndent: 0,
-                    indent: 0,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+
+
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Container(
@@ -1595,18 +1563,6 @@ class FilterScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Divider(
-                    color: kDarkPinkColor,
-                    height: 0.5,
-                    thickness: 2,
-                    endIndent: 0,
-                    indent: 0,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-
-
                   Center(
                     child: InkWell(
                       onTap: (){
