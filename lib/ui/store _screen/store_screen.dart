@@ -35,6 +35,50 @@ class StoreScreen extends StatelessWidget {
           return true;
         },
         child: Scaffold(
+          floatingActionButton: Visibility(
+            visible: controller.isVisible,
+            child: InkWell(
+              onTap: (){
+                controller. goUpToTopOfSScreen();
+              },
+              child: Container(
+                width: Get.width*0.17,
+                height: Get.height*0.08,
+                decoration: BoxDecoration(
+                  border: Border.all( color:kBackGroundColor,width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      offset: const Offset(
+                        0.0,
+                        0.0,
+                      ),
+                      blurRadius: 13.0,
+                      spreadRadius: 2.0,
+                    ), //BoxShadow
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.2),
+                      offset: const Offset(0.0, 0.0),
+                      blurRadius: 0.0,
+                      spreadRadius: 0.0,
+                    ), //BoxShadow
+                  ],
+                  gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [kDarkPinkColor,kLightPinkColor],
+                  ),shape: BoxShape.circle,
+                ),
+                child:  Center(
+                  child: const Icon(
+                    Icons.arrow_upward_sharp,
+                    weight: 30,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
           key: controller.scaffoldState,
           drawer: AppDrawers(scaffoldKey: controller.scaffoldState,),
           backgroundColor:kBackGroundColor,
@@ -51,7 +95,7 @@ class StoreScreen extends StatelessWidget {
 
                         children:[
                           Container(
-                            height: Get.height*0.3,
+                            height: Get.height*0.31,
                             width:Get.width,
 
                           ),
@@ -86,6 +130,7 @@ class StoreScreen extends StatelessWidget {
                                                 Get.find<StorageService>().activeLocale = newLocale;
                                                 //in Getx
                                                 Get.updateLocale(newLocale);
+                                                controller.changeFiltersData();
                                               },
                                               child: CustomText(
                                                 translateButton.tr,
@@ -184,7 +229,7 @@ class StoreScreen extends StatelessWidget {
                                                       .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                   fontWeight: FontWeight.w700),
                                               onTap: (){
-                                                controller.selectingFilter(e);
+                                                controller.selectingFilter(e,false);
                                               },
                                               child: SizedBox(
                                                 width: Get.width*0.45,
@@ -218,7 +263,9 @@ class StoreScreen extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
                                         child: Container(
-
+                                          constraints: BoxConstraints(
+                                            minHeight: Get.height*0.04,
+                                          ),
                                           width:Get.width*0.45,
                                           decoration: BoxDecoration(
                                             color:Colors.white,
@@ -244,7 +291,7 @@ class StoreScreen extends StatelessWidget {
                                           ),
                                           child:  Center(
                                             child:  Padding(
-                                              padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.005,8.0,Get.height*0.005),                                              child: Row(
+                                              padding:  EdgeInsets.fromLTRB(8.0,0,8.0,0),                                              child: Row(
                                                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                                 children: [
 
@@ -320,7 +367,6 @@ class StoreScreen extends StatelessWidget {
                                           textInputAction: TextInputAction.search,
                                           inputFormatters: [
                                             FilteringTextInputFormatter.allow(RegExp("[a-zA-Z\u0621-\u064A]")),
-
 
                                           ],
                                           style: TextStyle(
@@ -431,7 +477,7 @@ class StoreScreen extends StatelessWidget {
 
                         children:[
                           Container(
-                            height: Get.height*0.3,
+                            height: Get.height*0.31,
                             width:Get.width,
 
                           ),
@@ -466,6 +512,8 @@ class StoreScreen extends StatelessWidget {
                                                 Get.find<StorageService>().activeLocale = newLocale;
                                                 //in Getx
                                                 Get.updateLocale(newLocale);
+
+                                                controller.changeFiltersData();
                                               },
                                               child: CustomText(
                                                 translateButton.tr,
@@ -550,6 +598,7 @@ class StoreScreen extends StatelessWidget {
                                     ),
                                     PopupMenuButton<String>(
                                       constraints:BoxConstraints(
+
                                         maxWidth:  Get.width*0.45,
                                         minWidth:  Get.width*0.45,
                                       ),
@@ -564,7 +613,7 @@ class StoreScreen extends StatelessWidget {
                                                       .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                   fontWeight: FontWeight.w700),
                                               onTap: (){
-                                                controller.selectingFilter(e);
+                                                controller.selectingFilter(e,false);
                                               },
                                               child: SizedBox(
                                                 width: Get.width*0.45,
@@ -600,7 +649,9 @@ class StoreScreen extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
                                         child: Container(
-
+                                          constraints: BoxConstraints(
+                                            minHeight: Get.height*0.04,
+                                          ),
                                           width:Get.width*0.45,
                                           decoration: BoxDecoration(
                                             color:Colors.white,
@@ -626,7 +677,8 @@ class StoreScreen extends StatelessWidget {
                                           ),
                                           child:  Center(
                                             child:  Padding(
-                                              padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.005,8.0,Get.height*0.005),                                              child: Row(
+                                              padding:  EdgeInsets.fromLTRB(8.0,0,8.0,0),
+                                              child: Row(
                                                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                                 children: [
 

@@ -97,7 +97,7 @@ class ProductScreen extends StatelessWidget {
 
                         children:[
                           Container(
-                            height: Get.height*0.29,
+                            height: Get.height*0.31,
                             width:Get.width,
                             child:const Padding(padding: EdgeInsets.all(0),
                             ),
@@ -464,7 +464,7 @@ class ProductScreen extends StatelessWidget {
                                                 Get.find<StorageService>().activeLocale = newLocale;
                                                 //in Getx
                                                 Get.updateLocale(newLocale);
-
+                                                controller.changeFilterData();
                                               },
                                               child: CustomText(
                                                 translateButton.tr,
@@ -550,10 +550,6 @@ class ProductScreen extends StatelessWidget {
                                       height:Get.height*0.02,
                                     ),
                                     PopupMenuButton<String>(
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                      splashRadius:0.5,
-                                      elevation: 3.0,
                                       constraints:BoxConstraints(
                                         maxWidth:  Get.width*0.45,
                                         minWidth:  Get.width*0.45,
@@ -562,25 +558,22 @@ class ProductScreen extends StatelessWidget {
                                           controller.governmentData.map((e){
                                             return   PopupMenuItem(
                                               value:e,
-                                              textStyle:  TextStyle(
+                                              textStyle: TextStyle(
                                                   color: kDarkPinkColor,
                                                   fontFamily: Get
                                                       .find<StorageService>()
                                                       .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                   fontWeight: FontWeight.w700),
                                               onTap: (){
-                                                controller.selectingFilter(e);
+                                                controller.selectingFilter(e,false);
                                               },
                                               child: SizedBox(
-                                                width: Get.width*0.5,
-
+                                                width: Get.width*0.45,
                                                 child: Column(
                                                   children: [
                                                     CustomText(
                                                       e,
-                                                      textAlign: TextAlign.center,
                                                       style:  TextStyle(
-
                                                           color: kDarkPinkColor,
                                                           fontFamily: Get
                                                               .find<StorageService>()
@@ -602,13 +595,13 @@ class ProductScreen extends StatelessWidget {
                                               ),
                                             );
                                           }).toList(),
-                                      shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(15.0))
-                                      ),
+
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
                                         child: Container(
-
+                                          constraints: BoxConstraints(
+                                            minHeight: Get.height*0.04,
+                                          ),
                                           width:Get.width*0.45,
                                           decoration: BoxDecoration(
                                             color:Colors.white,
@@ -634,38 +627,38 @@ class ProductScreen extends StatelessWidget {
                                           ),
                                           child:  Center(
                                             child:  Padding(
-                                              padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.005,8.0,Get.height*0.005),                                              child: Row(
-                                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                                children: [
+                                              padding:  EdgeInsets.fromLTRB(8.0,0,8.0,0),                                              child: Row(
+                                              mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                              children: [
 
-                                                  Container(
+                                                Container(
 
-                                                    width:Get.width*0.34,
-                                                    child: CustomText(
-                                                      textAlign:TextAlign.center,
-                                                      maxLines:3,
-                                                      controller.selectingFilterTagName,
-                                                      style: TextStyle(
-                                                        shadows: <Shadow>[
-                                                          Shadow(
-                                                              offset: const Offset(0.5, 0.5),
-                                                              blurRadius: 0.5,
+                                                  width:Get.width*0.34,
+                                                  child: CustomText(
+                                                    textAlign:TextAlign.center,
+                                                    maxLines:3,
+                                                    controller.selectingFilterTagName,
+                                                    style: TextStyle(
+                                                      shadows: <Shadow>[
+                                                        Shadow(
+                                                            offset: const Offset(0.5, 0.5),
+                                                            blurRadius: 0.5,
 
-                                                              color: Colors.black.withOpacity(0.5)
-                                                          ),
-                                                        ],
-                                                        fontSize: 15,
-                                                        letterSpacing: 0,
-                                                        fontFamily: Get
-                                                            .find<StorageService>()
-                                                            .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                                                        color: kDarkPinkColor,
-                                                      ),
+                                                            color: Colors.black.withOpacity(0.5)
+                                                        ),
+                                                      ],
+                                                      fontSize: 15,
+                                                      letterSpacing: 0,
+                                                      fontFamily: Get
+                                                          .find<StorageService>()
+                                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                                      color: kDarkPinkColor,
                                                     ),
                                                   ),
-                                                  controller.selectingFilterTag == "0"||controller.selectingFilterTag.contains("desc")?const Icon( Icons.arrow_downward_sharp ,color:kDarkPinkColor,size:20):controller.selectingFilterTag.contains("asc")?const Icon( Icons.arrow_upward_sharp ,color:kDarkPinkColor,size:20):const SizedBox(),
-                                                ],
-                                              ),
+                                                ),
+                                                controller.selectingFilterTag == "0"||controller.selectingFilterTag.contains("desc")?const Icon( Icons.arrow_downward_sharp ,color:kDarkPinkColor,size:20):controller.selectingFilterTag.contains("asc")?const Icon( Icons.arrow_upward_sharp ,color:kDarkPinkColor,size:20):const SizedBox(),
+                                              ],
+                                            ),
                                             ),
 
                                           ),
@@ -785,7 +778,7 @@ class ProductScreen extends StatelessWidget {
                     Stack(
                       children:[
                         Container(
-                          height: Get.height*0.29,
+                          height: Get.height*0.31,
                           width:Get.width,
                           child:const Padding(padding: EdgeInsets.all(0),
                           ),
@@ -821,6 +814,7 @@ class ProductScreen extends StatelessWidget {
                                                Get.find<StorageService>().activeLocale = newLocale;
                                                //in Getx
                                                Get.updateLocale(newLocale);
+                                               controller.changeFilterData();
 
                                              },
                                              child: CustomText(
@@ -907,37 +901,30 @@ class ProductScreen extends StatelessWidget {
                                     height:Get.height*0.02,
                                   ),
                                   PopupMenuButton<String>(
-                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                    splashRadius:0.5,
-                                      elevation: 3.0,
-                                      constraints:BoxConstraints(
-                                        maxWidth:  Get.width*0.45,
-                                        minWidth:  Get.width*0.45,
-                                      ),
+                                    constraints:BoxConstraints(
+                                      maxWidth:  Get.width*0.45,
+                                      minWidth:  Get.width*0.45,
+                                    ),
                                     itemBuilder: (context) =>
                                         controller.governmentData.map((e){
                                           return   PopupMenuItem(
                                             value:e,
-                                            textStyle:  TextStyle(
+                                            textStyle: TextStyle(
                                                 color: kDarkPinkColor,
                                                 fontFamily: Get
                                                     .find<StorageService>()
                                                     .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                                                 fontWeight: FontWeight.w700),
                                             onTap: (){
-                                              controller.selectingFilter(e);
+                                              controller.selectingFilter(e,false);
                                             },
                                             child: SizedBox(
                                               width: Get.width*0.45,
-
                                               child: Column(
                                                 children: [
                                                   CustomText(
                                                     e,
-                                                    textAlign: TextAlign.center,
                                                     style:  TextStyle(
-
                                                         color: kDarkPinkColor,
                                                         fontFamily: Get
                                                             .find<StorageService>()
@@ -959,13 +946,13 @@ class ProductScreen extends StatelessWidget {
                                             ),
                                           );
                                         }).toList(),
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(15.0))
-                                    ),
+
                                     child: Padding(
                                       padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
                                       child: Container(
-
+                                        constraints: BoxConstraints(
+                                          minHeight: Get.height*0.04,
+                                        ),
                                         width:Get.width*0.45,
                                         decoration: BoxDecoration(
                                           color:Colors.white,
@@ -991,39 +978,38 @@ class ProductScreen extends StatelessWidget {
                                         ),
                                         child:  Center(
                                           child:  Padding(
-                                            padding:  EdgeInsets.fromLTRB(8.0,Get.height*0.005,8.0,Get.height*0.005),
-                                            child: Row(
-                                              mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                              children: [
+                                            padding:  EdgeInsets.fromLTRB(8.0,0,8.0,0),                                              child: Row(
+                                            mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                            children: [
 
-                                                Container(
+                                              Container(
 
-                                                  width:Get.width*0.34,
-                                                  child: CustomText(
-                                                    textAlign:TextAlign.center,
-                                                    maxLines:3,
-                                                    controller.selectingFilterTagName,
-                                                    style: TextStyle(
-                                                      shadows: <Shadow>[
-                                                        Shadow(
-                                                            offset: const Offset(0.5, 0.5),
-                                                            blurRadius: 0.5,
+                                                width:Get.width*0.34,
+                                                child: CustomText(
+                                                  textAlign:TextAlign.center,
+                                                  maxLines:3,
+                                                  controller.selectingFilterTagName,
+                                                  style: TextStyle(
+                                                    shadows: <Shadow>[
+                                                      Shadow(
+                                                          offset: const Offset(0.5, 0.5),
+                                                          blurRadius: 0.5,
 
-                                                            color: Colors.black.withOpacity(0.5)
-                                                        ),
-                                                      ],
-                                                      fontSize: 15,
-                                                      letterSpacing: 0,
-                                                      fontFamily: Get
-                                                          .find<StorageService>()
-                                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                                                      color: kDarkPinkColor,
-                                                    ),
+                                                          color: Colors.black.withOpacity(0.5)
+                                                      ),
+                                                    ],
+                                                    fontSize: 15,
+                                                    letterSpacing: 0,
+                                                    fontFamily: Get
+                                                        .find<StorageService>()
+                                                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                                    color: kDarkPinkColor,
                                                   ),
                                                 ),
-                                                controller.selectingFilterTag == "0"||controller.selectingFilterTag.contains("desc")?const Icon( Icons.arrow_downward_sharp ,color:kDarkPinkColor,size:20):controller.selectingFilterTag.contains("asc")?const Icon( Icons.arrow_upward_sharp ,color:kDarkPinkColor,size:20):const SizedBox(),
-                                              ],
-                                            ),
+                                              ),
+                                              controller.selectingFilterTag == "0"||controller.selectingFilterTag.contains("desc")?const Icon( Icons.arrow_downward_sharp ,color:kDarkPinkColor,size:20):controller.selectingFilterTag.contains("asc")?const Icon( Icons.arrow_upward_sharp ,color:kDarkPinkColor,size:20):const SizedBox(),
+                                            ],
+                                          ),
                                           ),
 
                                         ),

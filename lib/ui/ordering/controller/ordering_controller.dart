@@ -82,7 +82,7 @@ whatsapp(data?.shop?.whatsapp??"");
    try {
     if (Platform.isIOS) {
      var iosUrl = "https://wa.me/$contact?text=${Uri.parse(
-         messageTextWhatsApp)} ${data?.link ?? ""}";
+         messageTextWhatsApp)} \n ${data?.link ?? ""} ";
      await launchUrl(Uri.parse(iosUrl));
     }
     else {

@@ -280,7 +280,7 @@ class StoreWidget extends StatelessWidget {
                     crossAxisAlignment:CrossAxisAlignment.end,
                     children:[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0,0,15.0,0),
+                        padding: const EdgeInsets.fromLTRB(20.0,0,15.0,10),
                         child: CustomText(
                           Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.descEn??"":store?.desc??"",
                           style:  TextStyle(
@@ -404,7 +404,7 @@ class StoreWidget extends StatelessWidget {
                     crossAxisAlignment:CrossAxisAlignment.end,
                     children:[
                        Padding(
-                         padding: const EdgeInsets.fromLTRB(20.0,0,15.0,0),
+                         padding: const EdgeInsets.fromLTRB(20.0,0,15.0,10),
                          child: CustomText(
                           Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.descEn??"":store?.desc??"",
                           style: TextStyle(

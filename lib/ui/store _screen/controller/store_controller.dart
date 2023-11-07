@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
@@ -41,6 +42,7 @@ class StoreController extends GetxController {
   String selectingFilterTagName = removeFilterValue.tr;
   ScrollController scrollController = ScrollController();
   bool activateSearching = false;
+  bool isVisible = false;
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -53,18 +55,61 @@ class StoreController extends GetxController {
     await getMainCategoryData();
     }
     await   getStoreData(true);
+    scrollController.addListener(() {
+      if (scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (isVisible == true) {
+
+          isVisible = false;
+          update();
+        }
+      } else {
+        if (scrollController.position.userScrollDirection ==
+            ScrollDirection.forward) {
+          if (isVisible == false) {
+
+            isVisible = true;
+            update();
+          }
+        }
+      }
+    });
   }
-  selectingFilter(String filterName) async {
+  goUpToTopOfSScreen(){
+    scrollController.animateTo( //go to top of scroll
+        0,  //scroll offset to go
+        duration: const Duration(milliseconds: 500), //duration of scroll
+        curve:Curves.fastOutSlowIn //scroll type
+    );
+    isVisible = false;
+    update();
+  }
+  changeFiltersData(){
+    selectingFilter(selectingFilterTagName,true);
+    governmentData = [removeFilterTitle.tr,nameFilterDescTitle.tr,nameFilterAscTitle.tr,];
+  }
+  selectingFilter(String filterName,bool changingLanguageOnly) async {
     switch(filterName){
+      case "ترتيب حسب":{
+        selectingFilterTag = "0";
+        selectingFilterTagName = removeFilterValue.tr;
+      }
+      break;
+      case "Sort by":{
+        selectingFilterTag = "0";
+        selectingFilterTagName = removeFilterValue.tr;
+      }
+      break;
       case"ازاله ترتيب حسب":{
         selectingFilterTag = "0";
         selectingFilterTagName = removeFilterValue.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-
-          await   getStoreData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            await getStoreData(true);
+          }
         }
       }
       break;
@@ -73,11 +118,12 @@ class StoreController extends GetxController {
         selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_desc.name:Filters.name_desc.name;
         selectingFilterTagName = nameFilterDescTitle.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-
-          await   getStoreData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            await getStoreData(true);
+          }
         }
       }
       break;
@@ -85,11 +131,12 @@ class StoreController extends GetxController {
         selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_asc.name:Filters.name_asc.name;
         selectingFilterTagName = nameFilterAscTitle.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-
-          await   getStoreData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            await getStoreData(true);
+          }
         }
       }
       break;
@@ -97,11 +144,12 @@ class StoreController extends GetxController {
         selectingFilterTag = "0";
         selectingFilterTagName = removeFilterValue.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-
-          await   getStoreData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            await getStoreData(true);
+          }
         }
       }
       break;
@@ -110,11 +158,12 @@ class StoreController extends GetxController {
         selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_desc.name:Filters.name_desc.name;
         selectingFilterTagName = nameFilterDescTitle.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-
-          await   getStoreData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            await getStoreData(true);
+          }
         }
       }
       break;
@@ -122,11 +171,12 @@ class StoreController extends GetxController {
         selectingFilterTag =  Get.find<StorageService>().activeLocale == SupportedLocales.english?Filters.name_en_asc.name:Filters.name_asc.name;
         selectingFilterTagName = nameFilterAscTitle.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-
-          await   getStoreData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            await getStoreData(true);
+          }
         }
       }
       break;

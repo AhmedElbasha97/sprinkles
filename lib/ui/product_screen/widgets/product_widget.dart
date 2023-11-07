@@ -227,7 +227,7 @@ final ProductsModel? product;
                   Padding(
                     padding: const EdgeInsets.only(top:8.0),
                     child: Container(
-                      width:Get.width*0.44,
+                      width:Get.width*0.45,
                       child: Row(
 
                           mainAxisAlignment:MainAxisAlignment.spaceBetween,
@@ -305,7 +305,7 @@ final ProductsModel? product;
                                     child: Padding(
                                       padding: const EdgeInsets.only(bottom: 2.0),
                                       child: SizedBox(
-                                        height: Get.height*0.025,
+                                        height: Get.height*0.03,
                                         width: Get.width*0.09,
                                         child: Image.asset("assets/icons/c.png",fit: BoxFit.fitHeight,),
                                       ),
@@ -321,7 +321,7 @@ final ProductsModel? product;
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 2,bottom: 2),
                                       child: SizedBox(
-                                        height: Get.height*0.025,
+                                        height: Get.height*0.03,
                                         width: Get.width*0.09,
                                         child: Image.asset("assets/icons/w.png",fit: BoxFit.fitHeight,),
                                       ),
@@ -336,7 +336,7 @@ final ProductsModel? product;
 
                                     },
                                     child: SizedBox(
-                                      height: Get.height*0.02,
+                                      height: Get.height*0.024,
                                       width: Get.width*0.09,
                                       child: Image.asset("assets/icons/s.png",fit: BoxFit.fitHeight,),
                                     ),

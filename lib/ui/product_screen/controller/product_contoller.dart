@@ -102,21 +102,39 @@ class ProductController extends GetxController {
     isVisible = false;
     update();
   }
+
   getMainCategoryData() async {
     mainCategoryList = await CategoryServices.getHomeCategory();
     mainCategoryIsLoading = false;
     update();
   }
-  selectingFilter(String filterName){
+  changeFilterData(){
+    selectingFilter(selectingFilterTagName,true);
+    governmentData = [removeFilterTitle.tr,priceFilterDescTitle.tr,priceFilterAscTitle.tr,mostSelling.tr,mostRating.tr,];
+    update();
+  }
+  selectingFilter(String filterName,bool changingLanguageOnly){
     switch(filterName){
+      case "ترتيب حسب":{
+        selectingFilterTag = "0";
+        selectingFilterTagName = removeFilterValue.tr;
+      }
+      break;
+      case "Sort by":{
+        selectingFilterTag = "0";
+        selectingFilterTagName = removeFilterValue.tr;
+      }
+      break;
       case "Remove sort order":{
         selectingFilterTag = "0";
         selectingFilterTagName = removeFilterValue.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-          getProductData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            getProductData(true);
+          }
         }
       }
       break;
@@ -124,10 +142,12 @@ class ProductController extends GetxController {
         selectingFilterTag = Filters.price_desc.name;
         selectingFilterTagName = priceFilterDescTitle.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-          getProductData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            getProductData(true);
+          }
         }
       }
       break;
@@ -135,10 +155,12 @@ class ProductController extends GetxController {
         selectingFilterTag = Filters. price_asc.name;
         selectingFilterTagName = priceFilterAscTitle.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-          getProductData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            getProductData(true);
+          }
         }
       }
       break;
@@ -146,10 +168,12 @@ class ProductController extends GetxController {
         selectingFilterTag = Filters.review_asc.name;
         selectingFilterTagName = mostRating.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-          getProductData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            getProductData(true);
+          }
         }
       }
       break;
@@ -157,10 +181,12 @@ class ProductController extends GetxController {
         selectingFilterTag =  Filters.views_asc.name;
         selectingFilterTagName = mostSelling.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-          getProductData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            getProductData(true);
+          }
         }
       }
       break;
@@ -168,32 +194,38 @@ class ProductController extends GetxController {
         selectingFilterTag = "0";
         selectingFilterTagName = removeFilterValue.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-          getProductData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            getProductData(true);
+          }
         }
       }
       break;
-      case"السعر من الأقل إلى أعلى":{
+      case"السعر من الأقل  إلى الأعلى":{
         selectingFilterTag = Filters.price_desc.name;
         selectingFilterTagName = priceFilterDescTitle.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-          getProductData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            getProductData(true);
+          }
         }
       }
       break;
-      case"السعر من أعلى إلى الأقل ":{
+      case"السعر من الأعلى  إلى الأقل":{
         selectingFilterTag = Filters. price_asc.name;
         selectingFilterTagName = priceFilterAscTitle.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-          getProductData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            getProductData(true);
+          }
         }
       }
       break;
@@ -201,10 +233,12 @@ class ProductController extends GetxController {
         selectingFilterTag = Filters.review_asc.name;
         selectingFilterTagName = mostRating.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-          getProductData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            getProductData(true);
+          }
         }
       }
       break;
@@ -212,10 +246,12 @@ class ProductController extends GetxController {
         selectingFilterTag = Filters.views_asc.name;
         selectingFilterTagName = mostSelling.tr;
         update();
-        if(activateSearching){
-          searchingForKeyword();
-        }else{
-          getProductData(true);
+        if(!changingLanguageOnly) {
+          if (activateSearching) {
+            searchingForKeyword();
+          } else {
+            getProductData(true);
+          }
         }
       }
       break;
