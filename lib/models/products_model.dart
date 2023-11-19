@@ -2,7 +2,13 @@
 //
 //     final productsModel = productsModelFromJson(jsonString);
 
+// To parse this JSON data, do
+//
+//     final productsModel = productsModelFromJson(jsonString);
+
 import 'dart:convert';
+
+import 'package:sprinkles/models/branch_model.dart';
 
 List<ProductsModel> productsModelFromJson(String str) => List<ProductsModel>.from(json.decode(str).map((x) => ProductsModel.fromJson(x)));
 
@@ -17,10 +23,10 @@ class ProductsModel {
   String? price;
   int? persons;
   List<String>? images;
-  int? favorite;
   String? rating;
   Shop? shop;
   String? link;
+  int? favorite;
 
   ProductsModel({
     this.id,
@@ -32,9 +38,9 @@ class ProductsModel {
     this.persons,
     this.images,
     this.rating,
-    this.favorite,
     this.shop,
     this.link,
+    this.favorite,
   });
 
   factory ProductsModel.fromJson(Map<String, dynamic> json) => ProductsModel(
@@ -50,7 +56,6 @@ class ProductsModel {
     shop: json["shop"] == null ? null : Shop.fromJson(json["shop"]),
     link: json["link"],
     favorite: json["favorite"],
-
   );
 
   Map<String, dynamic> toJson() => {
@@ -75,6 +80,7 @@ class Shop {
   String? nameEn;
   String? phone;
   String? whatsapp;
+  List<Branch>? branch;
 
   Shop({
     this.id,
@@ -82,6 +88,7 @@ class Shop {
     this.nameEn,
     this.phone,
     this.whatsapp,
+    this.branch,
   });
 
   factory Shop.fromJson(Map<String, dynamic> json) => Shop(
@@ -90,14 +97,18 @@ class Shop {
     nameEn: json["name_en"],
     phone: json["phone"],
     whatsapp: json["whatsapp"],
+    branch: json["branch"] == null ? [] : List<Branch>.from(json["branch"]!.map((x) => Branch.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name": name,
+    "name":name,
     "name_en": nameEn,
     "phone": phone,
     "whatsapp": whatsapp,
+    "branch": branch == null ? [] : List<dynamic>.from(branch!.map((x) => x.toJson())),
   };
 }
+
+
 

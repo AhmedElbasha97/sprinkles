@@ -18,6 +18,7 @@ import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/services/product_service.dart';
 import 'package:sprinkles/services/reviews_services.dart';
 import 'package:sprinkles/services/stats_services.dart';
+import 'package:sprinkles/ui/branches_list/branches_list_screen.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
 import 'package:sprinkles/widgets/alert_dialogue.dart';
@@ -241,32 +242,56 @@ class ProductDetailedController extends GetxController{
     makingDotsForCarouselSlider();
     update(["Carsoul"]);
   }
-  Future<void> makePhoneCall(String phoneNumber) async {
-    var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${productData?.shop?.id??0}", "${productData?.id}", OrderType.CALL.name, "0");
-    if(result?.status == "true") {
-      final Uri launchUri = Uri(
-        scheme: 'tel',
-        path: phoneNumber,
-      );
-      await launchUrl(launchUri);
-    }
-  }
-  whatsapp(String contact) async{
-    var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${productData?.shop?.id??0}", "${productData?.id}", OrderType.WHATSAPP.name, "0");
-if(result?.status == "true") {
-  try {
-    if (Platform.isIOS) {
-      var iosUrl = "https://wa.me/$contact?text=${Uri.parse(
+  Future<void> makePhoneCall(String phoneNumber,context) async {
+    if(productData?.shop?.branch?.length != 0){
+      var iosUrl = "https://wa.me/${productData?.shop?.whatsapp}?text=${Uri.parse(
           messageTextWhatsApp)} /n  ${productData?.link}" ;
-      await launchUrl(Uri.parse(iosUrl));
+      var androidUrl = "whatsapp://send?phone=${productData?.shop?.whatsapp}&text=$messageTextWhatsApp /n ${productData?.link} ";
+      showDialog(context: context,
+        builder: (context) =>
+            BranchesListWidget(branch: productData?.shop?.branch, androidUrl:androidUrl, iosUrl: iosUrl, shopId: "${ productData?.shop?.id??0}", productId: "${ productData?.id??0}",),);
     }
     else {
-      var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp /n ${productData?.link} ";
-      await launchUrl(Uri.parse(androidUrl));
+      var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${productData?.shop?.id??0}", "${productData?.id}", OrderType.CALL.name, "0");
+      if(result?.status == "true") {
+        final Uri launchUri = Uri(
+          scheme: 'tel',
+          path: phoneNumber,
+        );
+        await launchUrl(launchUri);
+      }
+
     }
-  } on Exception {
 
   }
-}
-  }
+  whatsapp(String contact,context) async{
+    if(productData?.shop?.branch?.length != 0){
+      var iosUrl = "https://wa.me/${productData?.shop?.whatsapp}?text=${Uri.parse(
+          messageTextWhatsApp)} /n  ${productData?.link}" ;
+      var androidUrl = "whatsapp://send?phone=${productData?.shop?.whatsapp}&text=$messageTextWhatsApp /n ${productData?.link} ";
+      showDialog(context: context,
+        builder: (context) =>
+            BranchesListWidget(branch: productData?.shop?.branch, androidUrl:androidUrl, iosUrl: iosUrl, shopId: "${ productData?.shop?.id??0}", productId: "${ productData?.id??0}",),);
+    }
+    else {
+      var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${productData?.shop?.id??0}", "${productData?.id}", OrderType.WHATSAPP.name, "0");
+      if(result?.status == "true") {
+        try {
+          if (Platform.isIOS) {
+            var iosUrl = "https://wa.me/$contact?text=${Uri.parse(
+                messageTextWhatsApp)} /n  ${productData?.link}" ;
+            await launchUrl(Uri.parse(iosUrl));
+          }
+          else {
+            var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp /n ${productData?.link} ";
+            await launchUrl(Uri.parse(androidUrl));
+          }
+        } on Exception {
+
+        }
+      }
+    }
+
+    }
+
 }

@@ -106,7 +106,7 @@ class _AppDrawersState extends State<AppDrawers> {
       case "عرض المحلات":
         {
           Get.to(() =>
-          const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),
+          const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0, mainCategoryImg: '',),
               transition: Transition.rightToLeftWithFade, preventDuplicates: false);
 
           widget.scaffoldKey.currentState?.openEndDrawer();
@@ -142,7 +142,7 @@ class _AppDrawersState extends State<AppDrawers> {
       case "عرض المنتجات ":
         {
           Get.to(() =>
-          const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,),
+          const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true, mainCategoryImg: '',),
               transition: Transition.rightToLeftWithFade,preventDuplicates: false);
           widget.scaffoldKey.currentState?.openEndDrawer();
         }
@@ -266,7 +266,7 @@ class _AppDrawersState extends State<AppDrawers> {
       case "Shop Display":
         {
           Get.to(() =>
-          const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0,),
+          const StoreScreen(selectedFromDrawer: true, mainCategoryId: 0, mainCategoryImg: '',),
               transition: Transition.rightToLeftWithFade,preventDuplicates: false);
           widget.scaffoldKey.currentState?.openEndDrawer();
         }
@@ -301,7 +301,7 @@ class _AppDrawersState extends State<AppDrawers> {
       case "Display Products":
         {
           Get.to(() =>
-          const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,),
+          const ProductScreen(mainCategoryId: 0, selectingFromDrawer: true, mainCategoryImg: '',),
               transition: Transition.rightToLeftWithFade,preventDuplicates: false);
           widget.scaffoldKey.currentState?.openEndDrawer();
         }

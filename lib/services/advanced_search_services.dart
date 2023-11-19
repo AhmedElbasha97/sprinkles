@@ -15,6 +15,7 @@ class AdvancedSearchServices{
       String rating,
       String priceFrom,
       String priceTo,
+      String locationId,
       ) async {
     List<ProductsModel>? productsList = [];
     var data = await api.request(Services.advancedSearchEndPoint, "POST",queryParamters: {
@@ -24,6 +25,7 @@ class AdvancedSearchServices{
       "review":rating,
       "price_from":priceFrom,
       "price_to":priceTo,
+      "area":locationId,
       "member_id": Get.find<StorageService>().getId
     });
     if (data != null) {
@@ -36,8 +38,8 @@ class AdvancedSearchServices{
   }
   Future<List<ShopsModel>?> searchingForStore(
       String mainCategoryId,
-
       String rating,
+      String locationId,
       ) async {
     List<ShopsModel>? shopList = [];
     var data = await api.request(Services.advancedSearchEndPoint, "POST",queryParamters: {
@@ -47,6 +49,7 @@ class AdvancedSearchServices{
       "review":rating,
       "price_from":"0",
       "price_to":"0",
+      "area":locationId,
       "member_id": Get.find<StorageService>().getId
     });
     if (data != null) {

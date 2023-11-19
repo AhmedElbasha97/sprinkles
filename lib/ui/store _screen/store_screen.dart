@@ -20,7 +20,8 @@ import '../product_screen/product_screen.dart';
 
 
 class StoreScreen extends StatelessWidget {
-  const StoreScreen({Key? key, required this.mainCategoryId, required this.selectedFromDrawer}) : super(key: key);
+  const StoreScreen({Key? key, required this.mainCategoryId, required this.selectedFromDrawer, required this.mainCategoryImg}) : super(key: key);
+  final String mainCategoryImg;
   final int mainCategoryId;
   final bool selectedFromDrawer;
 
@@ -28,7 +29,7 @@ class StoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).viewPadding.top;
     return GetBuilder(
-      init:  StoreController(mainCategoryId,selectedFromDrawer,context),
+      init:  StoreController(mainCategoryId,selectedFromDrawer,context,mainCategoryImg),
       builder: (StoreController controller) =>  WillPopScope(
         onWillPop: () async {
           Get.delete<StoreController>();
@@ -156,8 +157,10 @@ class StoreScreen extends StatelessWidget {
                                       child: InkWell(
                                         onTap:(){
                                           if(!selectedFromDrawer) {
-                                            Get.off(() =>
-                                                ProductScreen(mainCategoryId: mainCategoryId, selectingFromDrawer: false,));
+                                          Get.off(() =>
+                                                ProductScreen(mainCategoryId: mainCategoryId, selectingFromDrawer: false,mainCategoryImg: mainCategoryImg,));
+                                          }else {
+                                            Get.off(()=>   ProductScreen(mainCategoryId: 0, selectingFromDrawer: true,  mainCategoryImg: mainCategoryImg,),);
                                           }
                                         },
                                         child: Container(
@@ -187,7 +190,7 @@ class StoreScreen extends StatelessWidget {
                                           ),
                                           child:  Center(
                                             child:  CustomText(
-                                              selectedFromDrawer?storeTitle.tr:showProduct.tr,
+                                              showProduct.tr,
                                               style: TextStyle(
                                                 shadows: <Shadow>[
                                                   Shadow(
@@ -444,7 +447,7 @@ class StoreScreen extends StatelessWidget {
                                   child: SizedBox(
                                     height: Get.height*0.235,
                                     width: Get.width*0.6,
-                                    child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitWidth,),
+                                    child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.contain,),
                                   ),
                                 ),Positioned(
                                   right:10,
@@ -540,9 +543,11 @@ class StoreScreen extends StatelessWidget {
                                         onTap:(){
                                           if(!selectedFromDrawer) {
                                             Get.off(() =>
-                                                ProductScreen(mainCategoryId: mainCategoryId, selectingFromDrawer: false,));
-    }
-                                          },
+                                                ProductScreen(mainCategoryId: mainCategoryId, selectingFromDrawer: false, mainCategoryImg: mainCategoryImg,));
+                                          }else {
+                                            Get.off(()=>   ProductScreen(mainCategoryId: 0, selectingFromDrawer: true, mainCategoryImg: mainCategoryImg,),);
+                                          }
+                                        },
                                         child: Container(
                                           height: Get.height*0.04,
                                           width:Get.width*0.3,
@@ -570,7 +575,7 @@ class StoreScreen extends StatelessWidget {
                                           ),
                                           child:  Center(
                                             child:  CustomText(
-                                              selectedFromDrawer?storeTitle.tr:showProduct.tr,
+                                              showProduct.tr,
                                               style: TextStyle(
                                                 shadows: <Shadow>[
                                                   Shadow(
@@ -832,7 +837,7 @@ class StoreScreen extends StatelessWidget {
                                   child: SizedBox(
                                     height: Get.height*0.235,
                                     width: Get.width*0.6,
-                                    child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitWidth,),
+                                    child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.contain,),
                                   ),
                                 ),Positioned(
                                   top:15,

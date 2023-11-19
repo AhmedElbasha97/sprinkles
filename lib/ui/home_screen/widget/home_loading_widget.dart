@@ -20,7 +20,7 @@ class HomeLoadingWidget extends StatelessWidget {
               children:[
                 Container(
                   height: Get.height*0.145,
-                  width:Get.width*0.8,
+                  width:Get.width*0.95,
                   child:const Padding(padding: EdgeInsets.all(0),
                   ),
                 ),
@@ -30,7 +30,7 @@ class HomeLoadingWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(18.0),
                     child: Container(
                       height: Get.height*0.09,
-                      width:Get.width*0.6,
+                      width:Get.width*0.75,
                       decoration: BoxDecoration(
                         color: const Color(0xFFF2F0F3),
                         border: Border.all( color:kBackGroundColor,width: 2),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sprinkles/Utils/api_service.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
+import 'package:sprinkles/models/government_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/shops_model.dart';
 import 'package:intl/intl.dart' as intl;
@@ -24,6 +25,17 @@ class SearchAndFilterServices {
         shopList.add(ShopsModel.fromJson(shop));
       }
       return shopList;
+    }
+    return null;
+  }
+  static Future<List<GovernmentModel>?> getGovernments() async {
+    List<GovernmentModel>? governmentsList = [];
+    var data = await api.request(Services.getGovernmentsEndPoint, "POST",);
+    if (data != null) {
+      for (var government in data){
+        governmentsList.add(GovernmentModel.fromJson(government));
+      }
+      return governmentsList;
     }
     return null;
   }

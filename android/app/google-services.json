@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "893562019101",
+    "project_id": "sprinkles-qa",
+    "storage_bucket": "sprinkles-qa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893562019101:android:a55c06d8abffcf31dd15f4",
+        "android_client_info": {
+          "package_name": "com.Sync.sprinkles"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBtv3tsktvNGiDYNScJGZ87BCXvExkjgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

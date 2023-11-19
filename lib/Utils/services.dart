@@ -3,6 +3,8 @@
 class Services {
  static String baseEndPoint = "http://sprinkles-qa.com";
  static String categoryEndPoint = "ctg"; //Post
+
+ static String getGovernmentsEndPoint = "area";//post
  static String shopEndPoint = "shop"; //Post
  static String productEndPoint = "item"; //Post
  static String mainCategoryDataProductEndPoint = "ctg/view"; //Post

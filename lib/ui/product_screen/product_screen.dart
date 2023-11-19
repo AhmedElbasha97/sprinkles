@@ -22,7 +22,8 @@ import '../../Utils/localization_services.dart';
 
 
 class ProductScreen extends StatelessWidget {
-  const ProductScreen({Key? key, required this.mainCategoryId, required this.selectingFromDrawer}) : super(key: key);
+  const ProductScreen({Key? key, required this.mainCategoryId, required this.selectingFromDrawer, required this.mainCategoryImg}) : super(key: key);
+  final String mainCategoryImg;
   final int mainCategoryId;
   final bool selectingFromDrawer;
 
@@ -30,7 +31,7 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).viewPadding.top;
     return GetBuilder(
-      init:  ProductController(mainCategoryId,context,selectingFromDrawer),
+      init:  ProductController(mainCategoryId,context,selectingFromDrawer,mainCategoryImg),
       builder: (ProductController controller) => WillPopScope(
         onWillPop: () async {
             Get.delete<ProductController>();
@@ -117,7 +118,7 @@ class ProductScreen extends StatelessWidget {
                                     child: SizedBox(
                                       height: Get.height*0.235,
                                       width: Get.width*0.6,
-                                      child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.fitWidth,),
+                                      child: Image.asset("assets/images/cakeBG1.png",fit: BoxFit.contain,),
                                     )),
                                 Positioned(
                                   top:15,
@@ -125,10 +126,10 @@ class ProductScreen extends StatelessWidget {
                                   child: Container(
                                     width:Get.width*0.45,
                                     child: Row(
-                                      mainAxisAlignment:MainAxisAlignment.end,
+                                      mainAxisAlignment:selectingFromDrawer?controller.selectedMainCategoryId==240?MainAxisAlignment.end:MainAxisAlignment.start:MainAxisAlignment.start,
                                       crossAxisAlignment:CrossAxisAlignment.start,
                                       children: [
-                                        selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?Container(
+                                        selectingFromDrawer?controller.selectedMainCategoryId==240?SizedBox():controller.categoryIsLoading?Container(
                                           width: Get.width*0.2,
                                           height: 13,
                                           decoration: BoxDecoration(
@@ -142,10 +143,10 @@ class ProductScreen extends StatelessWidget {
                                             .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                             .slide():Container(
                                           width: Get.width*0.2,
-                                              child: CustomText(
-                                          Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
-                                          maxLines: 2,
-                                                style: TextStyle(
+                                          child: CustomText(
+                                            Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
+                                            style: TextStyle(
+
                                               shadows: <Shadow>[
                                                 Shadow(
                                                     offset: const Offset(2.0, 2.0),
@@ -154,54 +155,57 @@ class ProductScreen extends StatelessWidget {
                                                     color: Colors.black.withOpacity(0.5)
                                                 ),
                                               ],
-                                              fontSize: 18,
-                                              letterSpacing: 0,
 
-                                              fontFamily: Get
-                                                  .find<StorageService>()
-                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                                              color: kBackGroundColor,
-                                          ),
-                                                textAlign: TextAlign.center,
-
-                                              ),
-                                            ):controller.categoryIsLoading?Container(
-                                          width: Get.width*0.2,
-                                          height: 13,
-                                          decoration: BoxDecoration(
-                                              color:  const Color(0xFFF2F0F3),
-                                              borderRadius: BorderRadius.circular(50)
-                                          ),
-
-                                        ).animate(onPlay: (controller) => controller.repeat())
-                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                            .animate() // this wraps the previous Animate in another Animate
-                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                            .slide():Container(
-                                          width: Get.width*0.2,
-                                              child: CustomText(
-                                          Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
-                                          style: TextStyle(
-                                              shadows: <Shadow>[
-                                                Shadow(
-                                                    offset: const Offset(2.0, 2.0),
-                                                    blurRadius: 13.0,
-
-                                                    color: Colors.black.withOpacity(0.5)
-                                                ),
-                                              ],
                                               fontSize: 18,
                                               letterSpacing: 0,
                                               fontFamily: Get
                                                   .find<StorageService>()
-                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyArabicName:fontFamilyEnglishName,
                                               color: kBackGroundColor,
-                                          ),
-                                                textAlign: TextAlign.center,
-
-                                              ),
                                             ),
-                                        selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ):controller.categoryIsLoading?Container(
+                                          width: Get.width*0.2,
+                                          height: 13,
+                                          decoration: BoxDecoration(
+                                              color:  const Color(0xFFF2F0F3),
+                                              borderRadius: BorderRadius.circular(50)
+                                          ),
+
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide():Container(
+                                          width: Get.width*0.2,
+                                          child: CustomText(
+                                            Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
+                                            style: TextStyle(
+                                              shadows: <Shadow>[
+                                                Shadow(
+                                                    offset: const Offset(2.0, 2.0),
+                                                    blurRadius: 13.0,
+
+                                                    color: Colors.black.withOpacity(0.5)
+                                                ),
+                                              ],
+
+                                              fontSize: 18,
+                                              letterSpacing: 0,
+                                              fontFamily: Get
+                                                  .find<StorageService>()
+                                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                              color: kBackGroundColor,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        selectingFromDrawer?controller.selectedMainCategoryId==240?SizedBox(
+                                          height: Get.height*0.15,
+                                          width: Get.width*0.3,
+                                          child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                        ):controller.categoryIsLoading?
                                         Container(
 
                                           height: Get.height*0.11,
@@ -209,7 +213,7 @@ class ProductScreen extends StatelessWidget {
                                           decoration:BoxDecoration(
 
                                             color:  const Color(0xFFF2F0F3),
-                                            shape: BoxShape.circle,
+                                            borderRadius: BorderRadius.circular(50),
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.black.withOpacity(0.1),
@@ -233,9 +237,9 @@ class ProductScreen extends StatelessWidget {
 
                                               height: Get.height*0.09,
                                               width: Get.width*0.2,
-                                              decoration:const BoxDecoration(
-                                                color:  Color(0xFFDFDDDF),
-                                                shape: BoxShape.circle,
+                                              decoration:BoxDecoration(
+                                                color:  const Color(0xFFDFDDDF),
+                                                borderRadius: BorderRadius.circular(50),
 
                                               ),
                                             ).animate(onPlay: (controller) => controller.repeat())
@@ -247,7 +251,7 @@ class ProductScreen extends StatelessWidget {
                                             .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
                                             .animate()
                                             :CachedNetworkImage(
-                                          fit:  BoxFit.contain,
+                                          fit:  BoxFit.fitWidth,
                                           imageUrl: "${Services.baseEndPoint}${controller.data?.img2??""}",
                                           imageBuilder: ((context, image){
                                             return   Container(
@@ -257,7 +261,7 @@ class ProductScreen extends StatelessWidget {
 
                                                   image: DecorationImage(
                                                     image: image,
-                                                    fit:  BoxFit.contain,
+                                                    fit:  BoxFit.fitWidth,
                                                   ),
                                                 ));
                                           }),
@@ -267,7 +271,7 @@ class ProductScreen extends StatelessWidget {
                                               width: Get.width*0.23,
                                               decoration:BoxDecoration(
                                                 color:  const Color(0xFFF2F0F3),
-                                                shape: BoxShape.circle,
+                                                borderRadius: BorderRadius.circular(50),
                                                 boxShadow: [
                                                   BoxShadow(
                                                     color: Colors.black.withOpacity(0.1),
@@ -291,9 +295,9 @@ class ProductScreen extends StatelessWidget {
 
                                                   height: Get.height*0.09,
                                                   width: Get.width*0.2,
-                                                  decoration:const BoxDecoration(
-                                                    color:  Color(0xFFDFDDDF),
-                                                    shape: BoxShape.circle,
+                                                  decoration:BoxDecoration(
+                                                    color:  const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50),
 
                                                   ),
                                                 ).animate(onPlay: (controller) => controller.repeat())
@@ -313,7 +317,8 @@ class ProductScreen extends StatelessWidget {
                                               child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
                                             );
                                           },
-                                        ):controller.categoryIsLoading?
+                                        ):
+                                        controller.categoryIsLoading?
                                         Container(
 
                                           height: Get.height*0.11,
@@ -321,7 +326,7 @@ class ProductScreen extends StatelessWidget {
                                           decoration:BoxDecoration(
 
                                             color:  const Color(0xFFF2F0F3),
-                                            shape: BoxShape.circle,
+                                            borderRadius: BorderRadius.circular(50),
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.black.withOpacity(0.1),
@@ -345,9 +350,9 @@ class ProductScreen extends StatelessWidget {
 
                                               height: Get.height*0.09,
                                               width: Get.width*0.2,
-                                              decoration:const BoxDecoration(
-                                                color:  Color(0xFFDFDDDF),
-                                                shape: BoxShape.circle,
+                                              decoration:BoxDecoration(
+                                                color:  const Color(0xFFDFDDDF),
+                                                borderRadius: BorderRadius.circular(50),
 
                                               ),
                                             ).animate(onPlay: (controller) => controller.repeat())
@@ -357,7 +362,8 @@ class ProductScreen extends StatelessWidget {
                                           ),
                                         ).animate(onPlay: (controller) => controller.repeat())
                                             .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                            .animate():CachedNetworkImage(
+                                            .animate():
+                                        CachedNetworkImage(
                                           fit:  BoxFit.contain,
                                           imageUrl: "${Services.baseEndPoint}${controller.data?.img2??""}",
                                           imageBuilder: ((context, image){
@@ -365,10 +371,9 @@ class ProductScreen extends StatelessWidget {
                                                 height: Get.height*0.14,
                                                 width: Get.width*0.25,
                                                 decoration: BoxDecoration(
-
                                                   image: DecorationImage(
                                                     image: image,
-                                                    fit:  BoxFit.contain,
+                                                    fit:  BoxFit.fitWidth,
                                                   ),
                                                 ));
                                           }),
@@ -378,7 +383,7 @@ class ProductScreen extends StatelessWidget {
                                               width: Get.width*0.23,
                                               decoration:BoxDecoration(
                                                 color:  const Color(0xFFF2F0F3),
-                                                shape: BoxShape.circle,
+                                                borderRadius: BorderRadius.circular(50),
                                                 boxShadow: [
                                                   BoxShadow(
                                                     color: Colors.black.withOpacity(0.1),
@@ -402,9 +407,9 @@ class ProductScreen extends StatelessWidget {
 
                                                   height: Get.height*0.09,
                                                   width: Get.width*0.2,
-                                                  decoration:const BoxDecoration(
-                                                    color:  Color(0xFFDFDDDF),
-                                                    shape: BoxShape.circle,
+                                                  decoration:BoxDecoration(
+                                                    color:  const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50),
 
                                                   ),
                                                 ).animate(onPlay: (controller) => controller.repeat())
@@ -493,7 +498,10 @@ class ProductScreen extends StatelessWidget {
                                             Get.off(() =>
                                                 StoreScreen(
                                                   mainCategoryId: mainCategoryId,
-                                                  selectedFromDrawer: false,));
+                                                  selectedFromDrawer: false, mainCategoryImg: mainCategoryImg,));
+                                          }else{
+                                            Get.off(() =>
+                                             StoreScreen(selectedFromDrawer: true, mainCategoryId: 0, mainCategoryImg: mainCategoryImg,));
                                           }
                                         },
                                         child: Container(
@@ -523,7 +531,7 @@ class ProductScreen extends StatelessWidget {
                                           ),
                                           child:  Center(
                                             child:  CustomText(
-                                              selectingFromDrawer?productTitle.tr:showStore.tr,
+                                              showStore.tr,
                                               style:TextStyle(
                                                 shadows: <Shadow>[
                                                   Shadow(
@@ -838,15 +846,18 @@ class ProductScreen extends StatelessWidget {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
-                                    child: InkWell(
+                                    child:InkWell(
                                       onTap:(){
                                         if(!selectingFromDrawer) {
                                           Get.off(() =>
                                               StoreScreen(
                                                 mainCategoryId: mainCategoryId,
-                                                selectedFromDrawer: false,));
+                                                selectedFromDrawer: false, mainCategoryImg: mainCategoryImg,));
+                                        }else{
+                                          Get.off(() =>
+                                           StoreScreen(selectedFromDrawer: true, mainCategoryId: 0, mainCategoryImg: mainCategoryImg,));
                                         }
-                                        },
+                                      },
                                       child: Container(
                                         height: Get.height*0.04,
                                         width:Get.width*0.35,
@@ -874,7 +885,7 @@ class ProductScreen extends StatelessWidget {
                                         ),
                                         child:  Center(
                                           child:  CustomText(
-                                            selectingFromDrawer?productTitle.tr:showStore.tr,
+                                            showStore.tr,
                                             style:TextStyle(
                                               shadows: <Shadow>[
                                                 Shadow(
@@ -1129,7 +1140,7 @@ class ProductScreen extends StatelessWidget {
                                 child: SizedBox(
                                   height: Get.height*0.235,
                                   width: Get.width*0.6,
-                                  child: Image.asset("assets/images/cakeBG.png",fit: BoxFit.fitWidth,),
+                                  child: Image.asset("assets/images/cakeBG.png",fit:  BoxFit.contain,),
                                 )),
                               Positioned(
                                 top: 15,
@@ -1137,10 +1148,10 @@ class ProductScreen extends StatelessWidget {
                                 child: Container(
                                   width:Get.width*0.45,
                                   child: Row(
-                                    mainAxisAlignment:MainAxisAlignment.start,
+                                    mainAxisAlignment:selectingFromDrawer?controller.selectedMainCategoryId==240?MainAxisAlignment.end:MainAxisAlignment.start:MainAxisAlignment.start,
                                     crossAxisAlignment:CrossAxisAlignment.start,
                                     children: [
-                                      selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?Container(
+                                      selectingFromDrawer?controller.selectedMainCategoryId==240?SizedBox():controller.categoryIsLoading?Container(
                                         width: Get.width*0.2,
                                         height: 13,
                                         decoration: BoxDecoration(
@@ -1212,7 +1223,11 @@ class ProductScreen extends StatelessWidget {
                                               textAlign: TextAlign.center,
                                       ),
                                           ),
-                                      selectingFromDrawer?controller.selectedMainCategoryId==240?const SizedBox():controller.categoryIsLoading?
+                                      selectingFromDrawer?controller.selectedMainCategoryId==240?SizedBox(
+                                        height: Get.height*0.15,
+                                        width: Get.width*0.3,
+                                        child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                      ):controller.categoryIsLoading?
                                       Container(
 
                                         height: Get.height*0.11,

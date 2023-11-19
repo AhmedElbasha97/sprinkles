@@ -20,23 +20,23 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap:(){
-        Get.to(()=> ProductScreen(mainCategoryId: category?.id??0, selectingFromDrawer: false,));
+        Get.to(()=> ProductScreen(mainCategoryId: category?.id??0, selectingFromDrawer: false, mainCategoryImg:  category?.img2??"",));
       },
       child: Get.find<StorageService>().activeLocale == SupportedLocales.english?Stack(
           children:[
             Container(
               height: Get.height*0.15,
-              width:Get.width*0.8,
+              width:Get.width*0.95,
               child:const Padding(padding: EdgeInsets.all(0),
               ),
             ),
             Positioned(
               bottom:Get.height*0.005,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(50.0,18.0,18.0,18.0,),
+                padding: const EdgeInsets.fromLTRB(50.0,18.0,0,18.0,),
                 child: Container(
                   height: Get.height*0.09,
-                  width:Get.width*0.6,
+                  width:Get.width*0.75,
                   decoration: BoxDecoration(
                     border: Border.all( color:kBackGroundColor,width: 2),
                     boxShadow: [
@@ -168,7 +168,7 @@ class HomeWidget extends StatelessWidget {
           children:[
             Container(
               height: Get.height*0.15,
-              width:Get.width*0.8,
+              width:Get.width*0.95,
               child:const Padding(padding: EdgeInsets.all(0),
               ),
             ),
@@ -178,7 +178,7 @@ class HomeWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(18.0),
                 child: Container(
                   height: Get.height*0.09,
-                  width:Get.width*0.6,
+                  width:Get.width*0.75,
                   decoration: BoxDecoration(
                     border: Border.all( color:kBackGroundColor,width: 2),
                     boxShadow: [

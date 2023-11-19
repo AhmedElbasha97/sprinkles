@@ -16,6 +16,7 @@ import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/services/stats_services.dart';
+import 'package:sprinkles/ui/branches_list/branches_list_screen.dart';
 
 import 'package:sprinkles/ui/ordering/ordering_screen.dart';
 import 'package:sprinkles/ui/product_detailed_screen/controller/product_detailed_controller.dart';
@@ -25,8 +26,9 @@ import 'package:sprinkles/widgets/custom_text_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProductWidget extends StatelessWidget {
-  const ProductWidget({Key? key, this.product, required this.productAreAddedOrNot, required this.addingOrRemovingProductToFavorite, required this.mainCategoryId, required this.comingFromFavoriteList, required this.comingFromProductList, required this.comingFromProductDetails, required this.branchCategoryId, this.productDetailsFunction,}) : super(key: key);
+  const ProductWidget({Key? key, this.product, required this.productAreAddedOrNot, required this.addingOrRemovingProductToFavorite, required this.mainCategoryId, required this.comingFromFavoriteList, required this.comingFromProductList, required this.comingFromProductDetails, required this.branchCategoryId, this.productDetailsFunction, required this.mainCategoryImg,}) : super(key: key);
 final ProductsModel? product;
+  final String mainCategoryImg;
   final bool productAreAddedOrNot ;
   final Function addingOrRemovingProductToFavorite;
   final int mainCategoryId;
@@ -35,30 +37,61 @@ final ProductsModel? product;
   final bool comingFromProductList;
   final bool comingFromProductDetails;
   final Function? productDetailsFunction;
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${product?.shop?.id??0}", "${product?.id}", OrderType.CALL.name, "0");
-    if(result?.status == "true") {
-      final Uri launchUri = Uri(
-        scheme: 'tel',
-        path: phoneNumber,
-      );
-      await launchUrl(launchUri);
+  Future<void> _makePhoneCall(String phoneNumber,context) async {
+      if(product?.shop?.branch?.length != 0){
+        String   messageTextWhatsApp = ' رأيت هذا ال ${product?.name??""} في تطبيق سبرينكلز و وأريد الاستفسار عنه \n I saw this ${product?.nameEn??""} In the Sprinkles app and I want to make an order ';
+        var androidUrl = "whatsapp://send?phone=$phoneNumber&text=$messageTextWhatsApp /n ${product?.link}";
+        var iosUrl = "https://wa.me/$phoneNumber?text=${Uri.parse(messageTextWhatsApp)} /n ${product?.link}";
+        showDialog(context: context,
+          builder: (context) =>
+              BranchesListWidget(branch: product?.shop?.branch, androidUrl:androidUrl, iosUrl: iosUrl, shopId: "${product?.shop?.id??0}", productId: "${product?.id}",),);
+      }else {
+        var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${product?.shop?.id??0}", "${product?.id}", OrderType.CALL.name, "0");
+        if(result?.status == "true") {
+          final Uri launchUri = Uri(
+          scheme: 'tel',
+          path: phoneNumber,
+        );
+          await launchUrl(launchUri);
+
+        }
+
+      }
+
     }
 
-  }
 
-  whatsapp(String contact) async{
+
+  whatsapp(String contact,context) async{
   String   messageTextWhatsApp = ' رأيت هذا ال ${product?.name??""} في تطبيق سبرينكلز و وأريد الاستفسار عنه \n I saw this ${product?.nameEn??""} In the Sprinkles app and I want to make an order ';
-  var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${product?.shop?.id??0}", "${product?.id}", OrderType.WHATSAPP.name, "0");
-  if(result?.status == "true") {
     try{
       if(Platform.isIOS){
         var iosUrl = "https://wa.me/$contact?text=${Uri.parse(messageTextWhatsApp)} /n ${product?.link}";
-        await launchUrl(Uri.parse(iosUrl));
+        if(product?.shop?.branch?.length != 0){
+          showDialog(context: context,
+            builder: (context) =>
+                BranchesListWidget(branch: product?.shop?.branch, androidUrl: iosUrl, iosUrl: iosUrl, productId: "${product?.id}", shopId: "${product?.shop?.id??0}",),);
+        }else {
+          var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${product?.shop?.id??0}", "${product?.id}", OrderType.WHATSAPP.name, "0");
+          if(result?.status == "true") {
+            await launchUrl(Uri.parse(iosUrl));
+          }
+        }
       }
       else{
         var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp /n ${product?.link}";
-        await launchUrl(Uri.parse(androidUrl));
+        if(product?.shop?.branch?.length != 0){
+          showDialog(context: context,
+            builder: (context) =>
+                BranchesListWidget(branch: product?.shop?.branch, androidUrl: androidUrl, iosUrl: androidUrl,productId: "${product?.id}", shopId: "${product?.shop?.id??0}",),);
+        }else {
+          var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${product?.shop?.id??0}", "${product?.id}", OrderType.WHATSAPP.name, "0");
+          if(result?.status == "true") {
+            await launchUrl(Uri.parse(androidUrl));
+
+          }
+
+        }
       }
     } on Exception{
 
@@ -67,7 +100,6 @@ final ProductsModel? product;
 
 
 
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +115,7 @@ final ProductsModel? product;
               comingFromProductList: comingFromProductList,
               comingFromFavoriteList: comingFromFavoriteList,
               comingFromProductDetails: comingFromProductDetails,
-              branchCategoryId: branchCategoryId,),preventDuplicates: false);
-
-
-
-
+              branchCategoryId: branchCategoryId, mainCategoryImg: mainCategoryImg,),preventDuplicates: false);
         },
       child: Container(
           width:Get.width*0.44,
@@ -128,7 +156,7 @@ final ProductsModel? product;
                             borderRadius: BorderRadius.circular(15),
                             child: Container(
                               width:Get.width*0.4,
-                              height:Get.height*0.16,
+                              height:Get.height*0.18,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: image,
@@ -140,7 +168,6 @@ final ProductsModel? product;
                         }),
                         placeholder: (context, image){
                           return   Container(
-
                             width:Get.width*0.4,
                             height:Get.height*0.16,
                             decoration:BoxDecoration(
@@ -256,7 +283,7 @@ final ProductsModel? product;
                                      padding: const EdgeInsets.symmetric(vertical: 2.0),
                                      child: CustomText(
 
-                                      Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.descEn??"":product?.desc??"",
+                                      Get.find<StorageService>().activeLocale == SupportedLocales.english?product?.shop?.nameEn??"":product?.shop?.name??"",
                                        maxLines: 2,
                                       style: const TextStyle(
 
@@ -300,7 +327,7 @@ final ProductsModel? product;
                                   padding: const EdgeInsets.symmetric(vertical: 2.0),
                                   child: InkWell(
                                     onTap:(){
-                                      _makePhoneCall(product?.shop?.phone??"");
+                                      _makePhoneCall(product?.shop?.phone??"",context);
                                       },
                                     child: Padding(
                                       padding: const EdgeInsets.only(bottom: 2.0),
@@ -315,8 +342,8 @@ final ProductsModel? product;
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 2.0),
                                   child: InkWell(
-                                    onTap:(){
-                                      whatsapp(product?.shop?.whatsapp??"");
+                                    onTap: (){
+                                      whatsapp(product?.shop?.whatsapp??"",context);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 2,bottom: 2),

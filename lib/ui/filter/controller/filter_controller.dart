@@ -7,6 +7,7 @@ import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/category_model.dart';
+import 'package:sprinkles/models/government_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/rating_model.dart';
 import 'package:sprinkles/models/response_model.dart';
@@ -14,6 +15,7 @@ import 'package:sprinkles/models/shops_model.dart';
 import 'package:sprinkles/services/advanced_search_services.dart';
 import 'package:sprinkles/services/category_services.dart';
 import 'package:sprinkles/services/favorite_services.dart';
+import 'package:sprinkles/services/seaarch_and_filters_services.dart';
 import 'package:sprinkles/ui/filter/advanced_search_screen.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_widget.dart';
@@ -32,6 +34,8 @@ class FilterController extends GetxController{
   List<Widget> storeListWidget = [];
   String mainCategoryName = "";
   int mainCategoryId = 0;
+  String locationName = "";
+  int locationId = 0;
   String mainCategoryImageURl = "";
   String subCategoryName = "";
   int subCategoryId = 0;
@@ -45,6 +49,7 @@ class FilterController extends GetxController{
   final ScrollController sController = ScrollController();
   late TextEditingController startPriceRange;
   late TextEditingController endPriceRange;
+  List<GovernmentModel>? governmentData = [];
   String selectedTap = "p";
 
   final GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
@@ -74,6 +79,7 @@ class FilterController extends GetxController{
   }
 
   getData() async{
+    governmentData = await SearchAndFilterServices.getGovernments();
  await getMainCategoryData();
     isLoading = false;
     update();
@@ -100,6 +106,10 @@ class FilterController extends GetxController{
     mainCategoryImageURl =  "${Services.baseEndPoint}${choosedMainCategory.img}";
     getSubCategoryData();
     update();
+  }
+  choosingGovernment(GovernmentModel choosedGovernment){
+    locationName = (Get.find<StorageService>().activeLocale == SupportedLocales.english?choosedGovernment.nameEn:choosedGovernment.name)!;
+    locationId = choosedGovernment.id??0;
   }
   choosingSubCategory(CategoryModel choosedSubCategory){
     subCategoryName = (Get.find<StorageService>().activeLocale == SupportedLocales.english?choosedSubCategory.nameEn:choosedSubCategory.name)!;
@@ -194,11 +204,11 @@ class FilterController extends GetxController{
                 children:[
                   ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                     addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
-                  }, mainCategoryId: mainCategoryId, comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true, branchCategoryId: subCategoryId,),
+                  }, mainCategoryId: mainCategoryId, comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true, branchCategoryId: subCategoryId, mainCategoryImg: '',),
 
                   ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
                     addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
-                  }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId)
+                  }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId, mainCategoryImg: '',)
                 ]
             ),
           );
@@ -214,7 +224,7 @@ class FilterController extends GetxController{
                         padding: const EdgeInsets.all(8.0),
                         child: ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                           addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,false);
-                        }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId)
+                        }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId, mainCategoryImg: '',)
                     ),
 
                   ]
@@ -244,11 +254,11 @@ class FilterController extends GetxController{
                   children:[
                     ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                       addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
-                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId),
+                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId, mainCategoryImg: '',),
 
                     ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
                       addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
-                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId)
+                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId, mainCategoryImg: '',)
                   ]
               ),
             );
@@ -264,7 +274,7 @@ class FilterController extends GetxController{
                           padding: const EdgeInsets.all(8.0),
                           child: ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                             addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,false);
-                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId)
+                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId, mainCategoryImg: '',)
                       ),
 
                     ]
@@ -294,7 +304,7 @@ class FilterController extends GetxController{
           );
         }else{
           var checker =  await checkAddedOrNotToFavorite( "${shopList?[index].id}");
-          storeListWidget[index]=StoreWidget(store:shopList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId,);
+          storeListWidget[index]=StoreWidget(store:shopList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId, mainCategoryImg: '',);
 
 
           update();
@@ -311,7 +321,7 @@ class FilterController extends GetxController{
           );
         }else{
           var checker =  await checkAddedOrNotToFavorite( "${shopList?[index].id}");
-          storeListWidget[index]=StoreWidget(store:shopList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId,);
+          storeListWidget[index]=StoreWidget(store:shopList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId, mainCategoryImg: '',);
           update();
         }
       }
@@ -344,11 +354,11 @@ class FilterController extends GetxController{
                   children:[
                     ProductWidget(product:productList?[i], productAreAddedOrNot:  productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
                       addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,true);
-                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId),
+                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId, mainCategoryImg: '',),
 
                     ProductWidget(product:productList?[i+1], productAreAddedOrNot:  productList?[i+1].favorite == 1 , addingOrRemovingProductToFavorite: (){
                       addingOrRemovingProductToFavorite(context,"${productList?[i+1].id}",i,true);
-                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId)
+                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId, mainCategoryImg: '',)
                   ]
               ),
             )
@@ -367,7 +377,7 @@ class FilterController extends GetxController{
                           padding: const EdgeInsets.all(8.0),
                           child: ProductWidget(product:productList?[i], productAreAddedOrNot: productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
                             addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,false);
-                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId)
+                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: subCategoryId, mainCategoryImg: '',)
                       ),
 
                     ]
@@ -383,7 +393,7 @@ class FilterController extends GetxController{
       storeListWidget = [];
       for (int i = 0; i <= shopList!.length-1; i=i+1) {
         storeListWidget.add(
-            StoreWidget(store:shopList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopList?[i].id}",i);}, shopAreAddedOrNot: shopList?[i].favorite==1, mainCategoryId: mainCategoryId,)
+            StoreWidget(store:shopList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopList?[i].id}",i);}, shopAreAddedOrNot: shopList?[i].favorite==1, mainCategoryId: mainCategoryId, mainCategoryImg: '',)
         );
 
       }
@@ -414,7 +424,7 @@ class FilterController extends GetxController{
 
   startSearching(context) async {
     if(selectedTap == "p"){
-      productList = await AdvancedSearchServices().searchingForProduct(selectedTap, "$mainCategoryId", "$subCategoryId", ratingId, "$sVal", "$sFal",);
+      productList = await AdvancedSearchServices().searchingForProduct(selectedTap, "$mainCategoryId", "$subCategoryId", ratingId, "$sVal", "$sFal","$locationId");
       await fillingData(context);
       searchIsLoading = false;
     if(productList?.length == 0||productList == []){
@@ -423,7 +433,7 @@ class FilterController extends GetxController{
     update();
     Get.to(()=>const AdvancedSearchScreen());
     }else{
-     shopList =  await AdvancedSearchServices().searchingForStore("$mainCategoryId", ratingId,);
+     shopList =  await AdvancedSearchServices().searchingForStore("$mainCategoryId", ratingId,"$locationId");
      await fillingData(context);
      searchIsLoading = false;
      if(shopList?.length == 0||shopList == []){

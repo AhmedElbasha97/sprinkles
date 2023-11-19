@@ -31,7 +31,8 @@ class StoreController extends GetxController {
   List<Widget> storeListWidget = [];
   final GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
   final BuildContext context;
-  StoreController(this.mainCategoryId, this.selectedFromDrawer, this.context);
+  final String mainCategoryImg;
+  StoreController(this.mainCategoryId, this.selectedFromDrawer, this.context, this.mainCategoryImg);
   bool checker =false;
   bool hasBeenSelectedFromDrawer = false;
   int selectedMainCategoryId = 0;
@@ -230,7 +231,7 @@ class StoreController extends GetxController {
           );
         }else{
           var checker =  await checkStoreAddedOrNet( "${storeList?[index].id}");
-          storeListWidget[index]=StoreWidget(store:storeList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${storeList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId,);
+          storeListWidget[index]=StoreWidget(store:storeList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${storeList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId, mainCategoryImg: mainCategoryImg,);
 
 
           update();
@@ -247,7 +248,7 @@ class StoreController extends GetxController {
           );
         }else{
           var checker =  await checkStoreAddedOrNet( "${storeList?[index].id}");
-          storeListWidget[index]=StoreWidget(store:storeList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${storeList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId,);
+          storeListWidget[index]=StoreWidget(store:storeList?[index], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${storeList?[index].id}",index);}, shopAreAddedOrNot: checker, mainCategoryId: mainCategoryId, mainCategoryImg: mainCategoryImg,);
           update();
         }
       }
@@ -289,7 +290,7 @@ class StoreController extends GetxController {
     storeListWidget = [];
     for (int i = 0; i <= storeList!.length-1; i=i+1) {
               storeListWidget.add(
-                  StoreWidget(store:storeList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${storeList?[i].id}",i);}, shopAreAddedOrNot: storeList?[i].favorite==1, mainCategoryId: mainCategoryId,)
+                  StoreWidget(store:storeList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${storeList?[i].id}",i);}, shopAreAddedOrNot: storeList?[i].favorite==1, mainCategoryId: mainCategoryId, mainCategoryImg: mainCategoryImg,)
               );
 
         }

@@ -2,7 +2,13 @@
 //
 //     final productDetailedModel = productDetailedModelFromJson(jsonString);
 
+// To parse this JSON data, do
+//
+//     final productDetailedModel = productDetailedModelFromJson(jsonString);
+
 import 'dart:convert';
+
+import 'package:sprinkles/models/branch_model.dart';
 
 ProductDetailedModel productDetailedModelFromJson(String str) => ProductDetailedModel.fromJson(json.decode(str));
 
@@ -23,6 +29,7 @@ class ProductDetailedModel {
   Ctg? ctg;
   Shop? shop;
   List<ItemFilter>? itemFilter;
+  int? favorite;
 
   ProductDetailedModel({
     this.id,
@@ -39,6 +46,7 @@ class ProductDetailedModel {
     this.ctg,
     this.shop,
     this.itemFilter,
+    this.favorite,
   });
 
   factory ProductDetailedModel.fromJson(Map<String, dynamic> json) => ProductDetailedModel(
@@ -56,6 +64,7 @@ class ProductDetailedModel {
     ctg: json["ctg"] == null ? null : Ctg.fromJson(json["ctg"]),
     shop: json["shop"] == null ? null : Shop.fromJson(json["shop"]),
     itemFilter: json["item_filter"] == null ? [] : List<ItemFilter>.from(json["item_filter"]!.map((x) => ItemFilter.fromJson(x))),
+    favorite: json["favorite"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -73,6 +82,7 @@ class ProductDetailedModel {
     "ctg": ctg?.toJson(),
     "shop": shop?.toJson(),
     "item_filter": itemFilter == null ? [] : List<dynamic>.from(itemFilter!.map((x) => x.toJson())),
+    "favorite": favorite,
   };
 }
 
@@ -135,6 +145,7 @@ class Shop {
   String? phone;
   String? whatsapp;
   String? image;
+  List<Branch>? branch;
 
   Shop({
     this.id,
@@ -143,6 +154,7 @@ class Shop {
     this.phone,
     this.whatsapp,
     this.image,
+    this.branch,
   });
 
   factory Shop.fromJson(Map<String, dynamic> json) => Shop(
@@ -152,6 +164,7 @@ class Shop {
     phone: json["phone"],
     whatsapp: json["whatsapp"],
     image: json["image"],
+    branch: json["branch"] == null ? [] : List<Branch>.from(json["branch"]!.map((x) => Branch.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -161,5 +174,8 @@ class Shop {
     "phone": phone,
     "whatsapp": whatsapp,
     "image": image,
+    "branch": branch == null ? [] : List<dynamic>.from(branch!.map((x) => x.toJson())),
   };
 }
+
+

@@ -108,7 +108,7 @@ class OrderingScreen extends StatelessWidget {
                             Icons.arrow_back_ios_rounded  ,color:kDarkPinkColor,size:15
                         ),
                         CustomText(
-                          'رجوع',
+                          goBack.tr,
                           textAlign:TextAlign.left,
                           style: TextStyle(
                             height:1,
@@ -154,15 +154,15 @@ class OrderingScreen extends StatelessWidget {
                     ),
                     Positioned(
                         bottom:0,
-                        left:0,
+                        right:0,
                         child:Container(
                           height:Get.height*0.09,
                           width: Get.width*0.3,
                           decoration:const BoxDecoration(
-                            borderRadius:BorderRadius.only(bottomLeft:Radius.circular(10)),
+                            borderRadius:BorderRadius.only(bottomRight:Radius.circular(10)),
                             image: DecorationImage(
                               image: AssetImage(
-                                "assets/images/Image 2.png",
+                                "assets/images/Image 3.png",
                               ),
                               fit:  BoxFit.cover,
                             ),
@@ -176,10 +176,127 @@ class OrderingScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children: [  controller.dataIsLoading? Container(
+
+                            width:Get.width*0.4,
+                            height:Get.height*0.16,
+                            decoration:BoxDecoration(
+                              color:  const Color(0xFFF2F0F3),
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  offset: const Offset(
+                                    0.0,
+                                    0.0,
+                                  ),
+                                  blurRadius: 13.0,
+                                  spreadRadius: 2.0,
+                                ), //BoxShadow
+                                BoxShadow(
+                                  color: Colors.white.withOpacity(0.2),
+                                  offset: const Offset(0.0, 0.0),
+                                  blurRadius: 0.0,
+                                  spreadRadius: 0.0,
+                                ), //BoxShadow
+                              ],
+                            ),
+                            child:Center(
+                              child: Container(
+
+                                width:Get.width*0.37,
+                                height:Get.height*0.13,
+                                decoration:BoxDecoration(
+                                  color:  const Color(0xFFDFDDDF),
+                                  borderRadius: BorderRadius.circular(15),
+
+                                ),
+                              ).animate(onPlay: (controller) => controller.repeat())
+                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                  .animate() // this wraps the previous Animate in another Animate
+                              ,
+                            ),
+                          ).animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                              .animate() // this wraps the previous Animate in another Animate
+                              :CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl:"${Services.baseEndPoint}${controller.data?.images?[0]??""}",
+                            imageBuilder: ((context, image){
+                              return  ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Container(
+                                    width:Get.width*0.4,
+                                    height:Get.height*0.16,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: image,
+                                        fit:  BoxFit.cover,
+                                      ),
+                                    )
+                                ),
+                              );
+                            }),
+                            placeholder: (context, image){
+                              return   Container(
+
+                                width:Get.width*0.4,
+                                height:Get.height*0.16,
+                                decoration:BoxDecoration(
+                                  color:  const Color(0xFFF2F0F3),
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      offset: const Offset(
+                                        0.0,
+                                        0.0,
+                                      ),
+                                      blurRadius: 13.0,
+                                      spreadRadius: 2.0,
+                                    ), //BoxShadow
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.2),
+                                      offset: const Offset(0.0, 0.0),
+                                      blurRadius: 0.0,
+                                      spreadRadius: 0.0,
+                                    ), //BoxShadow
+                                  ],
+                                ),
+                                child:Center(
+                                  child: Container(
+
+                                    width:Get.width*0.37,
+                                    height:Get.height*0.13,
+                                    decoration:BoxDecoration(
+                                      color:  const Color(0xFFDFDDDF),
+                                      borderRadius: BorderRadius.circular(15),
+
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                  ,
+                                ),
+                              ).animate(onPlay: (controller) => controller.repeat())
+                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                  .animate() // this wraps the previous Animate in another Animate
+                                  ;
+                            },
+                            errorWidget: (context, url, error){
+                              return SizedBox(
+                                width:Get.width*0.4,
+                                height:Get.height*0.16,
+                                child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                              );
+                            },
+                          ),
+
+                            const SizedBox(width: 20,),
                             Container(
                               height:Get.height*0.175,
                               child: Column(
+
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
 
@@ -199,7 +316,7 @@ class OrderingScreen extends StatelessWidget {
                                     width:Get.width*0.5,
                                     child: CustomText(
                                       Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.nameEn??"":controller.data?.name??"",
-                                      textAlign: TextAlign.right,
+                                      textAlign: TextAlign.left,
                                       style: TextStyle(
 
                                         shadows: <Shadow>[
@@ -239,7 +356,7 @@ class OrderingScreen extends StatelessWidget {
                                     width:Get.width*0.5,
                                     child: CustomText(
                                       "${priceKey.tr} ${controller.data?.price??""} ${currencyKey.tr}",
-                                      textAlign: TextAlign.right,
+                                      textAlign: TextAlign.left,
                                       style: TextStyle(
 
                                         shadows: <Shadow>[
@@ -267,6 +384,104 @@ class OrderingScreen extends StatelessWidget {
                                       width:Get.width*0.5,
                                       child: Row(
                                         children: [
+                                          controller.dataIsLoading?Container(
+                                          width:Get.width*0.1,
+                                          height:Get.height*0.05,
+                                          decoration:BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50),
+
+                                          ),
+                                          child:  Center(
+                                            child: Container(
+
+                                              width:Get.width*0.065,
+                                              height:Get.height*0.03,
+                                              decoration:BoxDecoration(
+                                                color:  const Color(0xFFF2F0F3),
+                                                borderRadius: BorderRadius.circular(15),
+
+                                              ),
+                                            ).animate(onPlay: (controller) => controller.repeat())
+                                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                .animate() // this wraps the previous Animate in another Animate
+                                            ,
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate():CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl: "http://sprinkles-qa.com${controller.data?.shop?.image??""}",
+                                          imageBuilder: ((context, image){
+                                            return  ClipRRect(
+                                              borderRadius: BorderRadius.circular(50),
+                                              child: Container(
+                                                  width:Get.width*0.1,
+                                                  height:Get.height*0.05,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: image,
+                                                      fit:  BoxFit.cover,
+                                                    ),
+                                                  )
+                                              ),
+                                            );
+                                          }),
+                                          placeholder: (context, image){
+                                            return   Container(
+
+                                              width:Get.width*0.1,
+                                              height:Get.height*0.05,
+                                              decoration:BoxDecoration(
+                                                color:  const Color(0xFFF2F0F3),
+                                                borderRadius: BorderRadius.circular(15),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black.withOpacity(0.1),
+                                                    offset: const Offset(
+                                                      0.0,
+                                                      0.0,
+                                                    ),
+                                                    blurRadius: 13.0,
+                                                    spreadRadius: 2.0,
+                                                  ), //BoxShadow
+                                                  BoxShadow(
+                                                    color: Colors.white.withOpacity(0.2),
+                                                    offset: const Offset(0.0, 0.0),
+                                                    blurRadius: 0.0,
+                                                    spreadRadius: 0.0,
+                                                  ), //BoxShadow
+                                                ],
+                                              ),
+                                              child:Center(
+                                                child: Container(
+
+                                                  width:Get.width*0.065,
+                                                  height:Get.height*0.03,
+                                                  decoration:BoxDecoration(
+                                                    color:  const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50),
+
+                                                  ),
+                                                ).animate(onPlay: (controller) => controller.repeat())
+                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                    .animate() // this wraps the previous Animate in another Animate
+                                                ,
+                                              ),
+                                            ).animate(onPlay: (controller) => controller.repeat())
+                                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                .animate() // this wraps the previous Animate in another Animate
+                                                ;
+                                          },
+                                          errorWidget: (context, url, error){
+                                            return SizedBox(
+                                              width:Get.width*0.1,
+                                              height:Get.height*0.05,
+                                              child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
+                                            );
+                                          },
+                                        ),
+                                          const SizedBox(width: 5,),
                                           controller.dataIsLoading? Container(
                                             width:Get.width*0.2,
                                             height: 13,
@@ -283,7 +498,7 @@ class OrderingScreen extends StatelessWidget {
                                             width:Get.width*0.35,
                                             child: CustomText(
                                               Get.find<StorageService>().activeLocale == SupportedLocales.english? controller.data?.shop?.nameEn??"":controller.data?.shop?.name??"",
-                                              textAlign: TextAlign.right,
+                                              textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 14,
@@ -296,104 +511,6 @@ class OrderingScreen extends StatelessWidget {
                                               maxLines: 1,
                                             ),
                                           ),
-                                          const SizedBox(width: 5,),
-                                          controller.dataIsLoading?Container(
-                                            width:Get.width*0.1,
-                                            height:Get.height*0.05,
-                                            decoration:BoxDecoration(
-                                              color: const Color(0xFFDFDDDF),
-                                              borderRadius: BorderRadius.circular(50),
-
-                                            ),
-                                            child:  Center(
-                                              child: Container(
-
-                                                width:Get.width*0.065,
-                                                height:Get.height*0.03,
-                                                decoration:BoxDecoration(
-                                                  color:  const Color(0xFFF2F0F3),
-                                                  borderRadius: BorderRadius.circular(15),
-
-                                                ),
-                                              ).animate(onPlay: (controller) => controller.repeat())
-                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                  .animate() // this wraps the previous Animate in another Animate
-                                              ,
-                                            ),
-                                          ).animate(onPlay: (controller) => controller.repeat())
-                                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                              .animate():CachedNetworkImage(
-                                            fit: BoxFit.cover,
-                                            imageUrl: "http://sprinkles-qa.com${controller.data?.shop?.image??""}",
-                                            imageBuilder: ((context, image){
-                                              return  ClipRRect(
-                                                borderRadius: BorderRadius.circular(50),
-                                                child: Container(
-                                                    width:Get.width*0.1,
-                                                    height:Get.height*0.05,
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                        image: image,
-                                                        fit:  BoxFit.cover,
-                                                      ),
-                                                    )
-                                                ),
-                                              );
-                                            }),
-                                            placeholder: (context, image){
-                                              return   Container(
-
-                                                width:Get.width*0.1,
-                                                height:Get.height*0.05,
-                                                decoration:BoxDecoration(
-                                                  color:  const Color(0xFFF2F0F3),
-                                                  borderRadius: BorderRadius.circular(15),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black.withOpacity(0.1),
-                                                      offset: const Offset(
-                                                        0.0,
-                                                        0.0,
-                                                      ),
-                                                      blurRadius: 13.0,
-                                                      spreadRadius: 2.0,
-                                                    ), //BoxShadow
-                                                    BoxShadow(
-                                                      color: Colors.white.withOpacity(0.2),
-                                                      offset: const Offset(0.0, 0.0),
-                                                      blurRadius: 0.0,
-                                                      spreadRadius: 0.0,
-                                                    ), //BoxShadow
-                                                  ],
-                                                ),
-                                                child:Center(
-                                                  child: Container(
-
-                                                    width:Get.width*0.065,
-                                                    height:Get.height*0.03,
-                                                    decoration:BoxDecoration(
-                                                      color:  const Color(0xFFDFDDDF),
-                                                      borderRadius: BorderRadius.circular(50),
-
-                                                    ),
-                                                  ).animate(onPlay: (controller) => controller.repeat())
-                                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                      .animate() // this wraps the previous Animate in another Animate
-                                                  ,
-                                                ),
-                                              ).animate(onPlay: (controller) => controller.repeat())
-                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                  .animate() // this wraps the previous Animate in another Animate
-                                                  ;
-                                            },
-                                            errorWidget: (context, url, error){
-                                              return SizedBox(
-                                                width:Get.width*0.1,
-                                                height:Get.height*0.05,
-                                                child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
-                                              );
-                                            },
-                                          ),
 
                                         ],
                                       ),
@@ -401,122 +518,6 @@ class OrderingScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            ),
-                            const SizedBox(width: 20,),
-                            controller.dataIsLoading? Container(
-
-                              width:Get.width*0.4,
-                              height:Get.height*0.16,
-                              decoration:BoxDecoration(
-                                color:  const Color(0xFFF2F0F3),
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    offset: const Offset(
-                                      0.0,
-                                      0.0,
-                                    ),
-                                    blurRadius: 13.0,
-                                    spreadRadius: 2.0,
-                                  ), //BoxShadow
-                                  BoxShadow(
-                                    color: Colors.white.withOpacity(0.2),
-                                    offset: const Offset(0.0, 0.0),
-                                    blurRadius: 0.0,
-                                    spreadRadius: 0.0,
-                                  ), //BoxShadow
-                                ],
-                              ),
-                              child:Center(
-                                child: Container(
-
-                                  width:Get.width*0.37,
-                                  height:Get.height*0.13,
-                                  decoration:BoxDecoration(
-                                    color:  const Color(0xFFDFDDDF),
-                                    borderRadius: BorderRadius.circular(15),
-
-                                  ),
-                                ).animate(onPlay: (controller) => controller.repeat())
-                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                    .animate() // this wraps the previous Animate in another Animate
-                                ,
-                              ),
-                            ).animate(onPlay: (controller) => controller.repeat())
-                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                .animate() // this wraps the previous Animate in another Animate
-                                :CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              imageUrl:"${Services.baseEndPoint}${controller.data?.images?[0]??""}",
-                              imageBuilder: ((context, image){
-                                return  ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Container(
-                                      width:Get.width*0.4,
-                                      height:Get.height*0.16,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: image,
-                                          fit:  BoxFit.cover,
-                                        ),
-                                      )
-                                  ),
-                                );
-                              }),
-                              placeholder: (context, image){
-                                return   Container(
-
-                                  width:Get.width*0.4,
-                                  height:Get.height*0.16,
-                                  decoration:BoxDecoration(
-                                    color:  const Color(0xFFF2F0F3),
-                                    borderRadius: BorderRadius.circular(15),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        offset: const Offset(
-                                          0.0,
-                                          0.0,
-                                        ),
-                                        blurRadius: 13.0,
-                                        spreadRadius: 2.0,
-                                      ), //BoxShadow
-                                      BoxShadow(
-                                        color: Colors.white.withOpacity(0.2),
-                                        offset: const Offset(0.0, 0.0),
-                                        blurRadius: 0.0,
-                                        spreadRadius: 0.0,
-                                      ), //BoxShadow
-                                    ],
-                                  ),
-                                  child:Center(
-                                    child: Container(
-
-                                      width:Get.width*0.37,
-                                      height:Get.height*0.13,
-                                      decoration:BoxDecoration(
-                                        color:  const Color(0xFFDFDDDF),
-                                        borderRadius: BorderRadius.circular(15),
-
-                                      ),
-                                    ).animate(onPlay: (controller) => controller.repeat())
-                                        .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                        .animate() // this wraps the previous Animate in another Animate
-                                    ,
-                                  ),
-                                ).animate(onPlay: (controller) => controller.repeat())
-                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                    .animate() // this wraps the previous Animate in another Animate
-                                    ;
-                              },
-                              errorWidget: (context, url, error){
-                                return SizedBox(
-                                  width:Get.width*0.4,
-                                  height:Get.height*0.16,
-                                  child: Image.asset("assets/images/logo sprinkles.png",fit: BoxFit.fitHeight,),
-                                );
-                              },
                             ),
 
 
@@ -930,7 +931,7 @@ class OrderingScreen extends StatelessWidget {
               Center(
                 child: InkWell(
                   onTap: (){
-                    controller.ordering();
+                    controller.ordering(context);
                   },
                   child: Container(
                     width: Get.width*0.65,

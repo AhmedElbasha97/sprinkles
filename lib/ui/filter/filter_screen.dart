@@ -490,6 +490,216 @@ class FilterScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Container(
                       width: Get.width,
+                      child:  Text(locationTitle.tr,
+                        textAlign: TextAlign.start,
+                        style:  TextStyle(
+                            fontFamily: Get
+                                .find<StorageService>()
+                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                            color: kDarkPinkColor,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 17),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  controller.isLoading? Center(
+                    child: Container(
+                      width: Get.width*0.9,
+                      height: Get.height*0.07,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: kBackGroundColor,
+                        border: Border.all(width: 1, color: kDarkPinkColor),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 5, //soften the shadow
+                            spreadRadius: 0, //extend the shadow
+                            offset: Offset(
+                              0.0, // Move to right 10  horizontally
+                              3.0, // Move to bottom 5 Vertically
+                            ),
+                          )
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+
+
+                            CustomText(
+                              loadingKey.tr,
+                              style:  TextStyle(
+                                fontFamily: Get
+                                    .find<StorageService>()
+                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20,
+                                color: kDarkPinkColor,
+                                height: 1,
+                                letterSpacing: -1,
+                              ),
+                            ) .animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color: kLightPinkColor)
+                                .animate() // this wraps the previous Animate in another Animate
+                                .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                                .slide(),
+                            const SizedBox(height: 10,),
+                            Image.asset("assets/images/logo sprinkles.png",width: 150,height: 150,fit: BoxFit.contain).animate(onPlay: (controller) => controller.repeat())
+                                .shimmer(duration: 1200.ms, color:  kLightPinkColor)
+                                .animate() // this wraps the previous Animate in another Animate
+                                .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                                .slide(),
+                          ],
+                        ),
+                      ),
+                    ).animate(onPlay: (controller) => controller.repeat())
+
+                        .animate() // this wraps the previous Animate in another Animate
+                        .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                        .slide(),
+                  ):
+                  PopupMenuButton<String>(
+                    itemBuilder: (context) =>
+                        controller.governmentData!.map((e){
+                          return   PopupMenuItem(
+                            value:"${e.id}",
+                            textStyle:  TextStyle(
+                                color: kDarkPinkColor,
+                                fontFamily: Get
+                                    .find<StorageService>()
+                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                fontWeight: FontWeight.w600),
+                            onTap: (){
+                              controller.choosingGovernment(e);
+                            },
+                            child: SizedBox(
+                              width: Get.width,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:MainAxisAlignment.center,
+                                    children: [
+
+                                      CustomText(
+                                        Get.find<StorageService>().activeLocale == SupportedLocales.english?e.nameEn??"":e.name??"",
+                                        style:  TextStyle(
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                            color: kDarkPinkColor,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Divider(
+                                    color: kDarkPinkColor,
+                                    height: 1,
+                                    thickness: 1,
+                                    endIndent: 0,
+                                    indent: 0,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }).toList(),
+
+                    child: Center(
+                      child: Container(
+                        width: Get.width*0.9,
+                        height: Get.height*0.07,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: kDarkPinkColor,width: 1)
+                        ),
+                        child:   Center(
+                          child:  controller.locationName==""?
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomText(
+                                locationText1.tr,
+                                style:  TextStyle(
+                                    fontFamily: Get
+                                        .find<StorageService>()
+                                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                    color: kDarkPinkColor,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15),
+                              ),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                height: 25,
+                                width: 20,
+                                child: Image.asset("assets/icons/searchIconDrawer.png",fit: BoxFit.fitHeight,),
+                              ),
+
+                            ],
+                          ):
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomText(
+                                locationText2.tr,
+                                style:  TextStyle(
+                                    fontFamily: Get
+                                        .find<StorageService>()
+                                        .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                    color: kDarkPinkColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 15),
+                              ),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: Get.width*0.4,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(controller.locationName,
+                                      style:  TextStyle(
+                                          fontFamily: Get
+                                              .find<StorageService>()
+                                              .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                          color: kDarkPinkColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15),),
+                                    const SizedBox(height: 3,),
+                                    const Divider(
+                                      color: kDarkPinkColor,
+                                      height: 1,
+                                      thickness: 1,
+                                      endIndent: 0,
+                                      indent: 0,
+                                    ),
+                                  ],
+                                ),
+                              )
+
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Container(
+                      width: Get.width,
                       child:  Text(mainCategoryTitle.tr,
                         textAlign: TextAlign.start,
                         style:  TextStyle(

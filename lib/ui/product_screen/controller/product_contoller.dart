@@ -41,7 +41,8 @@ class ProductController extends GetxController {
   final int mainCategoryId;
    final BuildContext context;
    final bool selectingFromDrawer;
-  ProductController(this.mainCategoryId, this.context, this.selectingFromDrawer);
+  final String mainCategoryImg;
+  ProductController(this.mainCategoryId, this.context, this.selectingFromDrawer, this.mainCategoryImg);
   late TextEditingController searchController;
   bool hasBeenSelectedFromDrawer = false;
   List<String> governmentData = [removeFilterTitle.tr,priceFilterDescTitle.tr,priceFilterAscTitle.tr,mostSelling.tr,mostRating.tr,];
@@ -359,11 +360,11 @@ class ProductController extends GetxController {
                   children:[
                     ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                       addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
-                    }, mainCategoryId: mainCategoryId, comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true, branchCategoryId: selectedSubCategoryId,),
+                    }, mainCategoryId: mainCategoryId, comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true, branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,),
 
                     ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
                       addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
-                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                    }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                   ]
               ),
             ),
@@ -458,7 +459,7 @@ class ProductController extends GetxController {
                       padding: const EdgeInsets.all(8.0),
                       child: ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                         addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,false);
-                      }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                      }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                   ),
 
                 ]
@@ -561,11 +562,11 @@ class ProductController extends GetxController {
                       children:[
                         ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                           addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
-                        }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
+                        }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,),
 
                         ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
                           addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
-                        }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                        }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                       ]
                   ),
                 ),
@@ -660,7 +661,7 @@ class ProductController extends GetxController {
                           padding: const EdgeInsets.all(8.0),
                           child: ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                             addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,false);
-                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                       ),
 
                     ]
@@ -818,11 +819,11 @@ class ProductController extends GetxController {
                     children:[
                  ProductWidget(product:productList?[i], productAreAddedOrNot: productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
                         addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,true,);
-                      }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
+                      }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,),
 
                      ProductWidget(product:productList?[i+1], productAreAddedOrNot: productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
                         addingOrRemovingProductToFavorite(context,"${productList?[i+1].id}",i,true,);
-                      }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                      }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                     ]
                   ),
                 ),
@@ -922,7 +923,7 @@ class ProductController extends GetxController {
                           padding: const EdgeInsets.all(8.0),
                           child: ProductWidget(product:productList?[i], productAreAddedOrNot: productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
                             addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,false,);
-                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                          }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                         ),
 
                       ]

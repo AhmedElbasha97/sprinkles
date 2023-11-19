@@ -92,11 +92,11 @@ fillingProductData()  async {
                 children:[
                   ProductWidget(product:productFavList?[i], productAreAddedOrNot: true , addingOrRemovingProductToFavorite: (){
                     addingOrRemovingProductToFavorite(context,"${productFavList?[i].id}",i,true);
-                  }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,),
+                  }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0, mainCategoryImg: '',),
 
                   ProductWidget(product:productFavList?[i+1], productAreAddedOrNot: true , addingOrRemovingProductToFavorite: (){
                     addingOrRemovingProductToFavorite(context,"${productFavList?[i+1].id}",i,true);
-                  }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,)
+                  }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0, mainCategoryImg: '',)
                 ]
             ),
           )
@@ -113,7 +113,7 @@ fillingProductData()  async {
                     padding: const EdgeInsets.all(8.0),
                     child: ProductWidget(product:productFavList?[i], productAreAddedOrNot: true , addingOrRemovingProductToFavorite: (){
                       addingOrRemovingProductToFavorite(context,"${productFavList?[i].id}",i,false);
-                    }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0,)
+                    }, mainCategoryId: 0,comingFromProductDetails: false, comingFromFavoriteList: true, comingFromProductList: false,branchCategoryId: 0, mainCategoryImg: '',)
                 ),
 
               ]
@@ -148,7 +148,7 @@ addingOrRemovingStoreToFavorite(context,String storeId,int index) async {
        for (int i =  index; i <= shopFavList!.length-1; i++) {
 
          storeListWidget[i]=
-             StoreWidget(store:shopFavList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[i].id}",i);}, shopAreAddedOrNot: shopFavList?[i].id==1, mainCategoryId: 0,);
+             StoreWidget(store:shopFavList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[i].id}",i);}, shopAreAddedOrNot: shopFavList?[i].id==1, mainCategoryId: 0, mainCategoryImg: '',);
 
        }
         update();
@@ -165,7 +165,7 @@ fillStoreData(context) async {
   for (int i = 0; i <= shopFavList!.length-1; i++) {
 
     storeListWidget.add(
-        StoreWidget(store:shopFavList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[i].id}",i);}, shopAreAddedOrNot: true, mainCategoryId: 0,)
+        StoreWidget(store:shopFavList?[i], addingOrRemovingForFav: (){addingOrRemovingStoreToFavorite(context,"${shopFavList?[i].id}",i);}, shopAreAddedOrNot: true, mainCategoryId: 0, mainCategoryImg: '',)
     );
 
   }

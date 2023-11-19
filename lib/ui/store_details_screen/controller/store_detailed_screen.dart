@@ -19,6 +19,7 @@ import 'package:sprinkles/services/favorite_services.dart';
 import 'package:sprinkles/services/reviews_services.dart';
 import 'package:sprinkles/services/shop_services.dart';
 import 'package:sprinkles/services/stats_services.dart';
+import 'package:sprinkles/ui/branches_list/branches_list_screen.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
 import 'package:sprinkles/ui/product_screen/widgets/product_widget.dart';
 import 'package:sprinkles/ui/siginup/signup_screen.dart';
@@ -28,7 +29,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class StoreDetailedController extends GetxController{
  bool shopIsLoading = true;
-
  bool shopProductIsLoading = true;
  late List<ProductsModel>? productList;
  List<CommentModel>? comments = [];
@@ -42,7 +42,9 @@ class StoreDetailedController extends GetxController{
  final BuildContext context;
  ScrollController scrollController = ScrollController();
  bool isVisible = false;
-  StoreDetailedController({required this.context, required this.mainCategoryId, required this.shopId});
+
+ final String mainCategoryImg;
+  StoreDetailedController({required this.context, required this.mainCategoryId, required this.shopId,required this.mainCategoryImg, });
 
  @override
   Future<void> onInit() async {
@@ -114,14 +116,26 @@ getData() async {
     );
   }
  Future<void> makePhoneCall() async {
-   var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked(shopId, "0", OrderType.CALL.name, "0");
-   if(result?.status == "true") {
-     final Uri launchUri = Uri(
-       scheme: 'tel',
-       path: shopData?.phone,
-     );
-     await launchUrl(launchUri);
+   if(shopData?.branch?.length != 0){
+     var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ'}";
+     var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ')}";
+     showDialog(context: context,
+       builder: (context) =>
+           BranchesListWidget(branch: shopData?.branch, androidUrl:androidUrl, iosUrl: iosUrl, shopId: "${shopData?.id??0}", productId: "0",),);
    }
+   else {
+     var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${shopData?.id??0}", "0", OrderType.CALL.name, "0");
+     if(result?.status == "true") {
+       final Uri launchUri = Uri(
+         scheme: 'tel',
+         path: shopData?.phone,
+       );
+       await launchUrl(launchUri);
+
+     }
+
+   }
+
  }
  fillingData()  async {
    products = [];
@@ -135,12 +149,12 @@ getData() async {
                  mainAxisAlignment:MainAxisAlignment.spaceAround,
                  children:[
                    ProductWidget(product:productList?[i], productAreAddedOrNot:  productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
-                     addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,true);
-                   }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
+                     addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,true,);
+                   }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId,  mainCategoryImg: mainCategoryImg,),
 
                    ProductWidget(product:productList?[i+1], productAreAddedOrNot:  productList?[i+1].favorite == 1 , addingOrRemovingProductToFavorite: (){
                      addingOrRemovingProductToFavorite(context,"${productList?[i+1].id}",i,true);
-                   }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                   }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                  ]
              ),
            )
@@ -159,7 +173,7 @@ getData() async {
                          padding: const EdgeInsets.all(8.0),
                          child: ProductWidget(product:productList?[i], productAreAddedOrNot: productList?[i].favorite == 1 , addingOrRemovingProductToFavorite: (){
                            addingOrRemovingProductToFavorite(context,"${productList?[i].id}",i,false);
-                         }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                         }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                      ),
 
                    ]
@@ -205,11 +219,11 @@ getData() async {
                children:[
                  ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                    addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
-                 }, mainCategoryId: mainCategoryId, comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true, branchCategoryId: selectedSubCategoryId,),
+                 }, mainCategoryId: mainCategoryId, comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true, branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,),
 
                  ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
                    addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
-                 }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                 }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                ]
            ),
          );
@@ -225,7 +239,7 @@ getData() async {
                        padding: const EdgeInsets.all(8.0),
                        child: ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                          addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,false);
-                       }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                       }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                    ),
 
                  ]
@@ -255,11 +269,11 @@ getData() async {
                  children:[
                    ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                      addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,true);
-                   }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId),
+                   }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,),
 
                    ProductWidget(product:productList?[index+1], productAreAddedOrNot: checker1 , addingOrRemovingProductToFavorite: (){
                      addingOrRemovingProductToFavorite(context,"${productList?[index+1].id}",index,true);
-                   }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                   }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                  ]
              ),
            );
@@ -275,7 +289,7 @@ getData() async {
                          padding: const EdgeInsets.all(8.0),
                          child: ProductWidget(product:productList?[index], productAreAddedOrNot: checker , addingOrRemovingProductToFavorite: (){
                            addingOrRemovingProductToFavorite(context,"${productList?[index].id}",index,false);
-                         }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId)
+                         }, mainCategoryId: mainCategoryId,comingFromProductDetails: false, comingFromFavoriteList: false, comingFromProductList: true,branchCategoryId: selectedSubCategoryId, mainCategoryImg: mainCategoryImg,)
                      ),
 
                    ]
@@ -303,21 +317,30 @@ getData() async {
        });
  }
  whatsapp() async{
+   if(shopData?.branch?.length != 0){
+     var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ'}";
+     var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ')}";
+     showDialog(context: context,
+       builder: (context) =>
+           BranchesListWidget(branch: shopData?.branch, androidUrl:androidUrl, iosUrl: iosUrl, shopId: "${shopData?.id??0}", productId: "0",),);
+   }
+   else {
+     var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ'}";
+     var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ')}";
+     var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked(shopId, "0", OrderType.WHATSAPP.name, "0");
+     if(result?.status == "true") {
+       try{
+         if(Platform.isIOS){
+           await launchUrl(Uri.parse(iosUrl));
+         }
+         else{
+           await launchUrl(Uri.parse(androidUrl));
+         }
+       } on Exception{
 
-   var androidUrl = "whatsapp://send?phone=${shopData?.whatsapp}&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ'}";
-   var iosUrl = "https://wa.me/${shopData?.whatsapp}?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ')}";
-   var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked(shopId, "0", OrderType.WHATSAPP.name, "0");
-   if(result?.status == "true") {
-     try{
-       if(Platform.isIOS){
-         await launchUrl(Uri.parse(iosUrl));
        }
-       else{
-         await launchUrl(Uri.parse(androidUrl));
-       }
-     } on Exception{
-
      }
+
    }
 
  }

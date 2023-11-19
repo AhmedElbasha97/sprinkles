@@ -138,6 +138,7 @@ class CategoryWidget extends StatelessWidget {
                   fontFamily: Get
                       .find<StorageService>()
                       .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                  fontWeight: FontWeight.w900,
                   color:selectedCategoryId == category?.id?kDarkPinkColor:kLightPinkColor,
                 ),
                 textAlign: TextAlign.center,

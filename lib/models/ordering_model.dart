@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:sprinkles/models/branch_model.dart';
+
 OrderingModel orderingModelFromJson(String str) => OrderingModel.fromJson(json.decode(str));
 
 String orderingModelToJson(OrderingModel data) => json.encode(data.toJson());
@@ -131,6 +133,8 @@ class Shop {
   String? phone;
   String? whatsapp;
   String? image;
+  List<Branch>? branch;
+
 
   Shop({
     this.id,
@@ -139,6 +143,8 @@ class Shop {
     this.phone,
     this.whatsapp,
     this.image,
+    this.branch,
+
   });
 
   factory Shop.fromJson(Map<String, dynamic> json) => Shop(
@@ -148,6 +154,8 @@ class Shop {
     phone: json["phone"],
     whatsapp: json["whatsapp"],
     image: json["image"],
+    branch: json["branch"] == null ? [] : List<Branch>.from(json["branch"]!.map((x) => x)),
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -157,5 +165,6 @@ class Shop {
     "phone": phone,
     "whatsapp": whatsapp,
     "image": image,
+    "branch": branch == null ? [] : List<Branch>.from(branch!.map((x) => x)),
   };
 }

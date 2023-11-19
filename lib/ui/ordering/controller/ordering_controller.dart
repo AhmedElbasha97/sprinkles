@@ -2,11 +2,13 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/models/choosing_filiter_model.dart';
 import 'package:sprinkles/services/order_services.dart';
 import 'package:sprinkles/services/stats_services.dart';
+import 'package:sprinkles/ui/branches_list/branches_list_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../models/ordering_model.dart';
@@ -68,29 +70,38 @@ settingWhatsAppText(){
   '$messageTextWhatsApp \n ${data?.link ?? ""} ';
  }
 }
-ordering() async {
+ordering(context) async {
 
 await settingWhatsAppText();
-whatsapp(data?.shop?.whatsapp??"");
+whatsapp(data?.shop?.whatsapp??"",context);
 }
- whatsapp(String contact) async {
+ whatsapp(String contact,context) async {
   var result = await StatsServices()
       .sendingOrderNowOrWhatsAppOrCallHasBeenClicked(
       "${data?.shop?.id ?? 0}", "${data?.id}", OrderType.FORM.name,
       messageTextWhatsApp);
   if (result?.status == "true") {
-   try {
-    if (Platform.isIOS) {
-     var iosUrl = "https://wa.me/$contact?text=${Uri.parse(
-         messageTextWhatsApp)} \n ${data?.link ?? ""} ";
-     await launchUrl(Uri.parse(iosUrl));
-    }
-    else {
-     var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
-     await launchUrl(Uri.parse(androidUrl));
-    }
-   } on Exception {
+   if(data?.shop?.branch?.length != 0){
+    var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse(
+        messageTextWhatsApp)} \n ${data?.link ?? ""} ";
+    showDialog(context: context,
+     builder: (context) =>
+         BranchesListWidget(branch: data?.shop?.branch, androidUrl:androidUrl, iosUrl: iosUrl, shopId: "${ data?.shop?.id??0}", productId: "${ data?.id??0}",),);
+   }else {
+    try {
+     if (Platform.isIOS) {
+      var iosUrl = "https://wa.me/$contact?text=${Uri.parse(
+          messageTextWhatsApp)} \n ${data?.link ?? ""} ";
+      await launchUrl(Uri.parse(iosUrl));
+     }
+     else {
+      var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
+      await launchUrl(Uri.parse(androidUrl));
+     }
+    } on Exception {
 
+    }
    }
   }
  }

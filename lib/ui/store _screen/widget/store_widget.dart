@@ -16,45 +16,68 @@ import 'package:sprinkles/Utils/translation_key.dart';
 
 import 'package:sprinkles/models/shops_model.dart';
 import 'package:sprinkles/services/stats_services.dart';
+import 'package:sprinkles/ui/branches_list/branches_list_screen.dart';
 
 import 'package:sprinkles/ui/store_details_screen/store_details_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StoreWidget extends StatelessWidget {
-  const StoreWidget({Key? key, this.store, required this.shopAreAddedOrNot, required this.addingOrRemovingForFav, required this.mainCategoryId}) : super(key: key);
+  const StoreWidget({Key? key, this.store, required this.shopAreAddedOrNot, required this.addingOrRemovingForFav, required this.mainCategoryId, required this.mainCategoryImg}) : super(key: key);
  final ShopsModel? store;
  final bool shopAreAddedOrNot;
  final Function addingOrRemovingForFav;
+  final String mainCategoryImg;
   final int mainCategoryId;
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${store?.id??0}", "0", OrderType.CALL.name, "0");
-    if(result?.status == "true") {
-      final Uri launchUri = Uri(
-        scheme: 'tel',
-        path: phoneNumber,
-      );
-      await launchUrl(launchUri);
+  Future<void> _makePhoneCall(String phoneNumber,context) async {
+    if(store?.branch?.length != 0){
+      var androidUrl = "whatsapp://send?phone=${store?.whatsapp??""}&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ'}";
+      var iosUrl = "https://wa.me/${store?.whatsapp??""}?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ')}";
+      showDialog(context: context,
+        builder: (context) =>
+            BranchesListWidget(branch: store?.branch, androidUrl:androidUrl, iosUrl: iosUrl, shopId: "${store?.id??0}", productId: "0",),);
     }
+    else {
+      var result = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${store?.id??0}", "0", OrderType.CALL.name, "0");
+      if(result?.status == "true") {
+        final Uri launchUri = Uri(
+          scheme: 'tel',
+          path: store?.phone,
+        );
+        await launchUrl(launchUri);
+
+      }
+
+    }
+
 
   }
 
-  whatsapp(String contact) async{
+  whatsapp(String contact,context) async{
+    if(store?.branch?.length != 0){
+      var androidUrl = "whatsapp://send?phone=$contact&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ'}";
+      var iosUrl = "https://wa.me/$contact?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ')}";
+      showDialog(context: context,
+        builder: (context) =>
+            BranchesListWidget(branch: store?.branch, androidUrl:androidUrl, iosUrl: iosUrl, shopId: "${store?.id??0}", productId: "0",),);
+    }
+    else {
+      var androidUrl = "whatsapp://send?phone=$contact&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ'}";
+      var iosUrl = "https://wa.me/$contact?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ')}";
+      var data = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${store?.id??0}", "0", OrderType.WHATSAPP.name, "0");
+      if(data?.status == "true") {
+        try{
+          if(Platform.isIOS){
+            await launchUrl(Uri.parse(iosUrl));
+          }
+          else{
+            await launchUrl(Uri.parse(androidUrl));
+          }
+        } on Exception{
 
-    var androidUrl = "whatsapp://send?phone=$contact&text=${'I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ'}";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('I saw your store in the Sprinkles app and I want to inquire about something \n رأيت متجرك فى تطبيق سبرينكلز  وأريد الاستفسار عن شئ')}";
-    var data = await StatsServices().sendingOrderNowOrWhatsAppOrCallHasBeenClicked("${store?.id??0}", "0", OrderType.WHATSAPP.name, "0");
-    if(data?.status == "true") {
-      try{
-        if(Platform.isIOS){
-          await launchUrl(Uri.parse(iosUrl));
         }
-        else{
-          await launchUrl(Uri.parse(androidUrl));
-        }
-      } on Exception{
-
       }
+
     }
 
 
@@ -80,7 +103,7 @@ class StoreWidget extends StatelessWidget {
                 if(test3){
                   Get.delete<StoreDetailedScreen>();
                 }
-                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
+                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId, mainCategoryImg: mainCategoryImg,));
               },
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
@@ -151,7 +174,7 @@ class StoreWidget extends StatelessWidget {
                 if(test3){
                   Get.delete<StoreDetailedScreen>();
                 }
-                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
+                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId, mainCategoryImg: mainCategoryImg,));
               },
               child: Container(
                 height: Get.height*0.15,
@@ -313,7 +336,7 @@ class StoreWidget extends StatelessWidget {
                           ),
                             InkWell(
                               onTap:(){
-                                whatsapp(store?.whatsapp??"");
+                                whatsapp(store?.whatsapp??"",context);
                               },
                               child: SizedBox(
                                 height: Get.height*0.03,
@@ -323,7 +346,7 @@ class StoreWidget extends StatelessWidget {
                             ),
                             InkWell(
                               onTap:(){
-                                _makePhoneCall(store?.phone??"");
+                                _makePhoneCall(store?.phone??"",context);
                               },
                               child: SizedBox(
                                 height: Get.height*0.03,
@@ -338,7 +361,7 @@ class StoreWidget extends StatelessWidget {
                                 if(test3){
                                   Get.delete<StoreDetailedScreen>();
                                 }
-                                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
+                                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId, mainCategoryImg: mainCategoryImg,));
                               },
                               child: Container(
                                 height: Get.height*0.04,
@@ -425,7 +448,7 @@ class StoreWidget extends StatelessWidget {
                                 if(test3){
                                   Get.delete<StoreDetailedScreen>();
                                 }
-                                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId,));
+                                Get.to(()=> StoreDetailedScreen(shopId: "${store?.id??0}", mainCategoryId: mainCategoryId, mainCategoryImg: mainCategoryImg,));
                               },
                               child: Container(
                                 height: Get.height*0.04,
@@ -476,7 +499,7 @@ class StoreWidget extends StatelessWidget {
                             ),
                             InkWell(
                               onTap:(){
-                                _makePhoneCall(store?.phone??"");
+                                _makePhoneCall(store?.phone??"",context);
                               },
                               child: SizedBox(
                                 height: Get.height*0.03,
@@ -486,7 +509,7 @@ class StoreWidget extends StatelessWidget {
                             ),
                             InkWell(
                               onTap:(){
-                                whatsapp(store?.whatsapp??"");
+                                whatsapp(store?.whatsapp??"",context);
                                 },
                               child: SizedBox(
                                 height: Get.height*0.03,

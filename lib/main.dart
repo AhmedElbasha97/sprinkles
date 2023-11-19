@@ -10,10 +10,15 @@ import 'package:sprinkles/Utils/transelation/app_transelation.dart';
 import 'package:sprinkles/services/network_status_service.dart';
 import 'package:sprinkles/ui/splash_screen/splash_screen.dart';
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await Get.putAsync(() => StorageService.init(), permanent: true);
   Get.put(LocalizationService.init(), permanent: true);
   await Get.putAsync(() => ConnectionService.init(), permanent: true);

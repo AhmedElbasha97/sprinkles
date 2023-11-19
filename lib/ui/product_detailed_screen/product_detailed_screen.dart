@@ -31,7 +31,8 @@ import 'package:sprinkles/ui/store_details_screen/widget/commet_screen.dart';
 import 'package:sprinkles/widgets/custom_text_widget.dart';
 
 class ProductDetailedScreen extends StatelessWidget {
-  const ProductDetailedScreen({Key? key, required this.productId, required this.mainCategoryId, required this.comingFromProductList, required this.comingFromFavoriteList, required this.comingFromProductDetails, required this.branchCategoryId}) : super(key: key);
+  const ProductDetailedScreen({Key? key, required this.productId, required this.mainCategoryId, required this.comingFromProductList, required this.comingFromFavoriteList, required this.comingFromProductDetails, required this.branchCategoryId, required this.mainCategoryImg}) : super(key: key);
+  final String mainCategoryImg;
   final String? productId;
   final int mainCategoryId;
   final bool comingFromProductList;
@@ -41,10 +42,10 @@ class ProductDetailedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gController = Get.put(ProductController(mainCategoryId,context,false));
+    final gController = Get.put(ProductController(mainCategoryId,context,false,mainCategoryImg));
     final fController = Get.put(FavoriteController(context));
     return GetBuilder(
-      init:  ProductDetailedController(productId??"",mainCategoryId,branchCategoryId),
+      init:  ProductDetailedController(productId??"",mainCategoryId,branchCategoryId,),
       builder: (ProductDetailedController controller) => Scaffold(
         appBar: AppBar(
           backgroundColor:kBackGroundColor,
@@ -171,8 +172,6 @@ class ProductDetailedScreen extends StatelessWidget {
             if(controller.productData?.video != ""){
               controller.videoPlayerController.pause();
             }
-
-
             Get.to(()=>OrderingScreen(productId: controller.productData?.id??0),transition:Transition.upToDown);
           },
           child: Container(
@@ -552,7 +551,7 @@ class ProductDetailedScreen extends StatelessWidget {
 
                               ),
                               child:Padding(
-                                padding: const EdgeInsets.only(left:10.0,right: 10,top:10,),
+                                padding: const EdgeInsets.only(left:10.0,right: 0,top:10,),
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:CrossAxisAlignment.start,
@@ -654,7 +653,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                                 .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                                 .slide():InkWell(
                                               onTap:(){
-                                                controller.makePhoneCall( '${controller.productData?.shop?.phone}');
+                                                controller.makePhoneCall( '${controller.productData?.shop?.phone}',context);
                                               },
                                               child: Row(
                                                 crossAxisAlignment:CrossAxisAlignment.center,
@@ -685,7 +684,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                                 .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                                 .slide():InkWell(
                                               onTap:(){
-                                                controller.whatsapp('${controller.productData?.shop?.whatsapp}');
+                                                controller.whatsapp('${controller.productData?.shop?.whatsapp}',context);
                                               },
                                               child: Row(
                                                 crossAxisAlignment:CrossAxisAlignment.center,
@@ -769,7 +768,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                                     ),
                                                   ),
                                                   const Icon(
-                                                      Icons.remove_red_eye_outlined  ,color:kDarkPinkColor,size:20
+                                                      Icons.remove_red_eye_outlined  ,color:kDarkPinkColor,size:15
                                                   ),
 
                                                 ]
@@ -811,11 +810,10 @@ class ProductDetailedScreen extends StatelessWidget {
                               children: [
 
                                 controller.productIsLoading?Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 7.0),
+                                  padding: const EdgeInsets.symmetric(vertical: 15.0),
                                   child: Container(
-
                                     height: Get.height*0.08,
-                                    width:Get.width*0.17,
+                                    width:Get.width*0.19,
                                     decoration:BoxDecoration(
                                       color:  const Color(0xFFF2F0F3),
                                       shape: BoxShape.circle,
@@ -842,8 +840,8 @@ class ProductDetailedScreen extends StatelessWidget {
 
                                         height: Get.height*0.07,
                                         width:Get.width*0.15,
-                                        decoration:const BoxDecoration(
-                                          color:  Color(0xFFDFDDDF),
+                                        decoration:BoxDecoration(
+                                          color:  const Color(0xFFDFDDDF),
                                           shape: BoxShape.circle,
 
                                         ),
@@ -855,10 +853,10 @@ class ProductDetailedScreen extends StatelessWidget {
                                   ).animate(onPlay: (controller) => controller.repeat())
                                       .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
                                       .animate(),
-                                ) // this wraps the previous Animate in another Animate
+                                )  // this wraps the previous Animate in another Animate
                                     : InkWell(
                                   onTap: (){
-                                    Get.to(()=> StoreDetailedScreen(shopId: "${controller.productData?.shop?.id??0}", mainCategoryId: mainCategoryId,),preventDuplicates: false);
+                                    Get.to(()=> StoreDetailedScreen(shopId: "${controller.productData?.shop?.id??0}", mainCategoryId: mainCategoryId, mainCategoryImg: mainCategoryImg,),preventDuplicates: false);
                                   },
                                       child: CachedNetworkImage(
                                   fit:  BoxFit.contain,
@@ -984,51 +982,54 @@ class ProductDetailedScreen extends StatelessWidget {
                               crossAxisAlignment:CrossAxisAlignment.end,
                               children: [
 
-                                controller.productIsLoading?Container(
-                                  height: Get.height*0.08,
-                                  width:Get.width*0.19,
-                                  decoration:BoxDecoration(
-                                    color:  const Color(0xFFF2F0F3),
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        offset: const Offset(
-                                          0.0,
-                                          0.0,
+                                controller.productIsLoading?Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                                  child: Container(
+                                    height: Get.height*0.08,
+                                    width:Get.width*0.19,
+                                    decoration:BoxDecoration(
+                                      color:  const Color(0xFFF2F0F3),
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                    ),
+                                    child:Center(
+                                      child: Container(
+
+                                        height: Get.height*0.07,
+                                        width:Get.width*0.15,
+                                        decoration:BoxDecoration(
+                                          color:  const Color(0xFFDFDDDF),
+                                          shape: BoxShape.circle,
+
                                         ),
-                                        blurRadius: 13.0,
-                                        spreadRadius: 2.0,
-                                      ), //BoxShadow
-                                      BoxShadow(
-                                        color: Colors.white.withOpacity(0.2),
-                                        offset: const Offset(0.0, 0.0),
-                                        blurRadius: 0.0,
-                                        spreadRadius: 0.0,
-                                      ), //BoxShadow
-                                    ],
-                                  ),
-                                  child:Center(
-                                    child: Container(
-
-                                      height: Get.height*0.07,
-                                      width:Get.width*0.15,
-                                      decoration:BoxDecoration(
-                                        color:  const Color(0xFFDFDDDF),
-                                        shape: BoxShape.circle,
-
-                                      ),
-                                    ).animate(onPlay: (controller) => controller.repeat())
-                                        .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                        .animate() // this wraps the previous Animate in another Animate
-                                    ,
-                                  ),
-                                ).animate(onPlay: (controller) => controller.repeat())
-                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                    .animate() // this wraps the previous Animate in another Animate
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                      ,
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate(),
+                                ) // this wraps the previous Animate in another Animate
                                     :InkWell(
                                   onTap: (){
-                                    Get.to(()=> StoreDetailedScreen(shopId: "${controller.productData?.shop?.id??0}", mainCategoryId: mainCategoryId,),preventDuplicates: false);
+                                    Get.to(()=> StoreDetailedScreen(shopId: "${controller.productData?.shop?.id??0}", mainCategoryId: mainCategoryId, mainCategoryImg:mainCategoryImg,),preventDuplicates: false);
                                   },
                                       child: CachedNetworkImage(
                                   imageUrl: "${Services.baseEndPoint}${controller.productData?.shop?.image??""}",
@@ -1219,7 +1220,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                           .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                           .slide():InkWell(
                                         onTap:(){
-                                          controller.makePhoneCall( '${controller.productData?.shop?.phone}');
+                                          controller.makePhoneCall( '${controller.productData?.shop?.phone}',context);
                                         },
                                         child: Row(
                                           crossAxisAlignment:CrossAxisAlignment.center,
@@ -1250,7 +1251,7 @@ class ProductDetailedScreen extends StatelessWidget {
                                           .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
                                           .slide():InkWell(
                                         onTap:(){
-                                          controller.whatsapp('${controller.productData?.shop?.whatsapp}');
+                                          controller.whatsapp('${controller.productData?.shop?.whatsapp}',context);
                                         },
                                         child: Row(
                                           crossAxisAlignment:CrossAxisAlignment.center,
@@ -1669,7 +1670,7 @@ class ProductDetailedScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
           child: Container(
               width:Get.width*0.95,
-              height:Get.height*0.42,
+              height:Get.height*0.445,
               decoration:BoxDecoration(
                 borderRadius:BorderRadius.circular(15),
                 color:Colors.white,
@@ -1728,7 +1729,7 @@ class ProductDetailedScreen extends StatelessWidget {
                       ]
                   ):Container(
                     width:Get.width*0.95,
-                    height:Get.height*0.36,
+                    height:Get.height*0.375,
                     child: ListView.builder(
                       scrollDirection:Axis.horizontal,
                       shrinkWrap:true,
@@ -1742,7 +1743,7 @@ class ProductDetailedScreen extends StatelessWidget {
                           }, mainCategoryId: mainCategoryId, comingFromProductDetails: true, comingFromFavoriteList: false, comingFromProductList: false, branchCategoryId: branchCategoryId,productDetailsFunction: (){
 
 
-                          },),
+                          }, mainCategoryImg: mainCategoryImg,),
                         );
                       },
 

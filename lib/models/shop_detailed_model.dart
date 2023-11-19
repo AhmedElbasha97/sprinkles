@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:sprinkles/models/branch_model.dart';
 import 'package:sprinkles/models/category_model.dart';
 
 ShopDetailedModel shopDetailedModelFromJson(String str) => ShopDetailedModel.fromJson(json.decode(str));
@@ -26,6 +27,8 @@ class ShopDetailedModel {
   int? star;
   List<CategoryModel>? ctgs;
   String? image;
+  int? favorite;
+  List<Branch>? branch;
 
   ShopDetailedModel({
     this.id,
@@ -43,6 +46,8 @@ class ShopDetailedModel {
     this.star,
     this.ctgs,
     this.image,
+    this.favorite,
+    this.branch,
   });
 
   factory ShopDetailedModel.fromJson(Map<String, dynamic> json) => ShopDetailedModel(
@@ -61,6 +66,8 @@ class ShopDetailedModel {
     star: json["star"],
     ctgs: json["ctgs"] == null ? [] : List<CategoryModel>.from(json["ctgs"]!.map((x) => CategoryModel.fromJson(x))),
     image: json["image"],
+    favorite: json["favorite"],
+    branch: json["branch"] == null ? [] : List<Branch>.from(json["branch"]!.map((x) => Branch.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -79,6 +86,14 @@ class ShopDetailedModel {
     "star": star,
     "ctgs": ctgs == null ? [] : List<dynamic>.from(ctgs!.map((x) => x.toJson())),
     "image": image,
+    "favorite": favorite,
+    "branch": branch == null ? [] : List<dynamic>.from(branch!.map((x) => x.toJson())),
   };
 }
+
+
+
+
+
+
 
