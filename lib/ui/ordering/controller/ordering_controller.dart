@@ -83,8 +83,7 @@ whatsapp(data?.shop?.whatsapp??"",context);
   if (result?.status == "true") {
    if(data?.shop?.branch?.length != 0){
     var androidUrl = "whatsapp://send?phone=$contact&text=$messageTextWhatsApp";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse(
-        messageTextWhatsApp)} \n ${data?.link ?? ""} ";
+    var iosUrl = "     ";
     showDialog(context: context,
      builder: (context) =>
          BranchesListWidget(branch: data?.shop?.branch, androidUrl:androidUrl, iosUrl: iosUrl, shopId: "${ data?.shop?.id??0}", productId: "${ data?.id??0}",),);

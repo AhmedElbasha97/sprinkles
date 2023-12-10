@@ -154,7 +154,7 @@ class Shop {
     phone: json["phone"],
     whatsapp: json["whatsapp"],
     image: json["image"],
-    branch: json["branch"] == null ? [] : List<Branch>.from(json["branch"]!.map((x) => x)),
+    branch: json["branch"] == null ? [] : List<Branch>.from(json["branch"]!.map((x) => Branch.fromJson(x))),
 
   );
 
