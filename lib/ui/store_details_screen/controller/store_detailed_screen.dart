@@ -10,6 +10,7 @@ import 'package:sprinkles/Utils/constant.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
+import 'package:sprinkles/models/category_model.dart';
 import 'package:sprinkles/models/comment_model.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/products_model.dart';
@@ -34,6 +35,7 @@ class StoreDetailedController extends GetxController{
  List<CommentModel>? comments = [];
  late ShopDetailedModel? shopData;
  int selectedSubCategoryId = 0;
+ String selectedCategoryImage = "";
  List<Widget> products = [];
  bool storeAreAddedOrNot = false;
  GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
@@ -80,8 +82,9 @@ class StoreDetailedController extends GetxController{
    isVisible = false;
    update();
  }
- selectingAnotherSubCategory(int subCategoryId){
-   selectedSubCategoryId = subCategoryId;
+ selectingAnotherSubCategory(CategoryModel subCategoryId){
+   selectedSubCategoryId = subCategoryId.id??0;
+   selectedCategoryImage = subCategoryId.img2??"";
    getProductData(true);
 
  }
@@ -89,7 +92,14 @@ class StoreDetailedController extends GetxController{
 getData() async {
   shopData = await ShopServices.getShopDetails(shopId);
   comments = await ReviewsServices().getStoreComment(shopId);
-  selectedSubCategoryId = shopData?.ctgs?[0].id??0;
+  if(shopData?.ctgs?.length == 2){
+    selectedSubCategoryId = shopData?.ctgs?[1].id??0;
+    selectedCategoryImage = shopData?.ctgs?[1].img2??"";
+  }else{
+    selectedSubCategoryId = shopData?.ctgs?[0].id??0;
+    selectedCategoryImage = shopData?.ctgs?[0].img2??"";
+  }
+
   await checkStoreAddedOrNet();
   shopIsLoading=false;
   getProductData(true);

@@ -1,10 +1,3 @@
-// To parse this JSON data, do
-//
-//     final productDetailedModel = productDetailedModelFromJson(jsonString);
-
-// To parse this JSON data, do
-//
-//     final productDetailedModel = productDetailedModelFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -27,6 +20,7 @@ class ProductDetailedModel {
   List<String>? images;
   String? video;
   Ctg? ctg;
+  Ctg? ctgsMain;
   Shop? shop;
   List<ItemFilter>? itemFilter;
   int? favorite;
@@ -44,6 +38,7 @@ class ProductDetailedModel {
     this.images,
     this.video,
     this.ctg,
+    this.ctgsMain,
     this.shop,
     this.itemFilter,
     this.favorite,
@@ -62,6 +57,7 @@ class ProductDetailedModel {
     images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
     video: json["video"],
     ctg: json["ctg"] == null ? null : Ctg.fromJson(json["ctg"]),
+    ctgsMain: json["ctgs_main"] == null ? null : Ctg.fromJson(json["ctgs_main"]),
     shop: json["shop"] == null ? null : Shop.fromJson(json["shop"]),
     itemFilter: json["item_filter"] == null ? [] : List<ItemFilter>.from(json["item_filter"]!.map((x) => ItemFilter.fromJson(x))),
     favorite: json["favorite"],
@@ -80,8 +76,9 @@ class ProductDetailedModel {
     "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
     "video": video,
     "ctg": ctg?.toJson(),
+    "ctgs_main": ctgsMain?.toJson(),
     "shop": shop?.toJson(),
-    "item_filter": itemFilter == null ? [] : List<dynamic>.from(itemFilter!.map((x) => x.toJson())),
+    "item_filter": itemFilter == null ? [] : List<ItemFilter>.from(itemFilter!.map((x) => x)),
     "favorite": favorite,
   };
 }
@@ -109,7 +106,6 @@ class Ctg {
     "name_en": nameEn,
   };
 }
-
 class ItemFilter {
   String? filter;
   String? filterEn;
@@ -137,7 +133,6 @@ class ItemFilter {
     "filter_item_en": filterItemEn,
   };
 }
-
 class Shop {
   int? id;
   String? name;
@@ -164,7 +159,7 @@ class Shop {
     phone: json["phone"],
     whatsapp: json["whatsapp"],
     image: json["image"],
-    branch: json["branch"] == null ? [] : List<Branch>.from(json["branch"]!.map((x) => Branch.fromJson(x))),
+    branch: json["branch"] == null ? [] : List<Branch>.from(json["branch"]!.map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
@@ -174,8 +169,6 @@ class Shop {
     "phone": phone,
     "whatsapp": whatsapp,
     "image": image,
-    "branch": branch == null ? [] : List<dynamic>.from(branch!.map((x) => x.toJson())),
+    "branch": branch == null ? [] : List<Branch>.from(branch!.map((x) => x)),
   };
 }
-
-

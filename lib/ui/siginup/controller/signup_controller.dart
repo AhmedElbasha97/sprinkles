@@ -11,13 +11,16 @@ import 'package:sprinkles/services/auth_services.dart';
 import 'package:sprinkles/widgets/alert_dialogue.dart';
 import 'package:sprinkles/widgets/loading_dialogue.dart';
 
-class SignUpController extends GetxController{
+class SignUpController extends GetxController {
   final _validatorHelber = ValidatorHelper.instance;
   bool isLoading = false;
   RxBool _visiblePsd = false.obs;
   RxBool _isEnableLogin = false.obs;
+
   bool get isEnableLogin => _isEnableLogin.value;
+
   bool get visiblePsd => _visiblePsd.value;
+  int val = 0;
 
   void toggleVisiblePsd() {
     _visiblePsd.value = !_visiblePsd.value;
@@ -52,7 +55,8 @@ class SignUpController extends GetxController{
   bool secondNameState = false;
   bool lastNameState = false;
   bool phoneState = false;
-  bool signingUp = false ;
+  bool signingUp = false;
+
   @override
   void onInit() {
     super.onInit();
@@ -60,7 +64,7 @@ class SignUpController extends GetxController{
     emailController = TextEditingController();
     reTypePasswordController = TextEditingController();
     nameController = TextEditingController();
-    phoneController =TextEditingController();
+    phoneController = TextEditingController();
   }
 
   @override
@@ -80,8 +84,9 @@ class SignUpController extends GetxController{
     nameController.clear();
     phoneController.clear();
   }
+
   void onEmailUpdate(String? value) {
-    if(value == "omar.khaled20@yahoo.com"){
+    if (value == "omar.khaled20@yahoo.com") {
       phoneController.clear();
     }
     if (value == "") {
@@ -96,12 +101,12 @@ class SignUpController extends GetxController{
     }
     update();
   }
+
   String? validateName(String? name) {
     var validateName = _validatorHelber.validateName(name);
     if (validateName == null && name != "") {
       nameState = true;
       nameValidated = true;
-
     } else {
       nameValidated = true;
       nameState = false;
@@ -115,29 +120,27 @@ class SignUpController extends GetxController{
     }
     update();
   }
+
   String? validatePhoneNumber(String? phoneNumber) {
     var validateName = _validatorHelber.validatePhoneNumberField(phoneNumber);
     if (validateName == null && phoneNumber != "") {
       phoneState = true;
       phoneValidated = true;
-
     } else {
       phoneValidated = true;
       phoneState = false;
     }
     return validateName;
   }
+
   String? validateEmail(String? email) {
     final validateEmail = _validatorHelber.validateEmail(email);
     if (email == "") {
       emailState = false;
       emailValidated = false;
-
     } else if (validateEmail == null) {
       emailState = true;
       emailValidated = true;
-
-
     } else {
       emailValidated = true;
       emailState = false;
@@ -150,33 +153,43 @@ class SignUpController extends GetxController{
     final validatePassword = _validatorHelber.validatePassword(password);
     if (validatePassword == null) {
       passState = true;
-
-    }else{
+    } else {
 
     }
     passValidated = true;
 
     return validatePassword;
   }
+
+  changeValueOfRadioBTN(value, context) {
+    if (val == 0) {
+      val = 1;
+    } else {
+      val = 0;
+    }
+    update();
+  }
+
   String? validateReTypePassword(String? password) {
     var validatePassword = _validatorHelber.validatePassword(password);
     if (validatePassword == null) {
-      if(passwordController.text != "") {
+      if (passwordController.text != "") {
         if (password == passwordController.text) {
           reTypePasswordState = true;
           reTypePasswordValidated = true;
         } else {
-          validatePassword =invalidReTypePassword.tr;
+          validatePassword = invalidReTypePassword.tr;
         }
-      }else{
+      } else {
         validatePassword = enterPasswordFirst.tr;
       }
-    }else{
+    } else {
       reTypePasswordState = false;
       reTypePasswordValidated = false;
     }
     return validatePassword;
   }
+
   Future<void> sendPressed(context) async {
     formValidated = formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
@@ -192,37 +205,63 @@ class SignUpController extends GetxController{
         titlePadding: const EdgeInsets.symmetric(vertical: 10),
         middleText: err);
   }
-  signningUp(context) async {
-    signingUp = true;
-    update();
-    showDialog(context: context,
-        builder: (context) {
-          return const LoadingDialogue();
-        }
-    );
-    if(passState&&emailState&&nameState&&phoneState&&reTypePasswordState){
-      UserAuthModel? data = await AuthServices.signingUp(nameController.text,
-          emailController.text,
-          "974${phoneController.text}",
-          passwordController.text,
-          reTypePasswordController.text
-      );
-      if(data?.msg == "succeeded"){
-        await Get.find<StorageService>().saveAccountId("${data?.info?.id??0}");
-        await Get.find<StorageService>().saveAccountName(data?.info?.name??"0");
 
-        Get.back();
-        Get.back();
-      }
-      else{
-        signingUp = false;
-        update();
-        showDialog(context: context,
+  signningUp(context) async {
+    if (val==1) {
+      signingUp = true;
+      update();
+      showDialog(context: context,
           builder: (context) {
-            return AlertDialogue(alertTitle: errorKey.tr, alertText: Get.find<StorageService>().activeLocale == SupportedLocales.english?data?.msg??"":data?.msgAr??"",alertIcon: "assets/icons/warningIcon.png",containerHeight: Get.height*0.4);
+            return const LoadingDialogue();
           }
+      );
+      if (passState && emailState && nameState && phoneState &&
+          reTypePasswordState) {
+        UserAuthModel? data = await AuthServices.signingUp(nameController.text,
+            emailController.text,
+            "974${phoneController.text}",
+            passwordController.text,
+            reTypePasswordController.text
         );
+        if (data?.msg == "succeeded") {
+          await Get.find<StorageService>().saveAccountId(
+              "${data?.info?.id ?? 0}");
+          await Get.find<StorageService>().saveAccountName(
+              data?.info?.name ?? "0");
+
+          Get.back();
+          Get.back();
+        }
+        else {
+          signingUp = false;
+          update();
+          showDialog(context: context,
+              builder: (context) {
+                return AlertDialogue(alertTitle: errorKey.tr,
+                    alertText: Get
+                        .find<StorageService>()
+                        .activeLocale == SupportedLocales.english
+                        ? data?.msg ?? ""
+                        : data?.msgAr ?? "",
+                    alertIcon: "assets/icons/warningIcon.png",
+                    containerHeight: Get.height * 0.4);
+              }
+          );
+        }
       }
+    } else {
+      showDialog(context: context,
+          builder: (context) {
+            return AlertDialogue(alertTitle: errorKey.tr,
+                alertText: Get
+                    .find<StorageService>()
+                    .activeLocale == SupportedLocales.english
+                    ? "You must agree to the terms and conditions and privacy policy"
+                    :"يجب عليك الموافقه على الشروط و الاحكام  وسياسه الخصوصيه",
+                alertIcon: "assets/icons/warningIcon.png",
+                containerHeight: Get.height * 0.4);
+          }
+      );
     }
   }
 

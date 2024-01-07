@@ -4,6 +4,7 @@ import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/models/main_category_data.dart';
 import 'package:sprinkles/models/product_detailed_model.dart';
+import 'package:sprinkles/models/product_pagination_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 
 
@@ -33,6 +34,36 @@ class ProductServices {
       return productsList;
     }
     return null;
+  }
+  static Future<ProductPaginationModel?> getProductsPagenation(int mainCategoryId,int subCategoryId,int pageNumber,String filterData) async {
+  
+      var data = await api.request(Services.productPagenationEndPoint, "POST",queryParamters: {
+        "ctgid":mainCategoryId,
+        "ctgid2":subCategoryId,
+        "sort":filterData,
+        "page":pageNumber,
+        "member_id": Get.find<StorageService>().getId,
+
+      });
+      if (data != null) {
+        return ProductPaginationModel.fromJson(data);
+      }
+
+      return null;
+  }
+  static Future<ProductPaginationModel?> getAllProductsPagenation(int pageNumber,String filterData) async {
+
+      var data = await api.request(Services.productPagenationEndPoint, "POST",queryParamters: {
+        "sort":filterData,
+        "page":pageNumber,
+        "member_id": Get.find<StorageService>().getId
+
+      });
+      if (data != null) {
+        return ProductPaginationModel.fromJson(data);
+      }
+
+      return null;
   }
   static Future<List<ProductsModel>?> getProducts(int mainCategoryId,int subCategoryId,String filterData) async {
     List<ProductsModel>? productsList = [];

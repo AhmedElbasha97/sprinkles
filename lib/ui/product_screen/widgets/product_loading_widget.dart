@@ -7,11 +7,2701 @@ import 'package:get/get.dart';
 import 'package:sprinkles/Utils/colors.dart';
 
 class ProductLoadingWidget extends StatelessWidget {
-  const ProductLoadingWidget({Key? key}) : super(key: key);
+ final bool isLoadingMoreData;
+  const ProductLoadingWidget({Key? key, required this.isLoadingMoreData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return isLoadingMoreData?
+    Column(
+      children: [
+        Padding(
+          padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+          child: Row(
+              mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+              children:[
+                Container(
+                    width:Get.width*0.44,
+                    height:Get.height*0.31,
+                    decoration: BoxDecoration(
+                      color:Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: const Offset(
+                            0.0,
+                            0.0,
+                          ),
+                          blurRadius: 13.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          offset: const Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          children:[
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.38,
+                                      height:Get.height*0.16,
+                                      color: const Color(0xFFDFDDDF)
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Positioned(
+                                  right:5,
+                                  top:5,
+                                  child: Container(
+                                    height: Get.height*0.03,
+                                    width:Get.width*0.06,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                children:[
+                                  Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:Get.width*0.1,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.23,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:   Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color:const  Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:  Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ]
+                            )
+                          ]
+                      ),
+                    )
+                ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                    .animate() // this wraps the previous Animate in another Animate
+                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                    .slide(),
+                Container(
+                    width:Get.width*0.44,
+                    height:Get.height*0.31,
+                    decoration: BoxDecoration(
+                      color:Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: const Offset(
+                            0.0,
+                            0.0,
+                          ),
+                          blurRadius: 13.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          offset: const Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          children:[
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.4,
+                                      height:Get.height*0.16,
+                                      color: const Color(0xFFDFDDDF)
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Positioned(
+                                  right:5,
+                                  top:5,
+                                  child: Container(
+                                    height: Get.height*0.03,
+                                    width:Get.width*0.06,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:Get.width*0.1,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.23,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:   Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color:const  Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:  Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ]
+                            )
+                          ]
+                      ),
+                    )
+                ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                    .animate() // this wraps the previous Animate in another Animate
+                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                    .slide()
+              ]
+          ),
+        ),
+        Padding(
+          padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+          child: Row(
+              mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+              children:[
+                Container(
+                    width:Get.width*0.44,
+                    height:Get.height*0.31,
+                    decoration: BoxDecoration(
+                      color:Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: const Offset(
+                            0.0,
+                            0.0,
+                          ),
+                          blurRadius: 13.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          offset: const Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          children:[
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.38,
+                                      height:Get.height*0.16,
+                                      color: const Color(0xFFDFDDDF)
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Positioned(
+                                  right:5,
+                                  top:5,
+                                  child: Container(
+                                    height: Get.height*0.03,
+                                    width:Get.width*0.06,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                children:[
+                                  Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:Get.width*0.1,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.23,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:   Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color:const  Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:  Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ]
+                            )
+                          ]
+                      ),
+                    )
+                ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                    .animate() // this wraps the previous Animate in another Animate
+                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                    .slide(),
+                Container(
+                    width:Get.width*0.44,
+                    height:Get.height*0.31,
+                    decoration: BoxDecoration(
+                      color:Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: const Offset(
+                            0.0,
+                            0.0,
+                          ),
+                          blurRadius: 13.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          offset: const Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          children:[
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.4,
+                                      height:Get.height*0.16,
+                                      color: const Color(0xFFDFDDDF)
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Positioned(
+                                  right:5,
+                                  top:5,
+                                  child: Container(
+                                    height: Get.height*0.03,
+                                    width:Get.width*0.06,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:Get.width*0.1,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.23,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:   Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color:const  Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:  Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ]
+                            )
+                          ]
+                      ),
+                    )
+                ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                    .animate() // this wraps the previous Animate in another Animate
+                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                    .slide()
+              ]
+          ),
+        ),
+        Padding(
+          padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+          child: Row(
+              mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+              children:[
+                Container(
+                    width:Get.width*0.44,
+                    height:Get.height*0.31,
+                    decoration: BoxDecoration(
+                      color:Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: const Offset(
+                            0.0,
+                            0.0,
+                          ),
+                          blurRadius: 13.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          offset: const Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          children:[
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.38,
+                                      height:Get.height*0.16,
+                                      color: const Color(0xFFDFDDDF)
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Positioned(
+                                  right:5,
+                                  top:5,
+                                  child: Container(
+                                    height: Get.height*0.03,
+                                    width:Get.width*0.06,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                children:[
+                                  Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:Get.width*0.1,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.23,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:   Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color:const  Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:  Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ]
+                            )
+                          ]
+                      ),
+                    )
+                ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                    .animate() // this wraps the previous Animate in another Animate
+                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                    .slide(),
+                Container(
+                    width:Get.width*0.44,
+                    height:Get.height*0.31,
+                    decoration: BoxDecoration(
+                      color:Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: const Offset(
+                            0.0,
+                            0.0,
+                          ),
+                          blurRadius: 13.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          offset: const Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          children:[
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.4,
+                                      height:Get.height*0.16,
+                                      color: const Color(0xFFDFDDDF)
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Positioned(
+                                  right:5,
+                                  top:5,
+                                  child: Container(
+                                    height: Get.height*0.03,
+                                    width:Get.width*0.06,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:Get.width*0.1,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.23,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:   Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color:const  Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:  Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ]
+                            )
+                          ]
+                      ),
+                    )
+                ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                    .animate() // this wraps the previous Animate in another Animate
+                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                    .slide()
+              ]
+          ),
+        ),
+        Padding(
+          padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+          child: Row(
+              mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+              children:[
+                Container(
+                    width:Get.width*0.44,
+                    height:Get.height*0.31,
+                    decoration: BoxDecoration(
+                      color:Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: const Offset(
+                            0.0,
+                            0.0,
+                          ),
+                          blurRadius: 13.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          offset: const Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          children:[
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.38,
+                                      height:Get.height*0.16,
+                                      color: const Color(0xFFDFDDDF)
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Positioned(
+                                  right:5,
+                                  top:5,
+                                  child: Container(
+                                    height: Get.height*0.03,
+                                    width:Get.width*0.06,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                children:[
+                                  Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:Get.width*0.1,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.23,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:   Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color:const  Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:  Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ]
+                            )
+                          ]
+                      ),
+                    )
+                ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                    .animate() // this wraps the previous Animate in another Animate
+                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                    .slide(),
+                Container(
+                    width:Get.width*0.44,
+                    height:Get.height*0.31,
+                    decoration: BoxDecoration(
+                      color:Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: const Offset(
+                            0.0,
+                            0.0,
+                          ),
+                          blurRadius: 13.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          offset: const Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          children:[
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.4,
+                                      height:Get.height*0.16,
+                                      color: const Color(0xFFDFDDDF)
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Positioned(
+                                  right:5,
+                                  top:5,
+                                  child: Container(
+                                    height: Get.height*0.03,
+                                    width:Get.width*0.06,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:Get.width*0.1,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.23,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:   Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color:const  Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:  Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ]
+                            )
+                          ]
+                      ),
+                    )
+                ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                    .animate() // this wraps the previous Animate in another Animate
+                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                    .slide()
+              ]
+          ),
+        ),
+        Padding(
+          padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
+          child: Row(
+              mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+              children:[
+                Container(
+                    width:Get.width*0.44,
+                    height:Get.height*0.31,
+                    decoration: BoxDecoration(
+                      color:Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: const Offset(
+                            0.0,
+                            0.0,
+                          ),
+                          blurRadius: 13.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          offset: const Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          children:[
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.38,
+                                      height:Get.height*0.16,
+                                      color: const Color(0xFFDFDDDF)
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Positioned(
+                                  right:5,
+                                  top:5,
+                                  child: Container(
+                                    height: Get.height*0.03,
+                                    width:Get.width*0.06,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                children:[
+                                  Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:Get.width*0.1,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.23,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:   Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color:const  Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:  Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ]
+                            )
+                          ]
+                      ),
+                    )
+                ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                    .animate() // this wraps the previous Animate in another Animate
+                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                    .slide(),
+                Container(
+                    width:Get.width*0.44,
+                    height:Get.height*0.31,
+                    decoration: BoxDecoration(
+                      color:Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: const Offset(
+                            0.0,
+                            0.0,
+                          ),
+                          blurRadius: 13.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          offset: const Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                          children:[
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                      width:Get.width*0.4,
+                                      height:Get.height*0.16,
+                                      color: const Color(0xFFDFDDDF)
+                                  ),
+                                ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                    .animate() // this wraps the previous Animate in another Animate
+                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                    .slide(),
+                                Positioned(
+                                  right:5,
+                                  top:5,
+                                  child: Container(
+                                    height: Get.height*0.03,
+                                    width:Get.width*0.06,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF2F0F3),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(55))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:Get.width*0.1,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.18,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                      Container(
+                                        width:Get.width*0.23,
+                                        height: 13,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+                                        Container(
+                                          height: Get.height*0.03,
+                                          width: Get.width*0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFDFDDDF),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ).animate(onPlay: (controller) => controller.repeat())
+                                            .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                            .animate() // this wraps the previous Animate in another Animate
+                                            .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                            .slide(),
+
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:   Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+
+                                  Container(
+                                    width:Get.width*0.18,
+                                    height:Get.height*0.028,
+                                    decoration: BoxDecoration(
+                                      color:const  Color(0xFFDFDDDF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                          blurRadius: 13.0,
+                                          spreadRadius: 2.0,
+                                        ), //BoxShadow
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(0.2),
+                                          offset: const Offset(0.0, 0.0),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ), //BoxShadow
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child:  Center(
+                                      child:  Container(
+                                        width:Get.width*0.1,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF2F0F3),
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                          .animate() // this wraps the previous Animate in another Animate
+                                          .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                      .animate() // this wraps the previous Animate in another Animate
+                                      .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                ]
+                            )
+                          ]
+                      ),
+                    )
+                ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                    .animate() // this wraps the previous Animate in another Animate
+                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                    .slide()
+              ]
+          ),
+        )
+      ],
+    ).animate(onPlay: (controller) => controller.repeat())
+        .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(85))
+        .animate() // this wraps the previous Animate in another Animate
+        .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+        .slide()
+        :Container(
       height: Get.height*0.7,
       width: Get.width,
       child: ListView.builder(
@@ -19,7 +2709,7 @@ class ProductLoadingWidget extends StatelessWidget {
 
 
 
-        itemCount:3,
+        itemCount:7,
         itemBuilder: (_, index) =>
            Padding(
              padding:const EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),

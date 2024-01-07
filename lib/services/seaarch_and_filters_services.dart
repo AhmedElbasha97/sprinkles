@@ -5,7 +5,7 @@ import 'package:sprinkles/Utils/api_service.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/models/government_model.dart';
-import 'package:sprinkles/models/products_model.dart';
+import 'package:sprinkles/models/product_pagination_model.dart';
 import 'package:sprinkles/models/shops_model.dart';
 import 'package:intl/intl.dart' as intl;
 class SearchAndFilterServices {
@@ -56,58 +56,52 @@ class SearchAndFilterServices {
     }
     return null;
   }
-  static Future<List<ProductsModel>?> searchForProductsInBranchCategory(int mainCategoryId,int subCategoryId,String searchKeyWord,String filterData) async {
-    List<ProductsModel>? productsList = [];
+  static Future<ProductPaginationModel?> searchForProductsInBranchCategory(int mainCategoryId,int subCategoryId,String searchKeyWord,String filterData,int pageNumber) async {
     String nameParamsTag = "";
     intl.Bidi.detectRtlDirectionality(searchKeyWord)?nameParamsTag = "name":nameParamsTag = "name_en";
-    var data = await api.request(Services.productEndPoint, "POST",queryParamters: {
+    var data = await api.request(Services.productPagenationEndPoint, "POST",queryParamters: {
       nameParamsTag:searchKeyWord,
       "ctgid":mainCategoryId,
       "ctgid2":subCategoryId,
       "sort":filterData,
+      "page":pageNumber,
       "member_id": Get.find<StorageService>().getId
     });
     if (data != null) {
-      for (var product in data){
-        productsList.add(ProductsModel.fromJson(product));
-      }
-      return productsList;
+      return ProductPaginationModel.fromJson(data);
     }
     return null;
   }
-  static Future<List<ProductsModel>?> searchForProductsInMainCategory(int mainCategoryId,String searchKeyWord,String filterData) async {
-    List<ProductsModel>? productsList = [];
+  static Future<ProductPaginationModel?> searchForProductsInMainCategory(int mainCategoryId,String searchKeyWord,String filterData,int pageNumber) async {
+
     String nameParamsTag = "";
     intl.Bidi.detectRtlDirectionality(searchKeyWord)?nameParamsTag = "name":nameParamsTag = "name_en";
-    var data = await api.request(Services.productEndPoint, "POST",queryParamters: {
+    var data = await api.request(Services.productPagenationEndPoint, "POST",queryParamters: {
       nameParamsTag:searchKeyWord,
       "ctgid":mainCategoryId,
       "sort":filterData,
+      "page":pageNumber,
       "member_id": Get.find<StorageService>().getId
 
     });
     if (data != null) {
-      for (var product in data){
-        productsList.add(ProductsModel.fromJson(product));
-      }
-      return productsList;
+      return ProductPaginationModel.fromJson(data);
     }
     return null;
   }
-  static Future<List<ProductsModel>?> searchForProducts(String searchKeyWord,String filterData) async {
-    List<ProductsModel>? productsList = [];
+  static Future<ProductPaginationModel?> searchForProducts(String searchKeyWord,String filterData,int pageNumber) async {
+
     String nameParamsTag = "";
     intl.Bidi.detectRtlDirectionality(searchKeyWord)?nameParamsTag = "name":nameParamsTag = "name_en";
-    var data = await api.request(Services.productEndPoint, "POST",queryParamters: {
+    var data = await api.request(Services.productPagenationEndPoint, "POST",queryParamters: {
       nameParamsTag:searchKeyWord,
+
       "sort":filterData,
+      "page":pageNumber,
       "member_id": Get.find<StorageService>().getId
     });
     if (data != null) {
-      for (var product in data){
-        productsList.add(ProductsModel.fromJson(product));
-      }
-      return productsList;
+      return ProductPaginationModel.fromJson(data);
     }
     return null;
   }

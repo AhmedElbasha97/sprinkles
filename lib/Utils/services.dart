@@ -7,6 +7,7 @@ class Services {
  static String getGovernmentsEndPoint = "area";//post
  static String shopEndPoint = "shop"; //Post
  static String productEndPoint = "item"; //Post
+  static String productPagenationEndPoint = "item_pagination"; //Post
  static String mainCategoryDataProductEndPoint = "ctg/view"; //Post
  static String shopDetailedEndPoint = "shop/view"; //Post
  static String productDetailedEndPoint = "item/view"; //Post
@@ -31,6 +32,7 @@ class Services {
  static String sendingReportEndPoint = "report";//post
  static String getOrdersHistoryEndPoint = "order/history";//post
  static String advancedSearchEndPoint = "search";//post
+ static String advancedSearchPaginationEndPoint = "search_pagination";//post
  static String statsEndPoint = "order/new";//post
  static String addingCommentEndPoint = "review/new";//post
  static String getCommentEndPoint = "review";//post

@@ -26,17 +26,17 @@ class HomeWidget extends StatelessWidget {
           children:[
             Container(
               height: Get.height*0.15,
-              width:Get.width*0.95,
+              width:Get.width*0.8,
               child:const Padding(padding: EdgeInsets.all(0),
               ),
             ),
             Positioned(
               bottom:Get.height*0.005,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(50.0,18.0,0,18.0,),
+                padding:  EdgeInsets.fromLTRB(Get.width*0.2,18.0,0,18.0,),
                 child: Container(
                   height: Get.height*0.09,
-                  width:Get.width*0.75,
+                  width:Get.width*0.7,
                   decoration: BoxDecoration(
                     border: Border.all( color:kBackGroundColor,width: 2),
                     boxShadow: [

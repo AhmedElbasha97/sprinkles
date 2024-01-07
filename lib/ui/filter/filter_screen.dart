@@ -22,7 +22,7 @@ class FilterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).viewPadding.top;
     return GetBuilder<FilterController>(
-      init: FilterController(),
+      init: FilterController(context),
       builder: (controller) =>  Scaffold(
           key: controller.scaffoldState,
           drawer: AppDrawers(scaffoldKey: controller.scaffoldState,),
@@ -1776,7 +1776,7 @@ class FilterScreen extends StatelessWidget {
                   Center(
                     child: InkWell(
                       onTap: (){
-                        controller.startSearching(context);
+                        controller.startSearching();
 
 
 

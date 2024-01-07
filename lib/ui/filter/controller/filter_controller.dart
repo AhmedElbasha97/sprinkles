@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, prefer_is_empty
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
@@ -8,6 +9,7 @@ import 'package:sprinkles/Utils/services.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/category_model.dart';
 import 'package:sprinkles/models/government_model.dart';
+import 'package:sprinkles/models/product_pagination_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/rating_model.dart';
 import 'package:sprinkles/models/response_model.dart';
@@ -51,13 +53,19 @@ class FilterController extends GetxController{
   late TextEditingController endPriceRange;
   List<GovernmentModel>? governmentData = [];
   String selectedTap = "p";
-
+  ScrollController scrollController = ScrollController();
+  bool isVisible = false;
+  int pageNumber = 1;
   final GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
-
   List<RatingModel> ratingsListData = [RatingModel(title: oneStarRat.tr,id: "1"),RatingModel(title: twoStarRat.tr,id: "2"),RatingModel(title:threeStarRat.tr,id: "3"),RatingModel(title: fourStarRat.tr,id: "4"),RatingModel(title: fiveStarRat.tr,id: "5")];
   int sVal =0;
   int sFal =1000;
   RangeValues currentRangeValues = const RangeValues(0,1000);
+  late ProductPaginationModel? pagenationData;
+  final BuildContext context;
+  bool isLoadingMoreData = false;
+
+  FilterController(this.context);
   @override
   void onInit() {
     // TODO: implement onInit
@@ -66,7 +74,61 @@ class FilterController extends GetxController{
     endPriceRange = TextEditingController();
     startPriceRange.text = "0";
     endPriceRange.text = "1000";
+    scrollController.addListener(() {
+      if ((scrollController.position.pixels ) == (scrollController.position.maxScrollExtent)) {
+        print(scrollController.position.pixels);
+        print(scrollController.position.maxScrollExtent);
+        getMoreData();
+      }
+      if (scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (isVisible == true) {
+
+          isVisible = false;
+          update();
+        }
+      } else {
+        if (scrollController.position.userScrollDirection ==
+            ScrollDirection.forward) {
+          if (isVisible == false) {
+
+            isVisible = true;
+            update();
+          }
+        }
+      }
+    });
     getData();
+  }
+  goUpToTopOfSScreen(){
+    scrollController.animateTo( //go to top of scroll
+        0,  //scroll offset to go
+        duration: const Duration(milliseconds: 500), //duration of scroll
+        curve:Curves.fastOutSlowIn //scroll type
+    );
+    isVisible = false;
+    update();
+  }
+  getMoreData() async {
+
+    if(selectedTap == "p"){
+      if(pagenationData!.totalPages! > pageNumber){
+        isLoadingMoreData= true;
+        update();
+        pageNumber++;
+      }
+      if(pagenationData!.totalPages! >= pageNumber){
+        pagenationData = await AdvancedSearchServices.searchingForProduct(selectedTap, "$mainCategoryId", "$subCategoryId", ratingId, "$sVal", "$sFal","$locationId",pageNumber);
+        productList?.addAll(pagenationData?.items as Iterable<ProductsModel>) ;
+        await fillingData(context);
+        isLoadingMoreData= false;
+        update();
+      }
+
+
+    }
+
+
   }
   selectingTap(String type){
     selectedTap = type;
@@ -110,6 +172,7 @@ class FilterController extends GetxController{
   choosingGovernment(GovernmentModel choosedGovernment){
     locationName = (Get.find<StorageService>().activeLocale == SupportedLocales.english?choosedGovernment.nameEn:choosedGovernment.name)!;
     locationId = choosedGovernment.id??0;
+    update();
   }
   choosingSubCategory(CategoryModel choosedSubCategory){
     subCategoryName = (Get.find<StorageService>().activeLocale == SupportedLocales.english?choosedSubCategory.nameEn:choosedSubCategory.name)!;
@@ -141,7 +204,6 @@ class FilterController extends GetxController{
     }
   }
   addingOrRemovingProductsToFavorite(context,String productId,int index) async {
-
     if(Get.find<StorageService>().checkUserIsSignedIn){
       if( await  checkAddedOrNotToFavorite(productId)){
         ResponseModel? data = await FavoriteServices.addOrRemoveProductFromFavorite(productId,"0");
@@ -422,25 +484,31 @@ class FilterController extends GetxController{
   }
 
 
-  startSearching(context) async {
+  startSearching() async {
     if(selectedTap == "p"){
-      productList = await AdvancedSearchServices().searchingForProduct(selectedTap, "$mainCategoryId", "$subCategoryId", ratingId, "$sVal", "$sFal","$locationId");
+      pagenationData = await AdvancedSearchServices.searchingForProduct(selectedTap, "$mainCategoryId", "$subCategoryId", ratingId, "$sVal", "$sFal","$locationId",pageNumber);
+      productList = pagenationData?.items;
       await fillingData(context);
-      searchIsLoading = false;
-    if(productList?.length == 0||productList == []){
+
+    if(pagenationData?.items?.length == 0||pagenationData?.items == []){
       hasNoData = true;
+      print("hiiiiiiiiii");
     }
-    update();
+    searchIsLoading = false;
+
     Get.to(()=>const AdvancedSearchScreen());
+    update();
     }else{
      shopList =  await AdvancedSearchServices().searchingForStore("$mainCategoryId", ratingId,"$locationId");
      await fillingData(context);
-     searchIsLoading = false;
+
      if(shopList?.length == 0||shopList == []){
        hasNoData = true;
      }
-     update();
+     searchIsLoading = false;
+
      Get.to(()=>const AdvancedSearchScreen());
+     update();
     }
   }
 }

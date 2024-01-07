@@ -16,6 +16,7 @@ import 'package:sprinkles/models/advertisment_model.dart';
 import 'package:sprinkles/models/category_model.dart';
 import 'package:sprinkles/models/favorite_model.dart';
 import 'package:sprinkles/models/main_category_data.dart';
+import 'package:sprinkles/models/product_pagination_model.dart';
 import 'package:sprinkles/models/products_model.dart';
 import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/services/advrtisment_services.dart';
@@ -58,8 +59,11 @@ class ProductController extends GetxController {
  int selectedMainCategoryId = 240;
   bool mainCategoryIsLoading = true;
   List<Widget> products = [];
+  late ProductPaginationModel? pagenationData;
  final GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
   bool isVisible = false;
+  int pageNumber = 1;
+  bool isLoadingMoreData = false;
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -75,6 +79,11 @@ class ProductController extends GetxController {
     }
     await  getAdvertisementsData();
     scrollController.addListener(() {
+      if ((scrollController.position.pixels ) == (scrollController.position.maxScrollExtent)) {
+        print(scrollController.position.pixels);
+        print(scrollController.position.maxScrollExtent);
+        getMoreData();
+      }
       if (scrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
         if (isVisible == true) {
@@ -94,6 +103,61 @@ class ProductController extends GetxController {
       }
     });
   }
+  getMoreData() async {
+    if(pagenationData!.totalPages! > pageNumber){
+      isLoadingMoreData= true;
+      update();
+      pageNumber++;
+    }
+
+    if(pagenationData!.totalPages! >= pageNumber) {
+      if(activateSearching){
+        if(selectingFromDrawer)
+        {
+          if(selectedMainCategoryId==240){
+            pagenationData  = await SearchAndFilterServices.searchForProducts(searchController.text,selectingFilterTag,pageNumber);
+            productList?.addAll(pagenationData?.items as Iterable<ProductsModel>);
+          }
+          else{
+            pagenationData  = await SearchAndFilterServices.searchForProductsInBranchCategory(selectedMainCategoryId, selectedSubCategoryId,searchController.text,selectingFilterTag,pageNumber);
+            productList?.addAll(pagenationData?.items as Iterable<ProductsModel>);
+          }
+          pagenationData  = await SearchAndFilterServices.searchForProductsInBranchCategory(selectedMainCategoryId, selectedSubCategoryId,searchController.text,selectingFilterTag,pageNumber);
+          productList?.addAll(pagenationData?.items as Iterable<ProductsModel>);
+        }else{
+          pagenationData  = await SearchAndFilterServices.searchForProductsInBranchCategory(mainCategoryId, selectedSubCategoryId,searchController.text,selectingFilterTag,pageNumber);
+          productList?.addAll(pagenationData?.items as Iterable<ProductsModel>);
+        }
+       await fillingData();
+        isLoadingMoreData = false;
+        update();
+      }else{
+        if(selectingFromDrawer) {
+          if (selectedMainCategoryId == 240) {
+            pagenationData =await ProductServices.getAllProductsPagenation(
+                pageNumber,selectingFilterTag);
+            productList?.addAll(pagenationData?.items as Iterable<ProductsModel>);
+
+          } else {
+            pagenationData =await ProductServices.getProductsPagenation(
+                selectedMainCategoryId, selectedSubCategoryId, pageNumber,selectingFilterTag);
+            productList?.addAll(pagenationData?.items as Iterable<ProductsModel>);
+          }
+        }else{
+          pagenationData = await ProductServices.getProductsPagenation(
+              mainCategoryId, selectedSubCategoryId, pageNumber,selectingFilterTag);
+          productList?.addAll(pagenationData?.items as Iterable<ProductsModel>);
+        }
+
+        await fillingData();
+        isLoadingMoreData = false;
+        update();
+      }
+    }
+
+
+  }
+
   goUpToTopOfSScreen(){
     scrollController.animateTo( //go to top of scroll
         0,  //scroll offset to go
@@ -115,6 +179,7 @@ class ProductController extends GetxController {
     update();
   }
   selectingFilter(String filterName,bool changingLanguageOnly){
+    pageNumber = 1;
     switch(filterName){
       case "ترتيب حسب":{
         selectingFilterTag = "0";
@@ -140,7 +205,7 @@ class ProductController extends GetxController {
       }
       break;
       case "Price from lowest to highest":{
-        selectingFilterTag = Filters.price_desc.name;
+        selectingFilterTag =Filters. price_asc.name ;
         selectingFilterTagName = priceFilterDescTitle.tr;
         update();
         if(!changingLanguageOnly) {
@@ -153,7 +218,7 @@ class ProductController extends GetxController {
       }
       break;
       case "Price from highest to lowest":{
-        selectingFilterTag = Filters. price_asc.name;
+        selectingFilterTag =Filters.price_desc.name;
         selectingFilterTagName = priceFilterAscTitle.tr;
         update();
         if(!changingLanguageOnly) {
@@ -205,7 +270,7 @@ class ProductController extends GetxController {
       }
       break;
       case"السعر من الأقل  إلى الأعلى":{
-        selectingFilterTag = Filters.price_desc.name;
+        selectingFilterTag =Filters. price_asc.name ;
         selectingFilterTagName = priceFilterDescTitle.tr;
         update();
         if(!changingLanguageOnly) {
@@ -218,7 +283,7 @@ class ProductController extends GetxController {
       }
       break;
       case"السعر من الأعلى  إلى الأقل":{
-        selectingFilterTag = Filters. price_asc.name;
+        selectingFilterTag =Filters.price_desc.name;
         selectingFilterTagName = priceFilterAscTitle.tr;
         update();
         if(!changingLanguageOnly) {
@@ -267,7 +332,7 @@ class ProductController extends GetxController {
     getAdvertisementsData();
   }
   searchingForKeyword() async {
-
+    pageNumber=1;
     if(removeAllWhitespaces(searchController.text)==""){
       activateSearching = false;
       getProductData(true);
@@ -278,13 +343,17 @@ class ProductController extends GetxController {
       if(selectingFromDrawer)
       {
         if(selectedMainCategoryId==240){
-          productList = await SearchAndFilterServices.searchForProducts(searchController.text,selectingFilterTag);
+          pagenationData  = await SearchAndFilterServices.searchForProducts(searchController.text,selectingFilterTag,pageNumber);
+          productList = pagenationData?.items;
         }else{
-          productList = await SearchAndFilterServices.searchForProductsInMainCategory(selectedMainCategoryId,searchController.text,selectingFilterTag);
+          pagenationData  = await SearchAndFilterServices.searchForProductsInBranchCategory(selectedMainCategoryId, selectedSubCategoryId,searchController.text,selectingFilterTag,pageNumber);
+          productList = pagenationData?.items;
         }
-        productList = await SearchAndFilterServices.searchForProductsInMainCategory(selectedMainCategoryId,searchController.text,selectingFilterTag);
-      }else{
-        productList = await SearchAndFilterServices.searchForProducts(searchController.text,selectingFilterTag);
+        pagenationData  = await SearchAndFilterServices.searchForProductsInBranchCategory(selectedMainCategoryId, selectedSubCategoryId,searchController.text,selectingFilterTag,pageNumber);
+        productList = pagenationData?.items;
+      } else{
+        pagenationData  = await SearchAndFilterServices.searchForProductsInBranchCategory(mainCategoryId, selectedSubCategoryId,searchController.text,selectingFilterTag,pageNumber);
+        productList = pagenationData?.items;
       }
 
       if(productList?.length != 0){
@@ -296,22 +365,26 @@ class ProductController extends GetxController {
 
   }
   getProductData(bool changingTap) async {
-
+    pageNumber = 1;
     if(changingTap) {
       productIsLoading = true;
       update();
     }
     if(selectingFromDrawer) {
       if (selectedMainCategoryId == 240) {
+        pagenationData =await ProductServices.getAllProductsPagenation(
+            pageNumber,selectingFilterTag);
+        productList = pagenationData?.items;
 
-        productList = await ProductServices.getAllProduct(selectingFilterTag);
       } else {
-        productList = await ProductServices.getProducts(
-            selectedMainCategoryId, selectedSubCategoryId, selectingFilterTag);
+        pagenationData =await ProductServices.getProductsPagenation(
+            selectedMainCategoryId, selectedSubCategoryId, pageNumber,selectingFilterTag);
+        productList = pagenationData?.items;
       }
     }else{
-      productList = await ProductServices.getProducts(
-          mainCategoryId, selectedSubCategoryId, selectingFilterTag);
+      pagenationData = await ProductServices.getProductsPagenation(
+          mainCategoryId, selectedSubCategoryId, pageNumber,selectingFilterTag);
+      productList = pagenationData?.items;
     }
     if(productList?.length != 0){
      await fillingData();
@@ -790,7 +863,6 @@ class ProductController extends GetxController {
   }
   selectingAnotherSubCategory(int subCategoryId){
     selectedSubCategoryId = subCategoryId;
-
     getAdvertisementsData();
   }
   selectingAdvertisements(String link,int advertisementsId) async {

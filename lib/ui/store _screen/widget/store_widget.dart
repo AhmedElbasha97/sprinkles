@@ -88,7 +88,7 @@ class StoreWidget extends StatelessWidget {
     return Stack(
         children:[
           Container(
-            height: Get.height*0.23,
+            height: Get.height*0.22,
             width:Get.width*0.9,
             child:const Padding(padding: EdgeInsets.all(0),
             ),
@@ -303,9 +303,10 @@ class StoreWidget extends StatelessWidget {
                     crossAxisAlignment:CrossAxisAlignment.end,
                     children:[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0,0,15.0,10),
+                        padding: const EdgeInsets.fromLTRB(20.0,5,15.0,10),
                         child: CustomText(
                           Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.descEn??"":store?.desc??"",
+                          maxLines: 2,
                           style:  TextStyle(
                             fontSize: 12,
                             letterSpacing: 0,
@@ -424,12 +425,13 @@ class StoreWidget extends StatelessWidget {
                 width:Get.width*0.61,
                 child:Column(
 
-                    crossAxisAlignment:CrossAxisAlignment.end,
+                    crossAxisAlignment:CrossAxisAlignment.start,
                     children:[
                        Padding(
-                         padding: const EdgeInsets.fromLTRB(20.0,0,15.0,10),
+                         padding: const EdgeInsets.fromLTRB(20.0,0,0.0,10),
                          child: CustomText(
                           Get.find<StorageService>().activeLocale == SupportedLocales.english?store?.descEn??"":store?.desc??"",
+                          maxLines: 2,
                           style: TextStyle(
                             fontSize: 12,
                             letterSpacing: 0,
@@ -438,7 +440,7 @@ class StoreWidget extends StatelessWidget {
                                 .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
                             color: kDarkPinkColor,
                           ),
-                      ),
+                                               ),
                        ),
                       Row(
                           children:[

@@ -152,17 +152,19 @@ final ProductsModel? product;
                         fit: BoxFit.cover,
                         imageUrl: "${Services.baseEndPoint}${product?.images?[0]??""}",
                         imageBuilder: ((context, image){
-                          return  ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Container(
-                              width:Get.width*0.4,
-                              height:Get.height*0.18,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: image,
-                                    fit:  BoxFit.cover,
-                                  ),
-                                )
+                          return  Center(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Container(
+                                width:Get.width*0.4,
+                                height:Get.height*0.18,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: image,
+                                      fit:  BoxFit.cover,
+                                    ),
+                                  )
+                              ),
                             ),
                           );
                         }),

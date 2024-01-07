@@ -295,7 +295,7 @@ class _WelcomeScreenUIState extends State<WelcomeScreenUI> {
                       bottom:Get.height*0.09,
                       child: InkWell(
                         onTap:(){
-                          controller.launchURL(controller.links?.whatsApp??"");
+                          controller. whatsapp(context);
                         },
                         child:  SizedBox(
                           height: Get.height*0.08,

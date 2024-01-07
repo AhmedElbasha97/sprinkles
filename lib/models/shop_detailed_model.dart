@@ -28,6 +28,7 @@ class ShopDetailedModel {
   List<CategoryModel>? ctgs;
   String? image;
   int? favorite;
+  String? link;
   List<Branch>? branch;
 
   ShopDetailedModel({
@@ -47,6 +48,8 @@ class ShopDetailedModel {
     this.ctgs,
     this.image,
     this.favorite,
+    this.link,
+
     this.branch,
   });
 
@@ -67,7 +70,10 @@ class ShopDetailedModel {
     ctgs: json["ctgs"] == null ? [] : List<CategoryModel>.from(json["ctgs"]!.map((x) => CategoryModel.fromJson(x))),
     image: json["image"],
     favorite: json["favorite"],
+    link: json["link"],
     branch: json["branch"] == null ? [] : List<Branch>.from(json["branch"]!.map((x) => Branch.fromJson(x))),
+
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -88,6 +94,8 @@ class ShopDetailedModel {
     "image": image,
     "favorite": favorite,
     "branch": branch == null ? [] : List<dynamic>.from(branch!.map((x) => x.toJson())),
+    "link": link,
+
   };
 }
 

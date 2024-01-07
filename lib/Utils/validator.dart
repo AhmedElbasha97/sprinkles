@@ -54,7 +54,7 @@ class ValidatorHelper {
   String? validatePassword(String? password) {
     if (password != null) {
       if (password.isNotEmpty) {
-        final notValid = isPasswordNotValid(password);
+        final notValid = false;
         if (notValid) {
           return invalidPassword.tr;
         }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
@@ -112,7 +113,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
 
                       children:[
                         Container(
-                          height: Get.height*0.3,
+                          height: Get.height*0.31,
                           width:Get.width,
                           child:const Padding(padding: EdgeInsets.all(0),
                           ),
@@ -191,7 +192,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                           .animate() // this wraps the previous Animate in another Animate
                                           :CachedNetworkImage(
                                         fit:  BoxFit.fitWidth,
-                                        imageUrl: "${Services.baseEndPoint}${widget.mainCategoryImg}",
+                                        imageUrl: "${Services.baseEndPoint}${controller.selectedCategoryImage}",
                                         imageBuilder: ((context, image){
                                           return   Container(
                                               height: Get.height*0.14,
@@ -326,10 +327,10 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 18.0),
                                     child: Container(
-                                      width:Get.width*0.2,
+                                      width:Get.width*0.4,
                                       child: Row(
-                                        mainAxisAlignment:MainAxisAlignment.start,
-                                        crossAxisAlignment:CrossAxisAlignment.end,
+                                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:CrossAxisAlignment.start,
                                         children: [
 
                                           controller.shopIsLoading?Padding(
@@ -450,6 +451,98 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                               );
                                             },
                                           ),
+                                          Column(
+                                            children: [
+                                              controller.shopIsLoading?Center(
+                                                child:   Container(
+                                                  width: Get.width*0.06,
+                                                  height: 20,
+                                                  decoration: const BoxDecoration(
+                                                    color: Color(0xFFDFDDDF),
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                ).animate(onPlay: (controller) => controller.repeat())
+                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                    .animate() // this wraps the previous Animate in another Animate
+                                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                    .slide(),
+
+
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide():Container(
+
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(5.0),
+                                                  child: InkWell(
+                                                    onTap:(){
+                                                      controller.addingOrRemovingStoreToFavorite(context);
+                                                    },
+                                                    child: Container(
+                                                        height: Get.height*0.045,
+                                                        width:Get.width*0.089,
+                                                        decoration: const BoxDecoration(
+                                                          color:kLightPinkColor,
+                                                          shape: BoxShape.circle,
+                                                        ),
+                                                        child: Center(
+                                                          child:controller.storeAreAddedOrNot?const Icon(
+                                                              Icons.favorite,
+                                                              color: Colors.white,
+                                                              size:20
+                                                          ):const Icon(
+                                                              Icons.favorite_border_rounded,
+                                                              color: Colors.white,
+                                                              size:20
+                                                          ),
+                                                        )
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 10,),
+                                              controller.shopIsLoading?Center(
+                                                child:   Container(
+                                                  width: Get.width*0.06,
+                                                  height: 20,
+                                                  decoration: const BoxDecoration(
+                                                    color: Color(0xFFDFDDDF),
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                ).animate(onPlay: (controller) => controller.repeat())
+                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                    .animate() // this wraps the previous Animate in another Animate
+                                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                    .slide(),
+
+
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide():InkWell(
+                                                onTap:(){
+                                                  Share.share(controller.shopData?.link??"");
+                                                },
+                                                child: Container(
+                                                    height: Get.height*0.04,
+                                                    width:Get.width*0.08,
+                                                    decoration: const BoxDecoration(
+                                                      color:Colors.white,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child:  Center(
+                                                      child: SizedBox(
+                                                        height: Get.height*0.02,
+                                                        width: Get.width*0.09,
+                                                        child: Image.asset("assets/icons/s.png",fit: BoxFit.fitHeight,),
+                                                      ),
+                                                    )
+                                                ),
+                                              ),
+                                            ],)
 
                                         ],
                                       ),
@@ -480,7 +573,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                       :Container(
                                     width:Get.width*0.6,
                                     child:  Padding(
-                                      padding: EdgeInsets.only(left: Get.width*0.1),
+                                      padding:const EdgeInsets.only(left: 18.0),
                                       child: CustomText(
                                         Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.nameEn??"":controller.shopData?.name??"",
                                         textAlign: TextAlign.left,
@@ -493,6 +586,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                                 color: Colors.black.withOpacity(0.5)
                                             ),
                                           ],
+                                          fontWeight: FontWeight.w800,
                                           fontSize: 15,
                                           letterSpacing: 0,
                                           fontFamily: Get
@@ -504,14 +598,14 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                     ),
                                   ),
                                   Padding(
-                                    padding:  EdgeInsets.fromLTRB(Get.width*0.11,3,0,0),
+                                    padding:  EdgeInsets.fromLTRB(18.0,3,0,0),
                                     child: InkWell(
                                       onTap:(){
 
                                       },
                                       child: Container(
 
-                                        width:Get.width*0.35,
+                                        width:Get.width*0.55,
                                         decoration: BoxDecoration(
 
                                           borderRadius: BorderRadius.circular(15), //
@@ -519,66 +613,54 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                         child:  controller.shopIsLoading?Center(
                                           child:   Column(
                                             children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  width:Get.width*0.4,
-                                                  height: 20,
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(0xFFDFDDDF),
-                                                      borderRadius: BorderRadius.circular(50)
-                                                  ),
-                                                ).animate(onPlay: (controller) => controller.repeat())
-                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                    .animate() // this wraps the previous Animate in another Animate
-                                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                                    .slide(),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  width:Get.width*0.45,
-                                                  height: 20,
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(0xFFDFDDDF),
-                                                      borderRadius: BorderRadius.circular(50)
-                                                  ),
-                                                ).animate(onPlay: (controller) => controller.repeat())
-                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                    .animate() // this wraps the previous Animate in another Animate
-                                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                                    .slide(),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  width:Get.width*0.45,
-                                                  height: 20,
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(0xFFDFDDDF),
-                                                      borderRadius: BorderRadius.circular(50)
-                                                  ),
-                                                ).animate(onPlay: (controller) => controller.repeat())
-                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                    .animate() // this wraps the previous Animate in another Animate
-                                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                                    .slide(),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  width:Get.width*0.45,
-                                                  height: 20,
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(0xFFDFDDDF),
-                                                      borderRadius: BorderRadius.circular(50)
-                                                  ),
-                                                ).animate(onPlay: (controller) => controller.repeat())
-                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                    .animate() // this wraps the previous Animate in another Animate
-                                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                                    .slide(),
-                                              ),
+                                              Container(
+                                                width:Get.width*0.4,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+                                              Container(
+                                                width:Get.width*0.45,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+                                              Container(
+                                                width:Get.width*0.45,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+                                              Container(
+                                                width:Get.width*0.45,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
                                             ],
                                           ).animate(onPlay: (controller) => controller.repeat())
                                               .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
@@ -592,16 +674,10 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                           child: Center(
                                             child:  ReadMoreText(Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.descEn??"":controller.shopData?.desc??"",
                                               textAlign: TextAlign.left,
-                                              trimLines: 1,
+                                              trimLines: 3,
+                                              trimLength: 90,
                                               style: TextStyle(
-                                                shadows: <Shadow>[
-                                                  Shadow(
-                                                      offset: const Offset(0.5, 0.5),
-                                                      blurRadius: 0.5,
-
-                                                      color: Colors.black.withOpacity(0.5)
-                                                  ),
-                                                ],
+                                                fontWeight: FontWeight.w600,
                                                 fontSize: 12,
                                                 letterSpacing: 0,
                                                 fontFamily: Get
@@ -629,7 +705,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                       :Stack(
                       children:[
                         Container(
-                          height: Get.height*0.3,
+                          height: Get.height*0.31,
                           width:Get.width,
                           child:const Padding(padding: EdgeInsets.all(0),
                           ),
@@ -696,10 +772,10 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 18.0),
                                     child: Container(
-                                      width:Get.width*0.2,
+                                      width:Get.width*0.4,
                                       child: Row(
-                                        mainAxisAlignment:MainAxisAlignment.start,
-                                        crossAxisAlignment:CrossAxisAlignment.end,
+                                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:CrossAxisAlignment.start,
                                         children: [
 
                                           controller.shopIsLoading?Padding(
@@ -820,6 +896,99 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                                   );
                                                 },
                                               ),
+                                          Column(
+                                            children: [
+                                            controller.shopIsLoading?Center(
+                                              child:   Container(
+                                                width: Get.width*0.06,
+                                                height: 20,
+                                                decoration: const BoxDecoration(
+                                                  color: Color(0xFFDFDDDF),
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+
+
+                                            ).animate(onPlay: (controller) => controller.repeat())
+                                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                .animate() // this wraps the previous Animate in another Animate
+                                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                .slide():Container(
+
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(5.0),
+                                                child: InkWell(
+                                                  onTap:(){
+                                                    controller.addingOrRemovingStoreToFavorite(context);
+                                                  },
+                                                  child: Container(
+                                                      height: Get.height*0.045,
+                                                      width:Get.width*0.089,
+                                                      decoration: const BoxDecoration(
+                                                        color:kLightPinkColor,
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Center(
+                                                        child:controller.storeAreAddedOrNot?const Icon(
+                                                            Icons.favorite,
+                                                            color: Colors.white,
+                                                            size:20
+                                                        ):const Icon(
+                                                            Icons.favorite_border_rounded,
+                                                            color: Colors.white,
+                                                            size:20
+                                                        ),
+                                                      )
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 10,),
+                                            controller.shopIsLoading?Center(
+                                              child:   Container(
+                                                width: Get.width*0.06,
+                                                height: 20,
+                                                decoration: const BoxDecoration(
+                                                  color: Color(0xFFDFDDDF),
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+
+
+                                            ).animate(onPlay: (controller) => controller.repeat())
+                                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                .animate() // this wraps the previous Animate in another Animate
+                                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                .slide():InkWell(
+                                              onTap:(){
+                                                Share.share(controller.shopData?.link??"");
+                                              },
+                                              child: Container(
+                                                  height: Get.height*0.04,
+                                                  width:Get.width*0.08,
+                                                  decoration: const BoxDecoration(
+                                                    color:Colors.white,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child:  Center(
+                                                    child: SizedBox(
+                                                      height: Get.height*0.02,
+                                                      width: Get.width*0.09,
+                                                      child: Image.asset("assets/icons/s.png",fit: BoxFit.fitHeight,),
+                                                    ),
+                                                  )
+                                              ),
+                                            ),
+                                          ],)
+
 
                                         ],
                                       ),
@@ -850,7 +1019,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                 :Container(
                               width:Get.width*0.6,
                                 child:  Padding(
-                                  padding: EdgeInsets.only(right: Get.width*0.1),
+                                  padding: EdgeInsets.only(right:18),
                                   child: CustomText(
                                     Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.nameEn??"":controller.shopData?.name??"",
                                     textAlign: TextAlign.right,
@@ -874,14 +1043,14 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                 ),
                             ),
                                   Padding(
-                                    padding:  EdgeInsets.fromLTRB(0,3,Get.width*0.11,0),
+                                    padding:  EdgeInsets.fromLTRB(0,3,18,0),
                                     child: InkWell(
                                       onTap:(){
 
                                       },
                                       child: Container(
 
-                                        width:Get.width*0.35,
+                                        width:Get.width*0.55,
                                         decoration: BoxDecoration(
 
                                           borderRadius: BorderRadius.circular(15), //
@@ -889,66 +1058,54 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                         child:  controller.shopIsLoading?Center(
                                           child:   Column(
                                             children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  width:Get.width*0.4,
-                                                  height: 20,
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(0xFFDFDDDF),
-                                                      borderRadius: BorderRadius.circular(50)
-                                                  ),
-                                                ).animate(onPlay: (controller) => controller.repeat())
-                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                    .animate() // this wraps the previous Animate in another Animate
-                                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                                    .slide(),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  width:Get.width*0.45,
-                                                  height: 20,
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(0xFFDFDDDF),
-                                                      borderRadius: BorderRadius.circular(50)
-                                                  ),
-                                                ).animate(onPlay: (controller) => controller.repeat())
-                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                    .animate() // this wraps the previous Animate in another Animate
-                                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                                    .slide(),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  width:Get.width*0.45,
-                                                  height: 20,
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(0xFFDFDDDF),
-                                                      borderRadius: BorderRadius.circular(50)
-                                                  ),
-                                                ).animate(onPlay: (controller) => controller.repeat())
-                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                    .animate() // this wraps the previous Animate in another Animate
-                                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                                    .slide(),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  width:Get.width*0.45,
-                                                  height: 20,
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(0xFFDFDDDF),
-                                                      borderRadius: BorderRadius.circular(50)
-                                                  ),
-                                                ).animate(onPlay: (controller) => controller.repeat())
-                                                    .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                                    .animate() // this wraps the previous Animate in another Animate
-                                                    .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                                    .slide(),
-                                              ),
+                                              Container(
+                                                width:Get.width*0.4,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+                                              Container(
+                                                width:Get.width*0.45,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+                                              Container(
+                                                width:Get.width*0.45,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
+                                              Container(
+                                                width:Get.width*0.45,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFDFDDDF),
+                                                    borderRadius: BorderRadius.circular(50)
+                                                ),
+                                              ).animate(onPlay: (controller) => controller.repeat())
+                                                  .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
+                                                  .animate() // this wraps the previous Animate in another Animate
+                                                  .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
+                                                  .slide(),
                                             ],
                                           ).animate(onPlay: (controller) => controller.repeat())
                                               .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
@@ -957,30 +1114,19 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                               .slide(),
 
 
-                                        ): Center(
-                                          child: Center(
-                                            child:  ReadMoreText(Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.descEn??"":controller.shopData?.desc??"",
-                                              textAlign: TextAlign.start,
-                                              trimLines: 1,
-                                              style: TextStyle(
-                                                shadows: <Shadow>[
-                                                  Shadow(
-                                                      offset: const Offset(0.5, 0.5),
-                                                      blurRadius: 0.5,
-
-                                                      color: Colors.black.withOpacity(0.5)
-                                                  ),
-                                                ],
-                                                fontSize: 12,
-                                                letterSpacing: 0,
-                                                fontFamily: Get
-                                                    .find<StorageService>()
-                                                    .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                                                color:Colors.black,
-                                              ),colorClickableText: kLightPinkColor,  semanticsLabel: '',),
-
-                                          ),
-                                        ),
+                                        ): ReadMoreText(Get.find<StorageService>().activeLocale == SupportedLocales.english?controller.shopData?.descEn??"":controller.shopData?.desc??"",
+                                          textAlign: TextAlign.start,
+                                          trimLines: 3,
+                                          trimLength: 90,
+                                          style: TextStyle(
+                                           fontWeight: FontWeight.w600,
+                                            fontSize: 12,
+                                            letterSpacing: 0,
+                                            fontFamily: Get
+                                                .find<StorageService>()
+                                                .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                            color:Colors.black,
+                                          ),colorClickableText: kLightPinkColor,  semanticsLabel: '',),
                                       ),
                                     ),
                                   ),
@@ -1019,11 +1165,9 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
 
 
                                       controller.shopIsLoading?Container(
-
                                         height: Get.height*0.11,
                                         width: Get.width*0.23,
                                         decoration:BoxDecoration(
-
                                           color:  const Color(0xFFF2F0F3),
                                           borderRadius: BorderRadius.circular(50),
                                           boxShadow: [
@@ -1064,7 +1208,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                                           .animate() // this wraps the previous Animate in another Animate
                                           :CachedNetworkImage(
                                         fit:  BoxFit.fitWidth,
-                                        imageUrl: "${Services.baseEndPoint}${widget.mainCategoryImg}",
+                                        imageUrl: "${Services.baseEndPoint}${controller.selectedCategoryImage}",
                                         imageBuilder: ((context, image){
                                           return   Container(
                                               height: Get.height*0.14,
@@ -1216,55 +1360,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                             ),
                           ),
 
-                          controller.shopIsLoading?Center(
-                            child:   Container(
-                              width: Get.width*0.06,
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                color: Color(0xFFDFDDDF),
-                                shape: BoxShape.circle,
-                              ),
-                            ).animate(onPlay: (controller) => controller.repeat())
-                                .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                                .animate() // this wraps the previous Animate in another Animate
-                                .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                                .slide(),
 
-
-                          ).animate(onPlay: (controller) => controller.repeat())
-                              .shimmer(duration: 1200.ms, color:  kDarkPinkColor.withAlpha(10))
-                              .animate() // this wraps the previous Animate in another Animate
-                              .fadeIn(duration: 700.ms, curve: Curves.easeOutQuad)
-                              .slide():Container(
-
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: InkWell(
-                                onTap:(){
-                                  controller.addingOrRemovingStoreToFavorite(context);
-                                },
-                                child: Container(
-                                    height: Get.height*0.045,
-                                    width:Get.width*0.089,
-                                    decoration: const BoxDecoration(
-                                      color:kLightPinkColor,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Center(
-                                      child:controller.storeAreAddedOrNot?const Icon(
-                                          Icons.favorite,
-                                          color: Colors.white,
-                                          size:20
-                                      ):const Icon(
-                                          Icons.favorite_border_rounded,
-                                          color: Colors.white,
-                                          size:20
-                                      ),
-                                    )
-                                ),
-                              ),
-                            ),
-                          ),
                           controller.shopIsLoading?Center(
                             child:   Container(
                               width: Get.width*0.06,
@@ -1431,7 +1527,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                         ],
                       ),
 
-                 controller.shopIsLoading?const CategoryLoadingWidget():controller.shopData?.ctgs?.length == 0||controller.shopData?.ctgs?.length == 1? const SizedBox():Container(
+                 controller.shopIsLoading?const CategoryLoadingWidget():controller.shopData?.ctgs?.length == 0||controller.shopData?.ctgs?.length == 1||controller.shopData?.ctgs?.length == 2? const SizedBox():Container(
                    width:Get.width*0.95,
                    height: Get.height*0.13,
                     child: ListView.builder(
@@ -1443,7 +1539,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                         return
                           InkWell(
                               onTap:(){
-                                controller.selectingAnotherSubCategory(controller.shopData?.ctgs?[index].id??0);
+                                controller.selectingAnotherSubCategory(controller.shopData!.ctgs![index]);
                               },
                               child: CategoryWidget(category:controller.shopData?.ctgs![index], selectedCategoryId:  controller.selectedSubCategoryId,)); },
 
@@ -1451,7 +1547,7 @@ class _StoreDetailedScreenState extends State<StoreDetailedScreen> {
                   ),
 
 
-                  controller.shopProductIsLoading?const ProductLoadingWidget():
+                  controller.shopProductIsLoading?const ProductLoadingWidget(isLoadingMoreData: false,):
                   controller.productList?.length == 0?Column(
                       children:[
                         SizedBox(

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, sized_box_for_whitespace, unnecessary_string_interpolations, unnecessary_brace_in_string_interps, prefer_is_empty
+// ignore_for_file: avoid_print, sized_box_for_whitespace, unnecessary_string_interpolations, unnecessary_brace_in_string_interps, prefer_is_empty, deprecated_member_use
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -709,9 +709,7 @@ class ProductScreen extends StatelessWidget {
                                           focusNode: controller.myFocusNode,
                                           cursorColor: kDarkPinkColor,
                                           textInputAction: TextInputAction.search,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.allow(RegExp("[a-zA-Z\u0621-\u064A]")),
-                                          ],
+
                                           style: TextStyle(
                                             shadows: <Shadow>[
                                               Shadow(
@@ -1063,9 +1061,7 @@ class ProductScreen extends StatelessWidget {
                                         focusNode: controller.myFocusNode,
                                         cursorColor: kDarkPinkColor,
                                         textInputAction: TextInputAction.search,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(RegExp("[a-zA-Z\u0621-\u064A]")),
-                                        ],
+
                                         style: TextStyle(
 
                                           fontSize: 15,
@@ -1521,7 +1517,7 @@ class ProductScreen extends StatelessWidget {
 
                       ),
                     ):const SizedBox(),
-                    controller.productIsLoading?const ProductLoadingWidget():controller.productList?.length == 0?controller.activateSearching? Column(
+                    controller.productIsLoading? ProductLoadingWidget(isLoadingMoreData:  controller.isLoadingMoreData,):controller.productList?.length == 0?controller.activateSearching? Column(
                         children:[
                           SizedBox(
                             height: Get.height*0.4,
@@ -1568,9 +1564,8 @@ class ProductScreen extends StatelessWidget {
                     ):Column(
                       children:
                         controller.products
-
                     ),
-
+                    controller.isLoadingMoreData?ProductLoadingWidget(  isLoadingMoreData: controller.isLoadingMoreData,):SizedBox(),
 
 
                   ],

@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, unused_local_variable, constant_identifier_names, prefer_const_declarations, prefer_typing_uninitialized_variables
+// ignore_for_file: unnecessary_null_comparison, unused_local_variable, constant_identifier_names, prefer_const_declarations, prefer_typing_uninitialized_variables, deprecated_member_use
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

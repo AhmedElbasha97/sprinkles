@@ -7,8 +7,11 @@ import 'package:sprinkles/Utils/colors.dart';
 import 'package:sprinkles/Utils/localization_services.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
+import 'package:sprinkles/models/privacy_policy_model.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
+import 'package:sprinkles/ui/privacypolicy/privacyPolicyScreen.dart';
 import 'package:sprinkles/ui/siginup/controller/signup_controller.dart';
+import 'package:sprinkles/ui/term&condition/terms_screen.dart';
 import 'package:sprinkles/widgets/text_field_widget.dart';
 
 import '../../Utils/constant.dart';
@@ -455,31 +458,81 @@ class SignupScreen extends StatelessWidget {
                       ),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: RichText(
-                        text:    TextSpan(
-                          children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      Radio(
+                        value: 1,
+                        fillColor: MaterialStateProperty.all<Color>(kDarkPinkColor),
 
-                            const WidgetSpan(
-                              child: Icon(Icons.info_sharp, size: 14,color: kDarkPinkColor,),
-                            ),
-                            TextSpan(
-                              text: changePassScreenText3.tr,
-                              style:   TextStyle(
-                                  fontSize: 12.0,
-                                  fontFamily: Get
+                        groupValue: controller.val,
+                        onChanged: (value) {
+                          controller.changeValueOfRadioBTN(value,context);
+                        },
+                        toggleable: true,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            readAppPolicyAndTerms.tr,  style:  TextStyle(
+                              fontFamily:Get
+                                  .find<StorageService>()
+                                  .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                              color: kDarkPinkColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15),),
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  Get.to(()=> PrivacyPolicyScreen());
+                                },
+                                child: Text(
+                                  privacyPolicy.tr,
+                                  style:  TextStyle(
+                                      fontFamily:Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                      color: kLightPinkColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15),
+                                ),
+                              ),
+                              Text(
+                                and.tr,  style:  TextStyle(
+                                  fontFamily:Get
                                       .find<StorageService>()
                                       .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                  color: kDarkPinkColor,
                                   fontWeight: FontWeight.w600,
-                                  color: kDarkPinkColor
+                                  fontSize: 15),),
+                              InkWell(
+                                onTap: (){
+                                  Get.to(()=> TermsScreen());
+                                },
+                                child: Text(
+                                  termsAndCondition.tr,
+                                  style:  TextStyle(
+                                      fontFamily:Get
+                                          .find<StorageService>()
+                                          .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
+                                      color: kLightPinkColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
+                            ],
+                          ),
+
+                        ],
+                      )
+                    ],
+                  ),
+
+                  const SizedBox(height: 25),
                   SizedBox(
                     width: Get.width,
                     child: Row(
@@ -516,7 +569,7 @@ class SignupScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 10,),
+
 
 
 

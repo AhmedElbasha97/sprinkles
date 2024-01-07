@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height:40),
                   Container(
                     height:Get.height*0.73,
-                    width:Get.width*0.95,
+                    width:Get.width*0.9,
                     child:controller.isLoading?const HomeLoadingWidget():ListView.builder(
                       physics: const BouncingScrollPhysics(),
 

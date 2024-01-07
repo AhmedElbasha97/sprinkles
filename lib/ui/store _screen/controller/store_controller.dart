@@ -7,10 +7,12 @@ import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/translation_key.dart';
 import 'package:sprinkles/models/category_model.dart';
 import 'package:sprinkles/models/favorite_model.dart';
+import 'package:sprinkles/models/main_category_data.dart';
 import 'package:sprinkles/models/response_model.dart';
 import 'package:sprinkles/models/shops_model.dart';
 import 'package:sprinkles/services/category_services.dart';
 import 'package:sprinkles/services/favorite_services.dart';
+import 'package:sprinkles/services/product_service.dart';
 import 'package:sprinkles/services/seaarch_and_filters_services.dart';
 import 'package:sprinkles/services/shop_services.dart';
 import 'package:sprinkles/ui/login/login_screen.dart';
@@ -26,6 +28,7 @@ class StoreController extends GetxController {
   bool advertisementsIsLoading = true;
   late TextEditingController searchController;
 
+  late MainCategoryTapModel? data;
   final int mainCategoryId;
   final bool selectedFromDrawer;
   List<Widget> storeListWidget = [];
@@ -35,7 +38,7 @@ class StoreController extends GetxController {
   StoreController(this.mainCategoryId, this.selectedFromDrawer, this.context, this.mainCategoryImg);
   bool checker =false;
   bool hasBeenSelectedFromDrawer = false;
-  int selectedMainCategoryId = 0;
+  int selectedMainCategoryId = 240;
   late List<ShopsModel>? storeList;
   late List<CategoryModel>? mainCategoryList;
   List<String> governmentData = [removeFilterTitle.tr,nameFilterDescTitle.tr,nameFilterAscTitle.tr,];
@@ -47,6 +50,7 @@ class StoreController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    getSubCategoryData();
     hasBeenSelectedFromDrawer = selectedFromDrawer;
     myFocusNode.addListener( () {
       update();
@@ -75,6 +79,19 @@ class StoreController extends GetxController {
         }
       }
     });
+  }
+  getSubCategoryData() async {
+    if(selectedFromDrawer){
+    if(selectedMainCategoryId!=240){
+      data = await ProductServices.getMainProductData("$selectedMainCategoryId");
+      categoryIsLoading = false;
+      update();
+    }}else{
+      data = await ProductServices.getMainProductData("${mainCategoryId}");
+      categoryIsLoading = false;
+      update();
+    }
+
   }
   goUpToTopOfSScreen(){
     scrollController.animateTo( //go to top of scroll
@@ -302,6 +319,8 @@ class StoreController extends GetxController {
     selectedMainCategoryId = mainCategoryId;
     storeIsLoading = true;
     update();
+    categoryIsLoading = true;
+    await getSubCategoryData();
     storeList = await ShopServices.getShopsForMainCategory(mainCategoryId,"${0}");
     await fillData();
     storeIsLoading = false;

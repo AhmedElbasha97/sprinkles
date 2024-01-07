@@ -41,9 +41,8 @@ class ProductDetailedController extends GetxController{
   final String productId;
   List<Widget> dotsList = [];
   String messageTextWhatsApp = "";
-  ProductDetailedController(this.productId, this.mainCategoryId, this.branchCategoryId,);
-  final int mainCategoryId;
-  final int branchCategoryId;
+  ProductDetailedController(this.productId, );
+
   int selectedProductId = 24543;
   bool favoriteHasBeenSelected = false;
   @override
@@ -163,7 +162,7 @@ class ProductDetailedController extends GetxController{
       productData =
       await ProductServices.getProductDetails("$selectedProductId");
       productsList =
-      await ProductServices.getProducts(mainCategoryId, productData?.ctg?.id??0, "0");
+      await ProductServices.getProducts(productData?.ctgsMain?.id??0, productData?.ctg?.id??0, "0");
       if(productData?.video != ""){
         videoPlayerController =
         VideoPlayerController.network('${Services.baseEndPoint}${productData?.video??""}')
@@ -179,7 +178,7 @@ class ProductDetailedController extends GetxController{
       productData =
       await ProductServices.getProductDetails(productId);
       productsList =
-      await ProductServices.getProducts(mainCategoryId, productData?.ctg?.id??0, "0");
+      await ProductServices.getProducts(productData?.ctgsMain?.id??0, productData?.ctg?.id??0, "0");
       if(productData?.video != null){
         videoPlayerController =
         VideoPlayerController.network('${Services.baseEndPoint}${productData?.video??""}')

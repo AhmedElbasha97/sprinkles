@@ -72,8 +72,9 @@ class CategoryWidget extends StatelessWidget {
                         placeholder: (context, image){
                           return   Container(
 
-                            height: Get.height*0.04,
-                            width:Get.width*0.1,
+                            height: Get.height*0.075,
+
+                            width:Get.width*0.14,
                             decoration:BoxDecoration(
                               color:  const Color(0xFFF2F0F3),
                               borderRadius: BorderRadius.circular(50),
@@ -98,8 +99,9 @@ class CategoryWidget extends StatelessWidget {
                             child:Center(
                               child: Container(
 
-                                height: Get.height*0.04,
-                                width:Get.width*0.1,
+                                height: Get.height*0.07,
+
+                                width:Get.width*0.13,
                                 decoration:BoxDecoration(
                                   color:  const Color(0xFFDFDDDF),
                                   borderRadius: BorderRadius.circular(50),
@@ -133,13 +135,13 @@ class CategoryWidget extends StatelessWidget {
             Get.find<StorageService>().activeLocale == SupportedLocales.english?category?.nameEn??"":category?.name??"",
                 style:  TextStyle(
 
-                  fontSize: 15,
+                  fontSize: 12,
                   letterSpacing: 0,
                   fontFamily: Get
                       .find<StorageService>()
                       .activeLocale == SupportedLocales.english ?fontFamilyEnglishName:fontFamilyArabicName,
-                  fontWeight: FontWeight.w900,
-                  color:selectedCategoryId == category?.id?kDarkPinkColor:kLightPinkColor,
+                  fontWeight: selectedCategoryId == category?.id?FontWeight.w900:FontWeight.w600,
+                  color:Colors.black,
                 ),
                 textAlign: TextAlign.center,
               ),

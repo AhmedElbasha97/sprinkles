@@ -153,4 +153,8 @@ const storeDetailedError1 = "Store_Detailed_Error_1";
 const storeDetailedError2 = "Store_Detailed_Error_2";
 const readMoreKey="Read_More_Key";
 const readLessKey="Read_Less_Key";
+const readAppPolicyAndTerms = "Read_App_Policy_And_Terms";
+const privacyPolicy = "Privacy_Policy";
+const termsAndCondition = "Terms_And_Condition";
+const and = "And";
 

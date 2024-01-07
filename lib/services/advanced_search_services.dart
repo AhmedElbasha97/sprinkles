@@ -2,13 +2,13 @@ import 'package:get/get.dart';
 import 'package:sprinkles/Utils/api_service.dart';
 import 'package:sprinkles/Utils/memory.dart';
 import 'package:sprinkles/Utils/services.dart';
-import 'package:sprinkles/models/products_model.dart';
+import 'package:sprinkles/models/product_pagination_model.dart';
 import 'package:sprinkles/models/shops_model.dart';
 
 
 class AdvancedSearchServices{
   static ApiService api = ApiService();
-  Future<List<ProductsModel>?> searchingForProduct(
+  static Future<ProductPaginationModel?> searchingForProduct(
       String searchType,
       String mainCategoryId,
       String subCategoryId,
@@ -16,9 +16,10 @@ class AdvancedSearchServices{
       String priceFrom,
       String priceTo,
       String locationId,
+      int pageNumber,
       ) async {
-    List<ProductsModel>? productsList = [];
-    var data = await api.request(Services.advancedSearchEndPoint, "POST",queryParamters: {
+
+    var data = await api.request(Services.advancedSearchPaginationEndPoint, "POST",queryParamters: {
       "type": "P",
       "ctgid":mainCategoryId,
       "ctgid2":subCategoryId,
@@ -26,13 +27,14 @@ class AdvancedSearchServices{
       "price_from":priceFrom,
       "price_to":priceTo,
       "area":locationId,
-      "member_id": Get.find<StorageService>().getId
+      "member_id": Get.find<StorageService>().getId,
+      "page":pageNumber,
+
     });
     if (data != null) {
-      for (var order in data){
-        productsList.add(ProductsModel.fromJson(order));
-      }
-      return productsList;
+      print(data.toString());
+      return ProductPaginationModel.fromJson(data);
+
     }
     return null;
   }

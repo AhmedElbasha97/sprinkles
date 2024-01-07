@@ -404,7 +404,7 @@ class FavoriteScreen extends StatelessWidget {
             ),
           ):Column(
               children:controller.storeListWidget,)
-              : controller.isLoading?const ProductLoadingWidget():controller.products.length == 0? Column(
+              : controller.isLoading?const ProductLoadingWidget(isLoadingMoreData: false,):controller.products.length == 0? Column(
               children:[
                 SizedBox(
                   height: Get.height*0.4,

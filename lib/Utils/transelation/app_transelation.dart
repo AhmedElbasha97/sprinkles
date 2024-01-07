@@ -161,6 +161,10 @@ class AppTranslations extends Translations {
       storeDetailedError2:"There are no products available in this store",
       readMoreKey:' ...read more',
       readLessKey:' read less',
+      readAppPolicyAndTerms: "I have read and agree to",
+      privacyPolicy: "privacy policy",
+      termsAndCondition: "Terms and conditions",
+      and:" and ",
     },
     "ar": {
       requiredFiled:"هذه الخانة مطلوبه",
@@ -177,13 +181,13 @@ class AppTranslations extends Translations {
       signInBTN: "تسجيل الدخول",
       welcomeBTN2: "سجل الآن",
       signUpTitle: "تسجيل" ,
-      signUpTitleName: "أدخل اسمك الكامل" ,
+      signUpTitleName: "أدخل الأسم " ,
       signUpTitlePhone: "أدخل رقم هاتفك" ,
       signUpTextPhone: "123-4567-8" ,
       signUpTextPhoneKey: "+974" ,
       signUpTitleEmail: "أدخل بريدك الإلكتروني" ,
-      signUpTitlePass: "أدخل كلمة المرور الخاصة بك" ,
-      signUpTitleConfirmPass: "تأكيد كلمة المرور الخاصة بك" ,
+      signUpTitlePass: "أدخل كلمة المرور جديده" ,
+      signUpTitleConfirmPass: "تأكيد كلمة المرور" ,
       signUpBTN: "تسجيل",
       signUpText1: "هل لديك حساب بالفعل؟",
       signUpText2: "تسجيل الدخول" ,
@@ -314,6 +318,10 @@ class AppTranslations extends Translations {
       storeDetailedError2:"ليس هناك منتجات متوفره فى هذا المحل",
       readMoreKey:' ...اقرأ أكثر',
       readLessKey:' أقرأ أقل',
+      readAppPolicyAndTerms: "أنا قرأت وأوافق على",
+      privacyPolicy: "سياسة خاصة",
+      termsAndCondition: "أحكام وشروط",
+      and:" و ",
     }
   };
 }
