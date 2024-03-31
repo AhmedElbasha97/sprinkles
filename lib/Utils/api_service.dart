@@ -35,6 +35,7 @@ class ApiService extends GetxService {
     String endPoint,
     String method, {
     dynamic data,
+        Map<String, dynamic>? headers,
     Map<String, dynamic>? queryParamters,
     String contentType = "application/json",
     Function(String errorMsg)? errorDialog,
@@ -49,7 +50,7 @@ class ApiService extends GetxService {
           options: Options(
             method: method,
             contentType: contentType,
-            // headers: headers,
+             headers: headers,
           ));
       if (response.statusCode != 200) {
         throw "${response.statusMessage}\n${response.statusCode}";

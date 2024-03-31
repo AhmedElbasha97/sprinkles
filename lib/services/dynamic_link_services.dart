@@ -1,11 +1,15 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
+import 'package:sprinkles/ui/product_detailed_screen/controller/product_detailed_controller.dart';
 import 'package:sprinkles/ui/product_detailed_screen/product_detailed_screen.dart';
+import 'package:sprinkles/ui/store_details_screen/controller/store_detailed_screen.dart';
 import 'package:sprinkles/ui/store_details_screen/store_details_screen.dart';
+
 
 class DynamicLinkHandler {
   FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
   Future<void> initDynamicLinks() async {
+
     dynamicLinks.onLink.listen((dynamicLinkData) {
       // Listen and retrieve dynamic links here
       final String deepLink = dynamicLinkData.link.toString(); // Get DEEP LINK
@@ -37,11 +41,19 @@ class DynamicLinkHandler {
     var aStr = result.replaceAll(new RegExp(r'[^0-9]'),''); // '23'
     var aInt = int.parse(aStr);
     print(aInt);
+    bool test4 = Get.isRegistered<ProductDetailedController>();
+    if(test4){
+      Get.delete<ProductDetailedController>();
+    }
+    bool test3 = Get.isRegistered<StoreDetailedController>();
+    if(test3){
+      Get.delete<StoreDetailedController>();
+    }
     if(result.contains("s")){
-      Get.to(()=>StoreDetailedScreen(shopId: "${aInt}", mainCategoryId: 1, mainCategoryImg: '',));
+      Get.to(()=>StoreDetailedScreen(shopId: "${aInt}", mainCategoryId: 1, mainCategoryImg: '',),preventDuplicates: false);
 
     }else{
-      Get.to(()=>ProductDetailedScreen(productId: "${aInt}", mainCategoryId: 1, comingFromProductList: false, comingFromFavoriteList: false, comingFromProductDetails: false, branchCategoryId: 2, mainCategoryImg: ""));
+      Get.to(()=>ProductDetailedScreen(productId: "${aInt}", mainCategoryId: 1, comingFromProductList: false, comingFromFavoriteList: false, comingFromProductDetails: false, branchCategoryId: 2, mainCategoryImg: ""),preventDuplicates: false);
 
     }
   }

@@ -104,13 +104,12 @@ class ProductController extends GetxController {
     });
   }
   getMoreData() async {
-    if(pagenationData!.totalPages! > pageNumber){
+
+
+    if(pagenationData!.totalPages! >= pageNumber ) {
+      pageNumber++;
       isLoadingMoreData= true;
       update();
-      pageNumber++;
-    }
-
-    if(pagenationData!.totalPages! >= pageNumber) {
       if(activateSearching){
         if(selectingFromDrawer)
         {
